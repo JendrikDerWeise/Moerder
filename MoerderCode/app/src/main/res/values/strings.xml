@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Moerder</string>
+
+    <string name="dummy_button" translatable="false">Dummy Button</string>
+    <string name="dummy_content" translatable="false">DUMMY\nCONTENT</string>
+
+    <string name="search">Search game</string>
+    <string name="rules">How to play</string>
+    <string name="host">Host game</string>
+</resources>
