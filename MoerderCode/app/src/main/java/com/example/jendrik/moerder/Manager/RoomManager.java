@@ -1,4 +1,7 @@
-package com.example.jendrik.moerder;
+package com.example.jendrik.moerder.Manager;
+
+import com.example.jendrik.moerder.GameObjekts.Room;
+import com.example.jendrik.moerder.GameObjekts.Weapon;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,4 +22,7 @@ public class RoomManager implements Serializable{
     public ArrayList<Room> showMap(){
         return roomList;
     }
+
+
+
 }

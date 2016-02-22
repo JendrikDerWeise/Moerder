@@ -1,4 +1,7 @@
-package com.example.jendrik.moerder;
+package com.example.jendrik.moerder.Manager;
+
+import com.example.jendrik.moerder.GameObjekts.Card;
+import com.example.jendrik.moerder.GameObjekts.Player;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,6 +10,8 @@ import java.util.ArrayList;
  * Created by Jendrik on 21.02.2016.
  */
 public class PlayerManager implements Serializable {
+
+
 
     private ArrayList<Player> playerList;
 
@@ -31,5 +36,9 @@ public class PlayerManager implements Serializable {
 
     public void giveCard(Card card, int playerNo){ //ich bin mir unsicher wo die Karten verteilt werden. Da muss jedenfalls eine Rechnung hin, damit alle Spieler die gleiche Menge Karten bekommen
         playerList.get(playerNo).setHandCard(card);
+    }
+
+    public ArrayList<Player> getPlayerList() {
+        return playerList;
     }
 }

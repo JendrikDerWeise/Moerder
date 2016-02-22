@@ -1,4 +1,4 @@
-package com.example.jendrik.moerder;
+package com.example.jendrik.moerder.GameObjekts;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Player implements Serializable{
     private String name;
     private boolean active;
+    private boolean dead;
     private int qrCode;
     private Weapon actualWeapon;
     private Room actualRoom;
@@ -60,4 +61,13 @@ public class Player implements Serializable{
     public void setHandCard(Card card){
         handCards.add(card);
     }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.example.jendrik.moerder;
+package com.example.jendrik.moerder.GameObjekts;
 
 import android.media.Image;
 
@@ -10,15 +10,15 @@ import java.io.Serializable;
 public class Card implements Serializable {
 
     private String name;
-    private Image image;
+    private int id; //0=player, 1=room, 2=weapon --> für Bildzuweisung
 
-    public Card(String name, Image image) {
+    public Card(String name, int id) {
         this.name = name;
-        this.image = image;
+        this.id = id;
     }
 
-    public Image getImage() {
-        return image;
+    public int id() {
+        return id;
     }
 
     public String getName() {

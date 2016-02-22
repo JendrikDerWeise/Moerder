@@ -1,4 +1,4 @@
-package com.example.jendrik.moerder;
+package com.example.jendrik.moerder.GameObjekts;
 
 import java.io.Serializable;
 

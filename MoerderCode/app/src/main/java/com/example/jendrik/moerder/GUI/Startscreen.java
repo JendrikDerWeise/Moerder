@@ -1,4 +1,4 @@
-package com.example.jendrik.moerder;
+package com.example.jendrik.moerder.GUI;
 
 import android.annotation.SuppressLint;
 import android.support.v7.app.ActionBar;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.example.jendrik.moerder.R;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -57,7 +59,7 @@ public class Startscreen extends AppCompatActivity {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        findViewById(R.id.host).setOnTouchListener(mDelayHideTouchListener);
     }
 
     @Override

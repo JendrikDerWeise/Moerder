@@ -1,4 +1,6 @@
-package com.example.jendrik.moerder;
+package com.example.jendrik.moerder.Manager;
+
+import com.example.jendrik.moerder.GameObjekts.Weapon;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,4 +20,9 @@ public class WeaponManager implements Serializable {
         int qrCode = weaponList.size() + 9;
         weaponList.add(new Weapon(name,qrCode));
     }
+
+    public ArrayList<Weapon> getWeaponList() {
+        return weaponList;
+    }
+
 }

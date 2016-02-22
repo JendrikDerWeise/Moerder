@@ -1,4 +1,4 @@
-package com.example.jendrik.moerder;
+package com.example.jendrik.moerder.GameObjekts;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,6 +31,10 @@ public class Room implements Serializable {
 
     public ArrayList<Weapon> getWeaponList() {
         return weaponList;
+    }
+
+    public void addWeapon(Weapon weapon) {
+        weaponList.add(weapon);
     }
 
 }
