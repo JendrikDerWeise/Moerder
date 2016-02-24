@@ -7,16 +7,16 @@ import java.io.Serializable;
  */
 public class Solution implements Serializable {
 
-    private String murder, weapon, room;
+    private String murderer, weapon, room;
 
     public Solution(String m, String w, String r){
-        murder=m;
+        murderer=m;
         weapon=w;
         room=r;
     }
 
-    public String getMurder() {
-        return murder;
+    public String getMurderer() {
+        return murderer;
     }
 
     public String getWeapon() {
