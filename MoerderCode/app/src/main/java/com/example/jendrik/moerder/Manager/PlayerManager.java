@@ -19,14 +19,13 @@ public class PlayerManager implements Serializable {
 
     }
 
-    public void addPlayer(String name){
+    public void addPlayer(String name, int numberOfThings){
         int qrCode = playerList.size()+1;
-        playerList.add(new Player(name,qrCode));
+        playerList.add(new Player(name,qrCode, numberOfThings));
     }
 
     public void setActive(String name) {
-        for (Player p : playerList
-                ) {
+        for (Player p : playerList) {
             if (p.getName().equals(name))
                 p.setActive(true);
             else
