@@ -16,15 +16,23 @@ import java.util.Random;
  *
  */
 public class Game implements Serializable {
-    private Solution solution = null;
-    private RoomManager roomManager = new RoomManager();
-    private WeaponManager weaponManager = new WeaponManager();
-    private PlayerManager playerManager = new PlayerManager();
-    private ArrayList<Card> cardList = new ArrayList<Card>();
+    private Solution solution;
+    private RoomManager roomManager;
+    private WeaponManager weaponManager;
+    private PlayerManager playerManager;
+    private ArrayList<Card> cardList;
+    private int numberOfThings;
+
 
     public Game(ArrayList<String> rooms, ArrayList<String> weapons){
+        solution = null;
+        cardList = new ArrayList<Card>();
+        playerManager = new PlayerManager();
+        weaponManager = new WeaponManager();
+        roomManager = new RoomManager();
         createRooms(rooms);
         createWeapons(weapons);
+        numberOfThings = rooms.size() + weapons.size();
     }
 
     public Game(){} //nur für das Laden verwendet
@@ -43,8 +51,9 @@ public class Game implements Serializable {
     }
 
     private void createPlayer(ArrayList<String> players){
+        numberOfThings += players.size();
         for(String s:players)
-            playerManager.addPlayer(s);
+            playerManager.addPlayer(s, numberOfThings);
     }
 
     private void createSolution(){
