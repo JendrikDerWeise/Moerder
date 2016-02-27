@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.content.Intent;
 
 import com.example.jendrik.moerder.R;
 
@@ -60,6 +62,15 @@ public class Startscreen extends AppCompatActivity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.host).setOnTouchListener(mDelayHideTouchListener);
+
+        Button next = (Button) findViewById(R.id.host);
+        next.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), CreateGame.class);
+                startActivityForResult(myIntent, 0);
+            }
+
+        });
     }
 
     @Override
