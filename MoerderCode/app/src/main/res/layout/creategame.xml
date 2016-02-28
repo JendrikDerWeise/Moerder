@@ -42,15 +42,20 @@
     <Spinner
         android:layout_width="103dp"
         android:layout_height="29dp"
-        android:id="@+id/spinner_player"
         android:layout_gravity="center_horizontal"
+        android:id="@+id/spinner_player"
+        android:drawSelectorOnTop="true"
         android:spinnerMode="dropdown"
-        android:layout_weight="0.02" />
+        android:layout_weight="0.02"
+        android:entries="@array/player_numbers"
+        android:entryValues="@array/players"/>
 
-    <TextView
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/test" />
+        android:id="@+id/next_button"
+        android:onClick="onClickNextScreen"
+        android:text="@string/next_button" />
 
 </LinearLayout>

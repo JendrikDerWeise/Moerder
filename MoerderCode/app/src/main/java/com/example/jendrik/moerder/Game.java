@@ -22,9 +22,13 @@ public class Game implements Serializable {
     private PlayerManager playerManager;
     private ArrayList<Card> cardList;
     private int numberOfThings;
+    private String gameName;
+    private String pwd;
 
 
-    public Game(ArrayList<String> rooms, ArrayList<String> weapons){
+    public Game(String gameName, String pwd, ArrayList<String> rooms, ArrayList<String> weapons){
+        this.gameName = gameName;
+        this.pwd = pwd;
         solution = null;
         cardList = new ArrayList<Card>();
         playerManager = new PlayerManager();

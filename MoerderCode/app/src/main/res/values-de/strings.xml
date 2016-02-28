@@ -9,4 +9,6 @@
     <string name="countPlayers">Anzahl Spieler:</string>
     <string name="countRooms">Räume:</string>
     <string name="countWeapons">Waffen:</string>
+    <string name="next_button">Weiter</string>
+
 </resources>

@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">Moerder</string>
 
-    <string name="dummy_button" translatable="false">Dummy Button</string>
-    <string name="dummy_content" translatable="false">DUMMY\nCONTENT</string>
-
     <string name="search">Search game</string>
     <string name="rules">How to play</string>
     <string name="host">Host game</string>
@@ -14,12 +11,6 @@
     <string name="countWeapons">weapons:</string>
 
     <!-- DropDown-Arrays-->
-    <string-array name="players">
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-    </string-array>
+
+    <string name="next_button">Next</string>
 </resources>
