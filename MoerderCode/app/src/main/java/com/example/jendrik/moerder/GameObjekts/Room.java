@@ -15,6 +15,8 @@ public class Room implements Serializable {
     public Room(String name, int qrCode) {
         this.name = name;
         this.qrCode = qrCode;
+        weaponList = new ArrayList<>();
+        playerList = new ArrayList<>();
     }
 
     public String getName() {

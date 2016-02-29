@@ -13,7 +13,7 @@ public class WeaponManager implements Serializable {
     public ArrayList<Weapon> weaponList;
 
     public WeaponManager(){
-
+        weaponList = new ArrayList<>();
     }
 
     public void createWeapon(String name){

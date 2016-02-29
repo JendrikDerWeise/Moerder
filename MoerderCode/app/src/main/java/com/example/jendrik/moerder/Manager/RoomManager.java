@@ -12,7 +12,9 @@ import java.util.ArrayList;
 public class RoomManager implements Serializable{
     private ArrayList<Room> roomList;
 
-    public RoomManager(){}
+    public RoomManager(){
+        roomList = new ArrayList<>();
+    }
 
     public void createRoom(String name){
         int qrCode=roomList.size() + 20;

@@ -13,4 +13,6 @@
     <!-- DropDown-Arrays-->
 
     <string name="next_button">Next</string>
+    <string name="txt_enterRoomName">Enter roomnames:</string>
+    <string name="txt_weaponList">Enter weapon names:</string>
 </resources>
