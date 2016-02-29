@@ -55,6 +55,7 @@ public class WeaponNameList extends Activity {
         final Intent intent = new Intent(this, STUB.class);
         intent.putExtras(extras);
         Game game = new Game("jh", "kdfhv", extras.getStringArrayList("room list"), weaponList);
+        intent.putExtra("GAME", game);
 
         startActivity(intent);
     }
