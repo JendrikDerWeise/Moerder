@@ -17,16 +17,8 @@ public class STUB extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.stub_activity);
-        LinearLayout ll = new LinearLayout(this);
+        setContentView(R.layout.stub_activity);
 
-        Bundle extras = getIntent().getExtras();
-        TextView tv = new TextView(this);
-        Game g1 = (Game) extras.get("GAME");
-        tv.setText(g1.getRooms().get(1).getName()); //idee zum erzeugen der QR-Verteilungliste
-
-        ll.addView(tv);
-        setContentView(ll);
 
     }
 }

@@ -26,6 +26,8 @@
         <activity
             android:name=".GUI.WeaponNameList" />
         <activity
+            android:name=".GUI.GivenQrCodes" />
+        <activity
             android:name=".GUI.STUB" />
         </application>
 
