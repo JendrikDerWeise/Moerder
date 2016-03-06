@@ -29,6 +29,9 @@
             android:name=".GUI.GivenQrCodes" />
         <activity
             android:name=".GUI.STUB" />
+        <activity
+            android:name=".GUI.popupGivenQrCodes"
+            android:theme="@style/AppTheme.PopUpTheme"/>
         </application>
 
 </manifest>

@@ -15,4 +15,5 @@
     <string name="next_button">Next</string>
     <string name="txt_enterRoomName">Enter roomnames:</string>
     <string name="txt_weaponList">Enter weapon names:</string>
+    <string name="popup_qrCodes">Please attach following QR-Codes to your rooms and weapons.</string>
 </resources>
