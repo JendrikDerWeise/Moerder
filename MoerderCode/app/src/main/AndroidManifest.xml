@@ -32,6 +32,8 @@
         <activity
             android:name=".GUI.popupGivenQrCodes"
             android:theme="@style/AppTheme.PopUpTheme"/>
+        <activity
+            android:name=".GUI.STUB_QrStarten" />
         </application>
 
 </manifest>
