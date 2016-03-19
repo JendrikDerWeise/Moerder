@@ -16,7 +16,7 @@ public class PlayerManager implements Serializable {
     private ArrayList<Player> playerList;
 
     public PlayerManager(){
-
+        playerList = new ArrayList<>();
     }
 
     public void addPlayer(String name, int numberOfThings){

@@ -3,6 +3,7 @@ package com.example.jendrik.moerder.GUI;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -16,7 +17,10 @@ import com.example.jendrik.moerder.R;
 /**
  * Created by bulk on 01.03.2016.
  */
+
 public class GivenQrCodes extends Activity {
+    Game game;
+    Bundle extras;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +29,8 @@ public class GivenQrCodes extends Activity {
         ll.setOrientation(LinearLayout.VERTICAL);
         TableLayout tbl = new TableLayout(this);
 
-        Bundle extras = getIntent().getExtras();
-        Game game = (Game) extras.get("GAME");
+        extras = getIntent().getExtras();
+        game = (Game) extras.get("GAME");
 
 
 
@@ -54,12 +58,25 @@ public class GivenQrCodes extends Activity {
         ll.addView(tbl); //add table to Layout
 
         Button btn = new Button(this);
-        btn.setText("Create Game");
+        btn.setText("Next");
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               startWaitForPlayers();
+            }
+        });
         ll.addView(btn);
         setContentView(ll);
 
         startActivity(new Intent(GivenQrCodes.this, popupGivenQrCodes.class));
 
+    }
+
+    public void startWaitForPlayers(){
+        final Intent intent = new Intent(this, WaitForPlayers.class);
+        intent.putExtras(extras);
+        intent.putExtra("GAME", game);
+        startActivity(intent);
     }
 
 }

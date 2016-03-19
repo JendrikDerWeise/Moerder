@@ -46,6 +46,8 @@ public class WeaponNameList extends Activity {
     }
 
     public void onClickNextButtonW(View button){
+        String gameName = extras.getString(CreateGame.NAME, "Game 1");
+        String pass = extras.getString(CreateGame.PASS, "none");
         final ArrayList<String> weaponList = new ArrayList<>();
 
         for(int i=0; i < extras.getInt(CreateGame.ROOM_COUNT); i++)
@@ -54,7 +56,7 @@ public class WeaponNameList extends Activity {
         getIntent().putExtra(WEAPON_LIST, weaponList);
         final Intent intent = new Intent(this, GivenQrCodes.class);
         intent.putExtras(extras);
-        Game game = new Game("jh", "kdfhv", extras.getStringArrayList("room list"), weaponList);
+        Game game = new Game(gameName, pass, extras.getStringArrayList("room list"), weaponList);
         intent.putExtra("GAME", game);
 
         startActivity(intent);

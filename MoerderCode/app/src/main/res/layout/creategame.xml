@@ -23,7 +23,7 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pwd"
+        android:text="@string/txt_pwd"
         android:id="@+id/cb_password"
         android:checked="false"
         android:textSize="32px" />

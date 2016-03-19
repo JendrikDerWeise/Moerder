@@ -41,6 +41,10 @@ public class Game implements Serializable {
 
     public Game(){} //nur für das Laden verwendet
 
+    public String getGameName() {
+        return gameName;
+    }
+
     private void createCards(){
         for (Player p:playerManager.getPlayerList())
             cardList.add(new Card(p.getName(), 0));
@@ -54,7 +58,7 @@ public class Game implements Serializable {
         createSolution();
     }
 
-    private void createPlayer(ArrayList<String> players){
+    public void createPlayer(ArrayList<String> players){
         numberOfThings += players.size();
         for(String s:players)
             playerManager.addPlayer(s, numberOfThings);
@@ -94,6 +98,10 @@ public class Game implements Serializable {
 
     public ArrayList<Room> getRooms(){
         return roomManager.showMap();
+    }
+
+    public ArrayList<Player> getPlayers(){
+        return playerManager.getPlayerList();
     }
 
     private void giveCardsToPlayer(){

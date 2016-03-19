@@ -34,6 +34,8 @@
             android:theme="@style/AppTheme.PopUpTheme"/>
         <activity
             android:name=".GUI.STUB_QrStarten" />
+        <activity
+            android:name=".GUI.WaitForPlayers" />
         </application>
 
 </manifest>
