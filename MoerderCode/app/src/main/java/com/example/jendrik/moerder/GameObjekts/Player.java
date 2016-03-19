@@ -21,6 +21,7 @@ public class Player implements Serializable{
         this.qrCode=qrCode;
         this.name=name;
         suspectList = new char[numberOfThings];
+        handCards = new ArrayList<>();
     }
 
     public String getName(){

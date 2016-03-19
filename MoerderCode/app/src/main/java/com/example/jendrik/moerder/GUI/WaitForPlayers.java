@@ -41,7 +41,8 @@ public class WaitForPlayers extends Activity {
         for(int i=0; i < extras.getInt(CreateGame.PLAYER_COUNT); i++)
             playerList.add("Dummy " + i);
 
-        game.createPlayer(playerList);
+        game.startGame(playerList); //TODO produziert INFloop
+        //game.createPlayer(playerList) //funktioniert, wenn Methode public
 
         /*
         Ende der Platzhalterfunktion

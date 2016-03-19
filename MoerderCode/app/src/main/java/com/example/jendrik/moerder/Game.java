@@ -58,7 +58,7 @@ public class Game implements Serializable {
         createSolution();
     }
 
-    public void createPlayer(ArrayList<String> players){
+    private void createPlayer(ArrayList<String> players){
         numberOfThings += players.size();
         for(String s:players)
             playerManager.addPlayer(s, numberOfThings);
