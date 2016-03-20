@@ -13,6 +13,7 @@ import com.example.jendrik.moerder.R;
 public class popupGivenQrCodes extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActionBar().hide();
         setContentView(R.layout.popup_given_qr_codes);
 
         DisplayMetrics dm = new DisplayMetrics();

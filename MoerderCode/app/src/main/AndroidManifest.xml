@@ -12,7 +12,7 @@
             android:name=".GUI.Startscreen"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/FullscreenTheme" >
+            android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,13 +20,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GUI.CreateGame" />
+            android:name=".GUI.CreateGame"
+            android:label="@string/txt_create_game"/>
         <activity
-            android:name=".GUI.RoomNameList" />
+            android:name=".GUI.RoomNameList"
+            android:label="@string/txt_create_game"/>
         <activity
-            android:name=".GUI.WeaponNameList" />
+            android:name=".GUI.WeaponNameList"
+            android:label="@string/txt_create_game"/>
         <activity
-            android:name=".GUI.GivenQrCodes" />
+            android:name=".GUI.GivenQrCodes"
+            android:label="@string/txt_attach_qrcodes"/>
         <activity
             android:name=".GUI.STUB" />
         <activity
@@ -35,7 +39,11 @@
         <activity
             android:name=".GUI.STUB_QrStarten" />
         <activity
-            android:name=".GUI.WaitForPlayers" />
+            android:name=".GUI.WaitForPlayers"
+            android:label="@string/txt_wait_for_players"/>
+        <activity
+            android:name=".GUI.MenueDrawer"
+            android:theme="@style/ThemeWithDrawer"/>
         </application>
 
 </manifest>

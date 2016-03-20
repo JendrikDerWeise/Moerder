@@ -18,5 +18,20 @@
     <string name="name_of_game">Game</string>
     <string name="txt_player">Player</string>
     <string name="btn_start_game">Start game</string>
-    <string name="pwd"></string>
+    <string name="txt_wait_for_players">Waiting for players...</string>
+    <string name="txt_create_game">Create a new game</string>
+    <string name="txt_attach_qrcodes">Attach QR-Codes</string>
+
+    <!-- Beginn Drawer-Temp-Krams -->
+    <string name="action_settings">whatever</string>
+    <string name="auf">open</string>
+    <string name="zu">close</string>
+    <string name="nav_map">Map</string>
+    <string name="nav_list">List</string>
+    <string name="nav_suspect">Suspect</string>
+    <string name="nav_weapon_change">Change weapon</string>
+    <string name="nav_indict">Indict</string>
+    <string name="nav_pause">Pause</string>
+    <string name="nav_help">Help</string>
+    <!-- Ende Drawer-Temp-Krams -->
 </resources>

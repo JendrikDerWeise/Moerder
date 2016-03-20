@@ -16,5 +16,15 @@
     <string name="txt_player">Spieler</string>
     <string name="txt_pwd">Passwort: (optional)</string>
     <string name="btn_start_game">Spiel starten</string>
+    <string name="txt_wait_for_players">Auf Spieler warten...</string>
+    <string name="txt_create_game">Neues Spiel erstellen</string>
+    <string name="txt_attach_qrcodes">QR-Codes anbringen</string>
+    <string name="nav_map">Karte</string>
+    <string name="nav_list">Liste</string>
+    <string name="nav_suspect">Verdächtigen</string>
+    <string name="nav_weapon_change">Waffe wechseln</string>
+    <string name="nav_indict">Anklagen</string>
+    <string name="nav_pause">Pause</string>
+    <string name="nav_help">Hilfe</string>
 
 </resources>
