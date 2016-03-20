@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.jendrik.moerder.GameObjekts.Room;
 import com.example.jendrik.moerder.R;
 
 import java.util.ArrayList;
@@ -36,8 +37,13 @@ public class RoomNameList extends Activity {
        roomNames.add((EditText) findViewById(R.id.editText10));
        roomNames.add((EditText) findViewById(R.id.editText11));
 
-       for(int i=extras.getInt(CreateGame.ROOM_COUNT); i < roomNames.size(); i++) {
-           roomNames.get(i).setText("DUMMY ROOM");
+       int a=1;
+       for(EditText r:roomNames) {
+           r.setText("DUMMY ROOM " + a); //TODO löschen bei Endversion
+           a++;
+       }
+
+       for(int i=extras.getInt(CreateGame.ROOM_COUNT); i < roomNames.size(); i++){
            roomNames.get(i).setVisibility(View.INVISIBLE);
        }
    }

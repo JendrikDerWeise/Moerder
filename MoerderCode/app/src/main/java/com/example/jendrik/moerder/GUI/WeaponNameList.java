@@ -39,6 +39,12 @@ public class WeaponNameList extends Activity {
         weaponNames.add((EditText) findViewById(R.id.editText19));
         weaponNames.add((EditText) findViewById(R.id.editText20));
 
+        int a=1;
+        for(EditText r:weaponNames){
+            r.setText("DUMMY WEAPON" + " "+a); //TODO löschen bei Endversion
+            a++;
+        }
+
         for(int i=extras.getInt(CreateGame.ROOM_COUNT); i < weaponNames.size(); i++){
             weaponNames.get(i).setText("DUMMY ROOM");
             weaponNames.get(i).setVisibility(View.INVISIBLE);

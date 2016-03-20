@@ -19,20 +19,13 @@
             android:id="@+id/activitylayout"
 
             >
-
-
-
             <android.support.v7.widget.Toolbar
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/toolbar1"
                 android:background="#ffd3d3d3"
                 android:fitsSystemWindows="true"
-
                 >
-
-
-
             </android.support.v7.widget.Toolbar>
 
             <!-- Fragmentarea  -->
@@ -42,9 +35,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/frag_area">
-
             </FrameLayout>
-
 
         </RelativeLayout>
 
@@ -68,8 +59,5 @@
                 />
 
         </RelativeLayout>
-
-
     </android.support.v4.widget.DrawerLayout>
-
 </RelativeLayout>

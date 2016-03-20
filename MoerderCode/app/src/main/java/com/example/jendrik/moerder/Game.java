@@ -1,6 +1,7 @@
 package com.example.jendrik.moerder;
 
 import android.media.Image;
+import android.util.Log;
 
 import com.example.jendrik.moerder.GameObjekts.*;
 import com.example.jendrik.moerder.Manager.*;
@@ -73,6 +74,7 @@ public class Game implements Serializable {
         String rName = roomManager.showMap().get(random.nextInt(roomCount)).getName();
         String wName = weaponManager.getWeaponList().get(random.nextInt(weaponCount)).getName();
         solution = new Solution(pName, rName,wName);
+        Log.e("SOLUTION", solution.getMurderer()+ solution.getRoom() + solution.getWeapon());
     }
 
     private void createRooms(ArrayList<String> rooms){
@@ -108,6 +110,7 @@ public class Game implements Serializable {
         ArrayList<Card> copyCardList = new ArrayList<Card>();//duplicates Cardlist
         for(int i = 0; i < cardList.size(); i++){
             copyCardList.add(i, cardList.get(i));
+            Log.d("COPYCARDLIST", cardList.get(i).getName());
         }
 
         int playerCount = playerManager.getPlayerList().size();
@@ -115,10 +118,11 @@ public class Game implements Serializable {
         int cardPosition = 0;
         boolean given = false;
         while(!copyCardList.isEmpty()){ //until copied List is not Empty
+            //Log.d("ERSTE", "hier");
+            given = false;
             for(int i = 0; i < playerCount; i++){
                 while(!given) {
                     cardPosition = random.nextInt(copyCardList.size());
-                    given = false;
                     if (copyCardList.get(cardPosition).getName() == solution.getMurderer() ||
                             copyCardList.get(cardPosition).getName() == solution.getWeapon() ||
                             copyCardList.get(cardPosition).getName() == solution.getRoom()) {
@@ -126,10 +130,11 @@ public class Game implements Serializable {
                         //card is deleted from Copied List
                         copyCardList.remove(cardPosition);
                         //loop repeats
-                    }else { //if card is not part of solution
+                    }else if(!copyCardList.isEmpty()) { //if card is not part of solution
                         //card is given
                         playerManager.giveCard(copyCardList.get(cardPosition), i);
                         given = true;
+                        Log.d("Karte", copyCardList.get(cardPosition).getName());
                         //Card is removed from copied List
                         copyCardList.remove(cardPosition);
                     }
@@ -147,6 +152,7 @@ public class Game implements Serializable {
         createPlayer(players);
         createCards();
         giveCardsToPlayer();
+        Log.d("KARTEN", "verteilt");
         //Spiel Speichern über GUI
         //Auslöser zum Senden des Savegames -->gehört in ServerClass
     }

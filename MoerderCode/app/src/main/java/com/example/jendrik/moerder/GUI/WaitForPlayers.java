@@ -41,13 +41,13 @@ public class WaitForPlayers extends Activity {
         for(int i=0; i < extras.getInt(CreateGame.PLAYER_COUNT); i++)
             playerList.add("Dummy " + i);
 
-        game.startGame(playerList); //TODO produziert INFloop
-        //game.createPlayer(playerList) //funktioniert, wenn Methode public
+        game.startGame(playerList);
 
         /*
         Ende der Platzhalterfunktion
         TODO Aktualisierung der Player-Liste zur Laufzeit, bis alle Spieler eingecheckt
          */
+
         TableLayout table = (TableLayout)findViewById(R.id.player_table);
         for(Player p: game.getPlayers())
             Log.d("PLAYERNAMES", p.getName());
@@ -67,7 +67,7 @@ public class WaitForPlayers extends Activity {
     }
 
     public void onClickStartGame(View button){
-        final Intent intent = new Intent(this,STUB.class);
+        final Intent intent = new Intent(this,MenueDrawer.class);
         intent.putExtra("GAME",game);
         startActivity(intent);
     }

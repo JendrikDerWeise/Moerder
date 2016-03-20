@@ -23,7 +23,7 @@ public class Startscreen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // getActionBar().hide();
+        getActionBar().hide();
         setContentView(R.layout.activity_startscreen);
 
     }
