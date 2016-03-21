@@ -3,13 +3,12 @@ package com.example.jendrik.moerder.GUI;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.webkit.ConsoleMessage;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.R;
@@ -49,8 +48,6 @@ public class WaitForPlayers extends Activity {
          */
 
         TableLayout table = (TableLayout)findViewById(R.id.player_table);
-        for(Player p: game.getPlayers())
-            Log.d("PLAYERNAMES", p.getName());
         fillTable(game.getPlayers(), table);
     }
 

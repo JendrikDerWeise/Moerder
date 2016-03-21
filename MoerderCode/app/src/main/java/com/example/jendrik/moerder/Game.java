@@ -134,7 +134,6 @@ public class Game implements Serializable {
                         //card is given
                         playerManager.giveCard(copyCardList.get(cardPosition), i);
                         given = true;
-                        Log.d("Karte", copyCardList.get(cardPosition).getName());
                         //Card is removed from copied List
                         copyCardList.remove(cardPosition);
                     }

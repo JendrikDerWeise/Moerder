@@ -1,11 +1,10 @@
-package com.example.jendrik.moerder.GUI;
+package com.example.jendrik.moerder.GUI.OnGamingClasses;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.jendrik.moerder.GUI.STUB_FRAG;
 import com.example.jendrik.moerder.R;
 
 
@@ -27,6 +27,7 @@ public class MenueDrawer extends AppCompatActivity {
 
     private MapOverview map;
     private STUB_FRAG stub;
+    private ChangeWeapon changeWeapon;
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
@@ -44,6 +45,8 @@ public class MenueDrawer extends AppCompatActivity {
         drawerLayoutgesamt.setDrawerListener(drawerToggle);
 
         map = (MapOverview) Fragment.instantiate(this,MapOverview.class.getName(), null);
+        changeWeapon = (ChangeWeapon) Fragment.instantiate(this,ChangeWeapon.class.getName(),null);
+
         stub = (STUB_FRAG) Fragment.instantiate(this,STUB_FRAG.class.getName(), null);
 
         fragmentManager = getFragmentManager();
@@ -86,7 +89,7 @@ public class MenueDrawer extends AppCompatActivity {
                         //TODO
                         fragmentManager = getFragmentManager();
                         fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frag_area, stub);
+                        fragmentTransaction.replace(R.id.frag_area, changeWeapon);
                         fragmentTransaction.commit();
                         break;
                     }

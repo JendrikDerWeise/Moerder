@@ -42,8 +42,9 @@
             android:name=".GUI.WaitForPlayers"
             android:label="@string/txt_wait_for_players"/>
         <activity
-            android:name=".GUI.MenueDrawer"
+            android:name=".GUI.OnGamingClasses.MenueDrawer"
             android:theme="@style/ThemeWithDrawer"/>
+        <activity android:name=".GUI.OnGamingClasses.STUB_SCANNER"/>
         </application>
 
 </manifest>
