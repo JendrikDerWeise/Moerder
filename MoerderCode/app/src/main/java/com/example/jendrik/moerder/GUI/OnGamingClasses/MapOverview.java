@@ -1,9 +1,13 @@
 package com.example.jendrik.moerder.GUI.OnGamingClasses;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +15,14 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Room;
+import com.example.jendrik.moerder.GameObjekts.Weapon;
 import com.example.jendrik.moerder.R;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jendrik on 20.03.2016.
@@ -24,6 +32,15 @@ public class MapOverview extends Fragment {
     View fragLayoutV;
     Game game;
 
+    RecyclerView recyclerView;
+    RecyclerView.Adapter rvadapter;
+    RecyclerView.LayoutManager rvLayoutManager;
+
+    public static ArrayList<String> roomNames;
+    public static ArrayList<String> weaponNames;
+
+    static TextView tv;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,17 +49,36 @@ public class MapOverview extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        fragLayoutV = inflater.inflate(R.layout.fragment_map, null);
-       /* LayoutInflater inflater1 = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LinearLayout parent = (LinearLayout) inflater.inflate(R.layout.fragment_map, null);
-        for(int i =0; i<3;i++){
-            View costum=inflater.inflate(R.layout.test,null);
-            parent.addView(costum);
-        }
+        fragLayoutV = inflater.inflate(R.layout.fragment_map, container, false);
+
         extras = getActivity().getIntent().getExtras();
         game = (Game) extras.get("GAME");
 
-        getActivity().setContentView(parent);*/
+        roomNames = new ArrayList<>();
+        weaponNames = new ArrayList<>();
+       //int i=0;
+        for(Room r: game.getRooms()) {
+            roomNames.add(r.getName());
+           // r.addWeapon(new Weapon("Testwaffe" + i, (i + 22)));
+            //i++;
+            String str_weaponNames="";
+            for(Weapon w: r.getWeaponList())
+                str_weaponNames += w.getName()+"\n";
+            weaponNames.add(str_weaponNames);
+        }
+
+
+
+        final Activity fA = getActivity();
+        recyclerView = (RecyclerView) fragLayoutV.findViewById(R.id.recyclerview);
+        rvLayoutManager = new LinearLayoutManager(fA);
+        recyclerView.setLayoutManager(rvLayoutManager);
+
+        rvadapter = new MapAdapterClass();
+        recyclerView.setAdapter(rvadapter);
+
+
+        tv = (TextView) fA.findViewById(R.id.textView);
 
         return fragLayoutV;
     }
@@ -51,14 +87,15 @@ public class MapOverview extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-/*
-        FrameLayout frame = (FrameLayout)fragLayoutV.findViewById(R.id.complete_map_layout);
-        //LinearLayout roomInflator = (LinearLayout)frame.findViewById(R.id.roomRow);
+        /*FrameLayout frame = (FrameLayout) fragLayoutV.findViewById(R.id.complete_map_layout);
 
-        Log.e("RAUM", game.getRooms().get(0).getName());
-        for(Room r:game.getRooms()){
-            frame.addView((LinearLayout)frame.findViewById(R.id.roomRow));
-        }
-*/
+        LayoutInflater inflater = LayoutInflater.from(this.getContext());
+
+        for (Room r : game.getRooms()) {
+            View view = inflater.inflate(R.layout.test, frame, false);
+            // Do whatever you want with view
+
+            frame.addView(view);
+        }*/
     }
 }

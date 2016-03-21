@@ -1,112 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
    >
-
-<FrameLayout
-    android:id="@+id/complete_map_layout"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-  >
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ICH bin die MAP!! Ich möchte ein Bild werden"
-        android:id="@+id/textView7"
-        android:layout_gravity="center_horizontal" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="ICH bin die MÄPP"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
-    <!-- Erstellung einzelner Räume
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="20dp"
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:id="@+id/recyclerview"
+
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+
+
+
+
+
+    <!--
+    <FrameLayout
+        android:id="@+id/complete_map_layout"
         android:orientation="horizontal"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/roomRow">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+      >
 
-        <!- Bezeichnung Raum
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ICH bin die MAP!! Ich möchte ein Bild werden"
+            android:id="@+id/textView7"
+            android:layout_gravity="center_horizontal" />
+
+         Erstellung einzelner Räume
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.10"
-            android:orientation="vertical"
-            android:id="@+id/roomNameOne"
-            android:background="#ff0000">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/roomName"
-                android:layout_gravity="center_vertical"
-                android:rotation="-90"
-                android:text="PLATZHALTER"/>
-        </LinearLayout>
-
-        <!- Inhalt Raum
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.40"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="20dp"
             android:orientation="horizontal"
-            android:id="@+id/WeaponNameOne">
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/roomRow">
 
-            <TextView
-                android:layout_width="match_parent"
+            <!- Bezeichnung Raum
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:id="@+id/testWeapon"
-                android:layout_gravity="center_vertical"
-                android:text="WAFFE"
-                android:background="#00ff00"/>
-        </LinearLayout>
+                android:layout_weight="0.10"
+                android:orientation="vertical"
+                android:id="@+id/roomNameOne"
+                android:background="#ff0000">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/roomName"
+                    android:layout_gravity="center_vertical"
+                    android:rotation="-90"
+                    android:text="PLATZHALTER"/>
+            </LinearLayout>
 
-
-        <!- Inhalt Raum2
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.40"
-            android:orientation="horizontal"
-            android:id="@+id/weaponNameTwo"
-            android:background="#0000ff">
-
-            <TextView
-                android:layout_width="match_parent"
+            <!- Inhalt Raum
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:id="@+id/testWeapon2"
-                android:layout_gravity="center_vertical"
-                android:text="WAFFE"/>
-        </LinearLayout>
+                android:layout_weight="0.40"
+                android:orientation="horizontal"
+                android:id="@+id/WeaponNameOne">
 
-        <!- Bezeichnung Raum2
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="0.10"
-            android:rotation="90"
-            android:id="@+id/roomNameTwo"
-            android:background="#ff0000">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/testWeapon"
+                    android:layout_gravity="center_vertical"
+                    android:text="WAFFE"
+                    android:background="#00ff00"/>
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
+
+
+            <!- Inhalt Raum2
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:id="@+id/roomName2"
-                android:layout_gravity="center_vertical"
-                android:text="PLATZHALTER"/>
+                android:layout_weight="0.40"
+                android:orientation="horizontal"
+                android:id="@+id/weaponNameTwo"
+                android:background="#0000ff">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/testWeapon2"
+                    android:layout_gravity="center_vertical"
+                    android:text="WAFFE"/>
+            </LinearLayout>
+
+            <!- Bezeichnung Raum2
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="0.10"
+                android:rotation="90"
+                android:id="@+id/roomNameTwo"
+                android:background="#ff0000">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/roomName2"
+                    android:layout_gravity="center_vertical"
+                    android:text="PLATZHALTER"/>
+            </LinearLayout>
+
+
         </LinearLayout>
-
-
-    </LinearLayout>-->
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView8"
         android:layout_gravity="right|bottom" />
-</FrameLayout>
-</LinearLayout>
+</FrameLayout>-->
+</RelativeLayout>
