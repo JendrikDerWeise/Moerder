@@ -1,15 +1,14 @@
 package com.example.jendrik.moerder.GUI;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
-import android.content.Intent;
 import android.content.DialogInterface;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.jendrik.moerder.QRHandler;
 import com.example.jendrik.moerder.R;
 
 /**
@@ -23,7 +22,7 @@ public class STUB_QrStarten extends Activity {
 
     }
 
-    public void scanQR(View v) {
+    public void scanQR() {
 
         try {
             alertDialog("juhu");
@@ -37,8 +36,13 @@ public class STUB_QrStarten extends Activity {
     }
 
 
-    public void onClickGrosserRoterKnopf(View button){
-        alertDialog("whoop! whoop!");
+    public void onClickGrosserRoterKnopf(View button)
+    {
+        //alertDialog("whoop! whoop!");
+        Intent intent = new Intent(this, QRHandler.class);
+        //startActivityForResult(intent, "SCAN_RESULT");
+        //alertDialog(intent.getStringExtra("SCAN_RESULT"));
+
     }
 
     void alertDialog(String str){
