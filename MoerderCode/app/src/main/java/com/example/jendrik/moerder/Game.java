@@ -1,10 +1,15 @@
 package com.example.jendrik.moerder;
 
-import android.media.Image;
 import android.util.Log;
 
-import com.example.jendrik.moerder.GameObjekts.*;
-import com.example.jendrik.moerder.Manager.*;
+import com.example.jendrik.moerder.GameObjekts.Card;
+import com.example.jendrik.moerder.GameObjekts.Player;
+import com.example.jendrik.moerder.GameObjekts.Room;
+import com.example.jendrik.moerder.GameObjekts.Solution;
+import com.example.jendrik.moerder.GameObjekts.Weapon;
+import com.example.jendrik.moerder.Manager.PlayerManager;
+import com.example.jendrik.moerder.Manager.RoomManager;
+import com.example.jendrik.moerder.Manager.WeaponManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -119,8 +124,9 @@ public class Game implements Serializable {
         boolean given = false;
         while(!copyCardList.isEmpty()){ //until copied List is not Empty
             //Log.d("ERSTE", "hier");
-            given = false;
+
             for(int i = 0; i < playerCount; i++){
+                given = false;
                 while(!given) {
                     cardPosition = random.nextInt(copyCardList.size());
                     if (copyCardList.get(cardPosition).getName() == solution.getMurderer() ||
