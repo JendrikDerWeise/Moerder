@@ -37,8 +37,5 @@
         <item>9</item>
     </string-array>
 
-    <string-array name="empty_array">
-        <item>Bitte Spieler auswählen</item>
-    </string-array>
 
 </resources>

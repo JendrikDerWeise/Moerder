@@ -70,6 +70,8 @@ public class GivenQrCodes extends Activity {
 
         startActivity(new Intent(GivenQrCodes.this, popupGivenQrCodes.class));
 
+
+
     }
 
     public void startWaitForPlayers(){

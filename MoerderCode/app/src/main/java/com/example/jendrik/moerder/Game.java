@@ -63,6 +63,7 @@ public class Game implements Serializable {
         numberOfThings += players.size();
         for(String s:players)
             playerManager.addPlayer(s, numberOfThings);
+        playerManager.getPlayerList().get(0).setActive(true);  //first Player has to be active for starting the game
     }
 
     private void createSolution(){
@@ -106,6 +107,15 @@ public class Game implements Serializable {
         return playerManager.getPlayerList();
     }
 
+    public Player getActivePlayer(){
+        Player player = new Player();
+        for(Player p : playerManager.getPlayerList()){
+            if(p.isActive())
+                player = p;
+        }
+        return player;
+    }
+
     private void giveCardsToPlayer(){
         ArrayList<Card> copyCardList = new ArrayList<Card>();//duplicates Cardlist
         for(int i = 0; i < cardList.size(); i++){
@@ -120,22 +130,25 @@ public class Game implements Serializable {
         while(!copyCardList.isEmpty()){ //until copied List is not Empty
             //Log.d("ERSTE", "hier");
             given = false;
-            for(int i = 0; i < playerCount; i++){
-                while(!given) {
-                    cardPosition = random.nextInt(copyCardList.size());
-                    if (copyCardList.get(cardPosition).getName() == solution.getMurderer() ||
-                            copyCardList.get(cardPosition).getName() == solution.getWeapon() ||
-                            copyCardList.get(cardPosition).getName() == solution.getRoom()) {
-                        //when the card is part of the solution
-                        //card is deleted from Copied List
-                        copyCardList.remove(cardPosition);
-                        //loop repeats
-                    }else if(!copyCardList.isEmpty()) { //if card is not part of solution
-                        //card is given
-                        playerManager.giveCard(copyCardList.get(cardPosition), i);
-                        given = true;
-                        //Card is removed from copied List
-                        copyCardList.remove(cardPosition);
+            if(copyCardList.size() >= 0) {
+                for (int i = 0; i < playerCount; i++) {
+                    while (!given) {
+                        cardPosition = random.nextInt(copyCardList.size());
+                        if (copyCardList.get(cardPosition).getName() == solution.getMurderer() ||
+                                copyCardList.get(cardPosition).getName() == solution.getWeapon() ||
+                                copyCardList.get(cardPosition).getName() == solution.getRoom()) {
+                            //when the card is part of the solution
+                            //card is deleted from Copied List
+                            copyCardList.remove(cardPosition);
+                            //loop repeats
+                        } else if (!copyCardList.isEmpty()) { //if card is not part of solution
+                            //card is given
+                            playerManager.giveCard(copyCardList.get(cardPosition), i);
+                            given = true;
+                            //Card is removed from copied List
+                            copyCardList.remove(cardPosition);
+                        }
+
                     }
                 }
             }
