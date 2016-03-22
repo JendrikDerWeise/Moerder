@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 /**
@@ -11,12 +12,19 @@ import android.widget.Toast;
  */
 public class QRHandler extends Activity{
 
-    private int qrnr;
+    public static int qrnr;
+    public static String RESULT = "scan result";
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
     private Intent intent;
 
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.stub_qr);
+
+    }
+
+    public void onClickScan(View button){
         qrnr = -1;
         try {
             //alertDialog("juhu");
@@ -32,6 +40,7 @@ public class QRHandler extends Activity{
         }
     }
 
+    /**@Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
@@ -51,6 +60,6 @@ public class QRHandler extends Activity{
             return intent;
         }
         return null;
-    }
+    }**/
 
 }

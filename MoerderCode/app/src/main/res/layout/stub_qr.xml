@@ -18,7 +18,7 @@
         android:layout_gravity="center_horizontal"
         android:clickable="true"
         android:contextClickable="false"
-        android:onClick="scanQR"
+        android:onClick="onClickScan"
         android:background = "@drawable/rounded_button"/>
 
 </LinearLayout>
