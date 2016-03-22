@@ -65,7 +65,10 @@ public class WaitForPlayers extends Activity {
 
     public void onClickStartGame(View button){
         final Intent intent = new Intent(this,MenueDrawer.class);
-        intent.putExtra("GAME",game);
+        intent.putExtra("GAME", game);
+        //TODO Raum und Waffe bei Spieler 0 setzen um Suspect zu bedienen. Später löschen!
+        game.getActivePlayer().setActualRoom(game.getRooms().get(0).getName());
+        game.getActivePlayer().setActualWeapon(game.getRooms().get(0).getWeaponList().get(0).getName());
         startActivity(intent);
     }
 }

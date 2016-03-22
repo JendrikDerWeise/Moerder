@@ -37,5 +37,6 @@
     <string name="btn_indict">Indict</string>
     <string name="txt_suspect">Say your suspect</string>
     <string name="btn_suspect">Suspect</string>
+    <string name="spinner_default_player">Please select a player</string>
     <!-- Ende Drawer-Temp-Krams -->
 </resources>

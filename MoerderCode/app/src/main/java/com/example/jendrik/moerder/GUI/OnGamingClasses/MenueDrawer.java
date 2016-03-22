@@ -10,14 +10,18 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.jendrik.moerder.GUI.STUB_FRAG;
+import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.R;
 
 
 public class MenueDrawer extends AppCompatActivity {
+    private Game game;
+    private Bundle extras;
 
     private Toolbar toolbar;
 
@@ -37,6 +41,9 @@ public class MenueDrawer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_drawer);
+        extras = getIntent().getExtras();
+        game = (Game) extras.get("GAME");
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
@@ -79,12 +86,21 @@ public class MenueDrawer extends AppCompatActivity {
                     }
 
                     case R.id.suspect: {
-                        //TODO
-                        fragmentManager = getFragmentManager();
-                        fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frag_area, suspect);
-                        fragmentTransaction.commit();
-                        break;
+                        //TODO Fehlermeldung "Du musst erst in einen Raum gehen/Waffe aufnehmen um einen Verdacht zu äußern"
+
+                        if(game.getActivePlayer().getActualWeapon()==null || game.getActivePlayer().getActualRoom()==null){
+                            fragmentManager = getFragmentManager();
+                            fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.frag_area, stub);
+                            fragmentTransaction.commit();
+                            break;
+                        }else {
+                            fragmentManager = getFragmentManager();
+                            fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.frag_area, suspect);
+                            fragmentTransaction.commit();
+                            break;
+                        }
                     }
 
                     case R.id.weapon_change: {

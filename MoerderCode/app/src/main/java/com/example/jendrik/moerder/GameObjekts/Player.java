@@ -11,8 +11,8 @@ public class Player implements Serializable{
     private boolean active;
     private boolean dead;
     private int qrCode;
-    private Weapon actualWeapon;
-    private Room actualRoom;
+    private String actualWeapon;
+    private String actualRoom;
     private ArrayList<Card> handCards;
     private char[] suspectList;
 
@@ -23,6 +23,8 @@ public class Player implements Serializable{
         suspectList = new char[numberOfThings];
         handCards = new ArrayList<>();
     }
+
+    public Player(){}
 
     public String getName(){
         return name;
@@ -45,20 +47,20 @@ public class Player implements Serializable{
         return active;
     }
 
-    public Weapon getActualWeapon() {
+    public String getActualWeapon() {
         return actualWeapon;
     }
 
-    public void setActualWeapon(Weapon actualWeapon) {
+    public void setActualWeapon(String actualWeapon) {
         this.actualWeapon = actualWeapon;
     }
     //TODO ggf removeWeapon() einbauen weapon = null
 
-    public Room getActualRoom() {
+    public String getActualRoom() {
         return actualRoom;
     }
 
-    public void setActualRoom(Room room){
+    public void setActualRoom(String room){
         this.actualRoom=room;
     }
 

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#ff0000">
 
     <TextView
         android:layout_width="wrap_content"
@@ -19,12 +20,11 @@
         android:layout_height="40dp"
         android:src="@drawable/sende_position" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/txt_indict_room"
-        />
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_indict_room"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -38,12 +38,11 @@
             android:layout_height="40dp"
             android:src="@android:drawable/star_big_on" />
 
-        <TextView
+        <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/txt_indict_weapon"
-            />
+            android:id="@+id/spinner_indict_weapon"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
