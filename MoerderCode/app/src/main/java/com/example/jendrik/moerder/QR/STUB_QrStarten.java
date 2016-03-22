@@ -1,6 +1,8 @@
-package com.example.jendrik.moerder.GUI;
+package com.example.jendrik.moerder.QR;
+
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.jendrik.moerder.QRHandler;
 import com.example.jendrik.moerder.R;
 
 /**
@@ -16,6 +17,8 @@ import com.example.jendrik.moerder.R;
  */
 public class STUB_QrStarten extends Fragment {
     private View fragLayoutV;
+    private Bundle extras;
+
     private static final int VALUE = 503;
 
 
@@ -27,7 +30,9 @@ public class STUB_QrStarten extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        fragLayoutV = inflater.inflate(R.layout.stub_qr, null);
+        fragLayoutV = inflater.inflate(R.layout.stub_activity, null);
+
+        extras = getActivity().getIntent().getExtras();
 
         return fragLayoutV;
     }
@@ -36,11 +41,15 @@ public class STUB_QrStarten extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        final Intent intent = new Intent(getActivity(), QRHandler.class);
-
-        startActivityForResult(intent, VALUE);
-        //TODO prüfen ob RESULT ein Weapon-Object ist, sonst neu scannen - oder was auch immer
+        try {
+            final Intent intent = new Intent(getActivity(), com.example.jendrik.moerder.QR.QRHandler.class);
+            startActivityForResult(intent, VALUE);
+        } catch (ActivityNotFoundException anfe) {
+            //alertDialog("Installiere den Zxing QR Scanner");
+            //Toast toast = Toast.makeText(this, "Installiere den Zxing QR Scanner", Toast.LENGTH_LONG);
+            //toast.show();
+            //showDialog(AndroidBarcodeQrExample.this, "No Scanner Found", "Download a scanner code activity?", "Yes", "No").show();
+        }
     }
 
     /**public void scanQR() {
@@ -91,12 +100,15 @@ public class STUB_QrStarten extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            int qrCode = data.getIntExtra(QRHandler.RESULT, 0);
-            Log.d("QRCODE", "" + qrCode + QRHandler.qrnr);
-            //alertDialog(Integer.toString(qrCode));
+        switch(requestCode) {
+            case (VALUE) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    int qrCode = Integer.parseInt(data.getStringExtra("SCAN_RESULT"));
+                    Log.d("QRCODE", " " + qrCode);
+                }
+                break;
+            }
         }
-
     }
 
     /**public void onActivityResultateeee(int requestCode, int resultCode, Intent intent) {

@@ -37,7 +37,7 @@
             android:name=".GUI.popupGivenQrCodes"
             android:theme="@style/AppTheme.PopUpTheme"/>
         <activity
-            android:name=".GUI.STUB_QrStarten" />
+            android:name=".QR.QRHandler" />
         <activity
             android:name=".GUI.WaitForPlayers"
             android:label="@string/txt_wait_for_players"/>
