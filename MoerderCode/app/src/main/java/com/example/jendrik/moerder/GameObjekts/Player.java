@@ -52,6 +52,7 @@ public class Player implements Serializable{
     public void setActualWeapon(Weapon actualWeapon) {
         this.actualWeapon = actualWeapon;
     }
+    //TODO ggf removeWeapon() einbauen weapon = null
 
     public Room getActualRoom() {
         return actualRoom;

@@ -26,6 +26,7 @@ public class MenueDrawer extends AppCompatActivity {
     private NavigationView navigationView;
 
     private MapOverview map;
+    private Suspect suspect;
     private STUB_FRAG stub;
     private ChangeWeapon changeWeapon;
 
@@ -45,6 +46,7 @@ public class MenueDrawer extends AppCompatActivity {
         drawerLayoutgesamt.setDrawerListener(drawerToggle);
 
         map = (MapOverview) Fragment.instantiate(this,MapOverview.class.getName(), null);
+        suspect = (Suspect) Fragment.instantiate(this,Suspect.class.getName(), null);
         changeWeapon = (ChangeWeapon) Fragment.instantiate(this,ChangeWeapon.class.getName(),null);
 
         stub = (STUB_FRAG) Fragment.instantiate(this,STUB_FRAG.class.getName(), null);
@@ -80,7 +82,7 @@ public class MenueDrawer extends AppCompatActivity {
                         //TODO
                         fragmentManager = getFragmentManager();
                         fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frag_area, stub);
+                        fragmentTransaction.replace(R.id.frag_area, suspect);
                         fragmentTransaction.commit();
                         break;
                     }
@@ -127,6 +129,8 @@ public class MenueDrawer extends AppCompatActivity {
             }
         });
 
+        //TODO checkTurn Methode um Titelleiste und Menü anzupassen wenn Spieler dran/nicht dran ist
+        //checkTurn();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerToggle.syncState();
 
@@ -171,4 +175,6 @@ public class MenueDrawer extends AppCompatActivity {
         drawerToggle.onConfigurationChanged(new Configuration());
         super.onConfigurationChanged(newConfig);
     }
+
+
 }

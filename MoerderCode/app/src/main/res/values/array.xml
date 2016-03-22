@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer-array name="players">
-    <item>4</item>
-    <item>5</item>
-    <item>6</item>
-    <item>7</item>
-    <item>8</item>
-    <item>9</item>
-</integer-array>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </integer-array>
+
     <string-array name="player_numbers">
         <item>4</item>
         <item>5</item>
@@ -25,6 +26,7 @@
         <item>8</item>
         <item>9</item>
     </integer-array>
+
     <string-array name="room_numbers">
         <item>3</item>
         <item>4</item>
@@ -34,5 +36,7 @@
         <item>8</item>
         <item>9</item>
     </string-array>
+
+    <string-array name="empty-array"></string-array>
 
 </resources>
