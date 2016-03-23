@@ -134,8 +134,6 @@ public class Game implements Serializable {
         boolean given = false;
         while(!copyCardList.isEmpty()){ //until copied List is not Empty
             //Log.d("ERSTE", "hier");
-<<<<<<< HEAD
-
             for(int i = 0; i < playerCount; i++){
                 given = false;
                 while(!given) {
@@ -153,28 +151,7 @@ public class Game implements Serializable {
                         given = true;
                         //Card is removed from copied List
                         copyCardList.remove(cardPosition);
-=======
-            given = false;
-            if(copyCardList.size() >= 0) {
-                for (int i = 0; i < playerCount; i++) {
-                    while (!given) {
-                        cardPosition = random.nextInt(copyCardList.size());
-                        if (copyCardList.get(cardPosition).getName() == solution.getMurderer() ||
-                                copyCardList.get(cardPosition).getName() == solution.getWeapon() ||
-                                copyCardList.get(cardPosition).getName() == solution.getRoom()) {
-                            //when the card is part of the solution
-                            //card is deleted from Copied List
-                            copyCardList.remove(cardPosition);
-                            //loop repeats
-                        } else if (!copyCardList.isEmpty()) { //if card is not part of solution
-                            //card is given
-                            playerManager.giveCard(copyCardList.get(cardPosition), i);
-                            given = true;
-                            //Card is removed from copied List
-                            copyCardList.remove(cardPosition);
-                        }
 
->>>>>>> origin/master
                     }
                 }
             }
