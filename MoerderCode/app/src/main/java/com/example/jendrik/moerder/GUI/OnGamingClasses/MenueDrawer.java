@@ -1,18 +1,18 @@
 package com.example.jendrik.moerder.GUI.OnGamingClasses;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
-import android.os.Bundle;
-
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.jendrik.moerder.GUI.STUB_FRAG;
 import com.example.jendrik.moerder.Game;
@@ -150,6 +150,13 @@ public class MenueDrawer extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerToggle.syncState();
 
+    }
+
+    public void onClickInDrawer(View v){
+        switch(v.getId()){
+            case R.id.btn_suspect:
+                suspect.onClickSuspect(v);
+        }
     }
 
 

@@ -98,10 +98,7 @@ public class Game implements Serializable {
     }
 
     public boolean compareSolution(String murderer, String room, String weapon){
-        if(solution != null && solution.getMurderer()==murderer && solution.getRoom()==room && solution.getWeapon()==weapon)
-            return true;
-        else
-            return false;
+        return solution != null && solution.getMurderer() == murderer && solution.getRoom() == room && solution.getWeapon() == weapon;
     }
 
     public ArrayList<Room> getRooms(){
@@ -137,7 +134,10 @@ public class Game implements Serializable {
             for(int i = 0; i < playerCount; i++){
                 given = false;
                 while(!given) {
-                    cardPosition = random.nextInt(copyCardList.size());
+                    if(copyCardList.size() !=0)
+                        cardPosition = random.nextInt(copyCardList.size());
+                    else
+                        break;
                     if (copyCardList.get(cardPosition).getName() == solution.getMurderer() ||
                             copyCardList.get(cardPosition).getName() == solution.getWeapon() ||
                             copyCardList.get(cardPosition).getName() == solution.getRoom()) {

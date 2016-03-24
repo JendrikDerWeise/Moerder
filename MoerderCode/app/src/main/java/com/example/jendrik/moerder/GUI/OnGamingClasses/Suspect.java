@@ -2,7 +2,6 @@ package com.example.jendrik.moerder.GUI.OnGamingClasses;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.Suspection;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.R;
@@ -28,6 +28,8 @@ public class Suspect extends Fragment {
     private Button btn;
     private Bundle extras;
     private Game game;
+    private String room;
+    private String weapon;
 
 
     @Override
@@ -95,21 +97,21 @@ public class Suspect extends Fragment {
     }
 
     private void setRoom(){
-        if(game.getActivePlayer().getActualRoom() != null) {
-            TextView tv = (TextView) fragLayoutV.findViewById(R.id.txt_suspect_room);
-            String str = game.getActivePlayer().getActualRoom();
-            tv.setText(str);
-            Log.d("BLA", "blabla");
-        }
+        TextView tv = (TextView) fragLayoutV.findViewById(R.id.txt_suspect_room);
+        room = game.getActivePlayer().getActualRoom();
+        tv.setText(room);
     }
 
     private void setWeapon(){
         TextView tv = (TextView)fragLayoutV.findViewById(R.id.txt_suspect_weapon);
-        tv.setText(game.getActivePlayer().getActualWeapon());
+        weapon = game.getActivePlayer().getActualWeapon();
+        tv.setText(weapon);
     }
 
-    public void onClickSuspect(View btn){
+    public void onClickSuspect(View button){
         //TODO
+        String player= (String)spinnerPlayer.getSelectedItem();
+        Suspection sus = new Suspection(getActivity(), player, room, weapon, game, game.getActivePlayer().getpNumber());
     }
 }
 

@@ -44,6 +44,10 @@
         <activity
             android:name=".GUI.OnGamingClasses.MenueDrawer"
             android:theme="@style/ThemeWithDrawer"/>
+        <activity
+            android:name=".GUI.OnGamingClasses.LittleHelpers.PopUpNobodyHasCards" />
+        <activity
+            android:name=".GUI.OnGamingClasses.LittleHelpers.PopUpPlayerShowsCard" />
         <activity android:name=".GUI.OnGamingClasses.STUB_SCANNER"/>
         </application>
 

@@ -21,7 +21,7 @@ public class PlayerManager implements Serializable {
 
     public void addPlayer(String name, int numberOfThings){
         int qrCode = playerList.size()+1;
-        playerList.add(new Player(name,qrCode, numberOfThings));
+        playerList.add(new Player(name,qrCode, numberOfThings, playerList.size()));
     }
 
     public void setActive(String name) {

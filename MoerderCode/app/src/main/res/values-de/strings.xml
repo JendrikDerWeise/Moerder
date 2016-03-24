@@ -31,5 +31,7 @@
     <string name="txt_suspect">Äußere deinen Verdacht</string>
     <string name="btn_suspect">Verdächtigen</string>
     <string name="spinner_default_player">Bitte einen Spieler wählen</string>
+    <string name="txt_nobody_has_cards">Wow! Du liegst verdammt richtig! Niemand hat diese Karten.</string>
+    <string name="txt_shows_card">zeigt dir die Karte:</string>
 
 </resources>

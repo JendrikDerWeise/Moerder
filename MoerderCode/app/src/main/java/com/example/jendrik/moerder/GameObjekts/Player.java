@@ -15,11 +15,13 @@ public class Player implements Serializable{
     private String actualRoom;
     private ArrayList<Card> handCards;
     private char[] suspectList;
+    private int pNumber;
 
-    public Player(String name, int qrCode, int numberOfThings){
+    public Player(String name, int qrCode, int numberOfThings, int pNumber){
         active=false;
         this.qrCode=qrCode;
         this.name=name;
+        this.pNumber = pNumber;
         suspectList = new char[numberOfThings];
         handCards = new ArrayList<>();
     }
@@ -79,6 +81,8 @@ public class Player implements Serializable{
     public void setDead(boolean dead) {
         this.dead = dead;
     }
+
+    public int getpNumber(){ return pNumber; }
 
     public void suspectOnList(int position, char character){ // zu deutsch verdaechtigen auf der Liste
         //different to suspect, as this is only the internal list for that human
