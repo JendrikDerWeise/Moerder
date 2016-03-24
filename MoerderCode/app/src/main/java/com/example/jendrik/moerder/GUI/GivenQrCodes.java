@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Room;
+import com.example.jendrik.moerder.R;
 
 /**
  * Created by bulk on 01.03.2016.
@@ -57,11 +58,11 @@ public class GivenQrCodes extends Activity {
         ll.addView(tbl); //add table to Layout
 
         Button btn = new Button(this);
-        btn.setText("Next");//TODO String einfügen
+        btn.setText(getResources().getText(R.string.next_button));
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               startWaitForPlayers();
+                startWaitForPlayers();
             }
         });
         ll.addView(btn);

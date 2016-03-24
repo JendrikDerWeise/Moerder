@@ -46,7 +46,11 @@ public class MenueDrawer extends AppCompatActivity {
         game = (Game) extras.get("GAME");
         //TODO verhindern das "Zurücktaste" von Android in die Spielerstellung zurück kehrt. Wie geht das? Ggf. finish()?
         //TODO Timer einbauen
-        //TODO Runde beenden --> erst game-Objekt abspeichern und senden --> finish(); --> startActivity(getIntent);
+        //TODO Runde beenden Methode --> erst game-Objekt abspeichern und senden --> finish(); --> startActivity(getIntent);
+        //TODO Pro Runde eine Aktion --> Runde Beenden Aufruf in jedes Fragment, das als Aktion gilt
+        //TODO Mitteilung "gerufen werden"
+        //TODO Raum wechsel Fragment fehlt noch
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
@@ -82,7 +86,7 @@ public class MenueDrawer extends AppCompatActivity {
                     }
 
                     case R.id.list: {
-                        //TODO
+                        //TODO muss noch erstellt werden
                         fragmentManager = getFragmentManager();
                         fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.frag_area, stub);
@@ -109,7 +113,7 @@ public class MenueDrawer extends AppCompatActivity {
                     }
 
                     case R.id.weapon_change: {
-                        //TODO
+                        //TODO Irgendwann austauschen gegen QR Scanner
                         fragmentManager = getFragmentManager();
                         fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.frag_area, changeWeapon);
@@ -118,7 +122,6 @@ public class MenueDrawer extends AppCompatActivity {
                     }
 
                     case R.id.indict: {
-                        //TODO
                         fragmentManager = getFragmentManager();
                         fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.frag_area, indict);
@@ -127,7 +130,7 @@ public class MenueDrawer extends AppCompatActivity {
                     }
 
                     case R.id.pause: {
-                        //TODO
+                        //TODO Timer starten/stoppen, Broadcast
                         fragmentManager = getFragmentManager();
                         fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.frag_area, stub);
@@ -136,7 +139,7 @@ public class MenueDrawer extends AppCompatActivity {
                     }
 
                     case R.id.help: {
-                        //TODO
+                        //TODO muss noch überlegt werden, was wir reinschreiben wollen... und dann schreiben...
                         fragmentManager = getFragmentManager();
                         fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.frag_area, stub);
