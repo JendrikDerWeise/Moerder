@@ -33,6 +33,7 @@ public class MenueDrawer extends AppCompatActivity {
     private Suspect suspect;
     private STUB_FRAG stub;
     private ChangeWeapon changeWeapon;
+    private Indict indict;
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
@@ -43,7 +44,9 @@ public class MenueDrawer extends AppCompatActivity {
         setContentView(R.layout.menu_drawer);
         extras = getIntent().getExtras();
         game = (Game) extras.get("GAME");
-
+        //TODO verhindern das "Zurücktaste" von Android in die Spielerstellung zurück kehrt. Wie geht das? Ggf. finish()?
+        //TODO Timer einbauen
+        //TODO Runde beenden --> erst game-Objekt abspeichern und senden --> finish(); --> startActivity(getIntent);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
@@ -55,6 +58,7 @@ public class MenueDrawer extends AppCompatActivity {
         map = (MapOverview) Fragment.instantiate(this,MapOverview.class.getName(), null);
         suspect = (Suspect) Fragment.instantiate(this,Suspect.class.getName(), null);
         changeWeapon = (ChangeWeapon) Fragment.instantiate(this,ChangeWeapon.class.getName(),null);
+        indict = (Indict) Fragment.instantiate(this,Indict.class.getName(),null);
 
         stub = (STUB_FRAG) Fragment.instantiate(this,STUB_FRAG.class.getName(), null);
 
@@ -68,6 +72,7 @@ public class MenueDrawer extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
+                    //TODO mehrfachen Code in Methode auslagern
                     case R.id.map: {
                         fragmentManager = getFragmentManager();
                         fragmentTransaction = fragmentManager.beginTransaction();
@@ -116,7 +121,7 @@ public class MenueDrawer extends AppCompatActivity {
                         //TODO
                         fragmentManager = getFragmentManager();
                         fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frag_area, stub);
+                        fragmentTransaction.replace(R.id.frag_area, indict);
                         fragmentTransaction.commit();
                         break;
                     }
@@ -155,7 +160,18 @@ public class MenueDrawer extends AppCompatActivity {
     public void onClickInDrawer(View v){
         switch(v.getId()){
             case R.id.btn_suspect:
-                suspect.onClickSuspect(v);
+                suspect.onClickSuspect();
+                break;
+            case R.id.btn_indict:
+                indict.onClickIndict(v);
+                break;
+            case R.id.btn_yes:
+                indict.onClickYes();
+                break;
+            case R.id.btn_no:
+                indict.onClickNo();
+                break;
+
         }
     }
 

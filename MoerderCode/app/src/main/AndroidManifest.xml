@@ -48,6 +48,10 @@
             android:name=".GUI.OnGamingClasses.LittleHelpers.PopUpNobodyHasCards" />
         <activity
             android:name=".GUI.OnGamingClasses.LittleHelpers.PopUpPlayerShowsCard" />
+        <activity
+            android:name=".GUI.OnGamingClasses.WinScreen" />
+        <activity
+            android:name=".GUI.OnGamingClasses.LooseScreen" />
         <activity android:name=".GUI.OnGamingClasses.STUB_SCANNER"/>
         </application>
 

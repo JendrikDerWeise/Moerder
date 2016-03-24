@@ -1,18 +1,12 @@
 package com.example.jendrik.moerder.GUI;
+
+import android.app.Activity;
 import android.content.Intent;
-import android.content.res.*;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-
-import android.app.Activity;
-import android.widget.TextView;
 
 import com.example.jendrik.moerder.R;
 
@@ -49,7 +43,7 @@ public class CreateGame extends Activity {
         final int p = spinnerR.getSelectedItemPosition();
         final int[] cRooms = getResources().getIntArray(R.array.rooms);
         final int countR = cRooms[p];
-
+        //TODO Timer einbauen
 
         final Intent intent = new Intent(this, RoomNameList.class);
         intent.putExtra(NAME, gameName);

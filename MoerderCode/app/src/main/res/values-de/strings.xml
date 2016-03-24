@@ -33,5 +33,10 @@
     <string name="spinner_default_player">Bitte einen Spieler wählen</string>
     <string name="txt_nobody_has_cards">Wow! Du liegst verdammt richtig! Niemand hat diese Karten.</string>
     <string name="txt_shows_card">zeigt dir die Karte:</string>
+    <string name="spinner_default_room">Bitte einen Raum wählen</string>
+    <string name="spinner_default_weapon">Bitte eine Waffe wählen</string>
+    <string name="txt_are_you_sure">Bist du dir wirklich sicher? Wenn du falsch liegst, hast du das Spiel verloren und bist raus!</string>
+    <string name="btn_yes">Ja, verdammt sicher!</string>
+    <string name="btn_no">Nein</string>
 
 </resources>

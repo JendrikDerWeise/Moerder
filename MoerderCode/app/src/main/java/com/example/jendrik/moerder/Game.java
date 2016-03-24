@@ -80,7 +80,7 @@ public class Game implements Serializable {
         String rName = roomManager.showMap().get(random.nextInt(roomCount)).getName();
         String wName = weaponManager.getWeaponList().get(random.nextInt(weaponCount)).getName();
         solution = new Solution(pName, rName,wName);
-        Log.e("SOLUTION", solution.getMurderer()+ solution.getRoom() + solution.getWeapon());
+        Log.e("SOLUTION", solution.getMurderer() + solution.getRoom() + solution.getWeapon());
     }
 
     private void createRooms(ArrayList<String> rooms){
@@ -98,11 +98,14 @@ public class Game implements Serializable {
     }
 
     public boolean compareSolution(String murderer, String room, String weapon){
-        return solution != null && solution.getMurderer() == murderer && solution.getRoom() == room && solution.getWeapon() == weapon;
+        return solution != null && solution.getMurderer().equals(murderer) && solution.getRoom().equals(room) && solution.getWeapon().equals(weapon);
     }
 
     public ArrayList<Room> getRooms(){
         return roomManager.showMap();
+    }
+    public ArrayList<Weapon> getWeapons(){
+        return weaponManager.getWeaponList();
     }
 
     public ArrayList<Player> getPlayers(){

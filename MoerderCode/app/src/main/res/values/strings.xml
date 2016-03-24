@@ -40,5 +40,10 @@
     <string name="spinner_default_player">Please select a player</string>
     <string name="txt_nobody_has_cards">Wow! You´re damed right! Nobody has these cards.</string>
     <string name="txt_shows_card">shows you the card:</string>
+    <string name="spinner_default_room">Please select room</string>
+    <string name="spinner_default_weapon">Please select weapon</string>
+    <string name="txt_are_you_sure">Are you really sure? If you´re wrong, you´ll loose and game is over for you!</string>
+    <string name="btn_yes">Yes, damn sure!</string>
+    <string name="btn_no">No</string>
     <!-- Ende Drawer-Temp-Krams -->
 </resources>

@@ -108,8 +108,7 @@ public class Suspect extends Fragment {
         tv.setText(weapon);
     }
 
-    public void onClickSuspect(View button){
-        //TODO
+    public void onClickSuspect(){
         String player= (String)spinnerPlayer.getSelectedItem();
         Suspection sus = new Suspection(getActivity(), player, room, weapon, game, game.getActivePlayer().getpNumber());
     }
