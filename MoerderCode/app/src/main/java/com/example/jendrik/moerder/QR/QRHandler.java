@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
-import com.example.jendrik.moerder.R; //HIER FEHLER
-
-import java.util.Scanner;
+import com.example.jendrik.moerder.R;
 
 /**
  * Created by Sophia on 21.03.2016.
@@ -44,28 +43,18 @@ public class QRHandler extends Activity{
         }
     }
 
-    /**@Override
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
-    if (requestCode == 0) {
-    if (resultCode == RESULT_OK) {
-    this.intent = intent;
-    qrnr = Integer.parseInt(intent.getStringExtra("SCAN_RESULT"));
-    String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
-    //Hier evtl lieber Name des Gescannten Objects mit angeben.
-    // alertDialog("QR-Nr." + qrnr + " " + format);
-    Toast toast = Toast.makeText(this, "QR-Nr." + qrnr + " " +
-    format, Toast.LENGTH_LONG);
-    toast.show();
-    }
-    }
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                qrnr = Integer.parseInt(intent.getStringExtra("SCAN_RESULT"));
+                String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
+                //Hier evtl lieber Name des Gescannten Objects mit angeben.
+                Log.d("QR-Nr." + qrnr , " " + format);
+            }
+        }
     }
 
-    public Intent getIntent(){
-    if(qrnr != -1){
-    return intent;
-    }
-    return null;
-    }**/
 
 }
