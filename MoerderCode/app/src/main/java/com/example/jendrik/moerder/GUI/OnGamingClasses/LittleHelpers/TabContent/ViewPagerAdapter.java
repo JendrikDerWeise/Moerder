@@ -13,12 +13,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter{
     public ViewPagerAdapter (FragmentManager manager, Context context){
 
         super(manager);
-        String tab1 = context.getResources().getString(R.string.tab_person);
-        String tab2 = context.getResources().getString(R.string.tab_room);
-        String tab3 = context.getResources().getString(R.string.tab_weapon);
-        tabtitlearray[0] = tab1;
-        tabtitlearray[1] = tab2;
-        tabtitlearray[2] = tab3;
+        tabtitlearray[0] = context.getResources().getString(R.string.tab_person);
+        tabtitlearray[1] = context.getResources().getString(R.string.tab_room);
+        tabtitlearray[2] = context.getResources().getString(R.string.tab_weapon);
     }
 
 
