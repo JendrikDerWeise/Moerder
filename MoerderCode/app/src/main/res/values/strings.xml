@@ -45,5 +45,8 @@
     <string name="txt_are_you_sure">Are you really sure? If you´re wrong, you´ll loose and game is over for you!</string>
     <string name="btn_yes">Yes, damn sure!</string>
     <string name="btn_no">No</string>
+    <string name="tab_person">Person</string>
+    <string name="tab_room">Room</string>
+    <string name="tab_weapon">Weapon</string>
     <!-- Ende Drawer-Temp-Krams -->
 </resources>

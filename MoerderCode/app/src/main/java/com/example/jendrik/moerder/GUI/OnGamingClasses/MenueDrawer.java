@@ -30,12 +30,13 @@ public class MenueDrawer extends AppCompatActivity {
     private NavigationView navigationView;
 
     private MapOverview map;
+    private NoticeList noticeList;
     private Suspect suspect;
     private STUB_FRAG stub;
     private ChangeWeapon changeWeapon;
     private Indict indict;
 
-    private FragmentManager fragmentManager;
+    private static FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
     @Override
@@ -59,7 +60,8 @@ public class MenueDrawer extends AppCompatActivity {
         drawerToggle = new ActionBarDrawerToggle(MenueDrawer.this,drawerLayoutgesamt,R.string.auf, R.string.zu);
         drawerLayoutgesamt.setDrawerListener(drawerToggle);
 
-        map = (MapOverview) Fragment.instantiate(this,MapOverview.class.getName(), null);
+        map = (MapOverview) Fragment.instantiate(this, MapOverview.class.getName(), null);
+        noticeList = (NoticeList) Fragment.instantiate(this,NoticeList.class.getName(), null);
         suspect = (Suspect) Fragment.instantiate(this,Suspect.class.getName(), null);
         changeWeapon = (ChangeWeapon) Fragment.instantiate(this,ChangeWeapon.class.getName(),null);
         indict = (Indict) Fragment.instantiate(this,Indict.class.getName(),null);
@@ -89,7 +91,7 @@ public class MenueDrawer extends AppCompatActivity {
                         //TODO muss noch erstellt werden
                         fragmentManager = getFragmentManager();
                         fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frag_area, stub);
+                        fragmentTransaction.replace(R.id.frag_area, noticeList);
                         fragmentTransaction.commit();
                         break;
                     }
@@ -157,6 +159,7 @@ public class MenueDrawer extends AppCompatActivity {
         //checkTurn();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerToggle.syncState();
+
 
     }
 
