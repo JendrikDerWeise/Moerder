@@ -19,12 +19,15 @@ public class QRHandler extends Activity{
     public static int qrnr;
     public static String RESULT = "scan result";
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
-    private Game game; //TODO wie zuer hoelle kriege ich jetzt das game objekt o.O 
+    private Game game; //TODO wie zuer hoelle kriege ich jetzt das game objekt o.O
+    private Bundle extras;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stub_qr); //HIER AUCH FEHLER
+        extras = getIntent().getExtras();
+        game = (Game) extras.get("GAME");
 
     }
 
