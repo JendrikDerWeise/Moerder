@@ -13,7 +13,7 @@ public class Player implements Serializable{
     private int qrCode;
     private String actualWeapon;
     private String actualRoom;
-    private ArrayList<Card> handCards;
+    private ArrayList<Clue> givenClues;
     private char[] suspectList;
     private int pNumber;
 
@@ -23,7 +23,7 @@ public class Player implements Serializable{
         this.name=name;
         this.pNumber = pNumber;
         suspectList = new char[numberOfThings];
-        handCards = new ArrayList<>();
+        givenClues = new ArrayList<>();
     }
 
     public Player(){}
@@ -66,13 +66,11 @@ public class Player implements Serializable{
         this.actualRoom=room;
     }
 
-    public ArrayList<Card> getHandCards() {
-        return handCards;
+    public ArrayList<Clue> getGivenClues() {
+        return givenClues;
     }
 
-    public void setHandCard(Card card){
-        handCards.add(card);
-    }
+    public void setGivenClues(Clue clue){ givenClues.add(clue); }
 
     public boolean isDead() {
         return dead;

@@ -24,5 +24,10 @@ public class WeaponManager implements Serializable {
     public ArrayList<Weapon> getWeaponList() {
         return weaponList;
     }
-
+    public String getNameByNumber(int qrnr){
+        for(Weapon w: weaponList){
+            if(w.getQrCode() == qrnr){ return w.getName();}
+        }
+        return "error";
+    }
 }

@@ -7,12 +7,12 @@ import java.io.Serializable;
 /**
  * Created by Jendrik on 21.02.2016.
  */
-public class Card implements Serializable {
+public class Clue implements Serializable {
 
     private String name;
     private int id; //0=player, 1=room, 2=weapon --> für Bildzuweisung
 
-    public Card(String name, int id) {
+    public Clue(String name, int id) {
         this.name = name;
         this.id = id;
     }

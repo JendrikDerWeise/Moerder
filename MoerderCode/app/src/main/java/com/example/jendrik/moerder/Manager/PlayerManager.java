@@ -1,6 +1,6 @@
 package com.example.jendrik.moerder.Manager;
 
-import com.example.jendrik.moerder.GameObjekts.Card;
+import com.example.jendrik.moerder.GameObjekts.Clue;
 import com.example.jendrik.moerder.GameObjekts.Player;
 
 import java.io.Serializable;
@@ -33,11 +33,18 @@ public class PlayerManager implements Serializable {
         }
     }
 
-    public void giveCard(Card card, int playerNo){ //ich bin mir unsicher wo die Karten verteilt werden. Da muss jedenfalls eine Rechnung hin, damit alle Spieler die gleiche Menge Karten bekommen
-        playerList.get(playerNo).setHandCard(card);
+    public void giveClue(Clue clue, int playerNo){ //ich bin mir unsicher wo die Karten verteilt werden. Da muss jedenfalls eine Rechnung hin, damit alle Spieler die gleiche Menge Karten bekommen
+        playerList.get(playerNo).setGivenClues(clue);
     }
 
     public ArrayList<Player> getPlayerList() {
         return playerList;
+    }
+
+    public String getNameByNumber(int qrnr){
+        for(Player p:playerList){
+            if(p.getQrCode() == qrnr){ return p.getName();}
+        }
+        return "error";
     }
 }

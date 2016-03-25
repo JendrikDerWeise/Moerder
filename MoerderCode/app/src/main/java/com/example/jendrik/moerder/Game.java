@@ -2,7 +2,7 @@ package com.example.jendrik.moerder;
 
 import android.util.Log;
 
-import com.example.jendrik.moerder.GameObjekts.Card;
+import com.example.jendrik.moerder.GameObjekts.Clue;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.GameObjekts.Room;
 import com.example.jendrik.moerder.GameObjekts.Solution;
@@ -26,7 +26,7 @@ public class Game implements Serializable {
     private RoomManager roomManager;
     private WeaponManager weaponManager;
     private PlayerManager playerManager;
-    private ArrayList<Card> cardList;
+    private ArrayList<Clue> clueList;
     private int numberOfThings;
     private String gameName;
     private String pwd;
@@ -36,7 +36,7 @@ public class Game implements Serializable {
         this.gameName = gameName;
         this.pwd = pwd;
         solution = null;
-        cardList = new ArrayList<Card>();
+        clueList = new ArrayList<Clue>();
         playerManager = new PlayerManager();
         weaponManager = new WeaponManager();
         roomManager = new RoomManager();
@@ -53,13 +53,13 @@ public class Game implements Serializable {
 
     private void createCards(){
         for (Player p:playerManager.getPlayerList())
-            cardList.add(new Card(p.getName(), 0));
+            clueList.add(new Clue(p.getName(), 0));
 
         for (Room r:roomManager.showMap())
-            cardList.add(new Card(r.getName(),1));
+            clueList.add(new Clue(r.getName(),1));
 
         for (Weapon w:weaponManager.getWeaponList())
-            cardList.add(new Card(w.getName(), 2));
+            clueList.add(new Clue(w.getName(), 2));
 
         createSolution();
     }
@@ -104,6 +104,7 @@ public class Game implements Serializable {
     public ArrayList<Room> getRooms(){
         return roomManager.showMap();
     }
+
     public ArrayList<Weapon> getWeapons(){
         return weaponManager.getWeaponList();
     }
@@ -121,39 +122,52 @@ public class Game implements Serializable {
         return player;
     }
 
-    private void giveCardsToPlayer(){
-        ArrayList<Card> copyCardList = new ArrayList<Card>();//duplicates Cardlist
-        for(int i = 0; i < cardList.size(); i++){
-            copyCardList.add(i, cardList.get(i));
-            Log.d("COPYCARDLIST", cardList.get(i).getName());
+    public String getNameByNumber(int qrnr){
+        if(qrnr > 0  && qrnr < 30){
+            if(qrnr < 10) {
+                return playerManager.getNameByNumber(qrnr);
+            }else if(qrnr < 20){
+                return roomManager.getNameByNumber(qrnr);
+            }else {
+                return weaponManager.getNameByNumber(qrnr);
+            }
+        }else{
+            return "error";
+        }
+    }
+    private void giveCluesToPlayer(){
+        ArrayList<Clue> copyClueList = new ArrayList<Clue>();//duplicates Cardlist
+        for(int i = 0; i < clueList.size(); i++){
+            copyClueList.add(i, clueList.get(i));
+            Log.d("COPYCLUELIST", clueList.get(i).getName());
         }
 
         int playerCount = playerManager.getPlayerList().size();
         Random random = new Random();
-        int cardPosition = 0;
+        int cluePosition = 0;
         boolean given = false;
-        while(!copyCardList.isEmpty()){ //until copied List is not Empty
+        while(!copyClueList.isEmpty()){ //until copied List is not Empty
             //Log.d("ERSTE", "hier");
             for(int i = 0; i < playerCount; i++){
                 given = false;
                 while(!given) {
-                    if(copyCardList.size() !=0)
-                        cardPosition = random.nextInt(copyCardList.size());
+                    if(copyClueList.size() !=0)
+                        cluePosition = random.nextInt(copyClueList.size());
                     else
                         break;
-                    if (copyCardList.get(cardPosition).getName() == solution.getMurderer() ||
-                            copyCardList.get(cardPosition).getName() == solution.getWeapon() ||
-                            copyCardList.get(cardPosition).getName() == solution.getRoom()) {
+                    if (copyClueList.get(cluePosition).getName() == solution.getMurderer() ||
+                            copyClueList.get(cluePosition).getName() == solution.getWeapon() ||
+                            copyClueList.get(cluePosition).getName() == solution.getRoom()) {
                         //when the card is part of the solution
                         //card is deleted from Copied List
-                        copyCardList.remove(cardPosition);
+                        copyClueList.remove(cluePosition);
                         //loop repeats
-                    }else if(!copyCardList.isEmpty()) { //if card is not part of solution
+                    }else if(!copyClueList.isEmpty()) { //if card is not part of solution
                         //card is given
-                        playerManager.giveCard(copyCardList.get(cardPosition), i);
+                        playerManager.giveClue(copyClueList.get(cluePosition), i);
                         given = true;
                         //Card is removed from copied List
-                        copyCardList.remove(cardPosition);
+                        copyClueList.remove(cluePosition);
 
                     }
                 }
@@ -169,7 +183,7 @@ public class Game implements Serializable {
     public void startGame(ArrayList<String> players){
         createPlayer(players);
         createCards();
-        giveCardsToPlayer();
+        giveCluesToPlayer();
         Log.d("KARTEN", "verteilt");
         //Spiel Speichern über GUI
         //Auslöser zum Senden des Savegames -->gehört in ServerClass

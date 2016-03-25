@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.R;
 
 /**
@@ -17,6 +19,8 @@ public class QRHandler extends Activity{
     public static int qrnr;
     public static String RESULT = "scan result";
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
+    private Game game; //TODO wie zuer hoelle kriege ich jetzt das game objekt o.O 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +54,13 @@ public class QRHandler extends Activity{
             if (resultCode == RESULT_OK) {
                 qrnr = Integer.parseInt(intent.getStringExtra("SCAN_RESULT"));
                 String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
-                //Hier evtl lieber Name des Gescannten Objects mit angeben.
+                //TODO von dem aufgerufenen Fenster qr nummer und name des objekts als popup
+                String name = game.getNameByNumber(qrnr);
+                if(name != "error"){
+                    Toast toast = Toast.makeText(this, "QR " + qrnr + " " + name, Toast.LENGTH_LONG);
+                }else{
+                    //TODO fehlerbehandlung bzw erneut scannen, wenn nummer falsch
+                }
                 Log.d("QR-Nr." + qrnr , " " + format);
             }
         }
