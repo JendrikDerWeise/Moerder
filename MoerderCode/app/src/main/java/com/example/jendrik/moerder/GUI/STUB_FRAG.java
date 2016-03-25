@@ -1,5 +1,4 @@
 package com.example.jendrik.moerder.GUI;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;

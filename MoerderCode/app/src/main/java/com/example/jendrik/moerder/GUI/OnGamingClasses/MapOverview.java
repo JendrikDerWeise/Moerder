@@ -2,21 +2,15 @@ package com.example.jendrik.moerder.GUI.OnGamingClasses;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.MapAdapterClass;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Room;
 import com.example.jendrik.moerder.GameObjekts.Weapon;
@@ -28,13 +22,13 @@ import java.util.ArrayList;
  * Created by Jendrik on 20.03.2016.
  */
 public class MapOverview extends Fragment {
-    Bundle extras;
-    View fragLayoutV;
-    Game game;
+    private Bundle extras;
+    private View fragLayoutV;
+    private Game game;
 
-    RecyclerView recyclerView;
-    RecyclerView.Adapter rvadapter;
-    RecyclerView.LayoutManager rvLayoutManager;
+    private  RecyclerView recyclerView;
+    private  RecyclerView.Adapter rvadapter;
+    private RecyclerView.LayoutManager rvLayoutManager;
 
     public static ArrayList<String> roomNames;
     public static ArrayList<String> weaponNames;

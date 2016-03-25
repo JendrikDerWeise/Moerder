@@ -38,5 +38,8 @@
     <string name="txt_are_you_sure">Bist du dir wirklich sicher? Wenn du falsch liegst, hast du das Spiel verloren und bist raus!</string>
     <string name="btn_yes">Ja, verdammt sicher!</string>
     <string name="btn_no">Nein</string>
+    <string name="tab_person">Person</string>
+    <string name="tab_room">Raum</string>
+    <string name="tab_weapon">Waffe</string>
 
 </resources>

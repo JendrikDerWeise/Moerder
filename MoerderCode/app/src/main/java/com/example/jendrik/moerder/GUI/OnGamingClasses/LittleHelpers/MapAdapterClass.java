@@ -1,4 +1,4 @@
-package com.example.jendrik.moerder.GUI.OnGamingClasses;
+package com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.jendrik.moerder.GUI.OnGamingClasses.MapOverview;
 import com.example.jendrik.moerder.R;
 
 /**
