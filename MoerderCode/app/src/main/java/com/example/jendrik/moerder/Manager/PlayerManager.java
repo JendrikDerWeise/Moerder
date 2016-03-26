@@ -2,6 +2,8 @@ package com.example.jendrik.moerder.Manager;
 
 import com.example.jendrik.moerder.GameObjekts.Clue;
 import com.example.jendrik.moerder.GameObjekts.Player;
+import com.example.jendrik.moerder.GameObjekts.Room;
+import com.example.jendrik.moerder.GameObjekts.Weapon;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,5 +48,24 @@ public class PlayerManager implements Serializable {
             if(p.getQrCode() == qrnr){ return p.getName();}
         }
         return "error";
+    }
+
+    public void setSuspectList(ArrayList<Room> rooms, ArrayList<Weapon> weapons){
+
+        for(Player p: playerList){
+            int i=0;
+            for(Player x: playerList){
+                p.suspectOnList(i,'n');
+                i++;
+            }
+            for(Room r : rooms){
+                p.suspectOnList(i,'n');
+                i++;
+            }
+            for(Weapon w : weapons){
+                p.suspectOnList(i,'n');
+                i++;
+            }
+        }
     }
 }

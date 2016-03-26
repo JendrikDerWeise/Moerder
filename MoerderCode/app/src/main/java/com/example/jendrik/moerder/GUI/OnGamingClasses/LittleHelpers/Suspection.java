@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.jendrik.moerder.Game;
-import com.example.jendrik.moerder.GameObjekts.Card;
+import com.example.jendrik.moerder.GameObjekts.Clue;
 import com.example.jendrik.moerder.GameObjekts.Player;
 
 /**
@@ -36,7 +36,7 @@ public class Suspection {
         for(Player p : game.getPlayers()) {
             if (p.isActive()) {
                 if(suspector != p.getpNumber()){
-                    for(Card c : p.getHandCards()){
+                    for(Clue c : p.getGivenClues()){
                         if(c.getName().equals(player) || c.getName().equals(room) || c.getName().equals(weapon)){
                             playerHasCard = p.getpNumber();
                             cardOwner = p.getName();

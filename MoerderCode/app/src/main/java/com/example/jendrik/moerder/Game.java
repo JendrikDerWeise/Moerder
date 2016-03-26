@@ -184,6 +184,7 @@ public class Game implements Serializable {
         createPlayer(players);
         createCards();
         giveCluesToPlayer();
+        playerManager.setSuspectList(getRooms(),getWeapons());
         Log.d("KARTEN", "verteilt");
         //Spiel Speichern über GUI
         //Auslöser zum Senden des Savegames -->gehört in ServerClass
