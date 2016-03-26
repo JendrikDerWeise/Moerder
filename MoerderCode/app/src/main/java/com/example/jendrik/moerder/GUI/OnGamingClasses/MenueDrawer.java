@@ -20,7 +20,7 @@ import com.example.jendrik.moerder.R;
 
 
 public class MenueDrawer extends AppCompatActivity {
-    private Game game;
+    public static Game game;
     private Bundle extras;
 
     private Toolbar toolbar;

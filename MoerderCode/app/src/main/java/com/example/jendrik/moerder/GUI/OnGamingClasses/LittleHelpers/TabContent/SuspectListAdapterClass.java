@@ -1,5 +1,6 @@
-package com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers;
+package com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.TabContent;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.jendrik.moerder.GUI.OnGamingClasses.MapOverview;
+import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
+import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.R;
 
 /**
@@ -26,6 +29,9 @@ public class SuspectListAdapterClass extends RecyclerView.Adapter<SuspectListAda
         }
     }
 
+    private Bundle extras;
+    private Game game;
+
     @Override
     public ViewHolderClass onCreateViewHolder(ViewGroup viewGroup, int i) {
 
@@ -36,9 +42,22 @@ public class SuspectListAdapterClass extends RecyclerView.Adapter<SuspectListAda
 
     @Override
     public void onBindViewHolder(ViewHolderClass viewHolderClass, final int i) {
+        int playerCount = MenueDrawer.game.getPlayers().size();
+        int roomCount = MenueDrawer.game.getRooms().size();
+        int weaponCount = MenueDrawer.game.getWeapons().size();
+
+        if(i<playerCount){
+            viewHolderClass.nameOfThing.setText(MapOverview.weaponNames.get(i));
+        }
+        else if(i<playerCount+roomCount){
+
+        }
+        else{
+
+        }
 
         viewHolderClass.colorField.setText(MapOverview.roomNames.get(i));
-        viewHolderClass.nameOfThing.setText(MapOverview.weaponNames.get(i));
+
 
         /*viewHolderClass.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

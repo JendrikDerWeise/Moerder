@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.SuspectListAdapterClass;
+import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.TabContent.SuspectListAdapterClass;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.R;
@@ -25,7 +25,7 @@ public class PersonList extends Fragment {
     private View contentView;
     private Bundle extras;
     private Game game;
-    private ArrayList<String> persons;
+    public static ArrayList<String> namesOfThings;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter rvadapter;
     private RecyclerView.LayoutManager rvLayoutManager;
@@ -42,9 +42,9 @@ public class PersonList extends Fragment {
         game = (Game) extras.get("GAME");
 
 
-        persons = new ArrayList<>();
+        namesOfThings = new ArrayList<>();
         for(Player p : game.getPlayers())
-            persons.add(p.getName());
+            namesOfThings.add(p.getName());
 
 
         final Activity fA = getActivity();
@@ -63,10 +63,6 @@ public class PersonList extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-
-
-
-
         super.onViewCreated(view, savedInstanceState);
     }
 }
