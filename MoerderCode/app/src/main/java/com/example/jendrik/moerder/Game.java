@@ -85,6 +85,10 @@ public class Game implements Serializable {
         Log.e("SOLUTION", solution.getMurderer() + solution.getRoom() + solution.getWeapon());
     }
 
+
+
+    
+
     private void createRooms(ArrayList<String> rooms){
         for (String s:rooms)
             roomManager.createRoom(s);
