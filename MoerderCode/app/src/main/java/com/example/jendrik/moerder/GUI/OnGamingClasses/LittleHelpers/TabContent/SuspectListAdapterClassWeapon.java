@@ -1,18 +1,24 @@
 package com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.TabContent;
 
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.TabContent.PersonList;
+import com.example.jendrik.moerder.GUI.OnGamingClasses.MapOverview;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
+import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.R;
 
 /**
  * Created by Jendrik on 21.03.2016.
  */
-public class SuspectListAdapterClass extends RecyclerView.Adapter<SuspectListAdapterClass.ViewHolderClass>{
+public class SuspectListAdapterClassWeapon extends RecyclerView.Adapter<SuspectListAdapterClassWeapon.ViewHolderClass>{
 
     public class ViewHolderClass extends RecyclerView.ViewHolder{
 
@@ -42,40 +48,40 @@ public class SuspectListAdapterClass extends RecyclerView.Adapter<SuspectListAda
 
     @Override
     public void onBindViewHolder(ViewHolderClass viewHolderClass, final int i) {
+        int playerCount = MenueDrawer.game.getPlayers().size();
+        int roomCount = MenueDrawer.game.getRooms().size();
 
-        viewHolderClass.nameOfThing.setText(PersonList.namesOfThings.get(i));
+        viewHolderClass.nameOfWeapon.setText(PersonList.namesOfThings.get(i+playerCount+roomCount));
+        ((ViewGroup) viewHolderClass.nameOfThing.getParent()).removeView(viewHolderClass.nameOfThing);
         ((ViewGroup) viewHolderClass.nameOfRoom.getParent()).removeView(viewHolderClass.nameOfRoom);
-        ((ViewGroup) viewHolderClass.nameOfWeapon.getParent()).removeView(viewHolderClass.nameOfWeapon);
-        setSuspectColor(MenueDrawer.game.getActivePlayer().getSuspectOnList(i), viewHolderClass.colorField);
+        setSuspectColor(MenueDrawer.game.getActivePlayer().getSuspectOnList(i + playerCount + roomCount), viewHolderClass.colorField);
 
 
         viewHolderClass.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final int position = i;
 
-                switch (MenueDrawer.game.getActivePlayer().getSuspectOnList(position)){
+                switch (MenueDrawer.game.getActivePlayer().getSuspectOnList(i)) {
                     case 'y':
-                        MenueDrawer.game.getActivePlayer().suspectOnList(position,'n');
-                        setSuspectColor(MenueDrawer.game.getActivePlayer().getSuspectOnList(position), (TextView) v.findViewById(R.id.txt_color_field));
+                        MenueDrawer.game.getActivePlayer().suspectOnList(i, 'n');
+                        setSuspectColor(MenueDrawer.game.getActivePlayer().getSuspectOnList(i), (TextView) v.findViewById(R.id.txt_color_field));
                         break;
                     case 'n':
-                        MenueDrawer.game.getActivePlayer().suspectOnList(position,'m');
-                        setSuspectColor(MenueDrawer.game.getActivePlayer().getSuspectOnList(position), (TextView) v.findViewById(R.id.txt_color_field));
+                        MenueDrawer.game.getActivePlayer().suspectOnList(i, 'm');
+                        setSuspectColor(MenueDrawer.game.getActivePlayer().getSuspectOnList(i), (TextView) v.findViewById(R.id.txt_color_field));
                         break;
                     case 'm':
-                        MenueDrawer.game.getActivePlayer().suspectOnList(position, 'y');
-                        setSuspectColor(MenueDrawer.game.getActivePlayer().getSuspectOnList(position), (TextView) v.findViewById(R.id.txt_color_field));
+                        MenueDrawer.game.getActivePlayer().suspectOnList(i, 'y');
+                        setSuspectColor(MenueDrawer.game.getActivePlayer().getSuspectOnList(i), (TextView) v.findViewById(R.id.txt_color_field));
                         break;
                 }
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
-        return MenueDrawer.game.getPlayers().size();
+        return MenueDrawer.game.getWeapons().size();
     }
 
     private void setSuspectColor(char c, TextView tv){

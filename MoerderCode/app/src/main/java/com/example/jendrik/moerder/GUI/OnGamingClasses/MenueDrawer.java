@@ -3,6 +3,7 @@ package com.example.jendrik.moerder.GUI.OnGamingClasses;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -16,6 +17,7 @@ import android.view.View;
 
 import com.example.jendrik.moerder.GUI.STUB_FRAG;
 import com.example.jendrik.moerder.Game;
+import com.example.jendrik.moerder.GameHandler;
 import com.example.jendrik.moerder.R;
 
 
@@ -35,7 +37,7 @@ public class MenueDrawer extends AppCompatActivity {
     private STUB_FRAG stub;
     private ChangeWeapon changeWeapon;
     private Indict indict;
-
+    public static Context cont;
     private static FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
@@ -137,6 +139,7 @@ public class MenueDrawer extends AppCompatActivity {
                         fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.frag_area, stub);
                         fragmentTransaction.commit();
+                        endTurn();
                         break;
                     }
 
@@ -151,6 +154,7 @@ public class MenueDrawer extends AppCompatActivity {
                 }
                 drawerLayoutgesamt.closeDrawers();
                 menuItem.setChecked(true);
+                cont = getApplicationContext();
                 return false;
             }
         });
@@ -161,6 +165,12 @@ public class MenueDrawer extends AppCompatActivity {
         drawerToggle.syncState();
 
 
+    }
+
+    public void endTurn(){
+        getIntent().putExtra("GAME",game);
+        finish();
+        startActivity(getIntent());
     }
 
     public void onClickInDrawer(View v){

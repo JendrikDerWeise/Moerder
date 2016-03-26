@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.TabContent.SuspectListAdapterClass;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
+import com.example.jendrik.moerder.GameObjekts.Room;
+import com.example.jendrik.moerder.GameObjekts.Weapon;
 import com.example.jendrik.moerder.R;
 
 import java.util.ArrayList;
@@ -46,9 +48,15 @@ public class PersonList extends Fragment {
         for(Player p : game.getPlayers())
             namesOfThings.add(p.getName());
 
+        for(Room r : game.getRooms())
+            namesOfThings.add(r.getName());
+
+        for(Weapon w : game.getWeapons())
+            namesOfThings.add(w.getName());
+
 
         final Activity fA = getActivity();
-        recyclerView = (RecyclerView) contentView.findViewById(R.id.recyclerview);
+        recyclerView = (RecyclerView) contentView.findViewById(R.id.suspect_list_recyclerview);
         rvLayoutManager = new LinearLayoutManager(fA);
         recyclerView.setLayoutManager(rvLayoutManager);
 
@@ -56,7 +64,7 @@ public class PersonList extends Fragment {
         recyclerView.setAdapter(rvadapter);
 
 
-        tv = (TextView) fA.findViewById(R.id.textView);
+        tv = (TextView) fA.findViewById(R.id.textViewTab);
 
         return contentView;
     }

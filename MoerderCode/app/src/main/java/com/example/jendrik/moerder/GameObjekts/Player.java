@@ -90,5 +90,9 @@ public class Player implements Serializable{
         }
     }
 
+    public char getSuspectOnList(int position){
+        return suspectList[position];
+    }
+
 
 }
