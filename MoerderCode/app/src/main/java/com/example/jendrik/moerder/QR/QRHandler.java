@@ -61,6 +61,7 @@ public class QRHandler extends Activity{
                 String name = game.getNameByNumber(qrnr);
                 if(name != "error"){
                     Toast toast = Toast.makeText(this, "QR " + qrnr + " " + name, Toast.LENGTH_LONG);
+                    game.setJustScannedQR(qrnr);
                 }else{
                     //TODO fehlerbehandlung bzw erneut scannen, wenn nummer falsch
                 }

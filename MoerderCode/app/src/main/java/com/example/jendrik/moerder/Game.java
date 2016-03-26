@@ -30,6 +30,7 @@ public class Game implements Serializable {
     private int numberOfThings;
     private String gameName;
     private String pwd;
+    private int justScannedQR;
 
 
     public Game(String gameName, String pwd, ArrayList<String> rooms, ArrayList<String> weapons){
@@ -43,6 +44,7 @@ public class Game implements Serializable {
         createRooms(rooms);
         createWeapons(weapons);
         numberOfThings = rooms.size() + weapons.size();
+        justScannedQR = 0;
     }
 
     public Game(){} //nur für das Laden verwendet
@@ -135,6 +137,7 @@ public class Game implements Serializable {
             return "error";
         }
     }
+
     private void giveCluesToPlayer(){
         ArrayList<Clue> copyClueList = new ArrayList<Clue>();//duplicates Cardlist
         for(int i = 0; i < clueList.size(); i++){
@@ -178,6 +181,10 @@ public class Game implements Serializable {
 
     public void killPlayer(int pNumber){
         playerManager.getPlayerList().get(pNumber).setDead(true);
+    }
+
+    public void setJustScannedQR(int qrnr){
+        justScannedQR = qrnr;
     }
 
     public void startGame(ArrayList<String> players){
