@@ -80,75 +80,47 @@ public class MenueDrawer extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
-                    //TODO mehrfachen Code in Methode auslagern
                     case R.id.map: {
-                        fragmentManager = getFragmentManager();
-                        fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frag_area, map);
-                        fragmentTransaction.commit();
+                        menueSetter(map);
                         break;
                     }
 
                     case R.id.list: {
-                        //TODO muss noch erstellt werden
-                        fragmentManager = getFragmentManager();
-                        fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frag_area, noticeList);
-                        fragmentTransaction.commit();
+                        menueSetter(noticeList);
                         break;
                     }
 
                     case R.id.suspect: {
-                        //TODO Fehlermeldung "Du musst erst in einen Raum gehen/Waffe aufnehmen um einen Verdacht zu äußern"
-
                         if(game.getActivePlayer().getActualWeapon()==null || game.getActivePlayer().getActualRoom()==null){
-                            fragmentManager = getFragmentManager();
-                            fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.frag_area, stub);
-                            fragmentTransaction.commit();
+                            menueSetter(stub);//TODO Fehlermeldung "Du musst erst in einen Raum gehen/Waffe aufnehmen um einen Verdacht zu äußern"
                             break;
                         }else {
-                            fragmentManager = getFragmentManager();
-                            fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.frag_area, suspect);
-                            fragmentTransaction.commit();
+                            menueSetter(suspect);
                             break;
                         }
                     }
 
                     case R.id.weapon_change: {
                         //TODO Irgendwann austauschen gegen QR Scanner
-                        fragmentManager = getFragmentManager();
-                        fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frag_area, changeWeapon);
-                        fragmentTransaction.commit();
+                        menueSetter(changeWeapon);
                         break;
                     }
 
                     case R.id.indict: {
-                        fragmentManager = getFragmentManager();
-                        fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frag_area, indict);
-                        fragmentTransaction.commit();
+                        menueSetter(indict);
                         break;
                     }
 
                     case R.id.pause: {
                         //TODO Timer starten/stoppen, Broadcast
-                        fragmentManager = getFragmentManager();
-                        fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frag_area, stub);
-                        fragmentTransaction.commit();
+                        menueSetter(stub);
                         endTurn();
                         break;
                     }
 
                     case R.id.help: {
                         //TODO muss noch überlegt werden, was wir reinschreiben wollen... und dann schreiben...
-                        fragmentManager = getFragmentManager();
-                        fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frag_area, stub);
-                        fragmentTransaction.commit();
+                        menueSetter(stub);
                         break;
                     }
                 }
@@ -163,8 +135,13 @@ public class MenueDrawer extends AppCompatActivity {
         //checkTurn();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerToggle.syncState();
+    }
 
-
+    private void menueSetter(Fragment frag){
+        fragmentManager = getFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frag_area, frag);
+        fragmentTransaction.commit();
     }
 
     public void endTurn(){
@@ -190,7 +167,9 @@ public class MenueDrawer extends AppCompatActivity {
 
         }
     }
-
+/*
+        Auto-generated methods
+ */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

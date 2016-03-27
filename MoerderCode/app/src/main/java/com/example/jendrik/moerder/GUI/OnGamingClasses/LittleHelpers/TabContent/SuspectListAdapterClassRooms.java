@@ -32,8 +32,7 @@ public class SuspectListAdapterClassRooms extends RecyclerView.Adapter<SuspectLi
             super(itemView);
             colorField = (TextView) itemView.findViewById(R.id.txt_color_field);
             nameOfThing = (TextView) itemView.findViewById(R.id.txt_name_of_thing);
-            nameOfRoom = (TextView) itemView.findViewById(R.id.txt_name_of_room);
-            nameOfWeapon = (TextView) itemView.findViewById(R.id.txt_name_of_weapon);
+
         }
     }
 
@@ -51,9 +50,7 @@ public class SuspectListAdapterClassRooms extends RecyclerView.Adapter<SuspectLi
     public void onBindViewHolder(ViewHolderClass viewHolderClass, final int i) {
         int playerCount = MenueDrawer.game.getPlayers().size();
 
-        viewHolderClass.nameOfRoom.setText(PersonList.namesOfThings.get(i + playerCount));
-        ((ViewGroup) viewHolderClass.nameOfThing.getParent()).removeView(viewHolderClass.nameOfThing);
-        ((ViewGroup) viewHolderClass.nameOfWeapon.getParent()).removeView(viewHolderClass.nameOfWeapon);
+        viewHolderClass.nameOfThing.setText(PersonList.namesOfThings.get(i + playerCount));
         setSuspectColor(MenueDrawer.game.getActivePlayer().getSuspectOnList(i + playerCount), viewHolderClass.colorField);
 
         viewHolderClass.itemView.setOnClickListener(new View.OnClickListener() {

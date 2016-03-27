@@ -43,23 +43,6 @@ public class MapAdapterClass extends RecyclerView.Adapter<MapAdapterClass.ViewHo
 
         viewHolderClass.tvRoomName.setText(MapOverview.roomNames.get(i));
         viewHolderClass.tvWeaponName.setText(MapOverview.weaponNames.get(i));
-
-        /*viewHolderClass.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                MapOverview.tv.setText(MapOverview.itemTexte.get(i));
-
-/*
-                switch (i){
-                    case 0: //deinCode
-                        break;
-                    case 1: //deinCode
-                        break;  *
-                }
-            }
-        });*/
-
     }
 
     @Override

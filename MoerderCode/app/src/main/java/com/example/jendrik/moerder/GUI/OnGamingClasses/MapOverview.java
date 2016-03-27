@@ -22,9 +22,7 @@ import java.util.ArrayList;
  * Created by Jendrik on 20.03.2016.
  */
 public class MapOverview extends Fragment {
-    private Bundle extras;
     private View fragLayoutV;
-    private Game game;
 
     private  RecyclerView recyclerView;
     private  RecyclerView.Adapter rvadapter;
@@ -45,13 +43,10 @@ public class MapOverview extends Fragment {
 
         fragLayoutV = inflater.inflate(R.layout.fragment_map, container, false);
 
-        extras = getActivity().getIntent().getExtras();
-        game = (Game) extras.get("GAME");
-
         roomNames = new ArrayList<>();
         weaponNames = new ArrayList<>();
        //int i=0;
-        for(Room r: game.getRooms()) {
+        for(Room r: MenueDrawer.game.getRooms()) {
             roomNames.add(r.getName());
            // r.addWeapon(new Weapon("Testwaffe" + i, (i + 22)));
             //i++;
@@ -81,15 +76,5 @@ public class MapOverview extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        /*FrameLayout frame = (FrameLayout) fragLayoutV.findViewById(R.id.complete_map_layout);
-
-        LayoutInflater inflater = LayoutInflater.from(this.getContext());
-
-        for (Room r : game.getRooms()) {
-            View view = inflater.inflate(R.layout.test, frame, false);
-            // Do whatever you want with view
-
-            frame.addView(view);
-        }*/
     }
 }

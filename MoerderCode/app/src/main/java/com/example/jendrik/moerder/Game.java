@@ -133,9 +133,9 @@ public class Game implements Serializable {
             if(qrnr < 10) {
                 return playerManager.getNameByNumber(qrnr);
             }else if(qrnr < 20){
-                return roomManager.getNameByNumber(qrnr);
-            }else {
                 return weaponManager.getNameByNumber(qrnr);
+            }else {
+                return roomManager.getNameByNumber(qrnr);
             }
         }else{
             return "error";
@@ -200,5 +200,4 @@ public class Game implements Serializable {
         //Spiel Speichern über GUI
         //Auslöser zum Senden des Savegames -->gehört in ServerClass
     }
-
 }

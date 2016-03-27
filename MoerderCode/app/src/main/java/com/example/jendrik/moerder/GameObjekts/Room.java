@@ -39,4 +39,12 @@ public class Room implements Serializable {
         weaponList.add(weapon);
     }
 
+    public void removeWeapon(Weapon weapon){
+        for(int i = 0; i<weaponList.size();i++){
+            if(weaponList.get(i).getName().equals(weapon.getName()))
+                weaponList.remove(i);
+
+        }
+    }
+
 }

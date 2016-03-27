@@ -57,7 +57,7 @@ public class Suspect extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         extras = getActivity().getIntent().getExtras();
-        game = (Game) extras.get("GAME");
+        game = MenueDrawer.game;
 
         fillSpinner();
         //setRoom();
@@ -98,13 +98,13 @@ public class Suspect extends Fragment {
 
     private void setRoom(){
         TextView tv = (TextView) fragLayoutV.findViewById(R.id.txt_suspect_room);
-        room = game.getActivePlayer().getActualRoom();
+        room = game.getActivePlayer().getActualRoom().getName();
         tv.setText(room);
     }
 
     private void setWeapon(){
         TextView tv = (TextView)fragLayoutV.findViewById(R.id.txt_suspect_weapon);
-        weapon = game.getActivePlayer().getActualWeapon();
+        weapon = game.getActivePlayer().getActualWeapon().getName();
         tv.setText(weapon);
     }
 

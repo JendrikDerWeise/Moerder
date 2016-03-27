@@ -3,6 +3,7 @@ package com.example.jendrik.moerder.GUI;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -64,11 +65,20 @@ public class WaitForPlayers extends Activity {
     }
 
     public void onClickStartGame(View button){
+
+        //TODO Raum und Waffe bei Spieler 0 setzen um Suspect zu bedienen. Später löschen!
+        game.getActivePlayer().setActualRoom(game.getRooms().get(0));
+        game.getActivePlayer().setActualWeapon(game.getRooms().get(0).getWeaponList().get(0));
+        game.getRooms().get(0).addWeapon(game.getWeapons().get(1));
+        game.getRooms().get(0).addWeapon(game.getWeapons().get(2));
+        game.getRooms().get(0).removeWeapon(game.getWeapons().get(0));
+        game.getRooms().get(1).removeWeapon(game.getWeapons().get(1));
+        game.getRooms().get(2).removeWeapon(game.getWeapons().get(2));
+        Log.d("HUHU", "mist");
+
+
         final Intent intent = new Intent(this,MenueDrawer.class);
         intent.putExtra("GAME", game);
-        //TODO Raum und Waffe bei Spieler 0 setzen um Suspect zu bedienen. Später löschen!
-        game.getActivePlayer().setActualRoom(game.getRooms().get(0).getName());
-        game.getActivePlayer().setActualWeapon(game.getRooms().get(0).getWeaponList().get(0).getName());
         startActivity(intent);
     }
 }

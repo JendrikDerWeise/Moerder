@@ -17,7 +17,7 @@ public class WeaponManager implements Serializable {
     }
 
     public void createWeapon(String name){
-        int qrCode = weaponList.size() + 9;
+        int qrCode = weaponList.size() + 10;
         weaponList.add(new Weapon(name,qrCode));
     }
 
