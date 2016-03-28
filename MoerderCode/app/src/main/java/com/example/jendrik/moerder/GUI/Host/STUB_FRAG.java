@@ -1,4 +1,4 @@
-package com.example.jendrik.moerder.GUI;
+package com.example.jendrik.moerder.GUI.Host;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;

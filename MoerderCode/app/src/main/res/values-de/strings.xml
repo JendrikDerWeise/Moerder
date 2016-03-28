@@ -41,5 +41,7 @@
     <string name="tab_person">Person</string>
     <string name="tab_room">Raum</string>
     <string name="tab_weapon">Waffe</string>
+    <string name="txt_clues">Dies sind deine Hinweise:</string>
+    <string name="nav_clue">Hinweise</string>
 
 </resources>

@@ -15,9 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.jendrik.moerder.GUI.STUB_FRAG;
+import com.example.jendrik.moerder.GUI.Host.STUB_FRAG;
 import com.example.jendrik.moerder.Game;
-import com.example.jendrik.moerder.GameHandler;
 import com.example.jendrik.moerder.R;
 
 
@@ -33,6 +32,7 @@ public class MenueDrawer extends AppCompatActivity {
 
     private MapOverview map;
     private NoticeList noticeList;
+    private ShowClues clues;
     private Suspect suspect;
     private STUB_FRAG stub;
     private ChangeWeapon changeWeapon;
@@ -64,6 +64,7 @@ public class MenueDrawer extends AppCompatActivity {
 
         map = (MapOverview) Fragment.instantiate(this, MapOverview.class.getName(), null);
         noticeList = (NoticeList) Fragment.instantiate(this,NoticeList.class.getName(), null);
+        clues = (ShowClues) Fragment.instantiate(this,ShowClues.class.getName(),null);
         suspect = (Suspect) Fragment.instantiate(this,Suspect.class.getName(), null);
         changeWeapon = (ChangeWeapon) Fragment.instantiate(this,ChangeWeapon.class.getName(),null);
         indict = (Indict) Fragment.instantiate(this,Indict.class.getName(),null);
@@ -87,6 +88,11 @@ public class MenueDrawer extends AppCompatActivity {
 
                     case R.id.list: {
                         menueSetter(noticeList);
+                        break;
+                    }
+
+                    case R.id.clues:{
+                        menueSetter(clues);
                         break;
                     }
 
@@ -163,6 +169,9 @@ public class MenueDrawer extends AppCompatActivity {
                 break;
             case R.id.btn_no:
                 indict.onClickNo();
+                break;
+            case R.id.btn_ok_suspect:
+                endTurn();
                 break;
 
         }

@@ -48,5 +48,7 @@
     <string name="tab_person">Person</string>
     <string name="tab_room">Room</string>
     <string name="tab_weapon">Weapon</string>
+    <string name="txt_clues">These are your clues:</string>
+    <string name="nav_clue">Clues</string>
     <!-- Ende Drawer-Temp-Krams -->
 </resources>

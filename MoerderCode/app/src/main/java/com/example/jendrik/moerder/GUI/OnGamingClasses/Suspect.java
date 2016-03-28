@@ -26,7 +26,6 @@ public class Suspect extends Fragment {
     private View fragLayoutV;
     private Spinner spinnerPlayer;
     private Button btn;
-    private Bundle extras;
     private Game game;
     private String room;
     private String weapon;
@@ -56,7 +55,6 @@ public class Suspect extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        extras = getActivity().getIntent().getExtras();
         game = MenueDrawer.game;
 
         fillSpinner();
@@ -111,7 +109,10 @@ public class Suspect extends Fragment {
     public void onClickSuspect(){
         String player= (String)spinnerPlayer.getSelectedItem();
         Suspection sus = new Suspection(getActivity(), player, room, weapon, game, game.getActivePlayer().getpNumber());
+        //TODO irgendwie ein endTurn() einbauen
     }
+
+
 }
 
 

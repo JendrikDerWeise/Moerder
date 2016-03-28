@@ -1,4 +1,4 @@
-package com.example.jendrik.moerder.GUI;
+package com.example.jendrik.moerder.GUI.Host;
 
 import android.app.Activity;
 import android.os.Bundle;

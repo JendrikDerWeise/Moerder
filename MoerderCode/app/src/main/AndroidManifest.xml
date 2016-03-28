@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".GUI.Startscreen"
+            android:name=".GUI.Host.Startscreen"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme" >
@@ -20,26 +20,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GUI.CreateGame"
+            android:name=".GUI.Host.CreateGame"
             android:label="@string/txt_create_game"/>
         <activity
-            android:name=".GUI.RoomNameList"
+            android:name=".GUI.Host.RoomNameList"
             android:label="@string/txt_create_game"/>
         <activity
-            android:name=".GUI.WeaponNameList"
+            android:name=".GUI.Host.WeaponNameList"
             android:label="@string/txt_create_game"/>
         <activity
-            android:name=".GUI.GivenQrCodes"
+            android:name=".GUI.Host.GivenQrCodes"
             android:label="@string/txt_attach_qrcodes"/>
         <activity
-            android:name=".GUI.STUB" />
+            android:name=".GUI.Host.STUB" />
         <activity
-            android:name=".GUI.popupGivenQrCodes"
+            android:name=".GUI.Host.popupGivenQrCodes"
             android:theme="@style/AppTheme.PopUpTheme"/>
         <activity
             android:name=".QR.QRHandler" />
         <activity
-            android:name=".GUI.WaitForPlayers"
+            android:name=".GUI.Host.WaitForPlayers"
             android:label="@string/txt_wait_for_players"/>
         <activity
             android:name=".GUI.OnGamingClasses.MenueDrawer"

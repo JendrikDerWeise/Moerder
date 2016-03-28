@@ -1,13 +1,8 @@
-package com.example.jendrik.moerder.GUI;
+package com.example.jendrik.moerder.GUI.Host;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.text.Layout;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.R;
 
 /**

@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.MapAdapterClass;
-import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Room;
 import com.example.jendrik.moerder.GameObjekts.Weapon;
 import com.example.jendrik.moerder.R;
@@ -24,8 +23,8 @@ import java.util.ArrayList;
 public class MapOverview extends Fragment {
     private View fragLayoutV;
 
-    private  RecyclerView recyclerView;
-    private  RecyclerView.Adapter rvadapter;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter rvadapter;
     private RecyclerView.LayoutManager rvLayoutManager;
 
     public static ArrayList<String> roomNames;

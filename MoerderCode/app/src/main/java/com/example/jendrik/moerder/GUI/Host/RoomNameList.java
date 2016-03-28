@@ -1,4 +1,4 @@
-package com.example.jendrik.moerder.GUI;
+package com.example.jendrik.moerder.GUI.Host;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.jendrik.moerder.GameObjekts.Room;
 import com.example.jendrik.moerder.R;
 
 import java.util.ArrayList;
