@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.jendrik.moerder.GUI.Host.STUB_FRAG;
+import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.CountDownClass;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.R;
 
@@ -141,6 +142,9 @@ public class MenueDrawer extends AppCompatActivity {
         //checkTurn();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerToggle.syncState();
+
+        CountDownClass timer = new CountDownClass(this, game.getMin(),game.getSec());
+        timer.getTimer().start();
     }
 
     private void menueSetter(Fragment frag){

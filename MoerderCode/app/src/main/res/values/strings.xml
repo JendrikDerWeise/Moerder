@@ -50,5 +50,7 @@
     <string name="tab_weapon">Weapon</string>
     <string name="txt_clues">These are your clues:</string>
     <string name="nav_clue">Clues</string>
+    <string name="txt_minutes">Minutes:</string>
+    <string name="txt_seconds">Seconds:</string>
     <!-- Ende Drawer-Temp-Krams -->
 </resources>

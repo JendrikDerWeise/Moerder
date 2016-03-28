@@ -30,12 +30,16 @@ public class Game implements Serializable {
     private int numberOfThings;
     private String gameName;
     private String pwd;
+    private int min;
+    private int sec;
     private int justScannedQR;
 
 
-    public Game(String gameName, String pwd, ArrayList<String> rooms, ArrayList<String> weapons){
+    public Game(String gameName, String pwd, ArrayList<String> rooms, ArrayList<String> weapons, int min, int sec){
         this.gameName = gameName;
         this.pwd = pwd;
+        this.min = min;
+        this.sec = sec;
         solution = null;
         clueList = new ArrayList<Clue>();
         playerManager = new PlayerManager();
@@ -45,6 +49,7 @@ public class Game implements Serializable {
         createWeapons(weapons);
         numberOfThings = rooms.size() + weapons.size();
         justScannedQR = 0;
+
     }
 
     public Game(){} //nur für das Laden verwendet
@@ -52,6 +57,10 @@ public class Game implements Serializable {
     public String getGameName() {
         return gameName;
     }
+
+    public int getMin() { return min;}
+
+    public int getSec(){return sec;}
 
     private void createCards(){
         for (Player p:playerManager.getPlayerList())

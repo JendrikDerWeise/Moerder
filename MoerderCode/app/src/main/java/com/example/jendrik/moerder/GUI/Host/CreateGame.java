@@ -20,6 +20,8 @@ public class CreateGame extends Activity {
     public static final String PASS = "password";
     public static final String PLAYER_COUNT = "players";
     public static final String ROOM_COUNT = "rooms";
+    public static final String COUNTER_MIN = "minutes";
+    public static final String COUNTER_SEC = "seconds";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,13 @@ public class CreateGame extends Activity {
         final int p = spinnerR.getSelectedItemPosition();
         final int[] cRooms = getResources().getIntArray(R.array.rooms);
         final int countR = cRooms[p];
-        //TODO Timer einbauen
+        final EditText etMin = (EditText) findViewById(R.id.et_minutes);
+        final String str_min = etMin.getText().toString();
+        final int min = Integer.parseInt(str_min);
+        final EditText etSec = (EditText) findViewById(R.id.et_seconds);
+        final String str_sec= etSec.getText().toString();
+        final int sec = Integer.parseInt(str_sec);
+
 
         final Intent intent = new Intent(this, RoomNameList.class);
         intent.putExtra(NAME, gameName);
@@ -55,6 +63,8 @@ public class CreateGame extends Activity {
         }
         intent.putExtra(PLAYER_COUNT, countP);
         intent.putExtra(ROOM_COUNT, countR);
+        intent.putExtra(COUNTER_MIN, min);
+        intent.putExtra(COUNTER_SEC, sec);
 
         startActivity(intent);
     }

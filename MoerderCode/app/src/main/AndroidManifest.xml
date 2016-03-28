@@ -51,6 +51,8 @@
         <activity
             android:name=".GUI.OnGamingClasses.WinScreen" />
         <activity
+            android:name=".GUI.OnGamingClasses.LittleHelpers.CountDownClass" />
+        <activity
             android:name=".GUI.OnGamingClasses.LooseScreen" />
         <activity android:name=".GUI.OnGamingClasses.STUB_SCANNER"/>
         </application>

@@ -43,5 +43,7 @@
     <string name="tab_weapon">Waffe</string>
     <string name="txt_clues">Dies sind deine Hinweise:</string>
     <string name="nav_clue">Hinweise</string>
+    <string name="txt_minutes">Minuten:</string>
+    <string name="txt_seconds">Sekunden:</string>
 
 </resources>

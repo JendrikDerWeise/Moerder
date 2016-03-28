@@ -61,7 +61,10 @@ public class WeaponNameList extends Activity {
         getIntent().putExtra(WEAPON_LIST, weaponList);
         final Intent intent = new Intent(this, GivenQrCodes.class);
         intent.putExtras(extras);
-        Game game = new Game(gameName, pass, extras.getStringArrayList("room list"), weaponList);
+
+        int min = extras.getInt(CreateGame.COUNTER_MIN);
+        int sec = extras.getInt(CreateGame.COUNTER_SEC);
+        Game game = new Game(gameName, pass, extras.getStringArrayList("room list"), weaponList, min, sec);
         intent.putExtra("GAME", game);
 
         startActivity(intent);
