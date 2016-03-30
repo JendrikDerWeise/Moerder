@@ -35,6 +35,7 @@ public class MenueDrawer extends AppCompatActivity {
     private NoticeList noticeList;
     private ShowClues clues;
     private Suspect suspect;
+    private SuspectError suspectError;
     private STUB_FRAG stub;
     private ChangeWeapon changeWeapon;
     private ChangeWeaponError changeWeaponError;
@@ -56,8 +57,6 @@ public class MenueDrawer extends AppCompatActivity {
         game = (Game) extras.get("GAME");
         //TODO verhindern das "Zurücktaste" von Android in die Spielerstellung zurück kehrt. Wie geht das? Ggf. finish()?
         //TODO Mitteilung "gerufen werden"
-        //TODO Raum wechsel Fragment fehlt noch
-
 
         toolbar = (Toolbar) findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
@@ -70,6 +69,7 @@ public class MenueDrawer extends AppCompatActivity {
         noticeList = (NoticeList) Fragment.instantiate(this,NoticeList.class.getName(), null);
         clues = (ShowClues) Fragment.instantiate(this,ShowClues.class.getName(),null);
         suspect = (Suspect) Fragment.instantiate(this,Suspect.class.getName(), null);
+        suspectError = (SuspectError) Fragment.instantiate(this,SuspectError.class.getName(),null);
         changeWeapon = (ChangeWeapon) Fragment.instantiate(this,ChangeWeapon.class.getName(),null);
         changeWeaponError = (ChangeWeaponError) Fragment.instantiate(this,ChangeWeaponError.class.getName(),null);
         changeRoom = (ChangeRoom) Fragment.instantiate(this,ChangeRoom.class.getName(),null);
@@ -109,7 +109,7 @@ public class MenueDrawer extends AppCompatActivity {
 
                     case R.id.suspect: {
                         if(game.getActivePlayer().getActualWeapon()==null || game.getActivePlayer().getActualRoom().getName().equals(game.getGrpRoom().getName())){
-                            menueSetter(indictError);
+                            menueSetter(suspectError);
                             break;
                         }else {
                             menueSetter(suspect);
@@ -131,7 +131,10 @@ public class MenueDrawer extends AppCompatActivity {
                     }
 
                     case R.id.indict: {
-                        menueSetter(indict);
+                        if(game.getActivePlayer().getActualRoom().getName().equals(game.getGrpRoom().getName()))
+                            menueSetter(indict);
+                        else
+                            menueSetter(indictError);
                         break;
                     }
 

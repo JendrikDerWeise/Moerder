@@ -49,7 +49,8 @@
     <string name="grp_room">Gruppenraum</string>
     <string name="grp_room_weapon">Keine Waffe</string>
     <string name="txt_you_are_now">Du bist jetzt in Raum </string>
-    <string name="txt_error_on_indict">Du kannst keinen Verdacht im Gruppenraum äußern und du musst eine Waffe bei dir haben!</string>
+    <string name="txt_error_on_indict">Du musst im Gruppenraum sein, um eine Anklage zu erheben!</string>
     <string name="error_change_eapon">Es gibt keine Waffe in diesem Raum. Schau auf die Karte um Waffen zu finden.</string>
+    <string name="txt_error_on_suspect">Du kannst keinen Verdacht im Gruppenraum äußern und du musst eine Waffe bei dir haben!</string>
 
 </resources>
