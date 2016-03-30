@@ -20,6 +20,9 @@
             android:id="@+id/weapon_change"
             android:title="@string/nav_weapon_change"></item>
         <item
+            android:id="@+id/room_change"
+            android:title="@string/nav_room_change"></item>
+        <item
             android:id="@+id/indict"
             android:title="@string/nav_indict"></item>
         <item

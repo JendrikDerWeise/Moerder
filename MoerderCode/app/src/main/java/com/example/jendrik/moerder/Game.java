@@ -62,6 +62,8 @@ public class Game implements Serializable {
 
     public int getSec(){return sec;}
 
+    public Room getGrpRoom(){ return roomManager.getGrpRoom(); }
+
     private void createCards(){
         for (Player p:playerManager.getPlayerList())
             clueList.add(new Clue(p.getName(), 0));
@@ -77,8 +79,10 @@ public class Game implements Serializable {
 
     private void createPlayer(ArrayList<String> players){
         numberOfThings += players.size();
-        for(String s:players)
+        for(String s:players) {
             playerManager.addPlayer(s, numberOfThings);
+            playerManager.getPlayerList().get(playerManager.getPlayerList().size()-1).setActualRoom(roomManager.getGrpRoom());
+        }
         playerManager.getPlayerList().get(0).setActive(true);  //first Player has to be active for starting the game
     }
 
@@ -94,9 +98,6 @@ public class Game implements Serializable {
         Log.e("SOLUTION", solution.getMurderer() + solution.getRoom() + solution.getWeapon());
     }
 
-
-
-    
 
     private void createRooms(ArrayList<String> rooms){
         for (String s:rooms)

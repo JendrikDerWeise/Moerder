@@ -52,5 +52,11 @@
     <string name="nav_clue">Clues</string>
     <string name="txt_minutes">Minutes:</string>
     <string name="txt_seconds">Seconds:</string>
+    <string name="nav_room_change">Change room</string>
+    <string name="grp_room">Room of group</string>
+    <string name="grp_room_weapon">No weapon</string>
+    <string name="txt_you_are_now">You are now in the</string>
+    <string name="txt_error_on_indict">You have to be not in the room of the group and you have to have a weapon with you!</string>
+    <string name="error_change_eapon">There is no weapon in this room. Look at the map to find weapons.</string>
     <!-- Ende Drawer-Temp-Krams -->
 </resources>

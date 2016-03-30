@@ -37,10 +37,16 @@ public class MenueDrawer extends AppCompatActivity {
     private Suspect suspect;
     private STUB_FRAG stub;
     private ChangeWeapon changeWeapon;
+    private ChangeWeaponError changeWeaponError;
+    private ChangeRoom changeRoom;
     private Indict indict;
+    private IndictError indictError;
+    private Pause pause;
     public static Context cont;
     private static FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+    private CountDownClass timer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +55,6 @@ public class MenueDrawer extends AppCompatActivity {
         extras = getIntent().getExtras();
         game = (Game) extras.get("GAME");
         //TODO verhindern das "Zurücktaste" von Android in die Spielerstellung zurück kehrt. Wie geht das? Ggf. finish()?
-        //TODO Timer einbauen
-        //TODO Runde beenden Methode --> erst game-Objekt abspeichern und senden --> finish(); --> startActivity(getIntent);
-        //TODO Pro Runde eine Aktion --> Runde Beenden Aufruf in jedes Fragment, das als Aktion gilt
         //TODO Mitteilung "gerufen werden"
         //TODO Raum wechsel Fragment fehlt noch
 
@@ -68,7 +71,11 @@ public class MenueDrawer extends AppCompatActivity {
         clues = (ShowClues) Fragment.instantiate(this,ShowClues.class.getName(),null);
         suspect = (Suspect) Fragment.instantiate(this,Suspect.class.getName(), null);
         changeWeapon = (ChangeWeapon) Fragment.instantiate(this,ChangeWeapon.class.getName(),null);
+        changeWeaponError = (ChangeWeaponError) Fragment.instantiate(this,ChangeWeaponError.class.getName(),null);
+        changeRoom = (ChangeRoom) Fragment.instantiate(this,ChangeRoom.class.getName(),null);
         indict = (Indict) Fragment.instantiate(this,Indict.class.getName(),null);
+        indictError = (IndictError) Fragment.instantiate(this,IndictError.class.getName(),null);
+        pause = (Pause) Fragment.instantiate(this,Pause.class.getName(),null);
 
         stub = (STUB_FRAG) Fragment.instantiate(this,STUB_FRAG.class.getName(), null);
 
@@ -76,6 +83,9 @@ public class MenueDrawer extends AppCompatActivity {
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frag_area, map);
         fragmentTransaction.commit();
+
+        timer = new CountDownClass(this, game.getMin(),game.getSec());
+        timer.getTimer().start();
 
         navigationView = (NavigationView) findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -98,8 +108,8 @@ public class MenueDrawer extends AppCompatActivity {
                     }
 
                     case R.id.suspect: {
-                        if(game.getActivePlayer().getActualWeapon()==null || game.getActivePlayer().getActualRoom()==null){
-                            menueSetter(stub);//TODO Fehlermeldung "Du musst erst in einen Raum gehen/Waffe aufnehmen um einen Verdacht zu äußern"
+                        if(game.getActivePlayer().getActualWeapon()==null || game.getActivePlayer().getActualRoom().getName().equals(game.getGrpRoom().getName())){
+                            menueSetter(indictError);
                             break;
                         }else {
                             menueSetter(suspect);
@@ -108,8 +118,15 @@ public class MenueDrawer extends AppCompatActivity {
                     }
 
                     case R.id.weapon_change: {
-                        //TODO Irgendwann austauschen gegen QR Scanner
-                        menueSetter(changeWeapon);
+                        if(game.getActivePlayer().getActualRoom().getWeaponList().isEmpty())
+                            menueSetter(changeWeaponError);
+                        else
+                            menueSetter(changeWeapon);
+                        break;
+                    }
+
+                    case R.id.room_change: {
+                        menueSetter(changeRoom);
                         break;
                     }
 
@@ -119,9 +136,10 @@ public class MenueDrawer extends AppCompatActivity {
                     }
 
                     case R.id.pause: {
-                        //TODO Timer starten/stoppen, Broadcast
-                        menueSetter(stub);
-                        endTurn();
+                        //TODO Pause Broadcast
+                        timer.pause();
+                        menueSetter(pause);
+                        drawerToggle.setDrawerIndicatorEnabled(false);
                         break;
                     }
 
@@ -143,8 +161,7 @@ public class MenueDrawer extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerToggle.syncState();
 
-        CountDownClass timer = new CountDownClass(this, game.getMin(),game.getSec());
-        timer.getTimer().start();
+
     }
 
     private void menueSetter(Fragment frag){
@@ -177,7 +194,11 @@ public class MenueDrawer extends AppCompatActivity {
             case R.id.btn_ok_suspect:
                 endTurn();
                 break;
-
+            case R.id.btn_resume:
+                drawerToggle.setDrawerIndicatorEnabled(true);
+                menueSetter(map);
+                timer.resume();
+                break;
         }
     }
 /*

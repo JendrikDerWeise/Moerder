@@ -10,9 +10,11 @@ import java.util.ArrayList;
  */
 public class RoomManager implements Serializable{
     private ArrayList<Room> roomList;
+    private Room grpRoom;
 
     public RoomManager(){
         roomList = new ArrayList<>();
+        grpRoom = new Room("grp_room", 29);
     }
 
     public void createRoom(String name){
@@ -29,6 +31,10 @@ public class RoomManager implements Serializable{
             if(r.getQrCode() == qrnr){ return r.getName(); }
         }
         return "error";
+    }
+
+    public Room getGrpRoom(){
+        return grpRoom;
     }
 
 }
