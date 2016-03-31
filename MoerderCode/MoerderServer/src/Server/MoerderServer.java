@@ -18,11 +18,9 @@ public class MoerderServer {
 	public final static int DEFAULT_PORT = 2342;
 	protected int port;
 	protected ServerSocket serverSocket;
-	private LinkedList<ClientRequestProcessor> alleSpieler = new LinkedList<ClientRequestProcessor>();
-	private LinkedList<ClientRequestProcessor> alleObjectSpieler = new LinkedList<ClientRequestProcessor>();
-	private int spielerAnzahl = 0;
 	private HashMap<String, Game> games;
 	private HashMap<String, ArrayList<ClientRequestProcessor>> playerClients;
+	private HashMap<String, ArrayList<String>> players;
 	
 	
 	public MoerderServer(int port){
@@ -71,6 +69,7 @@ public class MoerderServer {
 		ClientRequestProcessor spieler = new ClientRequestProcessor(clientSocket);
 		String name = spieler.getName();
 		String gameName = spieler.setGame();
+		int playerNumber = 0;
 		while(gameName.substring(0, 5) == "search"){//TODO ist substring inclusive oder exclusive?
 			spieler.getSearchResult(searchGame(gameName.substring(6, gameName.length()-1)));
 			gameName = spieler.setGame();
@@ -78,7 +77,7 @@ public class MoerderServer {
 		if(games.containsKey(gameName)){
 			Game game = games.get(gameName);
 			boolean add = false;
-			if(game.getPwd()){
+			if(game.passwordSecured()){ //Schutz durch Passwort prüfen
 				String password = spieler.getPwd();
 				if(game.checkPwd(password)){
 					add = true;
@@ -89,14 +88,17 @@ public class MoerderServer {
 				add = true;
 			}
 			if(add){
-				game.addPlayer(name); 
-				//TODO prüfen, ob es 'genug' spieler sind und dann Spiel starten
+				int number = addPlayer(gameName, name);
+				spieler.setNumber(number);
 				games.remove(gameName);
 				games.put(gameName, game); 
-				ArrayList<ClientRequestProcessor> players = playerClients.get(gameName);
-				players.add(spieler);
+				ArrayList<ClientRequestProcessor> playersCl = playerClients.get(gameName);
+				playersCl.add(spieler);
 				playerClients.remove(gameName);
-				playerClients.put(gameName, players);
+				playerClients.put(gameName, playersCl);
+				if(playerClients.get(gameName).size() == games.get(gameName).getPlayerAmount()){
+					startGame(gameName);
+				}
 			}
 			
 		}else{
@@ -113,37 +115,43 @@ public class MoerderServer {
 			
 		}
 		
-			
-		//BIS HIER
-		Thread t = new Thread(alleSpieler.get(spielerAnzahl));
+		Thread t = new Thread(playerClients.get(gameName).get(playerClients.get(gameName).size()));
         t.start();  
-       
-        spielerAnzahl++; 
-        for(ClientRequestProcessor s : alleSpieler){
-        	s.setSpielerAnzahl(spielerAnzahl);
-        	s.setSpielerListe(alleSpieler);
-       }
 	}
+	
+	private int addPlayer(String gameName, String name){
+		ArrayList<String> playerNames = players.get(gameName);
+		if(playerNames == null || playerNames.size() == 0){
+			playerNames = new ArrayList<String>();
+			playerNames.add(name);
+		}else{
+			playerNames.add(name);
+			players.remove(gameName);
+		}
+		players.put(gameName, playerNames);
+		return playerNames.size();
+	}
+	
+	
 	
 	public Set searchGame(String searchString){
 		return games.keySet();
 	}
 	
 	public void startGame(String key){
+		
 		Game game = games.get(key);
-		game.startGame();
+		game.startGame(players.get(key));
+		players.remove(key);
 		games.remove(key);
 		games.put(key, game);
-		
+		for(int i = 0; i < game.getPlayerAmount(); i++){
+			playerClients.get(key).get(i).addPlayers(playerClients.get(key));
+			playerClients.get(key).get(i).setGame(game);
+		}
 	}
 	
-	public void oneRound(String key){
-		int player = games.get(key).getActivePlayer().getQrCode();
-		ArrayList<ClientRequestProcessor> list = playerClients.get(key);
-		list.get(player).sendGame(games.get(key)); //TODO -1 ? 
-		Game game = list.get(player).getGame(); //TODO Spiel nach SPielzug zurück bekommen
-		games.get(key).setActivePlayer(); //TODO das ganze Loopen		
-	}
+	
 	
 	public static void main(String[] args){
 		MoerderServer server = new MoerderServer(0);

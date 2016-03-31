@@ -30,8 +30,10 @@ public class ClientRequestProcessor implements Runnable {
 	private ObjectInputStream inO;
 	private ObjectOutputStream outO;
 	private LinkedList<ClientRequestProcessor> alleSpieler;
-	private boolean isKIAngelegt = false;
+	private ArrayList<ClientRequestProcessor> allPlayers;
 	private String name;
+	private int qrCode;
+	private Game game;
 	
 	
 	/**
@@ -65,25 +67,26 @@ public class ClientRequestProcessor implements Runnable {
 		}
 	}
 	
+	public void oneRound(){
+		if(game.getActivePlayer().getQrCode() == this.qrCode){
+			sendGame(game);
+			game = getGame();
+			game.setActivePlayer();	
+			allPlayers.get(game.getActivePlayer().getQrCode()).sendGame(game);
+		}else{
+			getGame();
+		}
+		
+	}
 	
 
-	/**
-	 * Methode wird zum Start des Threads ausgeführt. Versendet zunächst Willkommensnachricht und Spielernummer.
-	 * Anschließend beginnt die große Lausch-Schleife. 
-	 * Der Prozessor reagiert dabei auf folgende "Befehle"
-	 * 
-	 * - quit
-	 * - spiel anlegen
-	 * - join
-	 * - schiffe setzen
-	 * - fertig
-	 * - schiessen
-	 * - runde beendet
-	 * 
-	 * Genaueres in den jeweiligen Methoden.
-	 */
+	
 	@Override
 	public void run() {
+		
+		while(!game.getGameOver()){
+			oneRound();
+		}
 	
 		String welcome = "Willkommen beim Ultra HD Remix WurstBraten Simulator - Serverversion 0.001 BETA!!";
 
@@ -413,10 +416,6 @@ public class ClientRequestProcessor implements Runnable {
 		}
 	}
 	
-	public void setSpielerAnzahl(int spielerAnzahl){
-		this.spielerAnzahl = spielerAnzahl;
-	}
-	
 	public void setSpielerListe(LinkedList<ClientRequestProcessor> liste){
 		this.alleSpieler = liste;
 	}
@@ -437,6 +436,7 @@ public class ClientRequestProcessor implements Runnable {
 		Game game;
 		try {
 			game = (Game) inO.readObject();
+			this.game = game;
 			return game;
 		} catch (IOException | ClassNotFoundException e) {				
 			e.printStackTrace();
@@ -455,6 +455,9 @@ public class ClientRequestProcessor implements Runnable {
 		return null;
 	}
 
+	public void setGame(Game game){
+		this.game = game;
+	}
 
 	public String setGame() {
 		String code = "";
@@ -467,10 +470,15 @@ public class ClientRequestProcessor implements Runnable {
 		return null;
 	}
 
+	public void setNumber(int num){
+		this.qrCode = num;
+	}
 
 	public void getSearchResult(Set searchGame) {
 		try{
+			outO.reset();
 			outO.writeObject(searchGame);
+			outO.flush();
 		}catch(IOException e){
 			e.printStackTrace();
 		}
@@ -478,11 +486,18 @@ public class ClientRequestProcessor implements Runnable {
 	}
 	
 	public void sendGame(Game game){
+		this.game = game;
 		try{
+			outO.reset();
 			outO.writeObject(game);
+			outO.flush();
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+	}
+
+	public void addPlayers(ArrayList<ClientRequestProcessor> arrayList) {
+		this.allPlayers = arrayList;
 	}
 
 }

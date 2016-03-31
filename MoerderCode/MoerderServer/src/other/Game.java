@@ -32,10 +32,12 @@ public class Game implements Serializable {
     private int min;
     private int sec;
     private int justScannedQR;
-    private int currentPlayerAmount;
+    private int playerAmount;
+    private boolean gameOver;
 
 
-    public Game(String gameName, String pwd, ArrayList<String> rooms, ArrayList<String> weapons, int min, int sec){
+
+    public Game(String gameName, String pwd, ArrayList<String> rooms, ArrayList<String> weapons, int min, int sec, int playerAmount){
         this.gameName = gameName;
         this.pwd = pwd;
         this.min = min;
@@ -49,20 +51,13 @@ public class Game implements Serializable {
         createWeapons(weapons);
         numberOfThings = rooms.size() + weapons.size();
         justScannedQR = 0;
-        currentPlayerAmount = 0;
+        this.playerAmount = playerAmount;
+        gameOver = false;
     }
 
     public Game(){} //nur für das Laden verwendet
 
-    public String getGameName() {
-        return gameName;
-    }
 
-    public int getMin() { return min;}
-
-    public int getSec(){return sec;}
-
-    public Room getGrpRoom(){ return roomManager.getGrpRoom(); }
 
     private void createClues(){
         for (Player p:playerManager.getPlayerList())
@@ -127,7 +122,33 @@ public class Game implements Serializable {
     public boolean compareSolution(String murderer, String room, String weapon){
         return solution != null && solution.getMurderer().equals(murderer) && solution.getRoom().equals(room) && solution.getWeapon().equals(weapon);
     }
+    public Player getActivePlayer(){
+        Player player = new Player();
+        for(Player p : playerManager.getPlayerList()){
+            if(p.isActive())
+                player = p;
+        }
+        return player;
+    }
 
+    public String getGameName() {
+        return gameName;
+    }
+
+    public int getMin() { return min;}
+
+    public int getSec(){return sec;}
+
+    public Room getGrpRoom(){
+        return roomManager.getGrpRoom(); }
+
+    public int getPlayerAmount(){
+        return this.playerAmount;
+    }
+
+    public boolean getGameOver(){
+        return this.gameOver;
+    }
     public ArrayList<Room> getRooms(){
         return roomManager.showMap();
     }
@@ -140,7 +161,7 @@ public class Game implements Serializable {
         return playerManager.getPlayerList();
     }
 
-    public boolean getPwd(){
+    public boolean passwordSecured(){
         return pwd != "";
     }
 
@@ -148,28 +169,8 @@ public class Game implements Serializable {
         return this.pwd == pwd;
     }
 
-    public Player getActivePlayer(){
-        Player player = new Player();
-        for(Player p : playerManager.getPlayerList()){
-            if(p.isActive())
-                player = p;
-        }
-        return player;
-    }
 
-    public void setActivePlayer(){
-    	ArrayList<Player> list = playerManager.getPlayerList();
-    	for(int i = 0; i < list.size(); i++){
-            if(list.get(i).isActive()){
-            	if(i + 1 < list.size()){
-            		playerManager.setActive(list.get(i+1).getName());
-            	}else{
-            		playerManager.setActive(list.get(0).getName());
-            	}
-            }
-        }
-    }
-    
+
     public String getNameByNumber(int qrnr){
         if(qrnr > 0  && qrnr < 30){
             if(qrnr < 10) {
@@ -231,6 +232,19 @@ public class Game implements Serializable {
 
     public void setJustScannedQR(int qrnr){
         justScannedQR = qrnr;
+    }
+
+    public void setActivePlayer(){
+        ArrayList<Player> list = playerManager.getPlayerList();
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).isActive()){
+                if(i + 1 < list.size()){
+                    playerManager.setActive(list.get(i+1).getName());
+                }else{
+                    playerManager.setActive(list.get(0).getName());
+                }
+            }
+        }
     }
 
     public void startGame(ArrayList<String> players){

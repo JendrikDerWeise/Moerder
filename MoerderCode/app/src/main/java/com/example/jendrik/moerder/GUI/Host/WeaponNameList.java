@@ -64,7 +64,8 @@ public class WeaponNameList extends Activity {
 
         int min = extras.getInt(CreateGame.COUNTER_MIN);
         int sec = extras.getInt(CreateGame.COUNTER_SEC);
-        Game game = new Game(gameName, pass, extras.getStringArrayList("room list"), weaponList, min, sec);
+        int playerAmount = extras.getInt(CreateGame.PLAYER_COUNT);
+        Game game = new Game(gameName, pass, extras.getStringArrayList("room list"), weaponList, min, sec, playerAmount);
         intent.putExtra("GAME", game);
 
         startActivity(intent);

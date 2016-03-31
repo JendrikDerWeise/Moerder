@@ -44,10 +44,10 @@ public class ClueAdapterClass extends RecyclerView.Adapter<ClueAdapterClass.View
                 viewHolderClass.itemImageView.setImageResource(R.drawable.pfeil);
                 break;
             case 1:
-                viewHolderClass.itemImageView.setImageResource(R.drawable.sende_position);
+                //viewHolderClass.itemImageView.setImageResource(R.drawable.sende_position);
                 break;
             case 2:
-                viewHolderClass.itemImageView.setImageResource(R.drawable.snackbar_background);
+                //viewHolderClass.itemImageView.setImageResource(R.drawable.snackbar_background);
                 break;
         }
 

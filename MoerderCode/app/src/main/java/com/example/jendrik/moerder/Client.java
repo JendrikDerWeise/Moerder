@@ -40,6 +40,8 @@ public class Client {
         try {
             outO.reset();
             outO.writeObject((String)game.getGameName());
+            outO.flush();
+            outO.reset();
             outO.writeObject(game);
             outO.flush();
         } catch (IOException e) {
