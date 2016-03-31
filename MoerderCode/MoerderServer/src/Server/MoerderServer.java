@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Set;
 
+import GameObjekts.Player;
 import other.Game;
 
 
@@ -70,29 +71,44 @@ public class MoerderServer {
 		ClientRequestProcessor spieler = new ClientRequestProcessor(clientSocket);
 		String name = spieler.getName();
 		String gameName = spieler.setGame();
+		while(gameName.substring(0, 5) == "search"){//TODO ist substring inclusive oder exclusive?
+			spieler.getSearchResult(searchGame(gameName.substring(6, gameName.length()-1)));
+			gameName = spieler.setGame();
+		}
 		if(games.containsKey(gameName)){
 			Game game = games.get(gameName);
-			game.addPlayer(name); 
-			games.remove(gameName);
-			games.put(gameName, game); //TODO ist das ueberfluessig?
-			ArrayList<ClientRequestProcessor> players = playerClients.get(gameName);
-			players.add(spieler);
-			playerClients.remove(gameName);
-			playerClients.put(gameName, players);
-		}else{
-			if(gameName.substring(0, 5) == "search"){ //TODO ist substring inclusive oder exclusive?
-				spieler.getSearchResult(searchGame(gameName.substring(6, gameName.length()-1)));
-			}else{
-				Game game = spieler.getGame();
-				if(game != null){
-					//TODO ich gehe davon aus, dass dann der Spieler schon hinzugefuegt ist
-					games.put(gameName, game);
-					ArrayList<ClientRequestProcessor> players = new ArrayList<ClientRequestProcessor>();
-					players.add(spieler);
-					playerClients.put(gameName, players);
+			boolean add = false;
+			if(game.getPwd()){
+				String password = spieler.getPwd();
+				if(game.checkPwd(password)){
+					add = true;
 				}else{
-					//TODO error
+					//TODO Passwort Falsch, probiers nochmal
 				}
+			}else{
+				add = true;
+			}
+			if(add){
+				game.addPlayer(name); 
+				//TODO prüfen, ob es 'genug' spieler sind und dann Spiel starten
+				games.remove(gameName);
+				games.put(gameName, game); 
+				ArrayList<ClientRequestProcessor> players = playerClients.get(gameName);
+				players.add(spieler);
+				playerClients.remove(gameName);
+				playerClients.put(gameName, players);
+			}
+			
+		}else{
+			Game game = spieler.getGame();
+			if(game != null){
+				//TODO ich gehe davon aus, dass dann der Spieler schon hinzugefuegt ist
+				games.put(gameName, game);
+				ArrayList<ClientRequestProcessor> players = new ArrayList<ClientRequestProcessor>();
+				players.add(spieler);
+				playerClients.put(gameName, players);
+			}else{
+				//TODO error
 			}
 			
 		}
@@ -113,6 +129,21 @@ public class MoerderServer {
 		return games.keySet();
 	}
 	
+	public void startGame(String key){
+		Game game = games.get(key);
+		game.startGame();
+		games.remove(key);
+		games.put(key, game);
+		
+	}
+	
+	public void oneRound(String key){
+		int player = games.get(key).getActivePlayer().getQrCode();
+		ArrayList<ClientRequestProcessor> list = playerClients.get(key);
+		list.get(player).sendGame(games.get(key)); //TODO -1 ? 
+		Game game = list.get(player).getGame(); //TODO Spiel nach SPielzug zurück bekommen
+		games.get(key).setActivePlayer(); //TODO das ganze Loopen		
+	}
 	
 	public static void main(String[] args){
 		MoerderServer server = new MoerderServer(0);

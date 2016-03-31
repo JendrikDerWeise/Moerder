@@ -443,6 +443,17 @@ public class ClientRequestProcessor implements Runnable {
 		}	
 		return null;
 	}
+	
+	public String getPwd(){
+		String code = "";
+		try {
+			code = inO.readUTF();
+			return code;
+		} catch (IOException e) {				
+			e.printStackTrace();
+		}	
+		return null;
+	}
 
 
 	public String setGame() {
@@ -457,7 +468,6 @@ public class ClientRequestProcessor implements Runnable {
 	}
 
 
-
 	public void getSearchResult(Set searchGame) {
 		try{
 			outO.writeObject(searchGame);
@@ -465,6 +475,14 @@ public class ClientRequestProcessor implements Runnable {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void sendGame(Game game){
+		try{
+			outO.writeObject(game);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 
 }

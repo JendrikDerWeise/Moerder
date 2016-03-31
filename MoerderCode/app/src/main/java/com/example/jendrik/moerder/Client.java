@@ -74,6 +74,18 @@ public class Client {
         //TODO irgendein JUHU du bist dabei scheiß
     }
 
+    public void joinGame(String name, String password){
+        try {
+            outO.reset();
+            outO.writeObject((String) name);
+            outO.writeObject((String) password);
+            outO.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //TODO irgendein JUHU du bist dabei scheiß
+    }
+
     public void yourTurn(){
         try {
             game = (Game) inO.readObject();

@@ -33,6 +33,7 @@ public class Game implements Serializable {
     private int min;
     private int sec;
     private int justScannedQR;
+    private int currentPlayerAmount;
 
 
     public Game(String gameName, String pwd, ArrayList<String> rooms, ArrayList<String> weapons, int min, int sec){
@@ -49,7 +50,7 @@ public class Game implements Serializable {
         createWeapons(weapons);
         numberOfThings = rooms.size() + weapons.size();
         justScannedQR = 0;
-
+        currentPlayerAmount = 0;
     }
 
     public Game(){} //nur für das Laden verwendet
@@ -64,7 +65,7 @@ public class Game implements Serializable {
 
     public Room getGrpRoom(){ return roomManager.getGrpRoom(); }
 
-    private void createCards(){
+    private void createClues(){
         for (Player p:playerManager.getPlayerList())
             clueList.add(new Clue(p.getName(), 0));
 
@@ -113,6 +114,17 @@ public class Game implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param playerName Name of the Player that is to be added
+     * @return true for it worked, false for it didn't
+     */
+    public boolean addPlayer(String playerName){
+        boolean added = false;
+        //TODO
+        return added;
+    }
+
     public boolean compareSolution(String murderer, String room, String weapon){
         return solution != null && solution.getMurderer().equals(murderer) && solution.getRoom().equals(room) && solution.getWeapon().equals(weapon);
     }
@@ -127,6 +139,14 @@ public class Game implements Serializable {
 
     public ArrayList<Player> getPlayers(){
         return playerManager.getPlayerList();
+    }
+
+    public boolean getPwd(){
+        return pwd != "";
+    }
+
+    public boolean checkPwd(String pwd){
+        return this.pwd == pwd;
     }
 
     public Player getActivePlayer(){
@@ -175,15 +195,15 @@ public class Game implements Serializable {
                     if (copyClueList.get(cluePosition).getName() == solution.getMurderer() ||
                             copyClueList.get(cluePosition).getName() == solution.getWeapon() ||
                             copyClueList.get(cluePosition).getName() == solution.getRoom()) {
-                        //when the card is part of the solution
-                        //card is deleted from Copied List
+                        //when the clue is part of the solution
+                        //clue is deleted from Copied List
                         copyClueList.remove(cluePosition);
                         //loop repeats
                     }else if(!copyClueList.isEmpty()) { //if card is not part of solution
-                        //card is given
+                        //clue is given
                         playerManager.giveClue(copyClueList.get(cluePosition), i);
                         given = true;
-                        //Card is removed from copied List
+                        //Clue is removed from copied List
                         copyClueList.remove(cluePosition);
 
                     }
@@ -203,7 +223,7 @@ public class Game implements Serializable {
 
     public void startGame(ArrayList<String> players){
         createPlayer(players);
-        createCards();
+        createClues();
         giveCluesToPlayer();
         playerManager.setSuspectList(getRooms(),getWeapons());
         Log.d("KARTEN", "verteilt");
