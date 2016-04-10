@@ -1,5 +1,7 @@
 package com.example.jendrik.moerder;
 
+import com.example.jendrik.moerder.GameObjekts.Player;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -34,21 +36,21 @@ public class Client {
         }
     }
 
-    public void newGame(Game game){
-        //TODO wo kriege ich das Game übergeben
-        this.game = game;
+    /**
+     * Game gets sent back to Server
+     */
+    public void done(){
         try {
-            outO.reset();
-            outO.writeObject((String)game.getGameName());
-            outO.flush();
             outO.reset();
             outO.writeObject(game);
             outO.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //TODO in den Wartebildschirm
+        //TODO zurück zum Wartebildschirm/Karte
     }
+
+
 
     public void getGameList(){
         try {
@@ -65,6 +67,61 @@ public class Client {
         }
     }
 
+    public void getThisPartyStarted(){
+        //TODO Visualisierung von es hat geklappt, du bist dabei
+        Object inputO = "";
+        //Hauptschleife zum ständigen Abfragen von Clientaktionen
+        do {
+
+            try {
+                inputO = inO.readObject();
+
+            } catch (Exception e) {
+                System.out.println("--->Fehler beim Lesen vom Client (Aktion): ");
+                System.out.println(e.getMessage());
+                continue;
+            }
+
+            if(inputO.equals((String) "ende")){}
+
+            else if(inputO.equals((String) "weiter")){
+
+            }
+
+            else if(inputO.equals((String) "spieler")){
+
+            }
+
+            else if(inputO.equals((String) "spielerU")){
+
+            }
+
+            else if(inputO.equals((String) "spielerR")){
+
+            }
+
+            else if(inputO.equals((String) "spielerR2")){
+
+            }
+
+            else if(inputO.equals((String) "anklage")){
+
+            }
+
+            else if(inputO.equals((String) "anklage2")){
+
+            }
+
+            else if(inputO.equals((String) "tot")){
+                //TODO was passiert hier eigentlich
+            }
+
+            else{}
+
+
+        } while (!(inputO.equals((String) "ende")));
+    }
+
     public void joinGame(String name){
         try {
             outO.reset();
@@ -73,7 +130,11 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //TODO irgendein JUHU du bist dabei scheiß
+        if(readString() == "welcome"){
+            getThisPartyStarted();
+        }else if(readString() == "sorry"){
+            //TODO FEHLER
+        }
     }
 
     public void joinGame(String name, String password){
@@ -85,32 +146,27 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //TODO irgendein JUHU du bist dabei scheiß
-    }
-
-    public void yourTurn(){
-        try {
-            game = (Game) inO.readObject();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(readString() == "welcome"){
+            getThisPartyStarted();
+        }else if(readString() == "sorry"){
+            //TODO FEHLER
         }
-        //TODO irgendein Fenster öffenen oder so
     }
 
-    /**
-     * Game gets sent back to Server
-     */
-    public void done(){
+    public void newGame(Game game){
+        //TODO wo kriege ich das Game übergeben
+        this.game = game;
         try {
+            outO.reset();
+            outO.writeObject((String)game.getGameName());
+            outO.flush();
             outO.reset();
             outO.writeObject(game);
             outO.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //TODO zurück zum Wartebildschirm/Karte
+        //TODO in den Wartebildschirm
     }
 
     public void playerUpdate(Player player){
@@ -126,5 +182,33 @@ public class Client {
         }
     }
 
+    private String readString(){
+        try{
+            return (String) inO.readUTF();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        return "";
+    }
 
+    public void sendName(String string){
+        try {
+            outO.reset();
+            outO.writeObject((String) string);
+            outO.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void yourTurn(){
+        try {
+            game = (Game) inO.readObject();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //TODO irgendein Fenster öffenen oder so
+    }
 }

@@ -68,37 +68,9 @@ public class ClientRequestProcessor implements Runnable {
 		}
 	}
 	
-	public void oneRound(){
-		if(game.getActivePlayer().getQrCode() == this.qrCode){
-			sendGame(game);
-			game = getGame();
-			game.setActivePlayer();	
-			allPlayers.get(game.getActivePlayer().getQrCode()).sendGame(game);
-		} //TODO passiert hier was
-		
-	}
-	
-
-	
 	@Override
 	public void run() {
 		
-		while(!game.getGameOver()){
-			oneRound();
-		}
-	
-		String welcome = "Willkommen beim Ultra HD Remix WurstBraten Simulator - Serverversion 0.001 BETA!!";
-
-		try {
-			outO.reset();
-			outO.writeObject((String) welcome);
-			outO.flush();
-			outO.reset();
-			outO.writeInt(spielerNummer);
-			outO.flush();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
 		Object inputO = "";
 		//Hauptschleife zum st‰ndigen Abfragen von Clientaktionen
 		do {
@@ -112,7 +84,7 @@ public class ClientRequestProcessor implements Runnable {
 				continue;
 			}
 			
-			if(inputO.equals((String) "quit")){}
+			if(inputO.equals((String) "ende")){}
 			
 			else if(inputO.equals((String) "weiter")){
 				this.game = getGame();
@@ -130,307 +102,61 @@ public class ClientRequestProcessor implements Runnable {
 				game.updatePlayer(player);
 			}
 			
-			else if(inputO.equals((String) "fertig")){
-				System.out.println("fertig");
-				for(ClientRequestProcessor s : alleSpieler)
-					s.setAlleFertig();
-				while(!(alleFertig == spielerAnzahl)){System.out.println("warteschleife");} //WARTEN auf alle Spieler
-				if(!isKIAngelegt)
-					kIsAnlegen();
-				spielStart();
-				
+			else if(inputO.equals((String) "spielerR")){
+				int spielerQR = readInt();
+				callPlayer(spielerQR);
 			}
 		
-			else if(inputO.equals((String) "schiessen")){
-				schiessen();
+			else if(inputO.equals((String) "spielerR2")){
+				callPlayer();
 			}
 			
-			else if(inputO.equals((String) "runde beendet")){
-				spielerFertig();
+			else if(inputO.equals((String) "anklage")){
+				indict();
+			}
+			
+			else if(inputO.equals((String) "anklage2")){
+				indictTwo();
+			}
+			
+			else if(inputO.equals((String) "tot")){
+				//TODO was passiert hier eigentlich
 			}
 			
 			else{}
 			
 			
-		} while (!(inputO.equals((String) "quit")));
+		} while (!(inputO.equals((String) "ende")));
 		
 	}
 	
-	
-	/**
-	 * Sobald der Client die spielrelevanten Daten aus dem Einstellungsfenster gesendet hat, empf‰ngt der Prozessor diese und legt damit ein neues
-	 * Spiel an. Zudem werden die relevanten Variablen f¸r die Spielrunden in globaler Variable abgelegt. 
-	 */
-	public void spielAnlegen() {
-		
-			try {
-				spielerAnzahlGesamt = inO.readInt();
-				bGroesse = inO.readInt();
-				schiffAnz = inO.readInt();
-			} catch (NumberFormatException | IOException e) {				
-				e.printStackTrace();
-			}			
-		
-		spiel.spielVorbereitung(spielerAnzahlGesamt, bGroesse, schiffAnz, spielerNummer);
-		this.pM = spiel.getPM();
-		
-		eigenesBoard = spiel.getSpieler(spielerNummer).getBoard();
-		schiffListe = spiel.getSchiffListe(spielerNummer);
-	}
-	
-	
-	/**
-	 * Sendet an Spieler die relevanten Daten raus, wenn sie nicht Ersteller des Spiels sind.
-	 */
-	public void join(){
-		this.pM = spiel.getPM();
-		spielerAnzahlGesamt = pM.getLength();
-		bGroesse = spiel.getSpieler(0).getbGroesse();
-		schiffAnz = spiel.getSchiffAnz();
-				
-		try {
-			outO.reset();
-			outO.writeInt(spielerAnzahlGesamt);
-			outO.flush();
-			outO.reset();
-			outO.writeInt(bGroesse);
-			outO.flush();
-			outO.reset();
-			outO.writeInt(schiffAnz);
-			outO.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
-	}
-	
-	
-	/**
-	 * Legt automatisch die Computer-Gegner an. Sobald der Client seine Schiffe gesetzt hat und mit "OK" best‰tigt hat, pr¸ft der Prozessor wieviele 
-	 * Clients verbunden sind. Dies wird mit der vom Ersteller definierten "spielerAnzahlGesamt" abgeglichen und "restliche" Spieler als KI gesetzt.
-	 * Beispiel: 5 Spieler insg. gew‰hlt. Drei Clients Verbunden --> ergibt zwei KI-Gegner.
-	 */
-	public void kIsAnlegen(){
-		boolean[] tempSpielerA = new boolean[spielerAnzahlGesamt];
-		
-		for(int i = 0; i < tempSpielerA.length; i++){
-			if(i < spielerAnzahl)
-				tempSpielerA[i] = false;
-			else
-				tempSpielerA[i] = true;
-		}
-		
-		for(int i = 0; i < tempSpielerA.length; i++){
-			if(tempSpielerA[i]){
-				spiel.vorbKI(i, schiffAnz);
-			}
-			isKIAngelegt = true;
-		}	
-	}
-	
-
-	/**
-	 * Sobald Spieler seine Schiffe gesetzt hat, empf‰ngt der Prozessor das eigene Board sowie die Schiffliste und gibt diese an das eigentliche Hauptprogramm weiter.
-	 */
-	public void schiffeSetzen(){
-		
-		try {
-			eigenesBoard = (Board) inO.readObject();
-			schiffListe = (List<Ship>) inO.readObject();
-			
-		}catch (Exception e) {
-			System.out.println("--->Fehler beim Lesen vom Client: "+spielerNummer);
-			System.out.println(e.getMessage());
-		}
-		spiel.vorbSpieler(spielerNummer, schiffAnz);
-		spiel.getSpieler(spielerNummer).setEigenesBoard(eigenesBoard);
-		spiel.getSpieler(spielerNummer).setSchiffListe(schiffListe);
-	}
-	
-	
-	/**
-	 * setzt "alleFertig" hoch. Dies ist der Counter der festlegt, wann das Spiel beginnt.
-	 */
-	public void setAlleFertig(){
-		alleFertig++;
-	}
-	
-	
-	/**
-	 * Methode gibt den Starschuss an die verbundenen Spieler.
-	 */
-	public void spielStart() {
-		spiel.spielfeldErstellen();
-		//Hauptfenster der Spieler ˆffnen
-		try {
-			outO.writeObject((String) "hauptfenster oeffnen");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		update();
-	}
-	
-	
-	/**
-	 * Dies ist die Rundenverwaltung im Prozessor.
-	 * Sie gibt die Kommandos an den Spieler der an der Reihe ist raus. Ist der aktive Spieler eine KI, so initialisiert die Methode den Schuss der KI.
-	 * Anschlieﬂend geht der Update-Befehl raus, so dass alle Spieler unmittelbar die aktuellen Daten erhalten.
-	 * Ist nur noch ein Spieler am Leben, geht die game-over Meldung raus.
-	 * Der Ersteller der Spiels erh‰lt die Option ein neues Spiel zu erstellen.
-	 */
-	public void spielerFertig(){
-		if(pM.pruefenAktiveSpieler() > 1){
-			spiel.spielerBeendetRunde();
-			int aktiverSpieler = spiel.getAktiverSpieler();
-			
-			if(pM.getPlayer(aktiverSpieler).isAmLeben()){
-				if(aktiverSpieler < spielerAnzahl) //menschlieche Gegner
-					alleSpieler.get(aktiverSpieler).setOut("du bist dran"); //entsprechender Spieler wird informiert - isDran() aktiviert wieder aktionsmˆglichkeiten
-				else{//KI Gegner
-					if(pM.spielerWillSchiessen(aktiverSpieler)){
-						spiel.schiessen(0,0,0,0);
-						
-						anAlle("update");	
-						try {
-							outO.writeObject((String) "update");
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						update();
-					}
-					try {
-						outO.writeObject((String) "update");
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					update();
-					spielerFertig();
-				}
-			}else{
-				spielerFertig();
-				return;
-			}
+	public void accept(boolean ac){
+		if(ac){
+			setOut("welcome");
 		}else{
-			try {
-				outO.writeObject((String) "game over");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			int i=0;
-			for(Player gewinner : pM.getSpielerArray()){
-				if(gewinner.isAmLeben())
-					try {
-						outO.writeInt(i);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				i++;
-			}			
-			alleSpieler.get(0).setOut("wiederholung");
+			setOut("sorry");
 		}
-		
+	}
+	
+	public void addPlayers(ArrayList<ClientRequestProcessor> arrayList) {
+		this.allPlayers = arrayList;
+	}
+	
+	private void callPlayer(){
+		setOut("spielerR2");
 	}
 
-
-
-	/**
-	 * Liest die Erforderlichen Schieﬂ-Daten ein und gibt sie an das Hauptprogramm weiter.
-	 * Diese Methode wird nur f¸r menschliche Spieler verwendet, da die KI-Schieﬂmethode direkt in der Hauptklasse verwoben ist.
-	 * Daher erfolgt hier wieder ein Update-Aufruf.
-	 */
-	public void schiessen(){
-		int wirdBeschossen = 0;
-		int x = 0;
-		int y = 0;
-		int schiessendesSchiff = 0;
-		
-		try {
-			
-			wirdBeschossen = inO.readInt();;
-			x = inO.readInt();
-			y = inO.readInt();
-			schiessendesSchiff = inO.readInt();
-			
-		}catch (Exception e) {
-			System.out.println("--->Fehler beim Lesen vom Client (Name): ");
-			System.out.println(e.getMessage());
-		}
-		
-		spiel.schieﬂenGUIaction(wirdBeschossen,x,y,schiessendesSchiff);
-		//neues oeffentlBoard an alle schicken
-		
-		anAlle("update");	
-		try {
-			outO.writeObject((String) "update");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		update();
-	}
-
-
-	/**
-	 * Methode sendet String an alle verbundenen Mitspieler, auﬂer an sich selbst.
-	 * @param string
-	 */
-	public void anAlle(String string){
-		for(int i = 0; i < alleSpieler.size(); i++){
-			if(i != spielerNummer){
-				alleSpieler.get(i).setOut(string);
-				alleSpieler.get(i).update();
+	private void callPlayer(int spielerQR) {
+		for(int i = 0; i < allPlayers.size(); i++){
+			if(allPlayers.get(i).getQR() == spielerQR){
+				allPlayers.get(i).setOut("spielerR2");
 			}
 		}
 	}
-	
-	
-	/**
-	 * das eigentliche "Senden" des Strings aus anAlle()
-	 * @param string
-	 */
-	public void setOut(String string){
-		try {
-			outO.reset();
-			outO.writeObject((String) string);
-			outO.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 
-
-	/**
-	 * Update-Methode sendet das eigeneBoard, Schiffliste und das ˆffentliche Board-Array.
-	 */
-	public void update(){
-		
-		try {
-			outO.reset();
-			outO.writeObject(spiel.getSpieler(spielerNummer).getBoard());
-			outO.flush();
-			outO.reset();
-			outO.writeObject(spiel.getSpieler(spielerNummer).getSchiffListe());
-			outO.flush();
-			outO.reset();
-			outO.writeObject(spiel.getoeffentlBoards());
-			outO.flush();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void setSpielerListe(LinkedList<ClientRequestProcessor> liste){
-		this.alleSpieler = liste;
-	}
-	
 	public String getName(){
 		if(this.name == null){
-			try{
-				this.name = inO.readUTF();
-				return this.name;
-			}catch(IOException e){
-				e.printStackTrace();
-			}
+			name =  readString();
 		}
 		return this.name;
 	}
@@ -469,6 +195,64 @@ public class ClientRequestProcessor implements Runnable {
 		return null;
 	}
 
+	public int getQR(){
+		return this.qrCode;
+	}
+	
+	public void getSearchResult(Set searchGame) {
+		try{
+			outO.reset();
+			outO.writeObject(searchGame);
+			outO.flush();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void indict() {
+		for(int i = 0; i < allPlayers.size(); i++){
+			if(i != qrCode-1){
+				allPlayers.get(i).setOut("anklage2");
+			}
+		}
+		
+	}
+
+	private void indictTwo(){
+		try{
+			outO.reset();
+			outO.writeObject("anklage2");
+			outO.flush();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+
+	private void oneRound(){
+		if(game.getActivePlayer().getQrCode() == this.qrCode){
+			sendGame(game);
+			game = getGame();
+			game.setActivePlayer();	
+			allPlayers.get(game.getActivePlayer().getQrCode()).sendGame(game);
+		} //TODO passiert hier was
+		
+	}
+
+	private int readInt(){
+		return Integer.parseInt(readString());
+	}
+	
+	private String readString(){
+		try{
+			return (String) inO.readUTF();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return "";
+		
+	}
+
 	public void setGame(Game game){
 		this.game = game;
 	}
@@ -488,17 +272,20 @@ public class ClientRequestProcessor implements Runnable {
 		this.qrCode = num;
 	}
 
-	public void getSearchResult(Set searchGame) {
-		try{
+	/**
+	 * das eigentliche "Senden" des Strings aus anAlle()
+	 * @param string
+	 */
+	public void setOut(String string){
+		try {
 			outO.reset();
-			outO.writeObject(searchGame);
+			outO.writeObject((String) string);
 			outO.flush();
-		}catch(IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
-	
+
 	public void sendGame(Game game){
 		this.game = game;
 		try{
@@ -536,10 +323,6 @@ public class ClientRequestProcessor implements Runnable {
 				allPlayers.get(i).sendPlayer(player);
 			}
 		}
-	}
-
-	public void addPlayers(ArrayList<ClientRequestProcessor> arrayList) {
-		this.allPlayers = arrayList;
 	}
 
 }
