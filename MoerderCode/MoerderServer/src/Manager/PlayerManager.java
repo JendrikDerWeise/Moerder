@@ -68,4 +68,13 @@ public class PlayerManager implements Serializable {
             }
         }
     }
+
+    public void updatePlayer(Player player){
+        for(int i = 0; i  < playerList.size(); i++){
+            if(playerList.get(i).getQrCode() == player.getQrCode()){
+                playerList.remove(i);
+                playerList.set(i, player); //TODO Stimmt die reihenfolge?
+            }
+        }
+    }
 }

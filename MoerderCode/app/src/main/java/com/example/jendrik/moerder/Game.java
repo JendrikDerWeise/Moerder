@@ -242,4 +242,8 @@ public class Game implements Serializable {
         //Spiel Speichern über GUI
         //Auslöser zum Senden des Savegames -->gehört in ServerClass
     }
+
+    public void updatePlayer(Player player){
+        playerManager.updatePlayer(player);
+    }
 }

@@ -53,7 +53,7 @@ public class Client {
     public void getGameList(){
         try {
             outO.reset();
-            outO.writeObject((String) "search"); //TODO suche mit suchstring
+            outO.writeObject((String) "suchen"); //TODO suche mit suchstring
             outO.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -111,6 +111,19 @@ public class Client {
             e.printStackTrace();
         }
         //TODO zurück zum Wartebildschirm/Karte
+    }
+
+    public void playerUpdate(Player player){
+        try {
+            outO.reset();
+            outO.writeObject("spieler");
+            outO.flush();
+            outO.reset();
+            outO.writeObject(player);
+            outO.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

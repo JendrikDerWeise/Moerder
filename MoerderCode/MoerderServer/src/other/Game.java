@@ -17,7 +17,7 @@ import java.util.Random;
 /**
  * Created by Jendrik on 22.02.2016.
  *
- * Hier landet die Spielmechanik. Klassen fÃ¼r hosten und suchen kommen extra
+ * Hier landet die Spielmechanik. Klassen für hosten und suchen kommen extra
  *
  */
 public class Game implements Serializable {
@@ -57,7 +57,17 @@ public class Game implements Serializable {
 
     public Game(){} //nur für das Laden verwendet
 
-
+    public boolean compareSolution(String murderer, String room, String weapon){
+        return solution != null && solution.getMurderer().equals(murderer) && solution.getRoom().equals(room) && solution.getWeapon().equals(weapon);
+    }
+    public Player getActivePlayer(){
+        Player player = new Player();
+        for(Player p : playerManager.getPlayerList()){
+            if(p.isActive())
+                player = p;
+        }
+        return player;
+    }
 
     private void createClues(){
         for (Player p:playerManager.getPlayerList())
@@ -93,7 +103,6 @@ public class Game implements Serializable {
         //Log.e("SOLUTION", solution.getMurderer() + solution.getRoom() + solution.getWeapon());
     }
 
-
     private void createRooms(ArrayList<String> rooms){
         for (String s:rooms)
             roomManager.createRoom(s);
@@ -108,28 +117,6 @@ public class Game implements Serializable {
         }
     }
 
-    /**
-     *
-     * @param playerName Name of the Player that is to be added
-     * @return true for it worked, false for it didn't
-     */
-    public boolean addPlayer(String playerName){
-        boolean added = false;
-        //TODO
-        return added;
-    }
-
-    public boolean compareSolution(String murderer, String room, String weapon){
-        return solution != null && solution.getMurderer().equals(murderer) && solution.getRoom().equals(room) && solution.getWeapon().equals(weapon);
-    }
-    public Player getActivePlayer(){
-        Player player = new Player();
-        for(Player p : playerManager.getPlayerList()){
-            if(p.isActive())
-                player = p;
-        }
-        return player;
-    }
 
     public String getGameName() {
         return gameName;
@@ -168,8 +155,6 @@ public class Game implements Serializable {
     public boolean checkPwd(String pwd){
         return this.pwd == pwd;
     }
-
-
 
     public String getNameByNumber(int qrnr){
         if(qrnr > 0  && qrnr < 30){
@@ -255,5 +240,9 @@ public class Game implements Serializable {
         //Log.d("KARTEN", "verteilt");
         //Spiel Speichern über GUI
         //Auslöser zum Senden des Savegames -->gehört in ServerClass
+    }
+
+    public void updatePlayer(Player player){
+        playerManager.updatePlayer(player);
     }
 }

@@ -70,7 +70,7 @@ public class MoerderServer {
 		String name = spieler.getName();
 		String gameName = spieler.setGame();
 		int playerNumber = 0;
-		while(gameName.substring(0, 5) == "search"){//TODO ist substring inclusive oder exclusive?
+		while(gameName.substring(0, 5) == "suchen"){//TODO ist substring inclusive oder exclusive?
 			spieler.getSearchResult(searchGame(gameName.substring(6, gameName.length()-1)));
 			gameName = spieler.setGame();
 		}

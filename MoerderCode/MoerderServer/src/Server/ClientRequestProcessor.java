@@ -19,6 +19,7 @@ import java.util.Set;
 import javax.management.ObjectInstance;
 import javax.swing.JOptionPane;
 
+import GameObjekts.Player;
 import other.Game;
 
 
@@ -73,9 +74,7 @@ public class ClientRequestProcessor implements Runnable {
 			game = getGame();
 			game.setActivePlayer();	
 			allPlayers.get(game.getActivePlayer().getQrCode()).sendGame(game);
-		}else{
-			getGame();
-		}
+		} //TODO passiert hier was
 		
 	}
 	
@@ -115,16 +114,20 @@ public class ClientRequestProcessor implements Runnable {
 			
 			if(inputO.equals((String) "quit")){}
 			
-			else if(inputO.equals((String) "spiel anlegen")){
-				spielAnlegen();	
+			else if(inputO.equals((String) "weiter")){
+				this.game = getGame();
+				oneRound();
 			}
 			
-			else if(inputO.equals((String) "join")){
-				join();
+			else if(inputO.equals((String) "spieler")){
+				Player player = getPlayer();
+				sendPlayerToAll(player);
+				game.updatePlayer(player);
 			}
 			
-			else if(inputO.equals((String) "schiffe setzen")){
-				schiffeSetzen();
+			else if(inputO.equals((String) "spielerU")){
+				Player player = getPlayer();
+				game.updatePlayer(player);
 			}
 			
 			else if(inputO.equals((String) "fertig")){
@@ -444,6 +447,17 @@ public class ClientRequestProcessor implements Runnable {
 		return null;
 	}
 	
+	public Player getPlayer(){
+		Player player;
+		try {
+			player = (Player) inO.readObject();
+			return player;
+		} catch (IOException | ClassNotFoundException e) {				
+			e.printStackTrace();
+		}	
+		return null;
+	}
+	
 	public String getPwd(){
 		String code = "";
 		try {
@@ -493,6 +507,34 @@ public class ClientRequestProcessor implements Runnable {
 			outO.flush();
 		}catch(IOException e){
 			e.printStackTrace();
+		}
+	}
+	
+	public void sendPlayer(Player player){
+		try{
+			outO.reset();
+			outO.writeObject(player);
+			outO.flush();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendGameToAll(){
+		for(int i = 0; i < allPlayers.size(); i++){
+			if(i != qrCode-1){
+				allPlayers.get(i).setOut("weiter");
+				allPlayers.get(i).sendGame(game);
+			}
+		}
+	}
+	
+	public void sendPlayerToAll(Player player){
+		for(int i = 0; i < allPlayers.size(); i++){
+			if(i != qrCode-1){
+				allPlayers.get(i).setOut("spielerU");
+				allPlayers.get(i).sendPlayer(player);
+			}
 		}
 	}
 
