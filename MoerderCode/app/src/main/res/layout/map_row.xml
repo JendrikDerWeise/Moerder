@@ -1,38 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent" android:layout_height="40dp"
 
-android:background="?attr/selectableItemBackground"
-    >
+    <android.support.percent.PercentRelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#000000">
 
-<ImageView
-    android:src="@drawable/pfeil"
-    android:layout_width="40dp"
-    android:layout_height="40dp"
-    android:id="@+id/imageViewItem"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true" />
+    <TextView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        app:layout_widthPercent="5%"
+        app:layout_heightPercent="100%"
+        app:layout_marginTopPercent="5%"
+        app:layout_marginLeftPercent="2%"
+        app:layout_marginRightPercent="75%"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/txt_roomname_map"
 
-<TextView
-    android:layout_width="200dp"
-    android:layout_height="50dp"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="Medium Text"
-    android:id="@+id/txt_roomname_map"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentBottom="true"
-    android:layout_toLeftOf="@+id/txt_weapons_in_room_map"
-    android:layout_toRightOf="@+id/imageViewItem"
-    android:layout_toEndOf="@+id/imageViewItem" />
+        android:background="#3c64f6"
+        android:textColor="#ffffff"
 
-<TextView
-    android:layout_width="200dp"
-    android:layout_height="50dp"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="Medium Text"
-    android:id="@+id/txt_weapons_in_room_map"
-    android:layout_alignTop="@+id/txt_roomname_map"
-    android:layout_alignParentRight="true"
-    android:layout_alignParentEnd="true" />
-</RelativeLayout>
+        />
+    <TextView
+
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        app:layout_widthPercent="35%"
+        app:layout_heightPercent="100%"
+        app:layout_marginTopPercent="5%"
+        app:layout_marginLeftPercent="13%"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/txt_weapons_in_room_map"
+        android:background="#3c64f6"
+        android:textColor="#ffffff"
+
+    />
+
+    <TextView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        app:layout_widthPercent="35%"
+        app:layout_heightPercent="100%"
+        app:layout_marginTopPercent="5%"
+        app:layout_marginLeftPercent="52%"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/txt_weapons_in_room_map2"
+        android:background="#3c64f6"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        app:layout_widthPercent="5%"
+        app:layout_heightPercent="100%"
+        app:layout_marginTopPercent="5%"
+        app:layout_marginLeftPercent="93%"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/txt_roomname_map2"
+        android:background="#3c64f6"
+        android:textColor="#ffffff" />
+</android.support.percent.PercentRelativeLayout>

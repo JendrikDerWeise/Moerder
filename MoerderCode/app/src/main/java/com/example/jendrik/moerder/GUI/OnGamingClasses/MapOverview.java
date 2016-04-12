@@ -59,6 +59,7 @@ public class MapOverview extends Fragment {
 
         final Activity fA = getActivity();
         recyclerView = (RecyclerView) fragLayoutV.findViewById(R.id.recyclerview);
+
         rvLayoutManager = new LinearLayoutManager(fA);
         recyclerView.setLayoutManager(rvLayoutManager);
 
@@ -76,4 +77,5 @@ public class MapOverview extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
+
 }
