@@ -19,13 +19,17 @@ public class MapAdapterClass extends RecyclerView.Adapter<MapAdapterClass.ViewHo
 
         TextView tvRoomName;
         TextView tvWeaponName;
-       // ImageView itemImageView;
+        TextView tvRoomName2;
+        TextView tvWeaponName2;
+
 
         public ViewHolderClass(View itemView) {
             super(itemView);
             tvRoomName = (TextView) itemView.findViewById(R.id.txt_roomname_map);
             tvWeaponName = (TextView) itemView.findViewById(R.id.txt_weapons_in_room_map);
-            //itemImageView = (ImageView) itemView.findViewById(R.id.imageViewItem);
+            tvRoomName2 = (TextView) itemView.findViewById(R.id.txt_roomname_map2);
+            tvWeaponName2 = (TextView) itemView.findViewById(R.id.txt_weapons_in_room_map2);
+
 
         }
     }
@@ -41,9 +45,17 @@ public class MapAdapterClass extends RecyclerView.Adapter<MapAdapterClass.ViewHo
     @Override
     public void onBindViewHolder(ViewHolderClass viewHolderClass, final int i) {
 
+        int count = MapOverview.roomNames.size();
 
         viewHolderClass.tvRoomName.setText(MapOverview.roomNames.get(i));
         viewHolderClass.tvWeaponName.setText(MapOverview.weaponNames.get(i));
+        if(i < count-1){
+            viewHolderClass.tvRoomName2.setText(MapOverview.roomNames.get(i+1));
+            viewHolderClass.tvWeaponName2.setText(MapOverview.weaponNames.get(i+1));
+        }
+
+
+
     }
 
     @Override
