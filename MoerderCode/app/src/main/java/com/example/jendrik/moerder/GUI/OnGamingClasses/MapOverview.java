@@ -30,8 +30,6 @@ public class MapOverview extends Fragment {
     public static ArrayList<String> roomNames;
     public static ArrayList<String> weaponNames;
 
-    static TextView tv;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +53,6 @@ public class MapOverview extends Fragment {
             weaponNames.add(str_weaponNames);
         }
 
-
-
         final Activity fA = getActivity();
         recyclerView = (RecyclerView) fragLayoutV.findViewById(R.id.recyclerview);
 
@@ -65,9 +61,6 @@ public class MapOverview extends Fragment {
 
         rvadapter = new MapAdapterClass();
         recyclerView.setAdapter(rvadapter);
-
-
-        tv = (TextView) fA.findViewById(R.id.textView);
 
         return fragLayoutV;
     }
