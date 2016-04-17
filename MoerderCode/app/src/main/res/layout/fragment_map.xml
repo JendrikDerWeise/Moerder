@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:fillViewport="true"
     android:background="#000000">
 
@@ -22,7 +23,9 @@
         android:id="@+id/imageView4"
         android:layout_centerHorizontal="true"
         android:src="@drawable/map2"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+
+        tools:ignore="MissingPrefix"/>
 
 
     <!--

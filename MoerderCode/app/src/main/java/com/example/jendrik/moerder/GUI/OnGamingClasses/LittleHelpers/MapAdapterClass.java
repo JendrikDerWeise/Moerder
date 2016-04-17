@@ -46,12 +46,35 @@ public class MapAdapterClass extends RecyclerView.Adapter<MapAdapterClass.ViewHo
     public void onBindViewHolder(ViewHolderClass viewHolderClass, final int i) {
 
         int count = MapOverview.roomNames.size();
+        int pos = i*2;
 
-        viewHolderClass.tvRoomName.setText(MapOverview.roomNames.get(i));
-        viewHolderClass.tvWeaponName.setText(MapOverview.weaponNames.get(i));
-        if(i < count-1){
-            viewHolderClass.tvRoomName2.setText(MapOverview.roomNames.get(i+1));
-            viewHolderClass.tvWeaponName2.setText(MapOverview.weaponNames.get(i+1));
+        if(pos <= count-1) {
+
+            viewHolderClass.tvRoomName.setText(MapOverview.roomNames.get(pos));
+            viewHolderClass.tvWeaponName.setText(MapOverview.weaponNames.get(pos));
+            if (pos < count - 1) {
+                viewHolderClass.tvRoomName2.setText(MapOverview.roomNames.get(pos + 1));
+                viewHolderClass.tvWeaponName2.setText(MapOverview.weaponNames.get(pos + 1));
+            }else {
+                viewHolderClass.tvRoomName2.setVisibility(View.INVISIBLE);
+                viewHolderClass.tvWeaponName2.setVisibility(View.INVISIBLE);
+            }
+        }
+
+        if(count%2==0) {
+            if (i >= count / 2) {
+                viewHolderClass.tvRoomName.setVisibility(View.INVISIBLE);
+                viewHolderClass.tvWeaponName.setVisibility(View.INVISIBLE);
+                viewHolderClass.tvRoomName2.setVisibility(View.INVISIBLE);
+                viewHolderClass.tvWeaponName2.setVisibility(View.INVISIBLE);
+            }
+        }else{
+            if (i >= (count / 2) + 1) {
+                viewHolderClass.tvRoomName.setVisibility(View.INVISIBLE);
+                viewHolderClass.tvWeaponName.setVisibility(View.INVISIBLE);
+                viewHolderClass.tvRoomName2.setVisibility(View.INVISIBLE);
+                viewHolderClass.tvWeaponName2.setVisibility(View.INVISIBLE);
+            }
         }
 
 
