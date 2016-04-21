@@ -24,6 +24,7 @@ public class Player implements Serializable{
         this.pNumber = pNumber;
         suspectList = new char[numberOfThings];
         givenClues = new ArrayList<>();
+        dead = false;
     }
 
     public Player(){}

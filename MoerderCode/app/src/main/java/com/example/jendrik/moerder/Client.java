@@ -55,7 +55,7 @@ public class Client {
     public void getGameList(){
         try {
             outO.reset();
-            outO.writeObject((String) "suchen"); //TODO suche mit suchstring
+            outO.writeObject((String) "search"); //TODO suche mit suchstring
             outO.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,44 +82,52 @@ public class Client {
                 continue;
             }
 
-            if(inputO.equals((String) "ende")){}
+            if(inputO.equals((String) "end")){}
 
-            else if(inputO.equals((String) "weiter")){
-
+            else if(inputO.equals((String) "next")){
+                //TODO Spielzug machen Screen oeffnen
+                //TODO veraendertes Game Objekt speichern
+                //TODO was, wenn zwischendurch noch einmal player gesendet wird, der upgedatet werden muss
+                sendGame(game);
             }
 
-            else if(inputO.equals((String) "spieler")){
-
+            else if(inputO.equals((String) "player")){
+                game.updatePlayer(readPlayer());
             }
 
-            else if(inputO.equals((String) "spielerU")){
-
+            else if(inputO.equals((String) "playerCall")){
+                int room = Integer.getInteger(readString());
+                //TODO POPUP "begib dich in den raum room"
             }
 
-            else if(inputO.equals((String) "spielerR")){
-
+            else if(inputO.equals((String) "prosecution")){
+                //TODO POPUP "begib dich in den Gruppenraum"
             }
 
-            else if(inputO.equals((String) "spielerR2")){
-
-            }
-
-            else if(inputO.equals((String) "anklage")){
-
-            }
-
-            else if(inputO.equals((String) "anklage2")){
-
-            }
-
-            else if(inputO.equals((String) "tot")){
+            else if(inputO.equals((String) "dead")){
                 //TODO was passiert hier eigentlich
             }
 
             else{}
 
 
-        } while (!(inputO.equals((String) "ende")));
+        } while (!(inputO.equals((String) "end")));
+    }
+
+    public void callPlayer(int qrnr){
+        try {
+            outO.reset();
+            outO.writeObject((String) "playerCall");
+            outO.flush();
+            outO.reset();
+            outO.write(qrnr);
+            outO.flush();
+            outO.reset();
+            outO.write(17); //TODO wo bekomme ich die Raumnummer her?
+            outO.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void joinGame(String name){
@@ -170,9 +178,10 @@ public class Client {
     }
 
     public void playerUpdate(Player player){
+        game.updatePlayer(player);
         try {
             outO.reset();
-            outO.writeObject("spieler");
+            outO.writeObject("player");
             outO.flush();
             outO.reset();
             outO.writeObject(player);
@@ -189,6 +198,35 @@ public class Client {
             e.printStackTrace();
         }
         return "";
+    }
+
+    private Player readPlayer(){
+        try{
+            Object object = inO.readObject();
+            if(object.getClass() == Player.class)
+                return (Player) object;
+        }catch(IOException e){
+            e.printStackTrace();
+        }catch(ClassNotFoundException c){
+            c.printStackTrace();
+        }
+        return null;
+    }
+
+    public void sendGame(Game game){
+        //TODO wo kriege ich das Game übergeben
+        this.game = game;
+        try {
+            outO.reset();
+            outO.writeObject((String) "next");
+            outO.flush();
+            outO.reset();
+            outO.writeObject(game);
+            outO.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //TODO in den Wartebildschirm
     }
 
     public void sendName(String string){
