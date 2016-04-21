@@ -213,19 +213,23 @@ public class ClientRequestProcessor implements Runnable {
 	private void oneRound(){
 		if(game.getActivePlayer().getQrCode() == this.qrCode && !game.getActivePlayer().isDead()){
 			sendGame(game);
-			Object object = readObject();
-			if(object.getClass() == Game.class){
-				game = getGame();
-				game.setActivePlayer();	
-				allPlayers.get(game.getActivePlayer().getQrCode()).sendGame(game);
-			}else if(object.getClass() == String.class){
-				if(object.equals("player")){
-					Object object2 = readObject();
-					if(object2.getClass() == Player.class){
-						sendPlayerToAll((Player) object2);
+			boolean done = false;
+			do{
+				Object object = readObject();
+				if(object.getClass() == Game.class){
+					game = getGame();
+					game.setActivePlayer();	
+					allPlayers.get(game.getActivePlayer().getQrCode()).sendGame(game);
+					done = true;
+				}else if(object.getClass() == String.class){
+					if(object.equals("player")){
+						Object object2 = readObject();
+						if(object2.getClass() == Player.class){
+							sendPlayerToAll((Player) object2);
+						}
 					}
 				}
-			}
+			}while(!done);
 			
 		} //TODO passiert hier was
 		
