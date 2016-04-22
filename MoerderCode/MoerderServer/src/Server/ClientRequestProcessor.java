@@ -98,7 +98,7 @@ public class ClientRequestProcessor implements Runnable {
 			
 			else if(inputO.equals((String) "player")){
 				Player player = getPlayer();
-				sendPlayerToAll(player);
+				sendPlayerToActive(player);
 				game.updatePlayer(player);
 			}
 			
@@ -109,11 +109,19 @@ public class ClientRequestProcessor implements Runnable {
 			}
 			
 			else if(inputO.equals((String) "prosecution")){
-				prosecution();
+				setOutToAllButMe("prosecution");
+			}
+			
+			else if(inputO.equals((String) "suspection")){
+				suspection();
 			}
 			
 			else if(inputO.equals((String) "dead")){
 				//TODO was passiert hier eigentlich
+			}
+			
+			else if(inputO.equals((String) "pause")){
+				
 			}
 			
 			else{}
@@ -137,12 +145,8 @@ public class ClientRequestProcessor implements Runnable {
 	
 
 	private void callPlayer(int playerQR, int roomQR) {
-		for(int i = 0; i < allPlayers.size(); i++){
-			if(allPlayers.get(i).getQR() == playerQR){
-				allPlayers.get(i).setOut("playerCall");
-				allPlayers.get(i).setOut("" + roomQR);
-			}
-		}
+		setOutToAllButMe("playerCall");
+		setOutToAllButMe(Integer.toString(roomQR));
 	}
 
 	public String getName(){
@@ -201,14 +205,6 @@ public class ClientRequestProcessor implements Runnable {
 		
 	}
 	
-	private void prosecution() {
-		for(int i = 0; i < allPlayers.size(); i++){
-			if(i != qrCode-1){
-				allPlayers.get(i).setOut("prosecution");
-			}
-		}
-		
-	}
 
 	private void oneRound(){
 		if(game.getActivePlayer().getQrCode() == this.qrCode && !game.getActivePlayer().isDead()){
@@ -225,13 +221,16 @@ public class ClientRequestProcessor implements Runnable {
 					if(object.equals("player")){
 						Object object2 = readObject();
 						if(object2.getClass() == Player.class){
-							sendPlayerToAll((Player) object2);
+							sendPlayerToActive((Player) object2);
 						}
 					}
 				}
 			}while(!done);
 			
-		} //TODO passiert hier was
+		}else{
+			setOutToAllButMe("update");
+			sendGame(game);
+		}
 		
 	}
 
@@ -294,6 +293,14 @@ public class ClientRequestProcessor implements Runnable {
 		}
 	}
 	
+	public void setOutToAllButMe(String string){
+		for(int i = 0; i < allPlayers.size(); i++){
+			if(allPlayers.get(i).getQR() != qrCode){
+				allPlayers.get(i).setOut(string);
+			}
+		}
+	}
+	
 	public void setInputO(String string){
 		this.inputO = string;
 	}
@@ -329,12 +336,38 @@ public class ClientRequestProcessor implements Runnable {
 		}
 	}
 	
-	public void sendPlayerToAll(Player player){
+	public void sendPlayerToActive(Player player){
 		game.updatePlayer(player);
 		for(int i = 0; i < allPlayers.size(); i++){
-			if(i != qrCode-1){
+			if(allPlayers.get(i).getQR() == game.getActivePlayer().getQrCode()){
 				allPlayers.get(i).setOut("player");
 				allPlayers.get(i).sendPlayer(player);
+			}
+		}
+	}
+	
+	public void sendSuspection(Suspection suspection){
+		try{
+			outO.reset();
+			outO.writeUTF("suspection");
+			outO.flush();
+			outO.reset();
+			outO.writeObject(suspection);
+			outO.flush();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+
+	private void suspection() {
+		try{
+            Suspection suspection = (Suspection) inO.readObject();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+		for(int i = 0; i < allPlayers.size(); i++){
+			if(allPlayers.get(i).getQR() != qrCode){
+				allPlayers.get(i).sendSuspection(suspection);
 			}
 		}
 	}
