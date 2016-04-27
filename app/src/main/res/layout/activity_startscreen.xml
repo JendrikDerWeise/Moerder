@@ -1,0 +1,76 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:background="@color/colorBackground" tools:context=".Startscreen">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/appName"
+            android:text="mord"
+            android:textColor="@color/colorFont"
+            android:textSize="100dp"
+            android:rotation="-10"
+            android:padding="20dp"
+            android:gravity="center"
+            android:textIsSelectable="true"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/host"
+                android:id="@+id/host"
+                android:layout_gravity="center_horizontal"
+                android:onClick="onClickCreateGame"
+                android:textColor="#FFFFFF"
+                android:background="@color/colorPrimary"
+                android:padding="10dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search"
+                android:id="@+id/search"
+                android:layout_gravity="center_horizontal"
+                android:padding="10dp"
+                android:textColor="#FFFFFF"
+                android:background="@color/colorPrimary"
+                android:layout_margin="20dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rules"
+                android:id="@+id/rules"
+                android:layout_gravity="center_horizontal"
+                android:padding="10dp"
+                android:background="#4eae2c"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,60 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light">
+        <!-- Customize your theme here.-->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+<!--
+    <style name="FullscreenTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+-->
+    <style name="AppTheme.PopUpTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
+
+    <style name="ThemeWithDrawer" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="drawerArrowStyle">@style/drawerarrow</item>
+    </style>
+
+    <style name="drawerarrow" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+    </style>
+
+    <style name="TabStyle" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="colorPrimary">#00bbff</item>
+
+        <item name="colorPrimaryDark">#00a8e6</item>
+        <item name="colorAccent">#00bbff</item>
+
+
+        <!-- Customize your theme here. -->
+    </style>
+
+
+    <style name="toolbarstyle" parent="Theme.AppCompat">
+
+        <item name="popupTheme">@style/Theme.AppCompat.Light</item>
+        <item name="colorPrimary">#00bbff</item>
+
+        <item name="colorPrimaryDark">#00a8e6</item>
+        <item name="colorAccent">#fff</item>
+
+
+    </style>
+
+
+</resources>
