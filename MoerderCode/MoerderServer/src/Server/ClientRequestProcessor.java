@@ -35,6 +35,7 @@ public class ClientRequestProcessor implements Runnable {
 	private String name;
 	private int qrCode;
 	private Game game;
+	private Object inputO = "";
 	
 	
 	/**
@@ -71,7 +72,11 @@ public class ClientRequestProcessor implements Runnable {
 	@Override
 	public void run() {
 		
-		Object inputO = "";
+		do{
+			
+		}while(inputO != "go"); //TODO testen, ob son scheiss funktioniert
+		
+		
 		//Hauptschleife zum ständigen Abfragen von Clientaktionen
 		do {
 			
@@ -84,49 +89,45 @@ public class ClientRequestProcessor implements Runnable {
 				continue;
 			}
 			
-			if(inputO.equals((String) "ende")){}
+			if(inputO.equals((String) "end")){}
 			
-			else if(inputO.equals((String) "weiter")){
+			else if(inputO.equals((String) "next")){
 				this.game = getGame();
 				oneRound();
 			}
 			
-			else if(inputO.equals((String) "spieler")){
+			else if(inputO.equals((String) "player")){
 				Player player = getPlayer();
-				sendPlayerToAll(player);
+				sendPlayerToActive(player);
 				game.updatePlayer(player);
 			}
 			
-			else if(inputO.equals((String) "spielerU")){
-				Player player = getPlayer();
-				game.updatePlayer(player);
+			else if(inputO.equals((String) "playerCall")){
+				int playerQR = readInt();
+				int roomQR = readInt();
+				callPlayer(playerQR, roomQR);
 			}
 			
-			else if(inputO.equals((String) "spielerR")){
-				int spielerQR = readInt();
-				callPlayer(spielerQR);
-			}
-		
-			else if(inputO.equals((String) "spielerR2")){
-				callPlayer();
+			else if(inputO.equals((String) "prosecution")){
+				setOutToAllButMe("prosecution");
 			}
 			
-			else if(inputO.equals((String) "anklage")){
-				indict();
+			else if(inputO.equals((String) "suspection")){
+				suspection();
 			}
 			
-			else if(inputO.equals((String) "anklage2")){
-				indictTwo();
-			}
-			
-			else if(inputO.equals((String) "tot")){
+			else if(inputO.equals((String) "dead")){
 				//TODO was passiert hier eigentlich
+			}
+			
+			else if(inputO.equals((String) "pause")){
+				
 			}
 			
 			else{}
 			
 			
-		} while (!(inputO.equals((String) "ende")));
+		} while (!(inputO.equals((String) "end")));
 		
 	}
 	
@@ -142,16 +143,10 @@ public class ClientRequestProcessor implements Runnable {
 		this.allPlayers = arrayList;
 	}
 	
-	private void callPlayer(){
-		setOut("spielerR2");
-	}
 
-	private void callPlayer(int spielerQR) {
-		for(int i = 0; i < allPlayers.size(); i++){
-			if(allPlayers.get(i).getQR() == spielerQR){
-				allPlayers.get(i).setOut("spielerR2");
-			}
-		}
+	private void callPlayer(int playerQR, int roomQR) {
+		setOutToAllButMe("playerCall");
+		setOutToAllButMe(Integer.toString(roomQR));
 	}
 
 	public String getName(){
@@ -210,32 +205,32 @@ public class ClientRequestProcessor implements Runnable {
 		
 	}
 	
-	private void indict() {
-		for(int i = 0; i < allPlayers.size(); i++){
-			if(i != qrCode-1){
-				allPlayers.get(i).setOut("anklage2");
-			}
-		}
-		
-	}
-
-	private void indictTwo(){
-		try{
-			outO.reset();
-			outO.writeObject("anklage2");
-			outO.flush();
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-	}
 
 	private void oneRound(){
-		if(game.getActivePlayer().getQrCode() == this.qrCode){
+		if(game.getActivePlayer().getQrCode() == this.qrCode && !game.getActivePlayer().isDead()){
 			sendGame(game);
-			game = getGame();
-			game.setActivePlayer();	
-			allPlayers.get(game.getActivePlayer().getQrCode()).sendGame(game);
-		} //TODO passiert hier was
+			boolean done = false;
+			do{
+				Object object = readObject();
+				if(object.getClass() == Game.class){
+					game = getGame();
+					game.setActivePlayer();	
+					allPlayers.get(game.getActivePlayer().getQrCode()).sendGame(game);
+					done = true;
+				}else if(object.getClass() == String.class){
+					if(object.equals("player")){
+						Object object2 = readObject();
+						if(object2.getClass() == Player.class){
+							sendPlayerToActive((Player) object2);
+						}
+					}
+				}
+			}while(!done);
+			
+		}else{
+			setOutToAllButMe("update");
+			sendGame(game);
+		}
 		
 	}
 
@@ -250,6 +245,18 @@ public class ClientRequestProcessor implements Runnable {
 			e.printStackTrace();
 		}
 		return "";
+		
+	}
+	
+	private Object readObject(){
+		try{
+			return inO.readObject();
+		}catch(IOException e){
+			e.printStackTrace();
+		}catch(ClassNotFoundException c){
+			c.printStackTrace();
+		}
+		return null;
 		
 	}
 
@@ -285,6 +292,18 @@ public class ClientRequestProcessor implements Runnable {
 			e.printStackTrace();
 		}
 	}
+	
+	public void setOutToAllButMe(String string){
+		for(int i = 0; i < allPlayers.size(); i++){
+			if(allPlayers.get(i).getQR() != qrCode){
+				allPlayers.get(i).setOut(string);
+			}
+		}
+	}
+	
+	public void setInputO(String string){
+		this.inputO = string;
+	}
 
 	public void sendGame(Game game){
 		this.game = game;
@@ -298,6 +317,7 @@ public class ClientRequestProcessor implements Runnable {
 	}
 	
 	public void sendPlayer(Player player){
+		game.updatePlayer(player);
 		try{
 			outO.reset();
 			outO.writeObject(player);
@@ -310,17 +330,44 @@ public class ClientRequestProcessor implements Runnable {
 	public void sendGameToAll(){
 		for(int i = 0; i < allPlayers.size(); i++){
 			if(i != qrCode-1){
-				allPlayers.get(i).setOut("weiter");
+				allPlayers.get(i).setOut("next");
 				allPlayers.get(i).sendGame(game);
 			}
 		}
 	}
 	
-	public void sendPlayerToAll(Player player){
+	public void sendPlayerToActive(Player player){
+		game.updatePlayer(player);
 		for(int i = 0; i < allPlayers.size(); i++){
-			if(i != qrCode-1){
-				allPlayers.get(i).setOut("spielerU");
+			if(allPlayers.get(i).getQR() == game.getActivePlayer().getQrCode()){
+				allPlayers.get(i).setOut("player");
 				allPlayers.get(i).sendPlayer(player);
+			}
+		}
+	}
+	
+	public void sendSuspection(Suspection suspection){
+		try{
+			outO.reset();
+			outO.writeUTF("suspection");
+			outO.flush();
+			outO.reset();
+			outO.writeObject(suspection);
+			outO.flush();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+
+	private void suspection() {
+		try{
+            Suspection suspection = (Suspection) inO.readObject();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+		for(int i = 0; i < allPlayers.size(); i++){
+			if(allPlayers.get(i).getQR() != qrCode){
+				allPlayers.get(i).sendSuspection(suspection);
 			}
 		}
 	}

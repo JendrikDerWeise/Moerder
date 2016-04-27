@@ -48,6 +48,26 @@ public class Suspection {
         informPlayer(playerHasCard);
     }
 
+    public String getPlayer() {
+        return player;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public String getWeapon() {
+        return weapon;
+    }
+
+    public int getSuspector() {
+        return suspector;
+    }
+
+    public String getCardOwner() {
+        return cardOwner;
+    }
+
     public void informPlayer(int playerHasCard){
         String shownCard="";
         if(playerHasCard == 88) //if nobody has suspection
@@ -79,4 +99,5 @@ public class Suspection {
 
         //TODO Broadcast-Popup mit Info über Verdacht und wer eine Karte gezeigt hat
     }
+
 }

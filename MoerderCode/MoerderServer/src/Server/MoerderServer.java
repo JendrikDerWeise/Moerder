@@ -69,7 +69,7 @@ public class MoerderServer {
 		ClientRequestProcessor spieler = new ClientRequestProcessor(clientSocket);
 		String name = spieler.getName();
 		String gameName = spieler.setGame();
-		while(gameName.substring(0, 5) == "suchen"){//TODO ist substring inclusive oder exclusive?
+		while(gameName.substring(0, 5) == "search"){//TODO ist substring inclusive oder exclusive?
 			spieler.getSearchResult(searchGame(gameName.substring(6, gameName.length()-1)));
 			gameName = spieler.setGame();
 		}
@@ -147,6 +147,7 @@ public class MoerderServer {
 		for(int i = 0; i < game.getPlayerAmount(); i++){
 			playerClients.get(key).get(i).addPlayers(playerClients.get(key));
 			playerClients.get(key).get(i).setGame(game);
+			playerClients.get(key).get(i).setInputO("go");
 		}
 	}
 	
