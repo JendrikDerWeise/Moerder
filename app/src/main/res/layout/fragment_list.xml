@@ -6,11 +6,7 @@
     tools:context=".NoticeList"
     android:background="@color/colorBackground">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hier kommt ein Bild hin"
-        android:id="@+id/textView12" />
+
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
@@ -44,14 +40,49 @@
         android:id="@+id/viewpager"
         android:background="@color/colorPrimaryDark" />
 
-    <ImageView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView5"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/pencil"
-        android:layout_above="@+id/tablayout"
-        android:padding="5dp" />
+        android:layout_above="@+id/linearLayout">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton"
+            android:layout_weight="1"
+            android:src="@drawable/arrow" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView5"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/pencil"
+            android:layout_above="@+id/tablayout"
+            android:padding="5dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton2"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:src="@drawable/arrow"
+            android:layout_margin="10dp"
+            android:background="@color/colorBackground" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@+id/toolbar"
+        android:id="@+id/linearLayout"></LinearLayout>
 
 
 </RelativeLayout>

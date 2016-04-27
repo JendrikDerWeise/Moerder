@@ -26,7 +26,7 @@
         jar="/Users/rahel/MI/tr47890/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         revision="23.0.1"
-        sha1="bf44f52cc51883162288e9cdbe34d7ec2c275bbf">
+        sha1="98cb3b0dc14c7cd0eb0d5b39aa9dbd7f65be9f04">
         <dex dex="/Users/rahel/MI/tr47890/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_95bc682052e2b4b64a3cf5d48afdab106ec05827/classes.dex" />
     </item>
     <item
@@ -68,7 +68,7 @@
         jar="/Users/rahel/MI/tr47890/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         revision="23.0.1"
-        sha1="1ab724081d63fd27b18d0cf13d2565747b73cf26">
+        sha1="80e69c9c2f0cba3e2c4546ffe3bf605ca1745267">
         <dex dex="/Users/rahel/MI/tr47890/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_6596a658d2c6e43deff836ffbee725f6bdab82bd/classes.dex" />
     </item>
     <item
