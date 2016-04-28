@@ -9,13 +9,6 @@
         <dex dex="/Users/rahel/MI/tr47890/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.2.1_5ba2f41880ebbc9f63e59792d73a119ca711ab4a/classes.dex" />
     </item>
     <item
-        jar="/Users/rahel/MI/tr47890/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.1/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.1"
-        sha1="3469cb457f10f74c28cbc05f069b6c894f6cbdd0">
-        <dex dex="/Users/rahel/MI/tr47890/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.2.1_6915b3b87f1649d2dd1d9d1796a12ea24aa9cc7c/classes.dex" />
-    </item>
-    <item
         jar="/Users/rahel/MI/tr47890/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/jars/classes.jar"
         jumboMode="true"
         revision="23.0.1"
@@ -23,18 +16,39 @@
         <dex dex="/Users/rahel/MI/tr47890/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.2.1_d9dab642002b2fd17a45bb77fc227d3e0dabfaf0/classes.dex" />
     </item>
     <item
-        jar="/Users/rahel/MI/tr47890/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        revision="23.0.1"
-        sha1="98cb3b0dc14c7cd0eb0d5b39aa9dbd7f65be9f04">
-        <dex dex="/Users/rahel/MI/tr47890/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_95bc682052e2b4b64a3cf5d48afdab106ec05827/classes.dex" />
-    </item>
-    <item
         jar="/Users/rahel/MI/tr47890/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.1/jars/classes.jar"
         jumboMode="true"
         revision="23.0.1"
         sha1="673d77a5bbddd766037f088e775df525c46407f0">
         <dex dex="/Users/rahel/MI/tr47890/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.2.1_f93376435b1672d74d4c3d5328ef813d765b0a1f/classes.dex" />
+    </item>
+    <item
+        jar="/Users/rahel/MI/tr47890/app/build/intermediates/exploded-aar/com.android.support/percent/23.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="ce16cf844ef6f424adb546dd8f9b07cb03c5bf52">
+        <dex dex="/Users/rahel/MI/tr47890/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-percent-23.2.1_a52f181e3e3dcfab4dbab0919e1e7c142e72d2a8/classes.dex" />
+    </item>
+    <item
+        jar="/Users/rahel/MI/tr47890/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="db29cdca65c1ddfb4c15ac261d5a013f38de5cc5">
+        <dex dex="/Users/rahel/MI/tr47890/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_6596a658d2c6e43deff836ffbee725f6bdab82bd/classes.dex" />
+    </item>
+    <item
+        jar="/Users/rahel/MI/tr47890/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="3469cb457f10f74c28cbc05f069b6c894f6cbdd0">
+        <dex dex="/Users/rahel/MI/tr47890/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.2.1_6915b3b87f1649d2dd1d9d1796a12ea24aa9cc7c/classes.dex" />
+    </item>
+    <item
+        jar="/Users/rahel/MI/tr47890/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.1"
+        sha1="3a3b63125d3a52ed489e15456904dcf2e9e06d85">
+        <dex dex="/Users/rahel/MI/tr47890/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_95bc682052e2b4b64a3cf5d48afdab106ec05827/classes.dex" />
     </item>
     <item
         jar="/Users/rahel/MI/tr47890/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.2.1/jars/classes.jar"
@@ -51,25 +65,11 @@
         <dex dex="/Users/rahel/MI/tr47890/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.2.1_71b32f3b421823dc35754ccc7d32662cff74372c/classes.dex" />
     </item>
     <item
-        jar="/Users/rahel/MI/tr47890/app/build/intermediates/exploded-aar/com.android.support/percent/23.2.1/jars/classes.jar"
-        jumboMode="true"
-        revision="23.0.1"
-        sha1="ce16cf844ef6f424adb546dd8f9b07cb03c5bf52">
-        <dex dex="/Users/rahel/MI/tr47890/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-percent-23.2.1_a52f181e3e3dcfab4dbab0919e1e7c142e72d2a8/classes.dex" />
-    </item>
-    <item
         jar="/Users/rahel/MI/tr47890/app/build/intermediates/exploded-aar/com.android.support/design/23.2.1/jars/classes.jar"
         jumboMode="true"
         revision="23.0.1"
         sha1="72961d8b453b46e277702f18de9d210bc019e36e">
         <dex dex="/Users/rahel/MI/tr47890/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-23.2.1_0384744e8142376903c39c84c984aaff8cc5ad92/classes.dex" />
-    </item>
-    <item
-        jar="/Users/rahel/MI/tr47890/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        revision="23.0.1"
-        sha1="80e69c9c2f0cba3e2c4546ffe3bf605ca1745267">
-        <dex dex="/Users/rahel/MI/tr47890/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_6596a658d2c6e43deff836ffbee725f6bdab82bd/classes.dex" />
     </item>
     <item
         jar="/Users/rahel/MI/tr47890/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/jars/classes.jar"
