@@ -41,10 +41,10 @@ public class Client {
 
 
 
-    public void getGameList(){
+    public void getGameList(String searchstring){
         try {
             outO.reset();
-            outO.writeUTF("search"); //TODO suche mit suchstring
+            outO.writeUTF("search" + searchstring); //TODO suche mit suchstring
             outO.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -74,7 +74,6 @@ public class Client {
             if(inputO.equals((String) "end")){}
 
             else if(inputO.equals((String) "next")){
-                gamesent = false;
                 Game game = readGame();
                 GameHandler.saveGame(game);
                 //TODO Spielzug machen Screen oeffnen
@@ -160,8 +159,8 @@ public class Client {
     public void joinGame(String name, String password){
         try {
             outO.reset();
-            outO.writeObject((String) name);
-            outO.writeObject((String) password);
+            outO.writeUTF( "join" + name);
+            outO.writeUTF( password);
             outO.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -178,7 +177,7 @@ public class Client {
         this.game = game;
         try {
             outO.reset();
-            outO.writeObject((String)game.getGameName());
+            outO.writeObject((String)"new" + game.getGameName());
             outO.flush();
             outO.reset();
             outO.writeObject(game);
@@ -217,6 +216,7 @@ public class Client {
         }
         return "";
     }
+
     private Game readGame(){
         try{
             Object object = inO.readObject();
@@ -229,6 +229,7 @@ public class Client {
         }
         return null;
     }
+
     private Player readPlayer(){
         try{
             Object object = inO.readObject();
@@ -241,6 +242,7 @@ public class Client {
         }
         return null;
     }
+
     private Suspection readSuspection() {
         try{
             Object object = inO.readObject();

@@ -30,6 +30,7 @@ public class Suspection {
         checkPlayerCards();
     }
 
+
     public void checkPlayerCards(){
         int playerHasCard = 88;
 

@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +22,7 @@ import javax.swing.JOptionPane;
 
 import GameObjekts.Player;
 import other.Game;
+import GameObjekts.Suspection;
 
 
 public class ClientRequestProcessor implements Runnable {
@@ -30,8 +32,8 @@ public class ClientRequestProcessor implements Runnable {
 	private PrintStream out;
 	private ObjectInputStream inO;
 	private ObjectOutputStream outO;
-	private LinkedList<ClientRequestProcessor> alleSpieler;
 	private ArrayList<ClientRequestProcessor> allPlayers;
+	private HashMap<Integer, Player> updatePlayers;
 	private String name;
 	private int qrCode;
 	private Game game;
@@ -47,7 +49,7 @@ public class ClientRequestProcessor implements Runnable {
 	 */
 	public ClientRequestProcessor(Socket socket){
 		this.clientSocket = socket;
-		
+		this.game = null;
 		
 		try { //Empfangsbereitschaft herstellen
 			
@@ -73,12 +75,15 @@ public class ClientRequestProcessor implements Runnable {
 	public void run() {
 		
 		do{
-			
-		}while(inputO != "go"); //TODO testen, ob son scheiss funktioniert
+			//auf Spieler warten
+		}while(game == null); //TODO testen, ob son scheiss funktioniert
 		
 		
 		//Hauptschleife zum ständigen Abfragen von Clientaktionen
 		do {
+			
+			oneRound(); //Wenn ich dran bin, mache ich nen Spielzug, wenn nicht passiert nichts
+			
 			
 			try {
 				inputO = inO.readObject();
@@ -91,10 +96,6 @@ public class ClientRequestProcessor implements Runnable {
 			
 			if(inputO.equals((String) "end")){}
 			
-			else if(inputO.equals((String) "next")){
-				this.game = getGame();
-				oneRound();
-			}
 			
 			else if(inputO.equals((String) "player")){
 				Player player = getPlayer();
@@ -208,28 +209,35 @@ public class ClientRequestProcessor implements Runnable {
 
 	private void oneRound(){
 		if(game.getActivePlayer().getQrCode() == this.qrCode && !game.getActivePlayer().isDead()){
+			setOut("next");
 			sendGame(game);
 			boolean done = false;
 			do{
 				Object object = readObject();
-				if(object.getClass() == Game.class){
+				if(object.equals((String) "next")){
 					game = getGame();
-					game.setActivePlayer();	
-					allPlayers.get(game.getActivePlayer().getQrCode()).sendGame(game);
-					done = true;
-				}else if(object.getClass() == String.class){
-					if(object.equals("player")){
-						Object object2 = readObject();
-						if(object2.getClass() == Player.class){
-							sendPlayerToActive((Player) object2);
+					int code;
+					if(!updatePlayers.isEmpty()){
+						for(int i = 0; i < game.getPlayerAmount(); i++){
+							code = game.getPlayers().get(i).getQrCode();
+							if(updatePlayers.containsKey(code)){
+								game.updatePlayer(updatePlayers.get(code));
+							}
 						}
+
+						updatePlayers.clear();
 					}
+					game.setActivePlayer();	
+					setGameForAll();
+					
+					//TODO Spiel an alle schicken
+					done = true;
+				}else if(object.equals((String) "player")){
+					Player object2 = (Player) readObject();
+					setUpdatedPlayer(object2);
 				}
 			}while(!done);
 			
-		}else{
-			setOutToAllButMe("update");
-			sendGame(game);
 		}
 		
 	}
@@ -262,9 +270,11 @@ public class ClientRequestProcessor implements Runnable {
 
 	public void setGame(Game game){
 		this.game = game;
+		setOut("update");
+		sendGame(this.game);	
 	}
 
-	public String setGame() {
+	public String getGameName() {
 		String code = "";
 		try {
 			code = inO.readUTF();
@@ -273,6 +283,13 @@ public class ClientRequestProcessor implements Runnable {
 			e.printStackTrace();
 		}	
 		return null;
+	}
+
+	private void setGameForAll() {
+		for(int i = 0; i < allPlayers.size(); i++){
+			allPlayers.get(i).setGame(this.game);
+		}
+		
 	}
 
 	public void setNumber(int num){
@@ -300,10 +317,6 @@ public class ClientRequestProcessor implements Runnable {
 			}
 		}
 	}
-	
-	public void setInputO(String string){
-		this.inputO = string;
-	}
 
 	public void sendGame(Game game){
 		this.game = game;
@@ -327,25 +340,19 @@ public class ClientRequestProcessor implements Runnable {
 		}
 	}
 	
-	public void sendGameToAll(){
-		for(int i = 0; i < allPlayers.size(); i++){
-			if(i != qrCode-1){
-				allPlayers.get(i).setOut("next");
-				allPlayers.get(i).sendGame(game);
-			}
-		}
-	}
-	
 	public void sendPlayerToActive(Player player){
 		game.updatePlayer(player);
 		for(int i = 0; i < allPlayers.size(); i++){
 			if(allPlayers.get(i).getQR() == game.getActivePlayer().getQrCode()){
-				allPlayers.get(i).setOut("player");
-				allPlayers.get(i).sendPlayer(player);
+				allPlayers.get(i).setUpdatedPlayer(player);
 			}
 		}
 	}
 	
+	public void setUpdatedPlayer(Player player) {
+		updatePlayers.put(player.getQrCode(), player);
+	}
+
 	public void sendSuspection(Suspection suspection){
 		try{
 			outO.reset();
@@ -360,16 +367,21 @@ public class ClientRequestProcessor implements Runnable {
 	}
 
 	private void suspection() {
+		//TODO das ist kaka so, das muss anders sein, inkompatible suspection klassen
 		try{
             Suspection suspection = (Suspection) inO.readObject();
+            
+            for(int i = 0; i < allPlayers.size(); i++){
+    			if(allPlayers.get(i).getQR() != qrCode){
+    				allPlayers.get(i).sendSuspection(suspection);
+    			}
+    		}
         }catch(IOException e){
             e.printStackTrace();
+        }catch(ClassNotFoundException c){
+        	c.printStackTrace();
         }
-		for(int i = 0; i < allPlayers.size(); i++){
-			if(allPlayers.get(i).getQR() != qrCode){
-				allPlayers.get(i).sendSuspection(suspection);
-			}
-		}
+		
 	}
 
 }

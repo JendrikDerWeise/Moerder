@@ -68,50 +68,56 @@ public class MoerderServer {
 	public void addClient(Socket clientSocket){
 		ClientRequestProcessor spieler = new ClientRequestProcessor(clientSocket);
 		String name = spieler.getName();
-		String gameName = spieler.setGame();
+		String gameName = spieler.getGameName();
 		while(gameName.substring(0, 5) == "search"){//TODO ist substring inclusive oder exclusive?
-			spieler.getSearchResult(searchGame(gameName.substring(6, gameName.length()-1)));
-			gameName = spieler.setGame();
+			spieler.getSearchResult(searchGame(gameName.substring(5, gameName.length())));
+			gameName = spieler.getGameName();
 		}
-		if(games.containsKey(gameName)){
-			Game game = games.get(gameName);
-			boolean add = false;
-			if(game.passwordSecured()){ //Schutz durch Passwort prüfen
-				String password = spieler.getPwd();
-				if(game.checkPwd(password)){
-					add = true;
+		if(gameName.substring(0,3) == "new"){
+			if(games.containsKey(gameName.substring(3,gameName.length()))){
+				//TODO schleife "name schon vergeben"
+			}else{
+				Game game = spieler.getGame();
+				if(game != null){
+					//TODO ich gehe davon aus, dass dann der Spieler schon hinzugefuegt ist
+					games.put(gameName, game);
+					ArrayList<ClientRequestProcessor> players = new ArrayList<ClientRequestProcessor>();
+					players.add(spieler);
+					playerClients.put(gameName, players);
 				}else{
-					//TODO Passwort Falsch, probiers nochmal
+					//TODO error
 				}
-			}else{
-				add = true;
-			}
-			if(add){
-				int number = addPlayer(gameName, name);
-				spieler.setNumber(number);
-				games.remove(gameName);
-				games.put(gameName, game); 
-				ArrayList<ClientRequestProcessor> playersCl = playerClients.get(gameName);
-				playersCl.add(spieler);
-				playerClients.remove(gameName);
-				playerClients.put(gameName, playersCl);
-				if(playerClients.get(gameName).size() == games.get(gameName).getPlayerAmount()){
-					startGame(gameName);
-				}
-			}
-			spieler.accept(add);
-		}else{
-			Game game = spieler.getGame();
-			if(game != null){
-				//TODO ich gehe davon aus, dass dann der Spieler schon hinzugefuegt ist
-				games.put(gameName, game);
-				ArrayList<ClientRequestProcessor> players = new ArrayList<ClientRequestProcessor>();
-				players.add(spieler);
-				playerClients.put(gameName, players);
-			}else{
-				//TODO error
 			}
 			
+		}else if(gameName.substring(0,4) == "join"){
+			if(games.containsKey(gameName)){
+				Game game = games.get(gameName);
+				boolean add = false;
+				if(game.passwordSecured()){ //Schutz durch Passwort prüfen
+					String password = spieler.getPwd();
+					if(game.checkPwd(password)){
+						add = true;
+					}else{
+						//TODO Passwort Falsch, probiers nochmal
+					}
+				}else{
+					add = true;
+				}
+				if(add){
+					int number = addPlayer(gameName, name);
+					spieler.setNumber(number);
+					games.remove(gameName);
+					games.put(gameName, game); 
+					ArrayList<ClientRequestProcessor> playersCl = playerClients.get(gameName);
+					playersCl.add(spieler);
+					playerClients.remove(gameName);
+					playerClients.put(gameName, playersCl);
+					if(playerClients.get(gameName).size() == games.get(gameName).getPlayerAmount()){
+						startGame(gameName);
+					}
+				}
+				spieler.accept(add);
+			}
 		}
 		
 		Thread t = new Thread(playerClients.get(gameName).get(playerClients.get(gameName).size()));
@@ -133,8 +139,14 @@ public class MoerderServer {
 	
 	
 	
-	public Set searchGame(String searchString){
-		return games.keySet();
+	public Set<String> searchGame(String searchString){
+		Set<String> setty = games.keySet();
+        for(String s : setty){
+            if(!s.contains(searchString)){
+                setty.remove(s);
+            }
+        }
+		return setty;
 	}
 	
 	public void startGame(String key){
@@ -147,7 +159,6 @@ public class MoerderServer {
 		for(int i = 0; i < game.getPlayerAmount(); i++){
 			playerClients.get(key).get(i).addPlayers(playerClients.get(key));
 			playerClients.get(key).get(i).setGame(game);
-			playerClients.get(key).get(i).setInputO("go");
 		}
 	}
 	
