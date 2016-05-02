@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#4eae2c</color>
+    <color name="colorPrimaryDark">#296d22</color>
+    <color name="colorBackground">#262626</color>
+    <color name="colorOtherTurn">#13445b</color>
+    <color name="colorOtherTurnLight">#1f657c</color>
+    <color name="colorFont">#FFFFFF</color>
+
+
+
     <color name="colorAccent">#FF4081</color>
 
     <color name="black_overlay">#66000000</color>
