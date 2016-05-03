@@ -20,7 +20,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/appName"
-            android:text="mordunddu"
+            android:text="mord"
             android:textColor="@color/colorFont"
             android:textSize="100dp"
             android:rotation="-10"
