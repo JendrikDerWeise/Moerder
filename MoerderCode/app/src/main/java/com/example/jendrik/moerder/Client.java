@@ -78,8 +78,13 @@ public class Client {
                 GameHandler.saveGame(game);
                 //TODO Spielzug machen Screen oeffnen
                 //TODO erst nach 'fertiger' runde hierher zurueck
-                //TODO was, wenn zwischendurch noch einmal player gesendet wird, der upgedatet werden muss
                 game = GameHandler.loadGame();
+
+                if(game.getGameOver()){
+                    sendString("end");
+                }else{
+                    sendGame(this.game);
+                }
             }
 
             else if(inputO.equals((String) "player")){
@@ -101,7 +106,7 @@ public class Client {
             }
 
             else if(inputO.equals((String) "suspection")){
-                readSuspection();
+                String[] s = readSuspection();
                 //TODO Popup mit den daten aus der Suspection (durch getter)
             }
 
@@ -157,14 +162,26 @@ public class Client {
     }
 
     public void joinGame(String name, String password){
-        try {
-            outO.reset();
-            outO.writeUTF( "join" + name);
-            outO.writeUTF( password);
-            outO.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        boolean worked = false;
+        int counter = 0;
+        do {
+            if (counter > 0) {
+                //TODO popup "leider ist das passwort falsch, versuche es erneut, oder spiele ein anderes spiel"
+            }
+            try {
+                outO.reset();
+                outO.writeUTF("join" + name);
+                outO.writeUTF(password);
+                outO.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try{
+                worked = inO.readBoolean();
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }while(!worked);
         if(readString() == "welcome"){
             getThisPartyStarted();
         }else if(readString() == "sorry"){
@@ -174,17 +191,30 @@ public class Client {
 
     public void newGame(Game game){
         //TODO wo kriege ich das Game übergeben
-        this.game = game;
-        try {
-            outO.reset();
-            outO.writeObject((String)"new" + game.getGameName());
-            outO.flush();
-            outO.reset();
-            outO.writeObject(game);
-            outO.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        boolean worked = false;
+        int counter = 0;
+        do{
+            if(counter > 0){
+                //TODO popup "den namen gibt es schon, der name muss eindeutig sein"
+            }
+            this.game = game;
+            try {
+                outO.reset();
+                outO.writeObject((String)"new" + game.getGameName());
+                outO.flush();
+                outO.reset();
+                outO.writeObject(game);
+                outO.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try{
+                worked = inO.readBoolean();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+            counter++;
+        }while(!worked);
         //TODO in den Wartebildschirm
     }
 
@@ -243,17 +273,20 @@ public class Client {
         return null;
     }
 
-    private Suspection readSuspection() {
-        try{
-            Object object = inO.readObject();
-            if(object.getClass() == Suspection.class)
-                return (Suspection) object;
-        }catch(IOException e){
-            e.printStackTrace();
-        }catch(ClassNotFoundException c){
-            c.printStackTrace();
-        }
-        return null;
+    /**
+     * reads a suspection from the server
+     *
+     * @return String array of components
+     * [0] suspector
+     * [1] suspected player
+     * [2] suspected room
+     * [3] suspected weapon
+     * [4] cardholder / the player that showed a card
+     */
+    private String[] readSuspection() {
+        String suspection = readString();
+        String[] suspect = suspection.split(" ");
+        return suspect;
     }
 
     public void sendGame(Game game){
@@ -280,17 +313,20 @@ public class Client {
         }
     }
 
-    public void sendSuspection(Suspection suspection){
+    public void sendString(String s){
         try {
             outO.reset();
-            outO.writeUTF("suspection");
-            outO.flush();
-            outO.reset();
-            outO.writeObject(suspection);
+            outO.writeUTF(s);
             outO.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void sendSuspection(Suspection suspection){
+        sendString("suspection");
+        String suspector = game.getNameByNumber(suspection.getSuspector()); //TODO auf jendriks antwort warten
+        sendString(suspector + " " + suspection.getPlayer() + " " + suspection.getRoom() + " " + suspection.getWeapon() + " " + suspection.getCardOwner());
     }
 
     public void updatePlayer(Player player){

@@ -66,16 +66,16 @@ public class MoerderServer {
 	 * @param clientSocket
 	 */
 	public void addClient(Socket clientSocket){
-		ClientRequestProcessor spieler = new ClientRequestProcessor(clientSocket);
+		ClientRequestProcessor spieler = new ClientRequestProcessor(clientSocket, this);
 		String name = spieler.getName();
 		String gameName = spieler.getGameName();
-		while(gameName.substring(0, 5) == "search"){//TODO ist substring inclusive oder exclusive?
+		while(gameName.substring(0, 5) == "search"){
 			spieler.getSearchResult(searchGame(gameName.substring(5, gameName.length())));
 			gameName = spieler.getGameName();
 		}
 		if(gameName.substring(0,3) == "new"){
 			if(games.containsKey(gameName.substring(3,gameName.length()))){
-				//TODO schleife "name schon vergeben"
+				spieler.sendBoolean(false); 
 			}else{
 				Game game = spieler.getGame();
 				if(game != null){
@@ -84,8 +84,9 @@ public class MoerderServer {
 					ArrayList<ClientRequestProcessor> players = new ArrayList<ClientRequestProcessor>();
 					players.add(spieler);
 					playerClients.put(gameName, players);
+					spieler.sendBoolean(false);
 				}else{
-					//TODO error
+					//TODO unerreichbarer error :) 
 				}
 			}
 			
@@ -97,8 +98,9 @@ public class MoerderServer {
 					String password = spieler.getPwd();
 					if(game.checkPwd(password)){
 						add = true;
+						spieler.sendBoolean(true);
 					}else{
-						//TODO Passwort Falsch, probiers nochmal
+						spieler.sendBoolean(false);//TODO Passwort Falsch, probiers nochmal
 					}
 				}else{
 					add = true;
@@ -137,7 +139,12 @@ public class MoerderServer {
 		return playerNames.size();
 	}
 	
-	
+	public void deleteGame(String gameName){
+		if(games.containsKey(gameName)){
+			games.remove(gameName);
+			playerClients.remove(gameName);
+		}
+	}
 	
 	public Set<String> searchGame(String searchString){
 		Set<String> setty = games.keySet();
