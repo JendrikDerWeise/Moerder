@@ -1,6 +1,8 @@
-package com.example.jendrik.moerder;
+package com.example.jendrik.moerder.GCM;
 
 import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.Suspection;
+import com.example.jendrik.moerder.Game;
+import com.example.jendrik.moerder.GameHandler;
 import com.example.jendrik.moerder.GameObjekts.Player;
 
 import java.io.IOException;
