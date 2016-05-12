@@ -1,6 +1,7 @@
 package Server;
 
 import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class GcmSender {
 
     public static final String API_KEY = "AIzaSyC6CeB3mHAPZM15ka0P24Q5P4VFfyxwFeo";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JSONException {
         if (args.length < 1 || args.length > 2 || args[0] == null) {
             System.err.println("usage: ./gradlew run -Pmsg=\"MESSAGE\" [-Pto=\"DEVICE_TOKEN\"]");
             System.err.println("");
