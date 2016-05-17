@@ -65,80 +65,69 @@ public class MyGcmListenerService extends GcmListenerService {
         } else {
             // normal downstream message.
         }
+        Game game;
+        switch(message){
+            case "end": //TODO was passiert hier
+                break;
+            case"next":
+                game = (Game) data.get("game"); //TODO irgendwie unschoen
+                GameHandler.saveGame(game);
+                //TODO Spielzug machen Screen oeffnen
+                //TODO erst nach 'fertiger' runde hierher zurueck
+                game = GameHandler.loadGame();
 
-        if(message.equals("end")){
-            //TODO was passiert hier
-        }
+                if(game.getGameOver()){
+                    //sendString("end");
+                }else{
+                    sendGame(game);
+                }
+                break;
+            case "player":
+                game = GameHandler.loadGame();
+                game.updatePlayer((Player)data.get("player"));
+                GameHandler.saveGame(game);
+                break;
+            case "playerCall":
+                int room = data.getInt("playerCall");
+                //TODO POPUP "begib dich in den raum room"
+                break;
+            case "prosecution":
+                //TODO POPUP "begib dich in den Gruppenraum"
+                break;
+            case "dead":
+                //TODO was passiert hier, gibt es das?
+                break;
+            case "suspection":
+                String[] s = data.getStringArray("suspection");
+                /**
+                 * [0] suspector
+                 * [1] suspected player
+                 * [2] suspected room
+                 * [3] suspected weapon
+                 * [4] cardholder / the player that showed a card
+                 */
+                //TODO Popup mit den daten aus der Suspection (durch getter)
+                break;
+            case "pause":
+                String playername = data.getString("pause");
+                //TODO Popup mit name und hat pause gedrueckt
+                break;
+            case "update":
+                game = (Game) data.get("game");
+                GameHandler.saveGame(game);
+                break;
+            case "welcome":
+                break;
+            case "newerror":
+                //TODO popup "name schon vegeben, ueberleg dir einen Neuen" /fuer spiel
+                break;
+            case "joinerror":
+                //TODO popup "leider ist etwas schief gelaufen, waehle ein anderes spiel oder gib das richtige pw ein"
+                break;
+            case "sorry":
+                break;
 
-        else if(message.equals("next")){
-            Game game = (Game) data.get("game"); //TODO irgendwie unschoen
-            GameHandler.saveGame(game);
-            //TODO Spielzug machen Screen oeffnen
-            //TODO erst nach 'fertiger' runde hierher zurueck
-            game = GameHandler.loadGame();
 
-            if(game.getGameOver()){
-                sendString("end");
-            }else{
-                sendGame(game);
-            }
-        }
-
-        else if(message.equals("player")){
-            Game game = GameHandler.loadGame();
-            game.updatePlayer((Player)data.get("player"));
-            GameHandler.saveGame(game);
-        }
-
-        else if(message.equals( "playerCall")){
-            int room = data.getInt("playerCall");
-            //TODO POPUP "begib dich in den raum room"
-        }
-
-        else if(message.equals("prosecution")){
-            //TODO POPUP "begib dich in den Gruppenraum"
-        }
-
-        else if(message.equals("dead")){
-            //TODO was passiert hier eigentlich
-        }
-
-        else if(message.equals("suspection")){
-            String[] s = data.getStringArray("suspection");
-            /**
-             * [0] suspector
-             * [1] suspected player
-             * [2] suspected room
-             * [3] suspected weapon
-             * [4] cardholder / the player that showed a card
-             */
-            //TODO Popup mit den daten aus der Suspection (durch getter)
-        }
-
-        else if(message.equals("pause")){
-            String playername = data.getString("pause");
-            //TODO Popup mit name und hat pause gedrueckt
-        }
-
-        else if(message.equals("update")){
-            Game game = (Game) data.get("game");
-            GameHandler.saveGame(game);
-        }
-
-        else if(message.equals("welcome")){
-            //TODO
-        }
-
-        else if(message.equals("newerror")){
-            //TODO popup "der Name ist schon vergeben"
-        }
-
-        else if(message.equals("joinerror")){
-            //TODO popup "etwas ist schief gelaufen, evtl stimmt das passwort nicht"
-        }
-
-        else if(message.equals("sorry")){
-            //TODO
         }
 
         // [START_EXCLUDE]
