@@ -22,8 +22,6 @@ import javax.swing.JOptionPane;
 
 import GameObjekts.Player;
 import other.Game;
-import GameObjekts.Suspection;
-
 
 public class ClientRequestProcessor implements Runnable {
 	
@@ -37,6 +35,7 @@ public class ClientRequestProcessor implements Runnable {
 	private String name;
 	private int qrCode;
 	private Game game;
+	private MoerderServer server;
 	private Object inputO = "";
 	
 	
@@ -47,9 +46,10 @@ public class ClientRequestProcessor implements Runnable {
 	 * @param host
 	 * @param port
 	 */
-	public ClientRequestProcessor(Socket socket){
+	public ClientRequestProcessor(Socket socket, MoerderServer server){
 		this.clientSocket = socket;
 		this.game = null;
+		this.server = server;
 		
 		try { //Empfangsbereitschaft herstellen
 			
@@ -82,7 +82,6 @@ public class ClientRequestProcessor implements Runnable {
 		//Hauptschleife zum ständigen Abfragen von Clientaktionen
 		do {
 			
-			oneRound(); //Wenn ich dran bin, mache ich nen Spielzug, wenn nicht passiert nichts
 			
 			
 			try {
@@ -94,8 +93,21 @@ public class ClientRequestProcessor implements Runnable {
 				continue;
 			}
 			
-			if(inputO.equals((String) "end")){}
+			if(inputO.equals((String) "end")){
+				for(int i = 0; i < allPlayers.size(); i++){
+					allPlayers.get(i).setOut("end");
+				}
+			}
 			
+			else if(inputO.equals((String) "next")){
+				try{
+					this.game = (Game) inO.readObject();
+				}catch(IOException e){
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
 			
 			else if(inputO.equals((String) "player")){
 				Player player = getPlayer();
@@ -127,8 +139,11 @@ public class ClientRequestProcessor implements Runnable {
 			
 			else{}
 			
+			oneRound(); //Wenn ich dran bin, mache ich nen Spielzug, wenn nicht passiert nichts
 			
 		} while (!(inputO.equals((String) "end")));
+		this.close();
+		server.deleteGame(game.getGameName());
 		
 	}
 	
@@ -148,6 +163,17 @@ public class ClientRequestProcessor implements Runnable {
 	private void callPlayer(int playerQR, int roomQR) {
 		setOutToAllButMe("playerCall");
 		setOutToAllButMe(Integer.toString(roomQR));
+	}
+	
+	private void close(){
+		try{
+			in.close();
+			out.close();
+			clientSocket.close();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		
 	}
 
 	public String getName(){
@@ -353,7 +379,7 @@ public class ClientRequestProcessor implements Runnable {
 		updatePlayers.put(player.getQrCode(), player);
 	}
 
-	public void sendSuspection(Suspection suspection){
+	public void sendSuspection(String suspection){
 		try{
 			outO.reset();
 			outO.writeUTF("suspection");
@@ -369,7 +395,7 @@ public class ClientRequestProcessor implements Runnable {
 	private void suspection() {
 		//TODO das ist kaka so, das muss anders sein, inkompatible suspection klassen
 		try{
-            Suspection suspection = (Suspection) inO.readObject();
+            String suspection =  inO.readUTF();
             
             for(int i = 0; i < allPlayers.size(); i++){
     			if(allPlayers.get(i).getQR() != qrCode){
@@ -378,10 +404,20 @@ public class ClientRequestProcessor implements Runnable {
     		}
         }catch(IOException e){
             e.printStackTrace();
-        }catch(ClassNotFoundException c){
-        	c.printStackTrace();
         }
 		
 	}
+
+	public void sendBoolean(boolean b) {
+		try{
+			outO.reset();
+			outO.writeBoolean(b);
+			outO.flush();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	
+
 
 }

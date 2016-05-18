@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
@@ -30,4 +29,8 @@ dependencies {
     compile 'com.android.support:percent:23.2.+'
     compile 'com.android.support:design:23.2.+'
     compile 'com.android.support:recyclerview-v7:23.2.+'
+    compile 'com.google.android.gms:play-services:8.4.0'
 }
+
+//apply plugin: 'com.google.gms.google-services'
+
