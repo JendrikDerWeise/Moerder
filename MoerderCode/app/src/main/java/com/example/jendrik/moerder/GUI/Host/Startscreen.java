@@ -19,6 +19,7 @@ public class Startscreen extends Activity {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
         setContentView(R.layout.activity_startscreen);
+        //TODO VERBINDUNG AUFBAUEN
 
     }
 

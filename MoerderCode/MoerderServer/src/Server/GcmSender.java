@@ -16,6 +16,7 @@ import java.net.URL;
 // This class should also not be included in the client (Android) application
 // since it includes the server's API key. For information on GCM server
 // implementation see: https://developers.google.com/cloud-messaging/server
+// fcm-xmpp.googleapis.com
 public class GcmSender {
 
     public static final String API_KEY = "AIzaSyC6CeB3mHAPZM15ka0P24Q5P4VFfyxwFeo";
@@ -52,7 +53,8 @@ public class GcmSender {
             jGcmData.put("data", jData);
 
             // Create connection to send GCM Message request.
-            URL url = new URL("https://android.googleapis.com/gcm/send");
+            URL url = new URL("fcm-xmpp.googleapis.com");
+            // TODO HIER XMPP austauschen 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Authorization", "key=" + API_KEY);
             conn.setRequestProperty("Content-Type", "application/json");
