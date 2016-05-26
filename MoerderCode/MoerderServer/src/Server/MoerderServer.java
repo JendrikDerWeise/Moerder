@@ -28,23 +28,21 @@ public class MoerderServer {
 	protected int port;
 	protected ServerSocket serverSocket;
 	private HashMap<String, Game> games;
-	private HashMap<String, ArrayList<ClientRequestProcessor>> playerClients;
-	private HashMap<String, ArrayList<String>> players;
+	private HashMap<String,  HashMap<Integer, Player>> updatePlayers;
 	public static final String API_KEY = "AIzaSyC6CeB3mHAPZM15ka0P24Q5P4VFfyxwFeo";
+	private HttpURLConnection conn;
+	private Game game;
+	private JSONObject jResponse;
 	
-	
-	public MoerderServer(int port){
-		if (port == 0)
-			port = DEFAULT_PORT;
-		this.port = port;
-		
+	public MoerderServer(){
 		try {
-			serverSocket = new ServerSocket(port);
-			
-			InetAddress ia = InetAddress.getLocalHost();
-			System.out.println("Host: " + ia.getHostName());
-			System.out.println("Server-Adresse " + ia.getHostAddress()	+ " an Port " + port);
-		} catch (IOException e) {
+			URL url = new URL("https://android.googleapis.com/gcm/send");
+	        conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestProperty("Authorization", "key=" + API_KEY);
+	        conn.setRequestProperty("Content-Type", "application/json");
+	        conn.setRequestMethod("POST");
+	        conn.setDoOutput(true);
+	    } catch (IOException e) {
 			System.err.println("Das hat nicht geklappt: " + e);
 			System.exit(1);
 		}
@@ -179,63 +177,145 @@ public class MoerderServer {
 		}
 	}
 	
+	public void sendData(JSONObject jData, String game){
+		// Prepare JSON containing the GCM message content. What to send and where to send.
+        try{
+		JSONObject jFcmData = new JSONObject();
+        
+        jFcmData.put("to", game);
+        jFcmData.put("data", jData);
+
+        OutputStream outputStream = conn.getOutputStream();
+        outputStream.write(jFcmData.toString().getBytes());
+
+        }catch(IOException e){
+        	e.printStackTrace();
+        } catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
 	
+	public JSONObject receiveData(){
+		try{
+			InputStream inputStream = conn.getInputStream();
+			String resp = IOUtils.toString(inputStream);
+			//TODO how to convert String back to JSONObject
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return new JSONObject();
+	}
 	
-	public static void main(String[] args) throws JSONException{
-		MoerderServer server = new MoerderServer(0);
-		if (args.length < 1 || args.length > 2 || args[0] == null) {
-            System.err.println("usage: ./gradlew run -Pmsg=\"MESSAGE\" [-Pto=\"DEVICE_TOKEN\"]");
-            System.err.println("");
-            System.err.println("Specify a test message to broadcast via GCM. If a device's GCM registration token is\n" +
-                    "specified, the message will only be sent to that device. Otherwise, the message \n" +
-                    "will be sent to all devices subscribed to the \"global\" topic.");
-            System.err.println("");
-            System.err.println("Example (Broadcast):\n" +
-                    "On Windows:   .\\gradlew.bat run -Pmsg=\"<Your_Message>\"\n" +
-                    "On Linux/Mac: ./gradlew run -Pmsg=\"<Your_Message>\"");
-            System.err.println("");
-            System.err.println("Example (Unicast):\n" +
-                    "On Windows:   .\\gradlew.bat run -Pmsg=\"<Your_Message>\" -Pto=\"<Your_Token>\"\n" +
-                    "On Linux/Mac: ./gradlew run -Pmsg=\"<Your_Message>\" -Pto=\"<Your_Token>\"");
-            System.exit(1);
-        }
-        try {
-            // Prepare JSON containing the GCM message content. What to send and where to send.
-            JSONObject jGcmData = new JSONObject();
-            JSONObject jData = new JSONObject();
-            jData.put("message", args[0].trim());
-            // Where to send GCM message.
-            if (args.length > 1 && args[1] != null) {
-                jGcmData.put("to", args[1].trim());
-            } else {
-                jGcmData.put("to", "/topics/global");
-            }
-            // What to send in GCM message.
-            jGcmData.put("data", jData);
+	public static void main(String[] args){
+		MoerderServer server = new MoerderServer();
+		server.run();
+	}
 
-            // Create connection to send GCM Message request.
-            URL url = new URL("https://android.googleapis.com/gcm/send");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestProperty("Authorization", "key=" + API_KEY);
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
 
-            // Send GCM message content.
-            OutputStream outputStream = conn.getOutputStream();
-            outputStream.write(jGcmData.toString().getBytes());
+	private void run() {
+		// TODO ist mein server runable oder muss ich ne do while schleife machen?
+		try{
+			JSONObject jData = (JSONObject) receiveData().get("data");
+			switch((String) jData.get("message")){
+			case "end":
+				//an alle end senden?
+				break;
+			case "next":
+				game = (Game) jData.get("game");
+				game = updateGameWithPlayers(game);
+				jResponse = new JSONObject();
+				jResponse.put("message", "next");
+				jResponse.put("game", game);
+				this.sendData(jResponse, game.getGameName());
+				break;
+			case "player":
+				Player player = (Player) jData.get("player");
+				addPlayerToHashMap(player, jData.getString("gameName"));
+				// alle Playerupdates auf Server in Map von Set speichern
+				//wenn next von jeweiligem Spiel aufgerufen wird, dann updaten bevor versenden
+				break;
+			case "playerCall":
+				int playerQR = (Integer) jData.get("playerQR");
+				int roomQR = (Integer) jData.get("roomQR");
+				//callPlayer(playerQR, roomQR);
+				break;
+			case "prosecution":
+				//setOutToAllButMe("prosecution");
+				break;
+			case "suspection":
+				//suspection();
+				break;
+			case "dead":
+				//TODO was passiert hier eigentlich
+				break;
+			case "pause":
+				break;
+			case "join":
+				if((boolean) jData.getBoolean("passwordprotected")){ //TODO anlegen
+					if(checkPassword((String) jData.getString("gameName"), (String) jData.getString("password"))){
+						//TODO join
+					}else{ //TODO pwError
+						
+					}
+				}else{
+					//TODO join
+				}
+				break;
+			case "newGame": //TODO stimmt dieser Code?
+				game = (Game) jData.get("game");
+				String message;
+				if(games.containsKey(game.getGameName())){
+					message = "gameNameError";
+				}else{
+					games.put(game.getGameName(), game);
+					message = "waitForPlayers";
+				}
+				jResponse = new JSONObject();
+				jResponse.put("message", message);
+				sendData(jResponse, game.getGameName()); 
+				//TODO geht das so?
+				break;
+			case "search":
+				jResponse = new JSONObject();
+				jResponse.put("search", searchGame((String) jData.get("searchString")));
+				this.sendData(jResponse, "FUCK"); //TODO AN Individuum nicht an Gruppe senden
+				break;
+			}
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		
+	}
 
-            // Read GCM response.
-            InputStream inputStream = conn.getInputStream();
-            String resp = IOUtils.toString(inputStream);
-            System.out.println(resp);
-            System.out.println("Check your device/emulator for notification or logcat for " +
-                    "confirmation of the receipt of the GCM message.");
-        } catch (IOException e) {
-            System.out.println("Unable to send GCM message.");
-            System.out.println("Please ensure that API_KEY has been replaced by the server " +
-                    "API key, and that the device's registration token is correct (if specified).");
-            e.printStackTrace();
-        }
+
+	private void addPlayerToHashMap(Player player, String gameName) {
+		if(updatePlayers.containsKey(gameName)){
+			updatePlayers.get(gameName).put(player.getQrCode(), player);
+		}else{
+			updatePlayers.put(gameName, new HashMap<Integer, Player>());
+			updatePlayers.get(gameName).put(player.getQrCode(), player);
+		}
+		
+	}
+
+
+	private Game updateGameWithPlayers(Game game) {
+		if(updatePlayers.containsKey(game.getGameName())){
+			HashMap<Integer, Player> players = updatePlayers.get(game.getGameName());
+			int code;
+			for(int i = 0; i < game.getPlayerAmount(); i++){
+				code = game.getPlayers().get(i).getQrCode();
+				if(updatePlayers.containsKey(code)){
+					game.updatePlayer(players.get(code));
+				}
+			}
+			updatePlayers.remove(game.getGameName());
+		}
+		return game;
+	}
+
+
+	private boolean checkPassword(String gamename, String password) {
+		return games.get(gamename).checkPwd(password);
 	}
 }

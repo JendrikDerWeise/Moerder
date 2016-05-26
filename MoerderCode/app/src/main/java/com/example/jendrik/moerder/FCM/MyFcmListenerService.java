@@ -29,14 +29,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
+
 import com.example.jendrik.moerder.GUI.OnGamingClasses.ChangeRoom;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.Suspection;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameHandler;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.R;
-import com.google.android.gms.gcm.GcmListenerService;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.io.IOException;
@@ -82,7 +82,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
                 GameHandler.saveGame(game);
                 break;
             case "playerCall":
-                int room = (Integer)data.get("playerCall");
+                int room = (Integer)data.get("roomQR");
                 //TODO POPUP "begib dich in den raum room"
                 break;
             case "prosecution":
@@ -136,7 +136,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(message);
+        //sendNotification(message);
         // [END_EXCLUDE]
     }
     // [END receive_message]
@@ -145,7 +145,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         Bundle data = new Bundle();
         data.putString("message", "playerCall");
         data.putInt("qrnr", qrnr);
-        data.putInt("room", 17);//TODO wo bekomme ich die Raumnummer her?
+        data.putInt("roomQR", 17);//TODO wo bekomme ich die Raumnummer her?
         String id = "1"; //TODO sinnvoll
         try {
             gcm.send(SENDER_ID + "@gcm.googleapis.com", id, data);
