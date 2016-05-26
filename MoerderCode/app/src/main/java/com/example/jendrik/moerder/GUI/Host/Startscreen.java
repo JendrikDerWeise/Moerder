@@ -8,8 +8,7 @@ import android.view.View;
 import com.example.jendrik.moerder.R;
 
 /**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
+ * Aufruf des Starbildschirms
  */
 public class Startscreen extends Activity {
 
@@ -17,16 +16,15 @@ public class Startscreen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActionBar().hide();
-        setContentView(R.layout.activity_startscreen);
-        //TODO VERBINDUNG AUFBAUEN
+        getActionBar().hide(); //macht das Ding oben weg
+        setContentView(R.layout.activity_startscreen); //legt das Layout fest
 
     }
 
     public void onClickCreateGame(View button){
-        final Intent intent = new Intent(this, CreateGame.class);
+        final Intent intent = new Intent(this, CreateGame.class); //legt nächste, zu startende Activity fest
 
-        startActivity(intent);
+        startActivity(intent); //startet nächste Activity
     }
 
 }

@@ -49,22 +49,53 @@ public class MenueDrawer extends AppCompatActivity {
     private CountDownClass timer;
 
 
+    /**
+     * Methode erstellt das linke Menü und initialisiert den Timer
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_drawer);
         extras = getIntent().getExtras();
-        game = (Game) extras.get("GAME");
+        game = (Game) extras.get("GAME"); //muss statisch sein, damit alle Fragments auf das selbe Objekt zugreifen können.
         //TODO verhindern das "Zurücktaste" von Android in die Spielerstellung zurück kehrt. Wie geht das? Ggf. finish()?
         //TODO Mitteilung "gerufen werden"
 
+        setLayout();
+        instantiateFragments();
+        initFragManager();
+
+        timer = new CountDownClass(this, game.getMin(),game.getSec());
+        timer.getTimer().start();
+
+        initNaviListener();
+
+        //TODO checkTurn Methode um Titelleiste und Menü anzupassen wenn Spieler dran/nicht dran ist
+        //checkTurn();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        drawerToggle.syncState();
+    }
+
+    /**
+     * Festlegen des Layouts
+     * Menu(Drawer) wird zugewiesen
+     */
+    private void setLayout(){
         toolbar = (Toolbar) findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
 
         drawerLayoutgesamt = (DrawerLayout) findViewById(R.id.drawerlayoutgesamt);
         drawerToggle = new ActionBarDrawerToggle(MenueDrawer.this,drawerLayoutgesamt,R.string.auf, R.string.zu);
         drawerLayoutgesamt.setDrawerListener(drawerToggle);
+    }
 
+    /**
+     * Fragments sind im Grunde Activitys innerhalb von Activitys. Weil das aber nicht geht, nimmt man Fragments.
+     * Ähnlich wie mit Intents, muss man ihnen die entsprechende Klasse zuweisen.
+     * Durch die Zuweisung hier, wird später die korrekte Klasse bei Klick auf Menüpunkt gestartet.
+     */
+    private void instantiateFragments(){
         map = (MapOverview) Fragment.instantiate(this, MapOverview.class.getName(), null);
         noticeList = (NoticeList) Fragment.instantiate(this,NoticeList.class.getName(), null);
         clues = (ShowClues) Fragment.instantiate(this,ShowClues.class.getName(),null);
@@ -78,15 +109,29 @@ public class MenueDrawer extends AppCompatActivity {
         pause = (Pause) Fragment.instantiate(this,Pause.class.getName(),null);
 
         stub = (STUB_FRAG) Fragment.instantiate(this,STUB_FRAG.class.getName(), null);
+    }
 
+    /**
+     * Zur Verwaltung und Bedienung der Fragments wird ein Manager benötigt.
+     * Es muss ein Startfragment festgelegt werden. Hier = map
+     * Eigentlich ist die Methode Unsinn, aber so wird es deutlicher.
+     */
+    private void initFragManager(){
+        menueSetter(map);
+    }
+
+    /**
+     * Immer wenn ein anderer Menüpunkt geklickt wird, muss der Fragmentmanager umgestellt werden.
+     * @param frag erwartet ein entsprechendes Fragment, also die jeweilige Klasse die angezeigt werden soll (siehe instantiateFragments)
+     */
+    private void menueSetter(Fragment frag){
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.frag_area, map);
+        fragmentTransaction.replace(R.id.frag_area, frag);
         fragmentTransaction.commit();
+    }
 
-        timer = new CountDownClass(this, game.getMin(),game.getSec());
-        timer.getTimer().start();
-
+    private void initNaviListener(){
         navigationView = (NavigationView) findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -158,20 +203,6 @@ public class MenueDrawer extends AppCompatActivity {
                 return false;
             }
         });
-
-        //TODO checkTurn Methode um Titelleiste und Menü anzupassen wenn Spieler dran/nicht dran ist
-        //checkTurn();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        drawerToggle.syncState();
-
-
-    }
-
-    private void menueSetter(Fragment frag){
-        fragmentManager = getFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frag_area, frag);
-        fragmentTransaction.commit();
     }
 
     public void endTurn(){
