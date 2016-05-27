@@ -10,14 +10,17 @@ import com.example.jendrik.moerder.R;
 
 import java.util.ArrayList;
 
-/**
- * Created by Jendrik on 29.02.2016.
- */
+
 public class RoomNameList extends Activity {
   //  public static ArrayList ROOM_LIST = "room list";
     private ArrayList<EditText> roomNames;
     private Bundle extras;
 
+    /**
+     * Die Klasse wurde erstellt, als ich die entsprechende Listenfunktion noch nicht kannte.
+     * Daher werden erst die Eingabefelder erstellt und alle nicht benötigten unsichtbar geschaltet.
+     * Abhängig davon, wieviele Räume der Spieler eingestellt hat.
+     */
    public void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
        setContentView(R.layout.roomlist_activity);

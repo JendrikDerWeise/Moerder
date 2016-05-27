@@ -20,6 +20,10 @@ public class WeaponNameList extends Activity {
     private ArrayList<EditText> weaponNames;
     private Bundle extras;
 
+    /**
+     * Es gilt das gleiche wie bei RoomNameList
+     * @param savedInstanceState
+     */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weaponlist_activity);

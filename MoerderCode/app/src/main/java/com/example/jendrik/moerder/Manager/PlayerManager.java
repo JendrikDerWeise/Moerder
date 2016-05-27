@@ -26,6 +26,9 @@ public class PlayerManager implements Serializable {
         playerList.add(new Player(name,qrCode, numberOfThings, playerList.size()));
     }
 
+    /*
+    Methode legt fest, welcher Spieler an der Reihe ist. Dazu muss der Name des aktiven Spielers übergeben werden.
+     */
     public void setActive(String name) {
         for (Player p : playerList) {
             if (p.getName().equals(name))
@@ -35,7 +38,7 @@ public class PlayerManager implements Serializable {
         }
     }
 
-    public void giveClue(Clue clue, int playerNo){ //ich bin mir unsicher wo die Karten verteilt werden. Da muss jedenfalls eine Rechnung hin, damit alle Spieler die gleiche Menge Karten bekommen
+    public void giveClue(Clue clue, int playerNo){
         playerList.get(playerNo).setGivenClues(clue);
     }
 
@@ -50,6 +53,10 @@ public class PlayerManager implements Serializable {
         return "error";
     }
 
+    /*
+    Methode füllt die Notizen des Spielers mit den passenden Namen der Spieler, Waffen und Räume. Diese werden alle mit 'n' markiert.
+    Der Spieler sieht dann ein rotes Viereck neben dem Namen in der Activity.
+     */
     public void setSuspectList(ArrayList<Room> rooms, ArrayList<Weapon> weapons){
 
         for(Player p: playerList){
@@ -69,6 +76,9 @@ public class PlayerManager implements Serializable {
         }
     }
 
+    /*
+    Ich habe keinen blassen Schimmer mehr, welchen Zweck diese Methode hat.
+     */
     public void updatePlayer(Player player){
         for(int i = 0; i  < playerList.size(); i++){
             if(playerList.get(i).getQrCode() == player.getQrCode()){

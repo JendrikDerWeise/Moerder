@@ -29,6 +29,10 @@ public class CreateGame extends Activity {
         setContentView(R.layout.creategame);
     }
 
+    /**
+     * die Methode "sammelt" die Spieleinstellungen ein, hängt sie in einen Intent, der dann an die nächste Activity übergeben wird.
+     * @param button erwartet einen View vom Typ Button - normalerweise der, der geklickt wird. Wird automatisch übergeben, wenn man dem Button sagt, welche Methode er onClick ausführen soll
+     */
     public void onClickNextScreen(View button){
         final EditText et = (EditText) findViewById(R.id.editText);
         final String gameName = et.getText().toString();
@@ -41,13 +45,15 @@ public class CreateGame extends Activity {
         final int[] cPlayer = getResources().getIntArray(R.array.players);
         final int countP = cPlayer[pos];
 
-        final Spinner spinnerR=(Spinner) findViewById(R.id.spinner_room);
+        final Spinner spinnerR=(Spinner) findViewById(R.id.spinner_room); //Spinner sind immer Array. Können über XML festgelegt werden (hier so geschehen)
         final int p = spinnerR.getSelectedItemPosition();
         final int[] cRooms = getResources().getIntArray(R.array.rooms);
         final int countR = cRooms[p];
-        final EditText etMin = (EditText) findViewById(R.id.et_minutes);
+
+        final EditText etMin = (EditText) findViewById(R.id.et_minutes); //EditText Objekte können nur Strings, daher muss ein Int geparst werden
         final String str_min = etMin.getText().toString();
         final int min = Integer.parseInt(str_min);
+
         final EditText etSec = (EditText) findViewById(R.id.et_seconds);
         final String str_sec= etSec.getText().toString();
         final int sec = Integer.parseInt(str_sec);
