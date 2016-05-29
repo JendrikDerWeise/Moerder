@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -56,12 +57,18 @@ public class MenueDrawer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu_drawer);
+
         extras = getIntent().getExtras();
         game = (Game) extras.get("GAME"); //muss statisch sein, damit alle Fragments auf das selbe Objekt zugreifen können.
         //TODO verhindern das "Zurücktaste" von Android in die Spielerstellung zurück kehrt. Wie geht das? Ggf. finish()?
         //TODO Mitteilung "gerufen werden"
 
+        if(game.getActivePlayer().isActive()){//TODO activePlayer ändern!
+            setContentView(R.layout.menu_drawer);
+        }else{
+            //setContentView(R.layout.menu_drawer_not_active);
+            notActive();
+        }
         setLayout();
         instantiateFragments();
         initFragManager();
@@ -244,6 +251,17 @@ public class MenueDrawer extends AppCompatActivity {
                 timer.resume();
                 break;
         }
+    }
+
+    private void notActive(){
+        setInvisible(R.id.suspect);
+        setInvisible(R.id.indict);
+        setInvisible(R.id.room_change);
+        setInvisible(R.id.weapon_change);
+    }
+
+    private void setInvisible(int id){
+        navigationView.getMenu().getItem(id).setVisible(false);
     }
 /*
         Auto-generated methods
