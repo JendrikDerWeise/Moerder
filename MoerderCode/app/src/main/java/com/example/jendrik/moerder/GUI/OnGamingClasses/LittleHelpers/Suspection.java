@@ -19,6 +19,18 @@ public class Suspection {
     private Context context;
     private String cardOwner;
 
+
+    /**
+     * Urspruenglich mal gedacht als versendbares Objekt gedacht.
+     * Es wird reih-um an jeden Spieler geschickt, wo jeweils die Methoden des Objektes genutzt werden koennen.
+     *
+     * @param context
+     * @param player
+     * @param room
+     * @param weapon
+     * @param game
+     * @param suspector
+     */
     public Suspection(Context context, String player, String room, String weapon, Game game, int suspector){
         this.context = context;
         this.player=player;
@@ -30,7 +42,9 @@ public class Suspection {
         checkPlayerCards();
     }
 
-
+    /**
+     * Objekt-Empfaenger prueft seine Clues mit dieser Methode.
+     */
     public void checkPlayerCards(){
         int playerHasCard = 88;
 
@@ -69,6 +83,13 @@ public class Suspection {
         return cardOwner;
     }
 
+    /**
+     * Methode informiert Spieler darueber, dass er einen Clue besitzt und fordert auf, aus den Clues einen zu zeigen.
+     * Diese Info wird an den aktiven Spieler, der den Verdacht geaeussert hat gesendet.
+     * Sus-Objekt muss jetzt an aktiven Spieler gesendet werden.
+     *
+     * @param playerHasCard
+     */
     public void informPlayer(int playerHasCard){
         String shownCard="";
         if(playerHasCard == 88) //if nobody has suspection
@@ -81,6 +102,12 @@ public class Suspection {
 
     }
 
+    /**
+     * Methode zeigt das Ergebnis der Verdaechtigung.
+     *
+     * @param shownCard
+     * @param playerHasCard
+     */
     public void informSuspector(String shownCard,int playerHasCard){
         //TODO Testdaten löschen
         cardOwner = "Peter";

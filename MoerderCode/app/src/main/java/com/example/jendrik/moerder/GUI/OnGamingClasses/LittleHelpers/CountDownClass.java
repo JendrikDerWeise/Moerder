@@ -18,6 +18,14 @@ public class CountDownClass{
     long millisOnPause;
     long millis;
 
+    /**
+     * Verantwortlich fuer das herunterzaehlen einer Rundendauer
+     * Klasse rechnet "echte" Minuten und Sekundenangaben intern in Millisekunden um, weil sonst nix geht
+     *
+     * @param activity this
+     * @param min Anzahl Minuten
+     * @param sec Anzahl Sekunden
+     */
    public CountDownClass(Activity activity, int min, int sec){
 
         this.activity = activity;

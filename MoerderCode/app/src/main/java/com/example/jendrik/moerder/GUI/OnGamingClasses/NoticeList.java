@@ -50,6 +50,10 @@ public class NoticeList extends Fragment {
 
     }
 
+    /**
+     * Methode baut ein Tab-Dingsi
+     * Die "onTabSelected" Methoden sprechen fuer sich.
+     */
     private void createTabs(){
 
         toolbar = (Toolbar) fragLayoutV.findViewById(R.id.toolbar);

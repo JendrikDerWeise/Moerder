@@ -32,13 +32,22 @@ public class ShowClues extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * Methode, bzw Activity legt nur das Design fest. Die Arbeit passiert in der ClueAdapterClass
+     * clues muss statisch sein, damit eben genannte Klasse auf die Daten zugreifen kann.
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         fragLayoutV = inflater.inflate(R.layout.fragment_show_clues, container, false);
 
         //TODO ActivePlayer ändern in festen Spieler, sobald möglich. Sonst werden die Hinweise der Gegener angezeigt
-        clues=MenueDrawer.game.getActivePlayer().getGivenClues();
+        clues=MenueDrawer.game.getActivePlayer().getGivenClues(); //activePlayer muss entsprechend angepasst werden
 
         final Activity fA = getActivity();
         recyclerView = (RecyclerView) fragLayoutV.findViewById(R.id.recyclerview);

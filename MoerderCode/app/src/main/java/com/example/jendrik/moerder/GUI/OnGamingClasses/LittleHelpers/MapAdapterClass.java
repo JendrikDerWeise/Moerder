@@ -11,7 +11,9 @@ import com.example.jendrik.moerder.GUI.OnGamingClasses.MapOverview;
 import com.example.jendrik.moerder.R;
 
 /**
- * Created by Jendrik on 21.03.2016.
+ * Dies ist das "Futter" fuer die ListView.
+ * Die Klasse legt den Inhalt der entsprechenden Rows fest (Text und Bild)
+ * Die Inner-Class befuellt lediglich die Variablen.
  */
 public class MapAdapterClass extends RecyclerView.Adapter<MapAdapterClass.ViewHolderClass>{
 
@@ -42,6 +44,13 @@ public class MapAdapterClass extends RecyclerView.Adapter<MapAdapterClass.ViewHo
         return new ViewHolderClass(itemView);
     }
 
+    /**
+     * Um zwei Raeume in einer Row anzuzeigen, wird hier ein wenig getrickst.
+     * Auch das Ausblenden des letzten Raums bei ungerader Raumanzahl geschieht hier.
+     *
+     * @param viewHolderClass
+     * @param i entsprechnde Position in RoomArrayList
+     */
     @Override
     public void onBindViewHolder(ViewHolderClass viewHolderClass, final int i) {
 
@@ -49,17 +58,18 @@ public class MapAdapterClass extends RecyclerView.Adapter<MapAdapterClass.ViewHo
         int pos = i*2;
 
         if(pos <= count-1) {
-
+            //linker Raum in der Spalte
             viewHolderClass.tvRoomName.setText(MapOverview.roomNames.get(pos));
             viewHolderClass.tvWeaponName.setText(MapOverview.weaponNames.get(pos));
-            if (pos < count - 1) {
+            if (pos < count - 1) {//rechter Raum in der Spalte
                 viewHolderClass.tvRoomName2.setText(MapOverview.roomNames.get(pos + 1));
                 viewHolderClass.tvWeaponName2.setText(MapOverview.weaponNames.get(pos + 1));
-            }else {
+            }else {//wenn ungerade Raumanzahl und i = letzter Raum in Liste
                 setInvisibleSecond(viewHolderClass);
             }
         }
 
+        //verhindert die entstehenden "leeren" Raeume die warum auch immer auftauchen...
         if(count%2==0) {
             if (i >= count / 2) {
                 setInvisibleFirst(viewHolderClass);

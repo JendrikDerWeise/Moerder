@@ -70,6 +70,10 @@ public class Indict extends Fragment {
         btn.setEnabled(false);
     }
 
+    /**
+     * Aeusserst umstaendliche Methode zur Befuellung der Spinner.
+     * Leider nur so moeglich, da die Spinner nicht direkt mit einem String Array gefuettert werden koennen
+     */
     public void fillSpinner(){
         Activity activity = getActivity();
 
@@ -111,6 +115,11 @@ public class Indict extends Fragment {
         putListenerOnSpinners(spinnerArrayList);
     }
 
+    /**
+     * Um den Spinnern einen Click-Listener zu geben und das Ausgewaehlte in einer Variablen speichern
+     * zu koennen, muss die spinnerArrayList jeweils mit einem onClickListener belegt werden (nicht der Spinner selbst)
+     * @param spinnerArrayList
+     */
     public void putListenerOnSpinners(ArrayList<Spinner> spinnerArrayList){
         for(Spinner s : spinnerArrayList){
             s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() { //activate - deactivate Button when change value of player-spinner
@@ -138,6 +147,12 @@ public class Indict extends Fragment {
         }
     }
 
+    /**
+     * Ein Spinner kann selber nicht sinnvolle Daten zurueck geben, er zeigt nur seinen Inhalt an.
+     * Um an die Daten hinter den Spinner zu gelangen, braucht man die jeweilige Position des Datensatzes
+     * @param parent
+     * @return Integer jeweilige Position des gewahlten in Spinner
+     */
     public boolean chooseChoser(AdapterView<?> parent){
         boolean chosen;
         chosen = parent.getSelectedItemPosition() > 0;
@@ -145,6 +160,9 @@ public class Indict extends Fragment {
         return chosen;
     }
 
+    /**
+     * Methode prüft, ob in jedem Spinner etwas ausgewaehlt wurde. Wenn ja, wird der Button frei gegeben.
+     */
     public void checkChosen(){
         if(personChosen && roomChosen && weaponChosen)
             btn.setEnabled(true);
@@ -169,6 +187,11 @@ public class Indict extends Fragment {
 
     }
 
+    /**
+     * Diese Methode bestimmt ob ein Spieler gewinnt oder verliert.
+     * Wenn seine Anklage falsch war, wird er aus dem Spiel genommen (killPlayer())
+     * Wenn es stimmt, wird das Spiel beendet TODO noch nicht implementiert!
+     */
     public void onClickYes(){
         String player= (String)spinnerPlayer.getSelectedItem();
         String room= (String)spinnerRoom.getSelectedItem();
@@ -189,6 +212,9 @@ public class Indict extends Fragment {
         }
     }
 
+    /**
+     * Beendet das "Bist du dir sicher?"-Fenster ohne irgendwelche Konsequenzen.
+     */
     public void onClickNo(){
         popupWindow.dismiss();
     }

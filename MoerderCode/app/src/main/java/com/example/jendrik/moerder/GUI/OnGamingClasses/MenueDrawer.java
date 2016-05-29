@@ -205,12 +205,22 @@ public class MenueDrawer extends AppCompatActivity {
         });
     }
 
+    /**
+     * das Spielobjekt wird in die Extras abgelegt. Hier TODO wuerde der "Send"-Befehl gut hinpassen
+     * Activity wird anschliessend neu gestartet.
+     */
     public void endTurn(){
         getIntent().putExtra("GAME",game);
         finish();
         startActivity(getIntent());
     }
 
+    /**
+     * onClickEvents innerhalb von Fragments funktionieren nicht. Daher wird bei jedem Klick auf einem
+     * Button innerhalb der Fragments diese Methode aufgerufen und leitet den Klick an die entsprechende
+     * onClick innerhalb des zugehoerigenFragments weiter.
+     * @param v
+     */
     public void onClickInDrawer(View v){
         switch(v.getId()){
             case R.id.btn_suspect:

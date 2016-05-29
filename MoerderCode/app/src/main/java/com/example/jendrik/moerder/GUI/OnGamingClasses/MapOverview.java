@@ -35,6 +35,16 @@ public class MapOverview extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * Diese Activity stellt nur das Geruest fuer die Spielkarte her. Die eigentliche Arbeit uebernehmen die Adapter
+     * siehe LittleHelpers->MapAdapterClass
+     * roomNames und weaponNames muessen statisch sein, damit die Adapter auf diese zugreifen und darstellen koennen.
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -42,11 +52,16 @@ public class MapOverview extends Fragment {
 
         roomNames = new ArrayList<>();
         weaponNames = new ArrayList<>();
-       //int i=0;
+
+        //Jeder Raum braucht seine eigene Waffenliste.
+        //Leider funktioniert es nicht mit einzelnen Waffennamen, daher ist ein Element in der Waffenliste
+        //mit einer neuen Zeile vom naechsten WAffen-Element getrennt. (String-Liste)
+        //Beispiel: Raum1 enthaelt -> Waffe1\nWaffe2\n
+        //          Raum2 enthaelt -> \n
+        //          Raum3 enthaelt -> Waffe3\n
+        //alles nach "->" ist ein Listeneintrag in der Arrayliste.
         for(Room r: MenueDrawer.game.getRooms()) {
             roomNames.add(r.getName());
-           // r.addWeapon(new Weapon("Testwaffe" + i, (i + 22)));
-            //i++;
             String str_weaponNames="";
             for(Weapon w: r.getWeaponList())
                 str_weaponNames += w.getName()+"\n";

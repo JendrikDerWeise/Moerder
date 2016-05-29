@@ -11,7 +11,9 @@ import com.example.jendrik.moerder.GUI.OnGamingClasses.ShowClues;
 import com.example.jendrik.moerder.R;
 
 /**
- * Created by Jendrik on 21.03.2016.
+ * Dies ist das "Futter" fuer die ListView.
+ * Die Klasse legt den Inhalt der entsprechenden Rows fest (Text und Bild)
+ * Die Inner-Class befuellt lediglich die Variablen.
  */
 public class ClueAdapterClass extends RecyclerView.Adapter<ClueAdapterClass.ViewHolderClass>{
 
@@ -35,19 +37,26 @@ public class ClueAdapterClass extends RecyclerView.Adapter<ClueAdapterClass.View
         return new ViewHolderClass(itemView);
     }
 
+    /**
+     * Entscheidung welches Bild fuer den Clue verwendet wird.
+     * 0=player, 1=room, 2=weapon
+     *
+     * @param viewHolderClass
+     * @param i entsprechender Inhalt der clues-ArrayList
+     */
     @Override
     public void onBindViewHolder(ViewHolderClass viewHolderClass, final int i) {
 
         viewHolderClass.clueName.setText(ShowClues.clues.get(i).getName());
         switch (ShowClues.clues.get(i).id()){
-            case 0:
-                viewHolderClass.itemImageView.setImageResource(R.drawable.pfeil);
+            case 0: //player
+                viewHolderClass.itemImageView.setImageResource(R.drawable.person);
                 break;
-            case 1:
-                //viewHolderClass.itemImageView.setImageResource(R.drawable.sende_position);
+            case 1: //room
+                viewHolderClass.itemImageView.setImageResource(R.drawable.map);
                 break;
-            case 2:
-                //viewHolderClass.itemImageView.setImageResource(R.drawable.snackbar_background);
+            case 2: //weapon
+                viewHolderClass.itemImageView.setImageResource(R.drawable.pistol);
                 break;
         }
 
