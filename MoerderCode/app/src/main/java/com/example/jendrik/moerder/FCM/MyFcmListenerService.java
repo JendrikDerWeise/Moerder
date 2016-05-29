@@ -51,6 +51,8 @@ public class MyFcmListenerService extends FirebaseMessagingService {
 
     private static final String TAG = "MyGcmListenerService";
     private static final String SENDER_ID = " ";
+    private static String topic;
+    private static final FirebaseMessaging fm = FirebaseMessaging.getInstance();
 
     @Override
     public void onMessageReceived(RemoteMessage message){
@@ -67,16 +69,15 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         String keyword = (String) data.get("keyword"); //TODO keyword am anderen Ende einbauen
         switch(keyword){
             case "end": //TODO was passiert hier
+                fm.unsubscribeFromTopic("/topics/" + topic);
                 break;
             case"next":
                 game = (Game) data.get("game");
                 GameHandler.saveGame(game);
                 //TODO hier menu drawer aufrufen
                 break;
-            case "player":
-                game = GameHandler.loadGame();
-                game.updatePlayer((Player)data.get("player"));
-                GameHandler.saveGame(game);
+            case "showCard":
+                //TODO den show card screen oeffnen
                 break;
             case "playerCall":
                 int room = (Integer)data.get("roomQR");
@@ -100,14 +101,19 @@ public class MyFcmListenerService extends FirebaseMessagingService {
                 //TODO Popup mit den daten aus der Suspection (durch getter)
                 break;
             case "pause":
-                String playername = (String) data.get("pause");
+                int playerqr = (int) data.get("player");
+                String playername = GameHandler.loadGame().getNameByNumber(playerqr);
                 //TODO Popup mit name und hat pause gedrueckt
                 break;
-            case "update":
-                game = (Game) data.get("game");
-                GameHandler.saveGame(game);
-                break;
+            case "waitForPlayers":
+                //TODO waitscreen
+                 //TODO ohne break führt er nur auch den nächsten aus, oder?
             case "welcome":
+                fm.subscribeToTopic("/topics/" + topic);
+                sendName("Peter"); //TODO wo wird der name gespeichert
+                break;
+            case "name":
+                //TODO kann man das einfach mit zu den leuten auf den wartebildschirm schreiben?
                 break;
             case "newerror":
                 //TODO popup "name schon vegeben, ueberleg dir einen Neuen" /fuer spiel
@@ -117,8 +123,6 @@ public class MyFcmListenerService extends FirebaseMessagingService {
                 break;
             case "sorry":
                 break;
-
-
         }
 
         // [START_EXCLUDE]
@@ -160,6 +164,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         /**Bundle data = new Bundle();
         data.putString("message", "join");
         data.putString("gameName", name);**/
+        topic = name;
         JSONObject json = new JSONObject();
         try{
             json.put("gameName", name);
@@ -174,6 +179,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         data.putString("message", "join");
         data.putString("gameName", name);
         data.putString("password", password);**/
+        topic = name;
         JSONObject json = new JSONObject();
         try{
             json.put("gameName", name);
@@ -191,6 +197,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         data.putString("message", "new");
         data.putString("gameName", game.getGameName());
         data.putSerializable("game", game);**/
+        topic = game.getGameName();
         JSONObject json = new JSONObject();
         try{
             json.put("gameName", game.getGameName());
@@ -223,7 +230,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         sendData(json, new AtomicInteger(123456789), "prosecution");
     }
 
-    public void sendGame(){
+    public static void sendGame(){
         Game game = GameHandler.loadGame();
 
         if(game.getGameOver()){
@@ -243,7 +250,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
 
     }
 
-    public void sendName(String string){
+    public static void sendName(String string){
         /**Bundle data = new Bundle();
         data.putString("message", "name");
         data.putString("name", string);**/
@@ -256,8 +263,20 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         sendData(json, new AtomicInteger(123456789), "name");
     }
 
+    public static void sendShowCard(Suspection suspection){
+        Game game = GameHandler.loadGame();
+        JSONObject json = new JSONObject();
+        try{
+            String suspector = game.getNameByNumber(suspection.getSuspector()+1); //Suspector Nummer = QRNR -1
+            json.put("suspection", new String[]{suspector, suspection.getPlayer(), suspection.getRoom(), suspection.getWeapon()});
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+        sendData(json, new AtomicInteger(123456789), "showCard");
+    }
 
-    public void sendSuspection(Suspection suspection){
+
+    public static void sendSuspection(Suspection suspection){
         Game game = GameHandler.loadGame();
         /**Bundle data = new Bundle();
         data.putString("message", "suspection");
@@ -273,7 +292,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         sendData(json, new AtomicInteger(123456789), "suspection");
     }
 
-    public void updatePlayer(Player player){
+    public static void updatePlayer(Player player){
         Game game = GameHandler.loadGame();
         game.updatePlayer(player);
         GameHandler.saveGame(game);
@@ -290,7 +309,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
     }
 
     private static void sendData(JSONObject json, AtomicInteger msgId, String code){
-        FirebaseMessaging fm = FirebaseMessaging.getInstance();
+
         fm.send(new RemoteMessage.Builder(SENDER_ID + "@gcm.googleapis.com")
                 .setMessageId(Integer.toString(msgId.incrementAndGet()))
                 .addData("message", code)
