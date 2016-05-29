@@ -25,11 +25,11 @@ public class Suspection {
      * Es wird reih-um an jeden Spieler geschickt, wo jeweils die Methoden des Objektes genutzt werden koennen.
      *
      * @param context
-     * @param player
-     * @param room
-     * @param weapon
-     * @param game
-     * @param suspector
+     * @param player verdächtigter Spieler
+     * @param room verdächtigter Raum
+     * @param weapon verdächtigte Waffe
+     * @param game Spiel-Objekt
+     * @param suspector Spieler der Verdacht ausspricht
      */
     public Suspection(Context context, String player, String room, String weapon, Game game, int suspector){
         this.context = context;
