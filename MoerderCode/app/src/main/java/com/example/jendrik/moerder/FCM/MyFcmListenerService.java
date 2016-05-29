@@ -36,17 +36,21 @@ import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameHandler;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.R;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MyFcmListenerService extends FirebaseMessagingService {
 
     private static final String TAG = "MyGcmListenerService";
     private static final String SENDER_ID = " ";
-    private static final GoogleCloudMessaging gcm = new GoogleCloudMessaging();
 
     @Override
     public void onMessageReceived(RemoteMessage message){
@@ -65,16 +69,9 @@ public class MyFcmListenerService extends FirebaseMessagingService {
             case "end": //TODO was passiert hier
                 break;
             case"next":
-                game = (Game) data.get("game"); //TODO irgendwie unschoen
+                game = (Game) data.get("game");
                 GameHandler.saveGame(game);
-                if(game.getActivePlayer().getActualRoom() == null){
-                    //TODO HILFE!!!! :'( kann man das so abfragen? wird das auf null gesetzt, wenn ich nen neuen verdacht aufbauen muss?
-                    //TODO oeffnen von Change Room View
-                }else{
-                    //TODO oeffnen von Change Weapon View
-                }
-
-
+                //TODO hier menu drawer aufrufen
                 break;
             case "player":
                 game = GameHandler.loadGame();
@@ -141,80 +138,89 @@ public class MyFcmListenerService extends FirebaseMessagingService {
     }
     // [END receive_message]
 
-    public static void callPlayer(int qrnr){
-        Bundle data = new Bundle();
+    public static void callPlayer(int qrnr, int roomnr, AtomicInteger msgId){
+        /**Bundle data = new Bundle();
         data.putString("message", "playerCall");
         data.putInt("qrnr", qrnr);
-        data.putInt("roomQR", 17);//TODO wo bekomme ich die Raumnummer her?
-        String id = "1"; //TODO sinnvoll
-        try {
-            gcm.send(SENDER_ID + "@gcm.googleapis.com", id, data);
-        } catch (IOException e) {
+        data.putInt("roomQR", roomnr);**/
+
+        JSONObject json = new JSONObject();
+        try{
+            json.put("qrnr", qrnr);
+            json.put("roomQR", roomnr);
+        }catch(JSONException e){
             e.printStackTrace();
         }
+        sendData(json, new AtomicInteger(123456789), "playerCall");
+
+        //TODO sinnvolle msgId uebergeben
     }
 
     public static void joinGame(String name){
-        Bundle data = new Bundle();
+        /**Bundle data = new Bundle();
         data.putString("message", "join");
-        data.putString("gameName", name);
-        String id = "1"; //TODO sinnvoll
-        try {
-            gcm.send(SENDER_ID + "@gcm.googleapis.com", id, data);
-        } catch (IOException e) {
+        data.putString("gameName", name);**/
+        JSONObject json = new JSONObject();
+        try{
+            json.put("gameName", name);
+        }catch(JSONException e){
             e.printStackTrace();
         }
+        sendData(json, new AtomicInteger(123456789), "join");
     }
 
     public static void joinGame(String name, String password){
-        Bundle data = new Bundle();
+        /**Bundle data = new Bundle();
         data.putString("message", "join");
         data.putString("gameName", name);
-        data.putString("password", password);
-        String id = "1"; //TODO sinnvoll
-        try {
-            gcm.send(SENDER_ID + "@gcm.googleapis.com", id, data);
-        } catch (IOException e) {
+        data.putString("password", password);**/
+        JSONObject json = new JSONObject();
+        try{
+            json.put("gameName", name);
+            json.put("password", password);
+        }catch(JSONException e){
             e.printStackTrace();
         }
+        sendData(json, new AtomicInteger(123456789), "join");
     }
 
     public static void newGame(Game game){
         //TODO wo kriege ich das Game übergeben
 
-        Bundle data = new Bundle();
+        /**Bundle data = new Bundle();
         data.putString("message", "new");
         data.putString("gameName", game.getGameName());
-        data.putSerializable("game", game);
-        String id = "1"; //TODO sinnvoll
-        try {
-            gcm.send(SENDER_ID + "@gcm.googleapis.com", id, data);
-        } catch (IOException e) {
+        data.putSerializable("game", game);**/
+        JSONObject json = new JSONObject();
+        try{
+            json.put("gameName", game.getGameName());
+            json.put("game", game);
+        }catch(JSONException e){
             e.printStackTrace();
         }
+        sendData(json, new AtomicInteger(123456789), "new");
+
         //TODO in den Wartebildschirm
     }
 
-    public static void pause(){
-        Bundle data = new Bundle();
-        data.putString("message", "pause");
-        String id = "1"; //TODO sinnvoll
-        try {
-            gcm.send(SENDER_ID + "@gcm.googleapis.com", id, data);
-        } catch (IOException e) {
+    public static void pause(int playerQR){
+        /**Bundle data = new Bundle();
+        data.putString("message", "pause");**/
+        JSONObject json = new JSONObject();
+        try{
+            json.put("player", playerQR);
+        }catch(JSONException e){
             e.printStackTrace();
         }
+        sendData(json, new AtomicInteger(123456789), "pause");
     }
 
     public static void prosecution(){
-        Bundle data = new Bundle();
-        data.putString("message", "prosecution");
-        String id = "1"; //TODO sinnvoll
-        try {
-            gcm.send(SENDER_ID + "@gcm.googleapis.com", id, data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        /**Bundle data = new Bundle();
+        data.putString("message", "prosecution");**/
+        JSONObject json = new JSONObject();
+
+        sendData(json, new AtomicInteger(123456789), "prosecution");
     }
 
     public void sendGame(){
@@ -223,59 +229,73 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         if(game.getGameOver()){
             //sendString("end");
         }else{
-            Bundle data = new Bundle();
+            /**Bundle data = new Bundle();
             data.putString("message", "next");
-            data.putSerializable("game", game);
-            String id = "1"; //TODO sinnvoll
-            try {
-                gcm.send(SENDER_ID + "@gcm.googleapis.com", id, data);
-            } catch (IOException e) {
+            data.putSerializable("game", game);**/
+            JSONObject json = new JSONObject();
+            try{
+                json.put("game", game);
+            }catch(JSONException e){
                 e.printStackTrace();
             }
+            sendData(json, new AtomicInteger(123456789), "next");
         }
 
     }
 
     public void sendName(String string){
-        Bundle data = new Bundle();
+        /**Bundle data = new Bundle();
         data.putString("message", "name");
-        data.putString("name", string);
-        String id = "1"; //TODO sinnvoll
-        try {
-            gcm.send(SENDER_ID + "@gcm.googleapis.com", id, data);
-        } catch (IOException e) {
+        data.putString("name", string);**/
+        JSONObject json = new JSONObject();
+        try{
+            json.put("name", string);
+        }catch(JSONException e){
             e.printStackTrace();
         }
+        sendData(json, new AtomicInteger(123456789), "name");
     }
 
 
     public void sendSuspection(Suspection suspection){
         Game game = GameHandler.loadGame();
-        Bundle data = new Bundle();
+        /**Bundle data = new Bundle();
         data.putString("message", "suspection");
-        String suspector = game.getNameByNumber(suspection.getSuspector()); //TODO auf jendriks antwort warten
-        data.putStringArray("suspection", new String[]{suspector, suspection.getPlayer(), suspection.getRoom(), suspection.getWeapon(), suspection.getCardOwner()});
-        String id = "1"; //TODO sinnvoll
-        try {
-            gcm.send(SENDER_ID + "@gcm.googleapis.com", id, data);
-        } catch (IOException e) {
+        String suspector = game.getNameByNumber(suspection.getSuspector()+1); //Suspector Nummer = QRNR -1
+        data.putStringArray("suspection", new String[]{suspector, suspection.getPlayer(), suspection.getRoom(), suspection.getWeapon(), suspection.getCardOwner()});**/
+        JSONObject json = new JSONObject();
+        try{
+            String suspector = game.getNameByNumber(suspection.getSuspector()+1); //Suspector Nummer = QRNR -1
+            json.put("suspection", new String[]{suspector, suspection.getPlayer(), suspection.getRoom(), suspection.getWeapon(), suspection.getCardOwner()});
+        }catch(JSONException e){
             e.printStackTrace();
         }
+        sendData(json, new AtomicInteger(123456789), "suspection");
     }
 
     public void updatePlayer(Player player){
         Game game = GameHandler.loadGame();
         game.updatePlayer(player);
         GameHandler.saveGame(game);
-        Bundle data = new Bundle();
+        /**Bundle data = new Bundle();
         data.putString("message", "player");
-        data.putSerializable("player", player);
-        String id = "1"; //TODO sinnvoll
-        try {
-            gcm.send(SENDER_ID + "@gcm.googleapis.com", id, data);
-        } catch (IOException e) {
+        data.putSerializable("player", player);**/
+        JSONObject json = new JSONObject();
+        try{
+            json.put("player", player);
+        }catch(JSONException e){
             e.printStackTrace();
         }
+        sendData(json, new AtomicInteger(123456789), "player");
+    }
+
+    private static void sendData(JSONObject json, AtomicInteger msgId, String code){
+        FirebaseMessaging fm = FirebaseMessaging.getInstance();
+        fm.send(new RemoteMessage.Builder(SENDER_ID + "@gcm.googleapis.com")
+                .setMessageId(Integer.toString(msgId.incrementAndGet()))
+                .addData("message", code)
+                .addData("data",json.toString())
+                .build());
     }
 
 
