@@ -52,6 +52,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
     private static final String TAG = "MyGcmListenerService";
     private static final String SENDER_ID = " ";
     private static String topic;
+    private static String gameName;
     private static final FirebaseMessaging fm = FirebaseMessaging.getInstance();
 
     @Override
@@ -76,46 +77,78 @@ public class MyFcmListenerService extends FirebaseMessagingService {
                 GameHandler.saveGame(game);
                 //TODO hier menu drawer aufrufen
                 break;
-            case "showCard":
-                //TODO den show card screen oeffnen
+            case "playerUpdate":
+                updatePlayer(new Player()); //TODO wo kriege ich den Player her?
+                break;
+            case "showClue":
+                /**
+                 * codewords
+                 *  suspector
+                 *  suspectedPlayer
+                 *  suspectedRoom
+                 *  suspectedWeapon
+                 **/
+                if((Integer) data.get("qrnr") == 47) { //TODO wo kriege ich meinen qr code her?
+                    if(data.containsKey("failure")){
+                        //TODO oeffne pop-up mit "dein verdacht war gut, niemand hat eine karte, mach in er nächsten runde eine anklage"
+                    }
+                    //TODO den show card screen oeffnen
+                }
+                break;
+            case "showedClue":
+                if((Integer) data.get("suspector") == 47) { //TODO wo kriege ich meinen qr code her?
+                    //TODO der und der hat die und die karte gezeigt bla bla bla oeffnen
+                    //code cardOwner für den der die karte gezeigt hat und card für die karte
+                    sendSuspection(data);
+                }
                 break;
             case "playerCall":
-                int room = (Integer)data.get("roomQR");
-                //TODO POPUP "begib dich in den raum room"
+                game = GameHandler.loadGame();
+                String calledPlayer = game.getNameByNumber((Integer) data.get("qrnr"));
+                if(calledPlayer == "Peter") { //TODO wo kriege ich meinen name her?
+                    int room = (Integer) data.get("roomQR");
+                    //TODO POPUP "begib dich in den raum room" + scan button
+                }
                 break;
             case "prosecution":
-                //TODO POPUP "begib dich in den Gruppenraum"
+                //TODO POPUP "begib dich in den Gruppenraum" + scan button
                 break;
             case "dead":
                 //TODO was passiert hier, gibt es das?
                 break;
             case "suspection":
-                String[] s = (String[]) data.get("suspection");
-               /**
-                 * [0] suspector
-                 * [1] suspected player
-                 * [2] suspected room
-                 * [3] suspected weapon
-                 * [4] cardholder / the player that showed a card
-                 **/
-                //TODO Popup mit den daten aus der Suspection (durch getter)
+                if((Integer) data.get("suspector") == 47) { //TODO wo kriege ich meinen qr code her?
+                    sendGame();
+                }else{
+                    //TODO Popup mit den daten
+                    /**
+                     * codewords
+                     *  suspector
+                     *  suspectedPlayer
+                     *  suspectedRoom
+                     *  suspectedWeapon
+                     *  cardOwner / the player that showed a card
+                     **/
+                }
                 break;
             case "pause":
                 int playerqr = (int) data.get("player");
                 String playername = GameHandler.loadGame().getNameByNumber(playerqr);
+                //TODO wenn ich = player, dann pause beenden pop-up mit knopf
                 //TODO Popup mit name und hat pause gedrueckt
                 break;
-            case "waitForPlayers":
-                //TODO waitscreen
-                 //TODO ohne break führt er nur auch den nächsten aus, oder?
             case "welcome":
                 fm.subscribeToTopic("/topics/" + topic);
                 sendName("Peter"); //TODO wo wird der name gespeichert
+                //TODO waitscreen
                 break;
             case "name":
                 //TODO kann man das einfach mit zu den leuten auf den wartebildschirm schreiben?
                 break;
-            case "newerror":
+            case "nameError":
+                String name = (String) data.get("name");
+                //TODO neues name pop-up mit "name xyz schon vergeben"
+            case "gameNameError":
                 //TODO popup "name schon vegeben, ueberleg dir einen Neuen" /fuer spiel
                 break;
             case "joinerror":
@@ -150,6 +183,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
 
         JSONObject json = new JSONObject();
         try{
+            json.put("gameName", gameName);
             json.put("qrnr", qrnr);
             json.put("roomQR", roomnr);
         }catch(JSONException e){
@@ -216,6 +250,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         JSONObject json = new JSONObject();
         try{
             json.put("player", playerQR);
+            json.put("gameName", gameName);
         }catch(JSONException e){
             e.printStackTrace();
         }
@@ -226,7 +261,11 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         /**Bundle data = new Bundle();
         data.putString("message", "prosecution");**/
         JSONObject json = new JSONObject();
-
+        try{
+            json.put("gameName", gameName);
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
         sendData(json, new AtomicInteger(123456789), "prosecution");
     }
 
@@ -241,6 +280,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
             data.putSerializable("game", game);**/
             JSONObject json = new JSONObject();
             try{
+                json.put("gameName", gameName);
                 json.put("game", game);
             }catch(JSONException e){
                 e.printStackTrace();
@@ -250,25 +290,41 @@ public class MyFcmListenerService extends FirebaseMessagingService {
 
     }
 
-    public static void sendName(String string){
-        /**Bundle data = new Bundle();
-        data.putString("message", "name");
-        data.putString("name", string);**/
+    public static void sendName(String playerName){
         JSONObject json = new JSONObject();
         try{
-            json.put("name", string);
+            json.put("name", playerName);
+            json.put("gameName", gameName);
         }catch(JSONException e){
             e.printStackTrace();
         }
         sendData(json, new AtomicInteger(123456789), "name");
     }
 
-    public static void sendShowCard(Suspection suspection){
-        Game game = GameHandler.loadGame();
+    public static void sendShowClue(Suspection suspection){
+       JSONObject json = new JSONObject();
+        try{
+            json.put("gameName", gameName);
+            json.put("suspector", suspection.getSuspector() + 1);
+            json.put("suspectedPlayer", suspection.getPlayer());
+            json.put("suspectedRoom", suspection.getRoom());
+            json.put("suspectedWeapon", suspection.getWeapon());
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+        sendData(json, new AtomicInteger(123456789), "showCard");
+    }
+
+    public static void sendShowedClue(Suspection suspection){
         JSONObject json = new JSONObject();
         try{
-            String suspector = game.getNameByNumber(suspection.getSuspector()+1); //Suspector Nummer = QRNR -1
-            json.put("suspection", new String[]{suspector, suspection.getPlayer(), suspection.getRoom(), suspection.getWeapon()});
+            json.put("gameName", gameName);
+            json.put("suspector", suspection.getSuspector() +1 );
+            json.put("suspectedPlayer", suspection.getPlayer());
+            json.put("suspectedRoom", suspection.getRoom());
+            json.put("suspectedWeapon", suspection.getWeapon());
+            json.put("cardOwner", suspection.getCardOwner());
+            json.put("card", suspection.getCard());
         }catch(JSONException e){
             e.printStackTrace();
         }
@@ -276,16 +332,17 @@ public class MyFcmListenerService extends FirebaseMessagingService {
     }
 
 
-    public static void sendSuspection(Suspection suspection){
+    public static void sendSuspection(Map data){
         Game game = GameHandler.loadGame();
-        /**Bundle data = new Bundle();
-        data.putString("message", "suspection");
-        String suspector = game.getNameByNumber(suspection.getSuspector()+1); //Suspector Nummer = QRNR -1
-        data.putStringArray("suspection", new String[]{suspector, suspection.getPlayer(), suspection.getRoom(), suspection.getWeapon(), suspection.getCardOwner()});**/
         JSONObject json = new JSONObject();
         try{
-            String suspector = game.getNameByNumber(suspection.getSuspector()+1); //Suspector Nummer = QRNR -1
-            json.put("suspection", new String[]{suspector, suspection.getPlayer(), suspection.getRoom(), suspection.getWeapon(), suspection.getCardOwner()});
+            String suspector = game.getNameByNumber((Integer)data.get("suspector")); //Suspector Nummer = QRNR -1
+            json.put("gameName", gameName);
+            json.put("suspector", suspector);
+            json.put("suspectedPlayer", (String) data.get("suspectedPlayer"));
+            json.put("suspectedRoom", (String) data.get("suspectedRoom"));
+            json.put("suspectedWeapon", (String) data.get("suspectedWeapon"));
+            json.put("cardOwner", (String) data.get("cardOwner"));
         }catch(JSONException e){
             e.printStackTrace();
         }
@@ -301,6 +358,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         data.putSerializable("player", player);**/
         JSONObject json = new JSONObject();
         try{
+            json.put("gameName", gameName);
             json.put("player", player);
         }catch(JSONException e){
             e.printStackTrace();

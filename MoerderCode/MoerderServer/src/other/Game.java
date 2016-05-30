@@ -57,9 +57,14 @@ public class Game implements Serializable {
 
     public Game(){} //nur für das Laden verwendet
 
+    /**
+    *Methode soll prüfen ob die Anklage des Spielers korrekt ist.
+    *Gibt true zurück, wenn dies der Fall ist.
+     */
     public boolean compareSolution(String murderer, String room, String weapon){
         return solution != null && solution.getMurderer().equals(murderer) && solution.getRoom().equals(room) && solution.getWeapon().equals(weapon);
     }
+
     public Player getActivePlayer(){
         Player player = new Player();
         for(Player p : playerManager.getPlayerList()){
@@ -69,6 +74,9 @@ public class Game implements Serializable {
         return player;
     }
 
+    /**
+    *Setzt eine Liste aus Clue-Objekten zusammen.
+     */
     private void createClues(){
         for (Player p:playerManager.getPlayerList())
             clueList.add(new Clue(p.getName(), 0));
@@ -82,6 +90,10 @@ public class Game implements Serializable {
         createSolution();
     }
 
+    /**
+    *Füllt ein String-Array mit den Namen aller bisher angemeldeten Spieler und setzt sie in den Gruppenraum (Startposition).
+    *Zum Ende wird Spieler 0 als aktiv markiert.
+     */
     private void createPlayer(ArrayList<String> players){
         numberOfThings += players.size();
         for(String s:players) {
@@ -91,6 +103,9 @@ public class Game implements Serializable {
         playerManager.getPlayerList().get(0).setActive(true);  //first Player has to be active for starting the game
     }
 
+    /**
+    *Hat Sophia geschrieben
+     */
     private void createSolution(){
         int playerCount = playerManager.getPlayerList().size();
         int roomCount = roomManager.showMap().size();
@@ -156,6 +171,9 @@ public class Game implements Serializable {
         return this.pwd == pwd;
     }
 
+    /**
+    *Methode gibt zu QR-Code zugehörigen Namen zurück. Kann dabei Spieler, Raum oder Waffe sein.
+     */
     public String getNameByNumber(int qrnr){
         if(qrnr > 0  && qrnr < 30){
             if(qrnr < 10) {
@@ -170,6 +188,9 @@ public class Game implements Serializable {
         }
     }
 
+    /**
+    *Verteilung der Spielkarten (Hinweise) an die Spieler. (Sophia)
+     */
     private void giveCluesToPlayer(){
         ArrayList<Clue> copyClueList = new ArrayList<Clue>();//duplicates Cardlist
         for(int i = 0; i < clueList.size(); i++){
@@ -232,12 +253,15 @@ public class Game implements Serializable {
         }
     }
 
+    /**
+    *Methode stupst das Spiel los. Erst wenn alle Daten vorliegen (Spieler, Räume, Waffen) kann die Methode sinnvoll
+    *verwendet werden. Die Reihenfolge muss so bestehn bleiben - glaub ich.
+     */
     public void startGame(ArrayList<String> players){
         createPlayer(players);
         createClues();
         giveCluesToPlayer();
         playerManager.setSuspectList(getRooms(),getWeapons());
-        //Log.d("KARTEN", "verteilt");
         //Spiel Speichern über GUI
         //Auslöser zum Senden des Savegames -->gehört in ServerClass
     }

@@ -18,6 +18,7 @@ public class Suspection {
     private int suspector;
     private Context context;
     private String cardOwner;
+    private String card;
 
 
     /**
@@ -38,29 +39,6 @@ public class Suspection {
         this.weapon=weapon;
         this.game=game;
         this.suspector=suspector;
-
-        checkPlayerCards();
-    }
-
-    /**
-     * Objekt-Empfaenger prueft seine Clues mit dieser Methode.
-     */
-    public void checkPlayerCards(){
-        int playerHasCard = 88;
-
-        for(Player p : game.getPlayers()) {
-            if (p.isActive()) {
-                if(suspector != p.getpNumber()){
-                    for(Clue c : p.getGivenClues()){
-                        if(c.getName().equals(player) || c.getName().equals(room) || c.getName().equals(weapon)){
-                            playerHasCard = p.getpNumber();
-                            cardOwner = p.getName();
-                        }
-                    }
-                }
-            }
-        }
-        informPlayer(playerHasCard);
     }
 
     public String getPlayer() {
@@ -83,6 +61,17 @@ public class Suspection {
         return cardOwner;
     }
 
+    public String getCard(){
+        return card;
+    }
+
+    public void setCardOwner(String cardOwner) {
+        this.cardOwner = cardOwner;
+    }
+
+    public void setCard(String card){
+        this.card = card;
+    }
     /**
      * Methode informiert Spieler darueber, dass er einen Clue besitzt und fordert auf, aus den Clues einen zu zeigen.
      * Diese Info wird an den aktiven Spieler, der den Verdacht geaeussert hat gesendet.

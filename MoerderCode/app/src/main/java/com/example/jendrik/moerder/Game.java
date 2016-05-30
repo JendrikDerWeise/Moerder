@@ -189,6 +189,8 @@ public class Game implements Serializable {
         }
     }
 
+
+
     /**
     *Verteilung der Spielkarten (Hinweise) an die Spieler. (Sophia)
      */
