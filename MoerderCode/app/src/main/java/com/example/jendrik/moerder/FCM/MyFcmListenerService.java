@@ -30,6 +30,8 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
 
+import com.example.jendrik.moerder.GUI.Host.WaitForPlayers;
+import com.example.jendrik.moerder.GUI.Join.WaitForServer;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.ChangeRoom;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.Suspection;
 import com.example.jendrik.moerder.Game;
@@ -144,6 +146,8 @@ public class MyFcmListenerService extends FirebaseMessagingService {
                 break;
             case "name":
                 //TODO kann man das einfach mit zu den leuten auf den wartebildschirm schreiben?
+                WaitForPlayers.addPlayer((String) data.get("name")); //setzt beim Host neuen Spieler in die Liste... hoffentlich
+                //WaitForServer.addPlayer((String) data.get("name")); Für die Client-Seite
                 break;
             case "nameError":
                 String name = (String) data.get("name");
