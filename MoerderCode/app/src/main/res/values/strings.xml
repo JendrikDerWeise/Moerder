@@ -59,5 +59,8 @@
     <string name="txt_error_on_indict">You have to be in the room of the group to place an indict!</string>
     <string name="error_change_eapon">There is no weapon in this room. Look at the map to find weapons.</string>
     <string name="txt_error_on_suspect">You have to be not in the room of the group and you have to have a weapon with you!</string>
+    <string name="error_popup_password">Please enter a Password!</string>
+    <string name="error_popup_gamename">Gamename allready taken. Please choose another one.</string>
+    <string name="error_popup_name">Playername allready taken. Please choose another one.</string>
     <!-- Ende Drawer-Temp-Krams -->
 </resources>
