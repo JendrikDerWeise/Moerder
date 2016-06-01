@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.jendrik.moerder.FCM.MyFcmListenerService;
 import com.example.jendrik.moerder.R;
 
 /**
@@ -14,6 +15,8 @@ import com.example.jendrik.moerder.R;
  */
 public class PopUpEnterName extends Activity {
     public static final String NAME = "playerName";
+    public static boolean nameOK = false;
+    private String pName;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,13 +36,9 @@ public class PopUpEnterName extends Activity {
         //sonst PopUp immer wieder neu ausführen
     }
 
-    public void onClickOK(View button){
-        EditText et = (EditText) findViewById(R.id.enterPlayerName);
-        String pName = et.toString();
-        boolean nameOK = false;
 
-        //an den Server senden
-        //nameOK = true/false
+    private void checkNameOK() throws InterruptedException {
+        wait(3000); //TODO testen ob wirklich notwendig
         if(nameOK){
             final Intent intent = new Intent(this,WaitForServer.class);
             intent.putExtra(NAME, pName);
@@ -49,6 +48,22 @@ public class PopUpEnterName extends Activity {
             final Intent restartIntent = new Intent(this,PopUpEnterName.class);
             startActivity(restartIntent);
             finish();
+        }
+    }
+
+    public void onClickOK(View button){
+        EditText et = (EditText) findViewById(R.id.enterPlayerName);
+        pName = et.toString();
+
+        //an den Server senden
+        //warten auf Antwort
+        //nameOK = true/false
+        MyFcmListenerService.sendName(pName);
+        //ChangeListener an die Bool
+        try {
+            checkNameOK();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

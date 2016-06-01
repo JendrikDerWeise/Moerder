@@ -31,6 +31,7 @@ import android.support.v4.app.NotificationCompat;
 
 
 import com.example.jendrik.moerder.GUI.Host.WaitForPlayers;
+import com.example.jendrik.moerder.GUI.Join.PopUpEnterName;
 import com.example.jendrik.moerder.GUI.Join.WaitForServer;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.ChangeRoom;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.Suspection;
@@ -151,6 +152,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
                 break;
             case "nameError":
                 String name = (String) data.get("name");
+                PopUpEnterName.nameOK = false; //entsprechend "true" wenn ok
                 //TODO neues name pop-up mit "name xyz schon vergeben"
             case "gameNameError":
                 //TODO popup "name schon vegeben, ueberleg dir einen Neuen" /fuer spiel
