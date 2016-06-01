@@ -253,10 +253,15 @@ public class MoerderServer {
 				}else{
 					if(!newPlayers.get(gameName).contains(name)){
 						newPlayers.get(gameName).add(name);
+						//sends name to all players
+						//sends other names to new player
 						try{
 							jResponse = new JSONObject();
 							jResponse.put("message", "name");
 							jResponse.put("name", name);
+							for(int j = 0; j < newPlayers.get(gameName).size(); j++){
+								jResponse.put("name" + j, newPlayers.get(j));
+							}
 							jResponse.put("gameName", gameName);
 							sendData(jResponse, gameName);
 						}catch(JSONException e){

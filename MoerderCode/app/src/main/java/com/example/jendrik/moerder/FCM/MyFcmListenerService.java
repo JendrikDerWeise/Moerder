@@ -146,6 +146,13 @@ public class MyFcmListenerService extends FirebaseMessagingService {
                 break;
             case "name":
                 //TODO kann man das einfach mit zu den leuten auf den wartebildschirm schreiben?
+                if((String) data.get("name") == "Peter") { //TODO Wo kriege ich meinen namen her?
+                    int j = 0;
+                    while(data.containsKey("name"+ j)){
+                        WaitForPlayers.addPlayer((String) data.get("name" + j));
+                        j += 1;
+                    }
+                }
                 WaitForPlayers.addPlayer((String) data.get("name")); //setzt beim Host neuen Spieler in die Liste... hoffentlich
                 //WaitForServer.addPlayer((String) data.get("name")); Für die Client-Seite
                 break;
