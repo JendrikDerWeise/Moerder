@@ -62,5 +62,6 @@
     <string name="error_popup_password">Please enter a Password!</string>
     <string name="error_popup_gamename">Gamename allready taken. Please choose another one.</string>
     <string name="error_popup_name">Playername allready taken. Please choose another one.</string>
+    <string name="enter_player_name">Please enter your name...</string>
     <!-- Ende Drawer-Temp-Krams -->
 </resources>

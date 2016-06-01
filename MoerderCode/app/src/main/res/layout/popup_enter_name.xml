@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#3e9a5d"
+    android:alpha="20"
+    android:weightSum="1"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:id="@+id/textView6"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.35" />
+
+    <EditText
+        android:layout_width="307dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/enterPlayerName"
+        android:text="@string/enter_player_name" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:id="@+id/button3"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onClickOK"/>
+
+</LinearLayout>

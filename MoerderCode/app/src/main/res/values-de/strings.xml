@@ -55,5 +55,6 @@
     <string name="error_popup_password">Bitte ein Passwort eingeben!</string>
     <string name="error_popup_gamename">Spielname bereits vergeben. Bitte einen anderen wählen.</string>
     <string name="error_popup_name">Spielername bereits vergeben. Bitte einen neuen wählen.</string>
+    <string name="enter_player_name">Gib bitte deinen Namen ein...</string>
 
 </resources>

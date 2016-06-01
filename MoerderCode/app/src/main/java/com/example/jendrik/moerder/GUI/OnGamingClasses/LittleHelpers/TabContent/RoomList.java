@@ -20,7 +20,6 @@ import com.example.jendrik.moerder.R;
  */
 public class RoomList extends Fragment {
     View contentView;
-
     private RecyclerView recyclerView;
     private RecyclerView.Adapter rvadapter;
     private RecyclerView.LayoutManager rvLayoutManager;

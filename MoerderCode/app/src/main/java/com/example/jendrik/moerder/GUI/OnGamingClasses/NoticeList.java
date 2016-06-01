@@ -82,7 +82,6 @@ public class NoticeList extends Fragment {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
 
