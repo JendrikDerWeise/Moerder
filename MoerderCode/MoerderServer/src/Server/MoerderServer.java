@@ -89,7 +89,7 @@ public class MoerderServer {
         try{
 		JSONObject jFcmData = new JSONObject();
         
-        jFcmData.put("to", game);
+        jFcmData.put("to", "/topics/"+ game); //sendet an topic
         jFcmData.put("data", jData);
 
         OutputStream outputStream = conn.getOutputStream();
@@ -253,7 +253,15 @@ public class MoerderServer {
 				}else{
 					if(!newPlayers.get(gameName).contains(name)){
 						newPlayers.get(gameName).add(name);
-						//TODO name weiterleiten an gruppe
+						try{
+							jResponse = new JSONObject();
+							jResponse.put("message", "name");
+							jResponse.put("name", name);
+							jResponse.put("gameName", gameName);
+							sendData(jResponse, gameName);
+						}catch(JSONException e){
+							e.printStackTrace();
+						}
 						if(games.get(gameName).getPlayerAmount() == newPlayers.get(gameName).size()){
 							startGame(gameName);
 						}

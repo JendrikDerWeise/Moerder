@@ -143,7 +143,6 @@ public class MyFcmListenerService extends FirebaseMessagingService {
             case "welcome":
                 fm.subscribeToTopic("/topics/" + topic);
                 sendName("Peter"); //TODO wo wird der name gespeichert
-                //TODO waitscreen
                 break;
             case "name":
                 //TODO kann man das einfach mit zu den leuten auf den wartebildschirm schreiben?
