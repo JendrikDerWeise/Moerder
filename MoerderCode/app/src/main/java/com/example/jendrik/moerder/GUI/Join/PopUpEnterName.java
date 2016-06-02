@@ -9,16 +9,15 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.jendrik.moerder.FCM.MyFcmListenerService;
+import com.example.jendrik.moerder.GUI.LittleHelpers.ErrorPopup;
 import com.example.jendrik.moerder.R;
 
 /**
  * Created by bulk on 01.06.2016.
  */
 public class PopUpEnterName extends Activity {
-    public static final String NAME = "playerName";
-    public static boolean nameOK = false;
+    public static final String PNAME = "playerName";
     private String pName;
-    private final Object stopMarker = new Object();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,26 +42,24 @@ public class PopUpEnterName extends Activity {
 
 
     private void checkNameOK() throws InterruptedException {
-        if(nameOK){
-            final Intent intent = new Intent(this,WaitForServer.class); //TODO Spielauswahl.class nicht WaitForServer!!!!!!!
-            intent.putExtra(NAME, pName);
+        if(MyFcmListenerService.anyBool){
+            Bundle extras = getIntent().getExtras();
+            final Intent intent = new Intent(this,WaitForServer.class);
+            intent.putExtras(extras);
+            intent.putExtra(PNAME, pName);
             startActivity(intent);
             finish();
         }else {
+            final String typeOfError = "pname";
+            final Intent errorPopup = new Intent(this, ErrorPopup.class);
+            errorPopup.putExtra("typeOfError", typeOfError);
+            startActivity(errorPopup);
+
             final Intent restartIntent = new Intent(this,PopUpEnterName.class);
             startActivity(restartIntent);
-            finish();
-        }
-    }
 
-    public static void setNameOK(boolean value){
-        nameOK = value;
-        synchronized (stopMarker){
-            try {
-                stopMarker.notify();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
+            finish();
         }
     }
 
@@ -76,14 +73,14 @@ public class PopUpEnterName extends Activity {
         //nameOK = true/false
         MyFcmListenerService.sendName(pName);
 
-        synchronized (stopMarker){
+        synchronized (MyFcmListenerService.stopMarker){
             try {
-                stopMarker.wait();
+                MyFcmListenerService.stopMarker.wait(); //pausiert den Task bis notify aufgerufen wird (in MyFcmListenerService)
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        //ChangeListener an die Bool
+
         try {
             checkNameOK();
         } catch (InterruptedException e) {

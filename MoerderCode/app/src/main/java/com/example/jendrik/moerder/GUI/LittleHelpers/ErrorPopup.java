@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.jendrik.moerder.R;
+import com.google.firebase.iid.FirebaseInstanceIdService;
 
 /**
  * Created by Jendrik on 31.05.2016.
@@ -43,7 +44,7 @@ public class ErrorPopup  extends Activity {
                 tv.setText(R.string.error_popup_gamename);
                 break;
 
-            case "name":
+            case "pname":
                 tv.setText(R.string.error_popup_name);
                 break;
         }

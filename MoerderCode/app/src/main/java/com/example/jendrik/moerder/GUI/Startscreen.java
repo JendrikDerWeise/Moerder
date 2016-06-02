@@ -1,11 +1,14 @@
-package com.example.jendrik.moerder.GUI.Host;
+package com.example.jendrik.moerder.GUI;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.jendrik.moerder.GUI.Host.CreateGame;
 import com.example.jendrik.moerder.R;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceIdService;
 
 /**
  * Aufruf des Starbildschirms
@@ -19,6 +22,7 @@ public class Startscreen extends Activity {
         getActionBar().hide(); //macht das Ding oben weg
         setContentView(R.layout.activity_startscreen); //legt das Layout fest
 
+        FirebaseInstanceId.getInstance().getToken();
     }
 
     public void onClickCreateGame(View button){

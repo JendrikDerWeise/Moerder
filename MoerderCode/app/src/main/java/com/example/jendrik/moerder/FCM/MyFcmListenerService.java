@@ -41,6 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MyFcmListenerService extends FirebaseMessagingService {
@@ -50,6 +51,8 @@ public class MyFcmListenerService extends FirebaseMessagingService {
     private static String topic;
     private static String gameName;
     private static final FirebaseMessaging fm = FirebaseMessaging.getInstance();
+    public static final Object stopMarker =new Object();
+    public static boolean anyBool = false;
 
     @Override
     public void onMessageReceived(RemoteMessage message){
@@ -139,7 +142,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
                 break;
             case "name":
                 //TODO kann man das einfach mit zu den leuten auf den wartebildschirm schreiben?
-                if((String) data.get("name") == "Peter") { //TODO Wo kriege ich meinen namen her?
+                if((String) data.get("name") == "Peter") { //TODO Wo kriege ich meinen namen her? ANTWORT: setzt die Klasse selber ein
                     int j = 0;
                     while(data.containsKey("name"+ j)){
                         WaitForPlayers.addPlayer((String) data.get("name" + j));
@@ -150,8 +153,11 @@ public class MyFcmListenerService extends FirebaseMessagingService {
                 //WaitForServer.addPlayer((String) data.get("name")); Für die Client-Seite
                 break;
             case "nameError":
-                String name = (String) data.get("name");
-                PopUpEnterName.nameOK = false; //entsprechend "true" wenn ok
+                String name = (String) data.get("name");//wird diese Zeile benötigt?
+                anyBool=false;
+                synchronized (stopMarker){
+                    stopMarker.notify();
+                }
                 //TODO neues name pop-up mit "name xyz schon vergeben"
             case "gameNameError":
                 //TODO popup "name schon vegeben, ueberleg dir einen Neuen" /fuer spiel
@@ -392,16 +398,16 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         //Intent intent = new Intent(this, MainActivity.class);
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-             //   PendingIntent.FLAG_ONE_SHOT);
+        //   PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-          //      .setSmallIcon(R.drawable.ic_stat_ic_notification)
+                //      .setSmallIcon(R.drawable.ic_stat_ic_notification)
                 .setContentTitle("GCM Message")
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri);
-          //      .setContentIntent(pendingIntent);
+        //      .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

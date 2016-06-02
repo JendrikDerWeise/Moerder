@@ -41,7 +41,6 @@ public class WaitForServer extends Activity {
         TextView gameName = (TextView) findViewById(R.id.game_name);
         gameName.setText(nameOfGame);
 
-        //TODO pNameList.add(eigenerName);
         makeActivity();
     }
 

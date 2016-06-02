@@ -9,6 +9,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.jendrik.moerder.GUI.Join.PopUpEnterName;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
@@ -39,7 +40,11 @@ public class WaitForPlayers extends Activity {
         TextView gameName = (TextView) findViewById(R.id.game_name);
         gameName.setText(game.getGameName());
 
-        //TODO pNameList.add(eigenerName);
+
+        extras = getIntent().getExtras();
+        String ownName = extras.getString(PopUpEnterName.PNAME);
+        pNameList.add(ownName);
+
         platzhalterSpielerListeFuellen();
         //makeActivity();
     }
