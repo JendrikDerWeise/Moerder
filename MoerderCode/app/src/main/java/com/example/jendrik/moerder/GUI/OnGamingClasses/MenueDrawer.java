@@ -5,7 +5,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -17,7 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.jendrik.moerder.GUI.Host.STUB_FRAG;
-import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.CountDownClass;
+import com.example.jendrik.moerder.GUI.LittleHelpers.CountDownClass;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.R;
 

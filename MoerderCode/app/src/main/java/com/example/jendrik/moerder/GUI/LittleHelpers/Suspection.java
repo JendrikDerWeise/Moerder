@@ -1,11 +1,9 @@
-package com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers;
+package com.example.jendrik.moerder.GUI.LittleHelpers;
 
 import android.content.Context;
 import android.content.Intent;
 
 import com.example.jendrik.moerder.Game;
-import com.example.jendrik.moerder.GameObjekts.Clue;
-import com.example.jendrik.moerder.GameObjekts.Player;
 
 /**
  * Created by Jendrik on 22.03.2016.

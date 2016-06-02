@@ -2,6 +2,7 @@ package com.example.jendrik.moerder.GUI.Join;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ObbInfo;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -17,6 +18,7 @@ public class PopUpEnterName extends Activity {
     public static final String NAME = "playerName";
     public static boolean nameOK = false;
     private String pName;
+    private final Object stopMarker = new Object();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,16 +33,18 @@ public class PopUpEnterName extends Activity {
 
         getWindow().setLayout((int) (width * 0.8), (int) (height * 0.6));
 
+
         //Intent Name des Spielers
         //irgendwie warten, dass der Server ein okay gibt und dann automatisch WaitForServer aufrufen
         //sonst PopUp immer wieder neu ausführen
     }
 
 
+
+
     private void checkNameOK() throws InterruptedException {
-        wait(3000); //TODO testen ob wirklich notwendig
         if(nameOK){
-            final Intent intent = new Intent(this,WaitForServer.class);
+            final Intent intent = new Intent(this,WaitForServer.class); //TODO Spielauswahl.class nicht WaitForServer!!!!!!!
             intent.putExtra(NAME, pName);
             startActivity(intent);
             finish();
@@ -51,6 +55,18 @@ public class PopUpEnterName extends Activity {
         }
     }
 
+    public static void setNameOK(boolean value){
+        nameOK = value;
+        synchronized (stopMarker){
+            try {
+                stopMarker.notify();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
     public void onClickOK(View button){
         EditText et = (EditText) findViewById(R.id.enterPlayerName);
         pName = et.toString();
@@ -59,6 +75,14 @@ public class PopUpEnterName extends Activity {
         //warten auf Antwort
         //nameOK = true/false
         MyFcmListenerService.sendName(pName);
+
+        synchronized (stopMarker){
+            try {
+                stopMarker.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         //ChangeListener an die Bool
         try {
             checkNameOK();

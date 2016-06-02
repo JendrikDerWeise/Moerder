@@ -1,4 +1,4 @@
-package com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.TabContent;
+package com.example.jendrik.moerder.GUI.LittleHelpers.TabContent;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.TabContent.SuspectListAdapterClass;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.GameObjekts.Room;

@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.ClueAdapterClass;
+import com.example.jendrik.moerder.GUI.LittleHelpers.ClueAdapterClass;
 import com.example.jendrik.moerder.GameObjekts.Clue;
 import com.example.jendrik.moerder.R;
 

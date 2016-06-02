@@ -1,25 +1,19 @@
-package com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.TabContent;
+package com.example.jendrik.moerder.GUI.LittleHelpers.TabContent;
 
-import android.content.res.Resources;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.TabContent.PersonList;
-import com.example.jendrik.moerder.GUI.OnGamingClasses.MapOverview;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
-import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.R;
 
 /**
  * Created by Jendrik on 21.03.2016.
  */
-public class SuspectListAdapterClassRooms extends RecyclerView.Adapter<SuspectListAdapterClassRooms.ViewHolderClass>{
+public class SuspectListAdapterClassWeapon extends RecyclerView.Adapter<SuspectListAdapterClassWeapon.ViewHolderClass>{
 
     public class ViewHolderClass extends RecyclerView.ViewHolder{
 
@@ -32,7 +26,6 @@ public class SuspectListAdapterClassRooms extends RecyclerView.Adapter<SuspectLi
             super(itemView);
             colorField = (TextView) itemView.findViewById(R.id.txt_color_field);
             nameOfThing = (TextView) itemView.findViewById(R.id.txt_name_of_thing);
-
         }
     }
 
@@ -49,9 +42,11 @@ public class SuspectListAdapterClassRooms extends RecyclerView.Adapter<SuspectLi
     @Override
     public void onBindViewHolder(ViewHolderClass viewHolderClass, final int i) {
         int playerCount = MenueDrawer.game.getPlayers().size();
+        int roomCount = MenueDrawer.game.getRooms().size();
 
-        viewHolderClass.nameOfThing.setText(PersonList.namesOfThings.get(i + playerCount));
-        setSuspectColor(MenueDrawer.game.getActivePlayer().getSuspectOnList(i + playerCount), viewHolderClass.colorField);
+        viewHolderClass.nameOfThing.setText(PersonList.namesOfThings.get(i + playerCount + roomCount));
+        setSuspectColor(MenueDrawer.game.getActivePlayer().getSuspectOnList(i + playerCount + roomCount), viewHolderClass.colorField);
+
 
         viewHolderClass.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +72,7 @@ public class SuspectListAdapterClassRooms extends RecyclerView.Adapter<SuspectLi
 
     @Override
     public int getItemCount() {
-        return MenueDrawer.game.getRooms().size();
+        return MenueDrawer.game.getWeapons().size();
     }
 
     private void setSuspectColor(char c, TextView tv){

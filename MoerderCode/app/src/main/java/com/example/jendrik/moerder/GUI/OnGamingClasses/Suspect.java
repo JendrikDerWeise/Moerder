@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.Suspection;
+import com.example.jendrik.moerder.GUI.LittleHelpers.Suspection;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.R;

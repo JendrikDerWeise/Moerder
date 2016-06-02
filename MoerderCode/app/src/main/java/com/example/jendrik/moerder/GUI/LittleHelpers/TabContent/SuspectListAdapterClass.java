@@ -1,4 +1,4 @@
-package com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.TabContent;
+package com.example.jendrik.moerder.GUI.LittleHelpers.TabContent;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;

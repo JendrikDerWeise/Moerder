@@ -1,4 +1,4 @@
-package com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.TabContent;
+package com.example.jendrik.moerder.GUI.LittleHelpers.TabContent;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,16 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.jendrik.moerder.R;
 
 /**
  * Created by Jendrik on 25.03.2016.
  */
-public class WeaponList extends Fragment {
+public class RoomList extends Fragment {
     View contentView;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter rvadapter;
@@ -36,11 +34,12 @@ public class WeaponList extends Fragment {
         rvLayoutManager = new LinearLayoutManager(fA);
         recyclerView.setLayoutManager(rvLayoutManager);
 
-        rvadapter = new SuspectListAdapterClassWeapon();
+        rvadapter = new SuspectListAdapterClassRooms();
         recyclerView.setAdapter(rvadapter);
 
 
         tv = (TextView) fA.findViewById(R.id.textViewTab);
+
 
         return contentView;
     }

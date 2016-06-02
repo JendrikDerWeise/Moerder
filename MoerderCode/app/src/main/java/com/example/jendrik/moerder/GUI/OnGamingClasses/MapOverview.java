@@ -8,9 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.MapAdapterClass;
+import com.example.jendrik.moerder.GUI.LittleHelpers.MapAdapterClass;
 import com.example.jendrik.moerder.GameObjekts.Room;
 import com.example.jendrik.moerder.GameObjekts.Weapon;
 import com.example.jendrik.moerder.R;

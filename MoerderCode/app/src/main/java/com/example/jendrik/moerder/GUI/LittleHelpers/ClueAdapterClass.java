@@ -1,4 +1,4 @@
-package com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers;
+package com.example.jendrik.moerder.GUI.LittleHelpers;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

@@ -21,24 +21,18 @@ package com.example.jendrik.moerder.FCM;
  */
 
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
 
 import com.example.jendrik.moerder.GUI.Host.WaitForPlayers;
 import com.example.jendrik.moerder.GUI.Join.PopUpEnterName;
-import com.example.jendrik.moerder.GUI.Join.WaitForServer;
-import com.example.jendrik.moerder.GUI.OnGamingClasses.ChangeRoom;
-import com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.Suspection;
+import com.example.jendrik.moerder.GUI.LittleHelpers.Suspection;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameHandler;
 import com.example.jendrik.moerder.GameObjekts.Player;
-import com.example.jendrik.moerder.R;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -46,7 +40,6 @@ import com.google.firebase.messaging.RemoteMessage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 

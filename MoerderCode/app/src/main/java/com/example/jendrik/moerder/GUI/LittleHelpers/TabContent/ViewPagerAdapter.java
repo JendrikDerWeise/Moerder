@@ -1,4 +1,4 @@
-package com.example.jendrik.moerder.GUI.OnGamingClasses.LittleHelpers.TabContent;
+package com.example.jendrik.moerder.GUI.LittleHelpers.TabContent;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
