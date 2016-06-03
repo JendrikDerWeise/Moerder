@@ -44,7 +44,7 @@ public class PopUpEnterName extends Activity {
     private void checkNameOK() throws InterruptedException {
         if(MyFcmListenerService.anyBool){
             Bundle extras = getIntent().getExtras();
-            final Intent intent = new Intent(this,WaitForServer.class);
+            final Intent intent = new Intent(this,WaitForServer.class);//TODO switch case HOST-->WaitForServer CLIENT-->WaitForPlayer
             intent.putExtras(extras);
             intent.putExtra(PNAME, pName);
             startActivity(intent);
@@ -57,7 +57,6 @@ public class PopUpEnterName extends Activity {
 
             final Intent restartIntent = new Intent(this,PopUpEnterName.class);
             startActivity(restartIntent);
-
 
             finish();
         }
