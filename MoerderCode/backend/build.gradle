@@ -27,6 +27,9 @@ dependencies {
     compile 'com.google.appengine:appengine-api-1.0-sdk:1.9.38'
     compile 'com.firebase:firebase-client-jvm:2.5.2'
     compile 'org.apache.httpcomponents:httpclient:4.5.2'
+    compile project(path: ':app')
+    compile 'org.json:json:20160212'
+    compile 'commons-io:commons-io:2.4'
 }
 
 appengine {

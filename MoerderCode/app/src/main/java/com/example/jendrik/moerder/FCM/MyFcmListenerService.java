@@ -22,9 +22,12 @@ package com.example.jendrik.moerder.FCM;
 
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 
 import com.example.jendrik.moerder.GUI.Host.WaitForPlayers;
@@ -42,22 +45,27 @@ import org.json.JSONObject;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MyFcmListenerService extends FirebaseMessagingService {
 
     private static final String TAG = "MyGcmListenerService";
-    private static final String SENDER_ID = " ";
+    private static final String SENDER_ID = UUID.randomUUID().toString(); ;
     private static String topic;
     private static String gameName;
     private static final FirebaseMessaging fm = FirebaseMessaging.getInstance();
     public static final Object stopMarker =new Object();
     public static boolean anyBool = false;
 
+
+
     @Override
     public void onMessageReceived(RemoteMessage message){
         String from = message.getFrom();
         Map data = message.getData();
+        Log.d(TAG, "From: " + message.getFrom());
+        Log.d(TAG, "Notification Message Body: " + message.getNotification().getBody());
 
 
         if (from.startsWith("/topics/")) {
@@ -384,6 +392,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
                 .addData("message", code)
                 .addData("data",json.toString())
                 .build());
+
     }
 
 

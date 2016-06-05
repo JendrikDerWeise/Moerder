@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.jendrik.moerder.FCM.MyFcmListenerService;
 import com.example.jendrik.moerder.Game;
+import com.example.jendrik.moerder.GameHandler;
 import com.example.jendrik.moerder.R;
 
 import java.util.ArrayList;
@@ -71,6 +73,9 @@ public class WeaponNameList extends Activity {
         int playerAmount = extras.getInt(CreateGame.PLAYER_COUNT);
         Game game = new Game(gameName, pass, extras.getStringArrayList("room list"), weaponList, min, sec, playerAmount);
         intent.putExtra("GAME", game);
+
+        GameHandler.saveGame(game);
+        MyFcmListenerService.sendGame();
 
         startActivity(intent);
     }

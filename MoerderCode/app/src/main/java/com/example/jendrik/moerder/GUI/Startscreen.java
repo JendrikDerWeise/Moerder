@@ -3,10 +3,13 @@ package com.example.jendrik.moerder.GUI;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import com.example.jendrik.moerder.FCM.MyFcmListenerService;
 import com.example.jendrik.moerder.GUI.Host.CreateGame;
 import com.example.jendrik.moerder.R;
 import com.firebase.client.Firebase;
@@ -35,6 +38,8 @@ public class Startscreen extends Activity {
         mAuth = FirebaseAuth.getInstance();
 
         firebaseBindAuthStateListener();
+
+
     }
 
     @Override
