@@ -1,14 +1,18 @@
 package com.example.jendrik.moerder.GUI.Host;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.view.View;
 import android.widget.EditText;
 
 import com.example.jendrik.moerder.FCM.MyFcmListenerService;
+import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameHandler;
+import com.example.jendrik.moerder.GameObjekts.Solution;
 import com.example.jendrik.moerder.R;
 
 import java.util.ArrayList;
@@ -75,8 +79,12 @@ public class WeaponNameList extends Activity {
         intent.putExtra("GAME", game);
 
         GameHandler.saveGame(game);
-        MyFcmListenerService.sendGame();
+        //MyFcmListenerService.sendGame();
+        Solution solution = new Solution("bla","blie","blupp");
+        SendToDatabase stb = new SendToDatabase();
+        stb.sendData("Solution", solution);
 
         startActivity(intent);
+
     }
 }
