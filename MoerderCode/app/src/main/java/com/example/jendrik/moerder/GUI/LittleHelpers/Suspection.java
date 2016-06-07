@@ -3,6 +3,7 @@ package com.example.jendrik.moerder.GUI.LittleHelpers;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.jendrik.moerder.GUI.OnGamingClasses.Suspect;
 import com.example.jendrik.moerder.Game;
 
 /**
@@ -13,8 +14,13 @@ public class Suspection {
     private String room;
     private String weapon;
     private Game game;
-    private int suspector;
+    private double suspector;
     private Context context;
+
+    public Game getGame() {
+        return game;
+    }
+
     private String cardOwner;
     private String card;
 
@@ -39,6 +45,7 @@ public class Suspection {
         this.suspector=suspector;
     }
 
+
     public String getPlayer() {
         return player;
     }
@@ -51,7 +58,7 @@ public class Suspection {
         return weapon;
     }
 
-    public int getSuspector() {
+    public double getSuspector() {
         return suspector;
     }
 

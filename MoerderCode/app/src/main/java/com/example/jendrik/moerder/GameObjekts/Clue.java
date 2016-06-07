@@ -10,14 +10,16 @@ import java.io.Serializable;
 public class Clue implements Serializable {
 
     private String name;
-    private int id; //0=player, 1=room, 2=weapon --> für Bildzuweisung
+    private double id; //0=player, 1=room, 2=weapon --> für Bildzuweisung
+
+    public Clue(){}
 
     public Clue(String name, int id) {
         this.name = name;
         this.id = id;
     }
 
-    public int id() {
+    public double getId() {
         return id;
     }
 

@@ -4,12 +4,13 @@ import com.example.jendrik.moerder.GameObjekts.Room;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jendrik on 21.02.2016.
  */
 public class RoomManager implements Serializable{
-    private ArrayList<Room> roomList;
+    private List<Room> roomList;
     private Room grpRoom;
 
     public RoomManager(){
@@ -22,9 +23,11 @@ public class RoomManager implements Serializable{
         roomList.add(new Room(name,qrCode));
     }
 
-    public ArrayList<Room> showMap(){
+    public List<Room> showMap(){
         return roomList;
     }
+
+    public List<Room> getRoomList() {return roomList; }
 
     public String getNameByNumber(int qrnr){
         for(Room r: roomList){

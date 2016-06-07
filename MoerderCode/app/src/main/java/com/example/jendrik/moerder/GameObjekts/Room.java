@@ -2,15 +2,18 @@ package com.example.jendrik.moerder.GameObjekts;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jendrik on 21.02.2016.
  */
 public class Room implements Serializable {
     private String name;
-    private int qrCode;
-    private ArrayList<Player> playerList;
-    private ArrayList<Weapon> weaponList;
+    private double qrCode;
+    private List<Player> playerList;
+    private List<Weapon> weaponList;
+
+    public Room(){}
 
     public Room(String name, int qrCode) {
         this.name = name;
@@ -23,15 +26,15 @@ public class Room implements Serializable {
         return name;
     }
 
-    public int getQrCode() {
+    public double getQrCode() {
         return qrCode;
     }
 
-    public ArrayList<Player> getPlayerList() {
+    public List<Player> getPlayerList() {
         return playerList;
     }
 
-    public ArrayList<Weapon> getWeaponList() {
+    public List<Weapon> getWeaponList() {
         return weaponList;
     }
 
