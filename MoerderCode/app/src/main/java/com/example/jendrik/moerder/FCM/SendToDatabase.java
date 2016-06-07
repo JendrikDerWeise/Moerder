@@ -1,10 +1,13 @@
 package com.example.jendrik.moerder.FCM;
 
+import android.util.Log;
 import android.widget.EditText;
 
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameHandler;
 import com.example.jendrik.moerder.GameObjekts.Solution;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.RemoteMessage;
@@ -35,9 +38,18 @@ public class SendToDatabase<T> {
 
 
     public void sendData(String typOfObject, T object){
-        DatabaseReference myRef = database.getReference("games/tolles_spiel/" + typOfObject);
+        DatabaseReference myRef = database.getReference(typOfObject);
 
-        myRef.setValue(object);
+        myRef.setValue(object, new Firebase.CompletionListener(){
+            @Override
+            public void onComplete(FirebaseError firebaseError, Firebase firebase) {
+                if (firebaseError != null) {
+                    Log.d("FBfehler","Data could not be saved. " + firebaseError.getMessage());
+                } else {
+                    Log.d("FBfehler","Data saved successfully.");
+                }
+            }
+        });
 
 
 

@@ -4,13 +4,14 @@ import com.example.jendrik.moerder.GameObjekts.Weapon;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jendrik on 21.02.2016.
  */
 public class WeaponManager implements Serializable {
 
-    public ArrayList<Weapon> weaponList;
+    public List<Weapon> weaponList;
 
     public WeaponManager(){
         weaponList = new ArrayList<>();
@@ -21,7 +22,7 @@ public class WeaponManager implements Serializable {
         weaponList.add(new Weapon(name,qrCode));
     }
 
-    public ArrayList<Weapon> getWeaponList() {
+    public List<Weapon> getWeaponList() {
         return weaponList;
     }
     public String getNameByNumber(int qrnr){

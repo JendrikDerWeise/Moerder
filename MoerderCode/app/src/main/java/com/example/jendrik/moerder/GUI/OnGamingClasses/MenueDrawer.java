@@ -72,7 +72,7 @@ public class MenueDrawer extends AppCompatActivity {
         instantiateFragments();
         initFragManager();
 
-        timer = new CountDownClass(this, game.getMin(),game.getSec());
+        timer = new CountDownClass(this, (int)game.getMin(),(int)game.getSec());
         timer.getTimer().start();
 
         initNaviListener();

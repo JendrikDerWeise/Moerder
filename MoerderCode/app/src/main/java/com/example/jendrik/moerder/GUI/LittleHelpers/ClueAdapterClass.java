@@ -48,7 +48,7 @@ public class ClueAdapterClass extends RecyclerView.Adapter<ClueAdapterClass.View
     public void onBindViewHolder(ViewHolderClass viewHolderClass, final int i) {
 
         viewHolderClass.clueName.setText(ShowClues.clues.get(i).getName());
-        switch (ShowClues.clues.get(i).id()){
+        switch ((int)ShowClues.clues.get(i).getId()){
             case 0: //player
                 viewHolderClass.itemImageView.setImageResource(R.drawable.person);
                 break;

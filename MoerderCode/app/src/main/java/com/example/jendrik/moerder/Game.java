@@ -13,6 +13,7 @@ import com.example.jendrik.moerder.Manager.WeaponManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -22,18 +23,20 @@ import java.util.Random;
  *
  */
 public class Game implements Serializable {
+
+
     private Solution solution;
     private RoomManager roomManager;
     private WeaponManager weaponManager;
     private PlayerManager playerManager;
-    private ArrayList<Clue> clueList;
-    private int numberOfThings;
+    private List<Clue> clueList;
+    private double numberOfThings;
     private String gameName;
     private String pwd;
-    private int min;
-    private int sec;
-    private int justScannedQR;
-    private int playerAmount;
+    private double min;
+    private double sec;
+    private double justScannedQR;
+    private double playerAmount;
     private boolean gameOver;
 
 
@@ -98,7 +101,7 @@ public class Game implements Serializable {
     private void createPlayer(ArrayList<String> players){
         numberOfThings += players.size();
         for(String s:players) {
-            playerManager.addPlayer(s, numberOfThings);
+            playerManager.addPlayer(s,(int) numberOfThings);
             playerManager.getPlayerList().get(playerManager.getPlayerList().size()-1).setActualRoom(roomManager.getGrpRoom());
         }
         playerManager.getPlayerList().get(0).setActive(true);  //first Player has to be active for starting the game
@@ -138,29 +141,29 @@ public class Game implements Serializable {
         return gameName;
     }
 
-    public int getMin() { return min;}
+    public double getMin() { return min;}
 
-    public int getSec(){return sec;}
+    public double getSec(){return sec;}
 
     public Room getGrpRoom(){
         return roomManager.getGrpRoom(); }
 
-    public int getPlayerAmount(){
+    public double getPlayerAmount(){
         return this.playerAmount;
     }
 
     public boolean getGameOver(){
         return this.gameOver;
     }
-    public ArrayList<Room> getRooms(){
+    public List<Room> getRooms(){
         return roomManager.showMap();
     }
 
-    public ArrayList<Weapon> getWeapons(){
+    public List<Weapon> getWeapons(){
         return weaponManager.getWeaponList();
     }
 
-    public ArrayList<Player> getPlayers(){
+    public List<Player> getPlayers(){
         return playerManager.getPlayerList();
     }
 
@@ -244,7 +247,7 @@ public class Game implements Serializable {
     }
 
     public void setActivePlayer(){
-        ArrayList<Player> list = playerManager.getPlayerList();
+        List<Player> list = playerManager.getPlayerList();
         for(int i = 0; i < list.size(); i++){
             if(list.get(i).isActive()){
                 if(i + 1 < list.size()){
@@ -271,5 +274,45 @@ public class Game implements Serializable {
 
     public void updatePlayer(Player player){
         playerManager.updatePlayer(player);
+    }
+
+    /**
+     * Viele Getter fuer Firebase-Gedoens
+     */
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public Solution getSolution() {
+        return solution;
+    }
+
+    public RoomManager getRoomManager() {
+        return roomManager;
+    }
+
+    public WeaponManager getWeaponManager() {
+        return weaponManager;
+    }
+
+    public PlayerManager getPlayerManager() {
+        return playerManager;
+    }
+
+    public List<Clue> getClueList() {
+        return clueList;
+    }
+
+    public double getNumberOfThings() {
+        return numberOfThings;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public double getJustScannedQR() {
+        return justScannedQR;
     }
 }

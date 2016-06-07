@@ -7,6 +7,7 @@ import com.example.jendrik.moerder.GameObjekts.Weapon;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jendrik on 21.02.2016.
@@ -15,7 +16,8 @@ public class PlayerManager implements Serializable {
 
 
 
-    private ArrayList<Player> playerList;
+    private List<Player> playerList;
+
 
     public PlayerManager(){
         playerList = new ArrayList<>();
@@ -42,7 +44,7 @@ public class PlayerManager implements Serializable {
         playerList.get(playerNo).setGivenClues(clue);
     }
 
-    public ArrayList<Player> getPlayerList() {
+    public List<Player> getPlayerList() {
         return playerList;
     }
 
@@ -57,7 +59,7 @@ public class PlayerManager implements Serializable {
     Methode füllt die Notizen des Spielers mit den passenden Namen der Spieler, Waffen und Räume. Diese werden alle mit 'n' markiert.
     Der Spieler sieht dann ein rotes Viereck neben dem Namen in der Activity.
      */
-    public void setSuspectList(ArrayList<Room> rooms, ArrayList<Weapon> weapons){
+    public void setSuspectList(List<Room> rooms, List<Weapon> weapons){
 
         for(Player p: playerList){
             int i=0;

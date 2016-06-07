@@ -9,6 +9,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.GUI.Join.PopUpEnterName;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
 import com.example.jendrik.moerder.Game;
@@ -18,6 +19,7 @@ import com.example.jendrik.moerder.R;
 import android.databinding.ObservableArrayList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jendrik on 19.03.2016.
@@ -73,7 +75,7 @@ public class WaitForPlayers extends Activity {
         makeTable();
     }
 
-    private void fillTable(ArrayList<Player> players, TableLayout table){
+    private void fillTable(List<Player> players, TableLayout table){
         for(int i=0; i<players.size(); i++){
             TableRow row = new TableRow(this);
             TextView tv = new TextView(this);
@@ -143,6 +145,7 @@ public class WaitForPlayers extends Activity {
         //makePlayerObjects();
         final Intent intent = new Intent(this,MenueDrawer.class);
         intent.putExtra("GAME", game);
+
         startActivity(intent);
     }
 }

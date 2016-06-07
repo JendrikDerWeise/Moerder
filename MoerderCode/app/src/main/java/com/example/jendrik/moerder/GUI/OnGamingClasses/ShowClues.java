@@ -14,6 +14,7 @@ import com.example.jendrik.moerder.GameObjekts.Clue;
 import com.example.jendrik.moerder.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jendrik on 28.03.2016.
@@ -25,7 +26,7 @@ public class ShowClues extends Fragment {
     private RecyclerView.Adapter rvadapter;
     private RecyclerView.LayoutManager rvLayoutManager;
 
-    public static ArrayList<Clue> clues;
+    public static List<Clue> clues;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

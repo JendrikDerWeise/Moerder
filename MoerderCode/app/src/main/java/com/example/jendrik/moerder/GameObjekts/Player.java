@@ -1,6 +1,7 @@
 package com.example.jendrik.moerder.GameObjekts;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -10,12 +11,12 @@ public class Player implements Serializable{
     private String name;
     private boolean active;
     private boolean dead;
-    private int qrCode;
+    private double qrCode;
     private Weapon actualWeapon;
     private Room actualRoom;
-    private ArrayList<Clue> givenClues;
+    private List<Clue> givenClues;
     private char[] suspectList;
-    private int pNumber;
+    private double pNumber;
 
     public Player(String name, int qrCode, int numberOfThings, int pNumber){
         active=false;
@@ -38,7 +39,7 @@ public class Player implements Serializable{
         actualWeapon = null;
     }
 
-    public int getQrCode() {
+    public double getQrCode() {
         return qrCode;
     }
 
@@ -67,7 +68,7 @@ public class Player implements Serializable{
         this.actualRoom=room;
     }
 
-    public ArrayList<Clue> getGivenClues() {
+    public List<Clue> getGivenClues() {
         return givenClues;
     }
 
@@ -81,7 +82,7 @@ public class Player implements Serializable{
         this.dead = dead;
     }
 
-    public int getpNumber(){ return pNumber; }
+    public double getpNumber(){ return pNumber; }
 
     public void suspectOnList(int position, char character){ // zu deutsch verdaechtigen auf der Liste
         //different to suspect, as this is only the internal list for that human
@@ -94,6 +95,8 @@ public class Player implements Serializable{
     public char getSuspectOnList(int position){
         return suspectList[position];
     }
+
+    public char[] getSuspectList() { return suspectList; }
 
 
 }

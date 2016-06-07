@@ -8,7 +8,9 @@ import java.io.Serializable;
 public class Weapon implements Serializable {
 
     private String name;
-    private int qrCode;
+    private double qrCode;
+
+    public Weapon(){}
 
     public Weapon(String name, int qrCode){
         this.name=name;
@@ -19,7 +21,7 @@ public class Weapon implements Serializable {
         return name;
     }
 
-    public int getQrCode() {
+    public double getQrCode() {
         return qrCode;
     }
 

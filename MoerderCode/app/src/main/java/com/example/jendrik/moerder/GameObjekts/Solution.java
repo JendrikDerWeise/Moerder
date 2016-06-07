@@ -9,6 +9,8 @@ public class Solution implements Serializable {
 
     private String murderer, weapon, room;
 
+    public Solution(){}
+
     public Solution(String m, String r, String w){
         murderer=m;
         weapon=w;

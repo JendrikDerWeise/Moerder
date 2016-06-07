@@ -16,6 +16,7 @@ import com.example.jendrik.moerder.GameObjekts.Solution;
 import com.example.jendrik.moerder.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jendrik on 29.02.2016.
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 public class WeaponNameList extends Activity {
 
     public static final String WEAPON_LIST = "weapon list";
-    private ArrayList<EditText> weaponNames;
+    private List<EditText> weaponNames;
     private Bundle extras;
 
     /**
@@ -80,9 +81,12 @@ public class WeaponNameList extends Activity {
 
         GameHandler.saveGame(game);
         //MyFcmListenerService.sendGame();
-        Solution solution = new Solution("bla","blie","blupp");
-        SendToDatabase stb = new SendToDatabase();
-        stb.sendData("Solution", solution);
+        //Solution solution = new Solution("bla","blie","blupp");
+        //SendToDatabase stb = new SendToDatabase();
+        //stb.sendData("Solution", solution);
+
+        //SendToDatabase stb = new SendToDatabase();
+        //stb.sendData("games", "bla");
 
         startActivity(intent);
 

@@ -18,6 +18,7 @@ import com.example.jendrik.moerder.GameObjekts.Weapon;
 import com.example.jendrik.moerder.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jendrik on 25.03.2016.
@@ -26,7 +27,7 @@ public class PersonList extends Fragment {
     private View contentView;
     private Bundle extras;
     private Game game;
-    public static ArrayList<String> namesOfThings;
+    public static List<String> namesOfThings;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter rvadapter;
     private RecyclerView.LayoutManager rvLayoutManager;
