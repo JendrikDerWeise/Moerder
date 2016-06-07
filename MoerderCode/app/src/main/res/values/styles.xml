@@ -27,7 +27,12 @@
 
     <style name="ThemeWithDrawer" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="drawerArrowStyle">@style/drawerarrow</item>
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="android:textColorPrimary">@color/colorFont</item>
     </style>
+
 
     <style name="drawerarrow" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
@@ -60,12 +65,7 @@
         <item name="android:colorBackground">@color/colorBackground</item>
     </style>
 
-    <style name="ThemeWithDrawer.mordTheme" parent="ThemeWithDrawer" >
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:colorBackground">@color/colorBackground</item>
-        <item name="android:textColorPrimary">@color/colorFont</item>
-    </style>
+
 
 
 </resources>

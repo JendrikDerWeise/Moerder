@@ -64,7 +64,7 @@
             android:label="@string/txt_wait_for_players" />
         <activity
             android:name=".GUI.OnGamingClasses.MenueDrawer"
-            android:theme="@style/ThemeWithDrawer.mordTheme" />
+            android:theme="@style/ThemeWithDrawer" />
         <activity android:name=".GUI.LittleHelpers.PopUpNobodyHasCards" />
         <activity android:name=".GUI.LittleHelpers.PopUpPlayerShowsCard" />
         <activity android:name=".GUI.OnGamingClasses.WinScreen" />
