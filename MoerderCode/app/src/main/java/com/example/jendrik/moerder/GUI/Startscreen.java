@@ -34,7 +34,7 @@ public class Startscreen extends Activity {
         getActionBar().hide(); //macht das Ding oben weg
         setContentView(R.layout.activity_startscreen); //legt das Layout fest
 
-        Log.d("Firebase Token ", FirebaseInstanceId.getInstance().getToken());
+//        Log.d("Firebase Token ", FirebaseInstanceId.getInstance().getToken());
         mAuth = FirebaseAuth.getInstance();
 
         firebaseBindAuthStateListener();

@@ -19,7 +19,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/mordTheme" >
         <service android:name=".FCM.MyFirebaseInstanceIDService" >
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -64,7 +64,7 @@
             android:label="@string/txt_wait_for_players" />
         <activity
             android:name=".GUI.OnGamingClasses.MenueDrawer"
-            android:theme="@style/ThemeWithDrawer" />
+            android:theme="@style/ThemeWithDrawer.mordTheme" />
         <activity android:name=".GUI.LittleHelpers.PopUpNobodyHasCards" />
         <activity android:name=".GUI.LittleHelpers.PopUpPlayerShowsCard" />
         <activity android:name=".GUI.OnGamingClasses.WinScreen" />
