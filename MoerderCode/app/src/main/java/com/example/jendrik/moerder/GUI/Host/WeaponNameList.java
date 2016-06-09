@@ -80,7 +80,18 @@ public class WeaponNameList extends Activity {
         intent.putExtra("GAME", game);
 
         GameHandler.saveGame(game);
-        SendToDatabase sendToDatabase=new SendToDatabase(extras.get("game name").toString());
+        boolean isSecret = extras.getBoolean(CreateGame.SECRET_CHECKED, false);
+        SendToDatabase sendToDatabase = new SendToDatabase(gameName);
+        sendToDatabase.createGame();
+        sendToDatabase.sendData("isSecret", isSecret);
+        sendToDatabase.sendData("countP",game.getPlayerAmount());
+        sendToDatabase.sendData("countR", (double)game.getRooms().size());
+        sendToDatabase.sendData("min",game.getMin());
+        sendToDatabase.sendData("sec",game.getSec());
+        if(isSecret)
+            sendToDatabase.sendData("pass", game.getPwd());
+
+        sendToDatabase.sendData("roomList", game.getRooms());
         sendToDatabase.sendData("weaponlist",weaponList);
 
         startActivity(intent);

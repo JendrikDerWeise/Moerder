@@ -39,8 +39,6 @@ public class Game implements Serializable {
     private double playerAmount;
     private boolean gameOver;
 
-
-
     public Game(String gameName, String pwd, ArrayList<String> rooms, ArrayList<String> weapons, int min, int sec, int playerAmount){
         this.gameName = gameName;
         this.pwd = pwd;
