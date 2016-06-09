@@ -91,7 +91,7 @@ public class WeaponNameList extends Activity {
         if(isSecret)
             sendToDatabase.sendData("pass", game.getPwd());
 
-        sendToDatabase.sendData("roomList", game.getRooms());
+        sendToDatabase.sendData("roomList", extras.getStringArrayList("room list"));
         sendToDatabase.sendData("weaponlist",weaponList);
 
         startActivity(intent);

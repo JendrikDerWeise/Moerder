@@ -3,6 +3,7 @@ package com.example.jendrik.moerder.GUI.Join;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -81,5 +82,21 @@ public class JoinGame extends Activity {
         }
         else
             Toast.makeText(this,"There are no games on the list!",Toast.LENGTH_SHORT);
+    }
+
+    private void setTouchListener(){
+        lv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Spielnamen speichern
+                int lvID = v.getId();
+                String gameName = games.get(lvID);
+                //Passwortabfrage
+                Log.d("secret",database.getReference("games/"+gameName+"/isSecret").getKey());
+
+                //Namen abfragen
+                //Activity beenden
+            }
+        });
     }
 }
