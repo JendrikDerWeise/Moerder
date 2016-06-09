@@ -9,6 +9,7 @@
         <item name="android:textColorPrimary">@color/colorFont</item>
         <item name="android:navigationBarColor">@color/colorNavi</item>
         <item name="android:colorAccent">@color/colorPrimary</item>
+        <item name="android:buttonStyle">@style/Button</item>
     </style>
     <style name="mordThemeNotTurn" parent="android:Theme.Material" >
         <item name="android:colorPrimary">@color/colorOtherTurn</item>
@@ -17,7 +18,15 @@
         <item name="android:colorButtonNormal">@color/colorOtherTurnLight</item>
         <item name="android:textColorPrimary">@color/colorFont</item>
         <item name="android:navigationBarColor">@color/colorOtherTurn</item>
-        <item name="android:colorAccent">@color/colorOtherTurnLight</item>
+        <item name="android:colorAccent">@color/colorOtherTurnAccent</item>
+        <item name="android:buttonStyle">@style/Button</item>
     </style>
+
+
+    <style name="Button" parent="Widget.AppCompat.Button">
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+
 
 </resources>
