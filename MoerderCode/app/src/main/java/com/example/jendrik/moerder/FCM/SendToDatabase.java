@@ -50,10 +50,10 @@ public class SendToDatabase<T> {
         });*/
 
         DatabaseReference myRef = database.getReference();
-        String key = myRef.child("games").child(gameName).child(typOfObject).push().getKey();
+        myRef.child("games").child(gameName).child(typOfObject).push();
 
         Map<String, Object>update = new HashMap<>();
-        update.put(key, object);
+        update.put("games/"+gameName+"/"+typOfObject, object);
         myRef.updateChildren(update);
     }
 
