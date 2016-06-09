@@ -39,10 +39,13 @@ public class CreateGame extends Activity {
      */
     public void onClickNextScreen(View button){
 
+        boolean nameDone = false;
 
         final EditText et = (EditText) findViewById(R.id.editText);
         if( et.getText().toString().length() == 0 )
             et.setError( "GameName can´t be empty!" );
+        else
+            nameDone = true;
 
         final String gameName = et.getText().toString();
         SendToDatabase sendToDatabase = new SendToDatabase(gameName);
@@ -89,7 +92,8 @@ public class CreateGame extends Activity {
         intent.putExtra(COUNTER_MIN, min);
         intent.putExtra(COUNTER_SEC, sec);
 
-        startActivity(intent);
+        if(nameDone)
+            startActivity(intent);
     }
 
 
