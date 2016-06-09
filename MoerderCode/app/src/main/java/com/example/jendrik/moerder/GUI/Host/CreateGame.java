@@ -39,6 +39,7 @@ public class CreateGame extends Activity {
 
 
         final EditText et = (EditText) findViewById(R.id.editText);
+        et.setText("TESTSPIEL");
         final String gameName = et.getText().toString();
         SendToDatabase sendToDatabase = new SendToDatabase(gameName);
         sendToDatabase.createGame();
