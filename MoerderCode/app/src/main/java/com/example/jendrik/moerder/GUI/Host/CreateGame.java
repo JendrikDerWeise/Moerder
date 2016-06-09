@@ -29,6 +29,8 @@ public class CreateGame extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.creategame);
+        final EditText et = (EditText) findViewById(R.id.editText);
+        et.setText("TESTSPIEL");
     }
 
     /**
@@ -39,7 +41,9 @@ public class CreateGame extends Activity {
 
 
         final EditText et = (EditText) findViewById(R.id.editText);
-        et.setText("TESTSPIEL");
+        if( et.getText().toString().length() == 0 )
+            et.setError( "GameName can´t be empty!" );
+
         final String gameName = et.getText().toString();
         SendToDatabase sendToDatabase = new SendToDatabase(gameName);
         sendToDatabase.createGame();
