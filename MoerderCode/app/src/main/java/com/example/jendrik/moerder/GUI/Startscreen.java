@@ -32,7 +32,6 @@ public class Startscreen extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("hello","hello");
         super.onCreate(savedInstanceState);
         getActionBar().hide(); //macht das Ding oben weg
         setContentView(R.layout.activity_startscreen); //legt das Layout fest

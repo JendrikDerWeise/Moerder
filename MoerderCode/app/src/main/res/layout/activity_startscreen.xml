@@ -30,6 +30,27 @@
             android:textStyle="bold" />
 
         <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="600dp"
+            android:layout_height="40dp"
+            android:background="@color/donotcross"
+            android:rotation="-10"
+            android:id="@+id/donotcross"
+            android:contextClickable="false"
+            android:layout_gravity="center_horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/donotcross"
+                android:id="@+id/textView12"
+                android:textSize="30dp"
+                android:textColor="@color/colorBackground" />
+        </LinearLayout>
+
+        <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -39,6 +60,7 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="@string/host"
+                android:textSize="20dp"
                 android:id="@+id/host"
                 android:layout_gravity="center_horizontal"
                 android:onClick="onClickCreateGame"
@@ -52,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/search"
                 android:id="@+id/search"
+                android:textSize="20dp"
                 android:layout_gravity="center_horizontal"
                 android:padding="10dp"
                 android:textColor="#FFFFFF"
@@ -64,6 +87,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/rules"
                 android:id="@+id/rules"
+                android:textSize="20dp"
                 android:layout_gravity="center_horizontal"
                 android:padding="10dp"
                 android:background="#4eae2c"
