@@ -12,7 +12,7 @@ public class MyApplication extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ReplaceFont.replaceDefaultFont(this, "DEFAULT", "fonts/wcRoughTrad.ttf");
+        //ReplaceFont.replaceDefaultFont(this, "DEFAULT", "fonts/wcRoughTrad.ttf");
         Firebase.setAndroidContext(this.getApplicationContext());
 
     }

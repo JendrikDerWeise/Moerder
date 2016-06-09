@@ -2,10 +2,12 @@ package com.example.jendrik.moerder.GUI;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jendrik.moerder.GUI.Host.CreateGame;
@@ -34,8 +36,9 @@ public class Startscreen extends Activity {
         super.onCreate(savedInstanceState);
         getActionBar().hide(); //macht das Ding oben weg
         setContentView(R.layout.activity_startscreen); //legt das Layout fest
-
-
+        Typeface specialTypeface = Typeface.createFromAsset(getAssets(), "fonts/wcRoughTrad.ttf");
+        TextView specialTextView = (TextView)findViewById(R.id.appName);
+        specialTextView.setTypeface(specialTypeface);
 //        Log.d("Firebase Token ", FirebaseInstanceId.getInstance().getToken());
         mAuth = FirebaseAuth.getInstance();
 
