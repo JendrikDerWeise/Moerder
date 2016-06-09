@@ -10,6 +10,14 @@
         <item name="android:navigationBarColor">@color/colorNavi</item>
         <item name="android:colorAccent">@color/colorPrimary</item>
     </style>
-
+    <style name="mordThemeNotTurn" parent="android:Theme.Material" >
+        <item name="android:colorPrimary">@color/colorOtherTurn</item>
+        <item name="android:colorPrimaryDark">@color/colorOtherTurnLight</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="android:colorButtonNormal">@color/colorOtherTurnLight</item>
+        <item name="android:textColorPrimary">@color/colorFont</item>
+        <item name="android:navigationBarColor">@color/colorOtherTurn</item>
+        <item name="android:colorAccent">@color/colorOtherTurnLight</item>
+    </style>
 
 </resources>

@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/colorOtherTurn">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -113,7 +113,7 @@
                         android:entries="@array/player_numbers"
                         android:entryValues="@array/players"
                         android:contextClickable="false"
-                        android:layout_marginRight="40dp" />
+                        android:layout_marginRight="80dp" />
 
                     <Spinner
                         android:layout_width="fill_parent"
@@ -123,7 +123,7 @@
                         android:entries="@array/room_numbers"
                         android:entryValues="@array/rooms"
                         android:layout_weight="1"
-                        android:layout_marginRight="40dp" />
+                        android:layout_marginRight="80dp" />
 
                 </LinearLayout>
 
@@ -208,7 +208,6 @@
         android:layout_gravity="center"
         android:layout_margin="20dp"
         android:padding="10dp"
-        android:background="@color/colorPrimary"
         android:textColor="@color/colorFont"
         android:textStyle="bold" /><![CDATA[
 

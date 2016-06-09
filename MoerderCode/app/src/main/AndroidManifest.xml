@@ -19,7 +19,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/mordTheme" >
+        android:theme="@style/mordThemeNotTurn" >
         <service android:name=".FCM.MyFirebaseInstanceIDService" >
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -35,7 +35,7 @@
             android:name=".GUI.Startscreen"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/mordTheme" >
+            android:theme="@style/mordThemeNotTurn" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

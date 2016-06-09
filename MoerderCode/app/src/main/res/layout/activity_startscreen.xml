@@ -20,7 +20,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/appName"
-            android:text="mord"
+            android:text="Mord"
             android:textColor="@color/colorFont"
             android:textSize="100dp"
             android:rotation="-10"
@@ -65,7 +65,6 @@
                 android:layout_gravity="center_horizontal"
                 android:onClick="onClickCreateGame"
                 android:textColor="#FFFFFF"
-                android:background="@color/colorPrimary"
                 android:padding="10dp"
                 android:textStyle="bold" />
 
@@ -78,7 +77,6 @@
                 android:layout_gravity="center_horizontal"
                 android:padding="10dp"
                 android:textColor="#FFFFFF"
-                android:background="@color/colorPrimary"
                 android:layout_margin="20dp"
                 android:textStyle="bold" />
 
@@ -90,7 +88,6 @@
                 android:textSize="20dp"
                 android:layout_gravity="center_horizontal"
                 android:padding="10dp"
-                android:background="#4eae2c"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold" />
         </LinearLayout>

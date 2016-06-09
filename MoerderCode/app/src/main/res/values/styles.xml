@@ -57,7 +57,15 @@
         <item name="colorAccent">@color/colorPrimary</item>
 
     </style>
+    <style name="mordThemeNotTurn" parent="AppTheme" >
+        <item name="colorPrimary">@color/colorOtherTurn</item>
+        <item name="colorPrimaryDark">@color/colorOtherTurnLight</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="android:textColorPrimary">@color/colorFont</item>
+        <item name="colorButtonNormal">@color/colorOtherTurnLight</item>
+        <item name="colorAccent">@color/colorOtherTurnLight</item>
 
+    </style>
 
 
 

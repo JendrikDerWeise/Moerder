@@ -35,7 +35,7 @@ public class Startscreen extends Activity {
         super.onCreate(savedInstanceState);
         getActionBar().hide(); //macht das Ding oben weg
         setContentView(R.layout.activity_startscreen); //legt das Layout fest
-        Typeface specialTypeface = Typeface.createFromAsset(getAssets(), "fonts/IndernikGold.ttf");
+        Typeface specialTypeface = Typeface.createFromAsset(getAssets(), "fonts/wcRoughTrad.ttf");
         TextView specialTextView = (TextView)findViewById(R.id.appName);
         specialTextView.setTypeface(specialTypeface);
 //        Log.d("Firebase Token ", FirebaseInstanceId.getInstance().getToken());

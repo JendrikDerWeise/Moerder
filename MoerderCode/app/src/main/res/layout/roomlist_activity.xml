@@ -79,7 +79,6 @@
             android:text="@string/next_button"
             android:id="@+id/button"
             android:onClick="onClickNextButtonR"
-            android:background="@color/colorPrimary"
             android:textColor="@color/colorFont"
             android:layout_gravity="center" />
     </LinearLayout>
