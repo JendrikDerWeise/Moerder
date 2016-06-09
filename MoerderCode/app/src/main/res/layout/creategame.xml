@@ -112,7 +112,8 @@
                         android:layout_weight="1"
                         android:entries="@array/player_numbers"
                         android:entryValues="@array/players"
-                        android:contextClickable="false" />
+                        android:contextClickable="false"
+                        android:layout_marginRight="40dp" />
 
                     <Spinner
                         android:layout_width="fill_parent"
@@ -121,7 +122,9 @@
                         android:layout_gravity="center_horizontal"
                         android:entries="@array/room_numbers"
                         android:entryValues="@array/rooms"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:layout_marginRight="40dp" />
+
                 </LinearLayout>
 
                 <LinearLayout
