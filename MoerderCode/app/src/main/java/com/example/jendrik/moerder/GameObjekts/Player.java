@@ -12,8 +12,8 @@ public class Player implements Serializable{
     private boolean active;
     private boolean dead;
     private double qrCode;
-    private Weapon actualWeapon;
-    private Room actualRoom;
+    private List<Weapon> actualWeapon;
+    private List<Room> actualRoom;
     private List<Clue> givenClues;
     private char[] suspectList;
     private double pNumber;
@@ -52,20 +52,22 @@ public class Player implements Serializable{
     }
 
     public Weapon getActualWeapon() {
-        return actualWeapon;
+        return actualWeapon.get(0);
     }
 
     public void setActualWeapon(Weapon actualWeapon) {
-        this.actualWeapon = actualWeapon;
+        this.actualWeapon.clear();
+        this.actualWeapon.add(actualWeapon);
     }
     //TODO ggf removeWeapon() einbauen weapon = null
 
     public Room getActualRoom() {
-        return actualRoom;
+        return actualRoom.get(0);
     }
 
     public void setActualRoom(Room room){
-        this.actualRoom=room;
+        this.actualRoom.clear();
+        this.actualRoom.add(room);
     }
 
     public List<Clue> getGivenClues() {

@@ -80,13 +80,8 @@ public class WeaponNameList extends Activity {
         intent.putExtra("GAME", game);
 
         GameHandler.saveGame(game);
-        //MyFcmListenerService.sendGame();
-        //Solution solution = new Solution("bla","blie","blupp");
-        //SendToDatabase stb = new SendToDatabase();
-        //stb.sendData("Solution", solution);
-
-        //SendToDatabase stb = new SendToDatabase();
-        //stb.sendData("games", "bla");
+        SendToDatabase sendToDatabase=new SendToDatabase(extras.get("game name").toString());
+        sendToDatabase.sendData("weaponlist",weaponList);
 
         startActivity(intent);
 

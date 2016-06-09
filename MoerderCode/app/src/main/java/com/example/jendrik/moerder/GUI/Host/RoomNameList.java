@@ -6,14 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class RoomNameList extends Activity {
   //  public static ArrayList ROOM_LIST = "room list";
-    private ArrayList<EditText> roomNames;
+    private List<EditText> roomNames;
     private Bundle extras;
 
     /**
@@ -59,6 +61,8 @@ public class RoomNameList extends Activity {
         final Intent intent = new Intent(this, WeaponNameList.class);
         intent.putExtras(extras);
         intent.putExtra("room list", roomList);
+        SendToDatabase sendToDatabase=new SendToDatabase(extras.get("game name").toString());
+        sendToDatabase.sendData("roomlist",roomList);
 
         startActivity(intent);
     }

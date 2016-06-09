@@ -24,21 +24,17 @@ public class SendToDatabase<T> {
 
     private static final String TAG = "NewPostActivity";
     private static final String REQUIRED = "Required";
+    private String gameName;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    // [START declare_database_ref]
-    private DatabaseReference mDatabase;
-    // [END declare_database_ref]
-
-    public SendToDatabase(){
-
+    public SendToDatabase(String gameName) {
+        this.gameName = gameName;
 
     }
 
 
-
-    public void sendData(String typOfObject, T object){
-        DatabaseReference myRef = database.getReference(typOfObject);
+    public void sendData(String typOfObject, T object) {
+        /*DatabaseReference myRef = database.getReference(typOfObject);
 
         myRef.setValue(object, new Firebase.CompletionListener(){
             @Override
@@ -49,12 +45,14 @@ public class SendToDatabase<T> {
                     Log.d("FBfehler","Data saved successfully.");
                 }
             }
-        });
+        });*/
+        DatabaseReference myRef = database.getReference(gameName + "/" + typOfObject);
 
-
-
+        myRef.setValue(object);
     }
 
-
-
+    public void createGame(){
+        DatabaseReference myRef = database.getReference();
+        myRef.setValue(gameName);
+    }
 }
