@@ -1,9 +1,11 @@
 package com.example.jendrik.moerder.GUI.Join;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -15,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,7 @@ public class JoinGame extends Activity {
         games = new ArrayList();
 
         receiveData();
+        setTouchListener();
     }
 
     public void receiveData(){
@@ -67,8 +71,8 @@ public class JoinGame extends Activity {
     }
 
     private void  getUpdate(DataSnapshot snapshot){
-        String str = String.valueOf(snapshot.child("games").getChildrenCount());
-        Log.d("childs",str);
+        //String str = String.valueOf(snapshot.child("games").getChildrenCount());
+        //Log.d("childs",str);
         Log.d("bla",snapshot.toString());
         games.clear();
         for (DataSnapshot ds : snapshot.getChildren()){
@@ -85,14 +89,36 @@ public class JoinGame extends Activity {
     }
 
     private void setTouchListener(){
-        lv.setOnClickListener(new View.OnClickListener() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Spielnamen speichern
-                int lvID = v.getId();
-                String gameName = games.get(lvID);
-                //Passwortabfrage
-                Log.d("secret",database.getReference("games/"+gameName+"/isSecret").getKey());
+                //int lvID = v.getId();
+                String gameName = games.get(position);
+
+                //Log.d("secret",database.getReference("games/"+gameName+"/isSecret").equals(true));
+
+                database.getReference().child("games").child(gameName).child("isSecret").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        boolean isSecret = dataSnapshot.getValue(Boolean.class);
+                        if(isSecret) {
+                            //Passwortabfrage
+                            //final Intent intent = new Intent()
+                            //Intent mit Passwort füttern
+                            //im Intent Vergleich mit Eingabe
+                            //gleiches popup wie spielername, text von et ändern
+                            //von dort PopUpEnterName aufrufen
+                            //diese Activity beenden
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
                 //Namen abfragen
                 //Activity beenden
@@ -100,3 +126,5 @@ public class JoinGame extends Activity {
         });
     }
 }
+
+

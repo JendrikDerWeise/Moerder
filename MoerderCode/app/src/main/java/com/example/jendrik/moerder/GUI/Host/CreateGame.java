@@ -3,6 +3,7 @@ package com.example.jendrik.moerder.GUI.Host;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -51,7 +52,7 @@ public class CreateGame extends Activity {
 
 
         final CheckBox cb = (CheckBox) findViewById(R.id.cb_password);
-        final boolean isSecret = cb.isActivated();
+        final boolean isSecret = cb.isChecked();
 
         final Spinner spinner=(Spinner) findViewById(R.id.spinner_player);
         final int pos = spinner.getSelectedItemPosition();
@@ -71,7 +72,6 @@ public class CreateGame extends Activity {
         final EditText etSec = (EditText) findViewById(R.id.et_seconds);
         final String str_sec= etSec.getText().toString();
         final int sec = Integer.parseInt(str_sec);
-
 
         final Intent intent = new Intent(this, RoomNameList.class);
         intent.putExtra(NAME, gameName);

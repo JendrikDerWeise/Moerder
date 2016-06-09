@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -80,7 +81,7 @@ public class WeaponNameList extends Activity {
         intent.putExtra("GAME", game);
 
         GameHandler.saveGame(game);
-        boolean isSecret = extras.getBoolean(CreateGame.SECRET_CHECKED, false);
+        boolean isSecret = extras.getBoolean(CreateGame.SECRET_CHECKED);
         SendToDatabase sendToDatabase = new SendToDatabase(gameName);
         sendToDatabase.createGame();
         sendToDatabase.sendData("isSecret", isSecret);
