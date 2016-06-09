@@ -30,6 +30,7 @@
         <item name="android:textColorPrimary">@color/colorFont</item>
         <item name="colorButtonNormal">@color/colorPrimary</item>
         <item name="colorAccent">#00bbff</item>
+        <item name="android:fontFamily">"times new roman"</item>
 
 
         <!-- Customize your theme here. -->

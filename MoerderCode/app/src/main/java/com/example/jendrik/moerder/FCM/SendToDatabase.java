@@ -15,6 +15,8 @@ import com.google.firebase.messaging.RemoteMessage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -46,13 +48,17 @@ public class SendToDatabase<T> {
                 }
             }
         });*/
-        DatabaseReference myRef = database.getReference(gameName + "/" + typOfObject);
 
-        myRef.setValue(object);
+        DatabaseReference myRef = database.getReference();
+        String key = myRef.child("games").child(gameName).child(typOfObject).push().getKey();
+
+        Map<String, Object>update = new HashMap<>();
+        update.put(key, object);
+        myRef.updateChildren(update);
     }
 
     public void createGame(){
         DatabaseReference myRef = database.getReference();
-        myRef.setValue(gameName);
+        myRef.child("games").setValue(gameName);
     }
 }
