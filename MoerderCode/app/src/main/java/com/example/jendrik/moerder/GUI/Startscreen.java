@@ -3,13 +3,11 @@ package com.example.jendrik.moerder.GUI;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.jendrik.moerder.FCM.MyFcmListenerService;
 import com.example.jendrik.moerder.GUI.Host.CreateGame;
 import com.example.jendrik.moerder.R;
 import com.firebase.client.Firebase;
@@ -18,21 +16,25 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.iid.FirebaseInstanceId;
+
+
 
 /**
  * Aufruf des Starbildschirms
  */
 public class Startscreen extends Activity {
+
     Firebase myFirebaseRef = new Firebase("https://project-3462685560901461074.firebaseio.com/");
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("hello","hello");
         super.onCreate(savedInstanceState);
         getActionBar().hide(); //macht das Ding oben weg
         setContentView(R.layout.activity_startscreen); //legt das Layout fest
+        ReplaceFont.replaceDefaultFont(this, "DEFAULT", "fonts/wcRoughTrad.ttf");
 
 //        Log.d("Firebase Token ", FirebaseInstanceId.getInstance().getToken());
         mAuth = FirebaseAuth.getInstance();
@@ -48,6 +50,8 @@ public class Startscreen extends Activity {
         mAuth.addAuthStateListener(mAuthListener);
 
         signInAnonymously();
+
+
     }
 
     @Override
@@ -106,4 +110,5 @@ public class Startscreen extends Activity {
         mAuth.signOut();
 
     }
+
 }

@@ -27,10 +27,12 @@
 
     <style name="ThemeWithDrawer" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="drawerArrowStyle">@style/drawerarrow</item>
-        <item name="android:colorPrimary">@color/colorPrimary</item>
-        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="android:textColorPrimary">@color/colorFont</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+
     </style>
 
 
@@ -40,9 +42,12 @@
 
     <style name="TabStyle" parent="Theme.AppCompat.Light.NoActionBar">
 
-        <item name="colorPrimary">#00bbff</item>
 
-        <item name="colorPrimaryDark">#00a8e6</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="android:textColorPrimary">@color/colorFont</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
         <item name="colorAccent">#00bbff</item>
 
 
