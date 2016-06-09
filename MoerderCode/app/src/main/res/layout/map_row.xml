@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:minHeight="100dp"
-        android:background="#000000">
+        android:background="@color/colorBackground">
 
     <TextView
         android:layout_height="match_parent"
@@ -22,8 +22,9 @@
         android:text="Medium Text"
         android:id="@+id/txt_roomname_map"
 android:textSize="15dp"
-        android:background="#3c64f6"
+        android:background="@color/colorBackground"
         android:textColor="#ffffff"
+
 
         />
     <TextView
@@ -37,7 +38,7 @@ android:textSize="15dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/txt_weapons_in_room_map"
-        android:background="#3c64f6"
+        android:background="@color/colorPrimaryDark"
         android:textColor="#ffffff"
 
     />
@@ -52,7 +53,7 @@ android:textSize="15dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/txt_weapons_in_room_map2"
-        android:background="#3c64f6"
+        android:background="@color/colorPrimaryDark"
         android:textColor="#ffffff"/>
 
     <TextView
@@ -66,7 +67,7 @@ android:textSize="15dp"
         android:text="Medium Text"
         android:textSize="15dp"
         android:id="@+id/txt_roomname_map2"
-        android:background="#3c64f6"
+        android:background="@color/colorBackground"
         android:textColor="#ffffff" />
 </android.support.percent.PercentRelativeLayout>
 </LinearLayout>

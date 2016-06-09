@@ -36,7 +36,7 @@
             android:gravity="center_vertical">
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="@string/host"
                 android:id="@+id/host"
@@ -48,7 +48,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="@string/search"
                 android:id="@+id/search"
@@ -60,7 +60,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="@string/rules"
                 android:id="@+id/rules"
