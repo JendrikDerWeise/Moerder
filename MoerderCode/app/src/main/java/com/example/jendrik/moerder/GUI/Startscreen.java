@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jendrik.moerder.GUI.Host.CreateGame;
+import com.example.jendrik.moerder.GUI.Join.JoinGame;
 import com.example.jendrik.moerder.R;
 import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -68,6 +69,11 @@ public class Startscreen extends Activity {
         final Intent intent = new Intent(this, CreateGame.class); //legt nächste, zu startende Activity fest
 
         startActivity(intent); //startet nächste Activity
+    }
+
+    public void onClickJoin(View button){
+        final Intent intent = new Intent(this, JoinGame.class);
+        startActivity(intent);
     }
 
     private void firebaseBindAuthStateListener(){

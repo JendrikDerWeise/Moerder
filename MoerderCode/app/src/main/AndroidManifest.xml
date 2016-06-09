@@ -43,6 +43,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".GUI.Join.JoinGame"
+            android:label="Search for a game..."/>
+        <activity
             android:name=".GUI.Host.CreateGame"
             android:label="@string/txt_create_game" />
         <activity

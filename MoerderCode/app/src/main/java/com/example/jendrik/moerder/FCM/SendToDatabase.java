@@ -59,6 +59,6 @@ public class SendToDatabase<T> {
 
     public void createGame(){
         DatabaseReference myRef = database.getReference();
-        myRef.child("games").setValue(gameName);
+        myRef.child("games").child(gameName).push();
     }
 }

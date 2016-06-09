@@ -78,7 +78,8 @@
                 android:padding="10dp"
                 android:textColor="#FFFFFF"
                 android:layout_margin="20dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:onClick="onClickJoin" />
 
             <Button
                 android:layout_width="200dp"
