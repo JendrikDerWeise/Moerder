@@ -9,132 +9,192 @@
     android:background="@color/colorBackground">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/gameName"
-        android:id="@+id/txt_gameName"
-        android:textSize="32px"
-        android:textColor="@color/colorFont" />
-
-    <EditText
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:textColor="@color/colorFont"
-        android:autoText="false"
-        android:textColorHighlight="@color/colorPrimary"
-        android:textColorHint="@color/colorPrimary"
-        android:textColorLink="@color/colorPrimary" />
+        android:layout_margin="20dp"
+        android:background="@color/colorPrimaryDark">
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_pwd"
-        android:id="@+id/cb_password"
-        android:checked="false"
-        android:textSize="32px"
-        android:textColor="@color/colorFont" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText2"
-        android:password="true"
-        android:textColor="@color/colorFont" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/countPlayers"
-        android:id="@+id/txt_countPlayers"
-        android:textColor="@color/colorFont" />
-
-    <Spinner
-        android:layout_width="103dp"
-        android:layout_height="29dp"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/spinner_player"
-        android:drawSelectorOnTop="true"
-        android:spinnerMode="dropdown"
-        android:layout_weight="0.02"
-        android:entries="@array/player_numbers"
-        android:entryValues="@array/players"
-        android:contextClickable="false" />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/countRooms"
-        android:id="@+id/countRooms"
-        android:textColor="@color/colorFont" />
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner_room"
-        android:layout_gravity="center_horizontal"
-        android:entries="@array/room_numbers"
-        android:entryValues="@array/rooms"/><![CDATA[/>
-
-    ]]>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/txt_minutes"
-                android:id="@+id/textView13"
-                android:textColor="@color/colorFont" />
-
-            <EditText
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="time"
-                android:ems="10"
-                android:id="@+id/et_minutes"
-                android:layout_gravity="center_horizontal"
-                android:text="3"
-                android:textColor="@color/colorFont" />
-        </LinearLayout>
+                android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gameName"
+                    android:id="@+id/txt_gameName"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorFont" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/txt_seconds"
-                android:id="@+id/textView14"
-                android:textColor="@color/colorFont" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editText"
+                    android:textColor="@color/colorFont"
+                    android:autoText="false"
+                    android:textSize="20sp" />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="time"
-                android:ems="10"
-                android:id="@+id/et_seconds"
-                android:text="00"
-                android:textColor="@color/colorFont" />
-        </LinearLayout>
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_pwd"
+                    android:id="@+id/cb_password"
+                    android:checked="false"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorFont" />
 
-    </LinearLayout>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editText2"
+                    android:password="true"
+                    android:textColor="@color/colorFont"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/countPlayers"
+                            android:id="@+id/txt_countPlayers"
+                            android:textColor="@color/colorFont"
+                            android:layout_weight="1"
+                            android:textSize="20sp"
+                            android:textIsSelectable="false" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/countRooms"
+                            android:id="@+id/countRooms"
+                            android:textColor="@color/colorFont"
+                            android:layout_weight="1"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Spinner
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/spinner_player"
+                        android:drawSelectorOnTop="true"
+                        android:spinnerMode="dropdown"
+                        android:layout_weight="1"
+                        android:entries="@array/player_numbers"
+                        android:entryValues="@array/players"
+                        android:contextClickable="false" />
+
+                    <Spinner
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spinner_room"
+                        android:layout_gravity="center_horizontal"
+                        android:entries="@array/room_numbers"
+                        android:entryValues="@array/rooms"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/txt_minutes"
+                            android:id="@+id/textView13"
+                            android:textColor="@color/colorFont"
+                            android:textSize="20sp" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="time"
+                            android:ems="10"
+                            android:id="@+id/et_minutes"
+                            android:layout_gravity="center_horizontal"
+                            android:text="3"
+                            android:textColor="@color/colorFont"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/txt_seconds"
+                            android:id="@+id/textView14"
+                            android:textColor="@color/colorFont"
+                            android:textSize="20sp" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="time"
+                            android:ems="10"
+                            android:id="@+id/et_seconds"
+                            android:text="00"
+                            android:textColor="@color/colorFont"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="2" >
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </FrameLayout>
+    </FrameLayout>
 
     <Button
         android:layout_width="wrap_content"
@@ -147,6 +207,26 @@
         android:padding="10dp"
         android:background="@color/colorPrimary"
         android:textColor="@color/colorFont"
-        android:textStyle="bold" />
+        android:textStyle="bold" /><![CDATA[
 
+
+
+
+
+
+
+
+    />
+
+
+
+
+
+
+
+
+
+
+
+]]>
 </LinearLayout>

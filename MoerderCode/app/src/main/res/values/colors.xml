@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#4eae2c</color>
     <color name="colorPrimaryDark">#296d22</color>
+    <color name="colorNavi">#a9296d22</color>
     <color name="colorBackground">#262626</color>
     <color name="colorOtherTurn">#13445b</color>
     <color name="colorOtherTurnLight">#1f657c</color>

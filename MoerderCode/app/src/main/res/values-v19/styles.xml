@@ -35,6 +35,7 @@
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="android:textColorPrimary">@color/colorFont</item>
         <item name="colorButtonNormal">@color/colorPrimary</item>
+
     </style>
 
     <style name="drawerarrow" parent="Widget.AppCompat.DrawerArrowToggle">

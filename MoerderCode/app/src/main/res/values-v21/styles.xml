@@ -7,6 +7,7 @@
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="android:colorButtonNormal">@color/colorPrimary</item>
         <item name="android:textColorPrimary">@color/colorFont</item>
+        <item name="android:navigationBarColor">@color/colorNavi</item>
     </style>
 
 
