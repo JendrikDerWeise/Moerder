@@ -8,6 +8,7 @@
         <item name="android:colorButtonNormal">@color/colorPrimary</item>
         <item name="android:textColorPrimary">@color/colorFont</item>
         <item name="android:navigationBarColor">@color/colorNavi</item>
+        <item name="android:colorAccent">@color/colorPrimary</item>
     </style>
 
 

@@ -29,7 +29,7 @@
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="android:textColorPrimary">@color/colorFont</item>
         <item name="colorButtonNormal">@color/colorPrimary</item>
-        <item name="colorAccent">#00bbff</item>
+        <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:fontFamily">"times new roman"</item>
 
 
@@ -40,7 +40,7 @@
     <style name="toolbarstyle" parent="Theme.AppCompat">
 
         <item name="popupTheme">@style/Theme.AppCompat.Light</item>
-        <item name="colorPrimary">#00bbff</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
 
         <item name="colorPrimaryDark">#00a8e6</item>
         <item name="colorAccent">#fff</item>
@@ -54,7 +54,7 @@
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="android:textColorPrimary">@color/colorFont</item>
         <item name="colorButtonNormal">@color/colorPrimary</item>
-
+        <item name="colorAccent">@color/colorPrimary</item>
 
     </style>
 
