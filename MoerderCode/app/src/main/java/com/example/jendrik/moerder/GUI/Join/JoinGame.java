@@ -11,7 +11,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.jendrik.moerder.R;
-import com.firebase.client.Firebase;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +28,7 @@ public class JoinGame extends Activity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     ListView lv;
     List<String> games;
+    boolean isSecret;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,14 +44,10 @@ public class JoinGame extends Activity {
         DatabaseReference myRef = database.getReference();
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                getUpdate(dataSnapshot);
-            }
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) { getUpdate(dataSnapshot); }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                getUpdate(dataSnapshot);
-            }
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) { getUpdate(dataSnapshot);}
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
@@ -59,20 +55,14 @@ public class JoinGame extends Activity {
             }
 
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
     }
 
     private void  getUpdate(DataSnapshot snapshot){
-        //String str = String.valueOf(snapshot.child("games").getChildrenCount());
-        //Log.d("childs",str);
         Log.d("bla",snapshot.toString());
         games.clear();
         for (DataSnapshot ds : snapshot.getChildren()){
@@ -92,39 +82,27 @@ public class JoinGame extends Activity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Spielnamen speichern
-                //int lvID = v.getId();
                 final String gameName = games.get(position);
-
-                //Log.d("secret",database.getReference("games/"+gameName+"/isSecret").equals(true));
 
                 database.getReference().child("games").child(gameName).child("isSecret").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        boolean isSecret = dataSnapshot.getValue(Boolean.class);
-                        if(isSecret) {
-                            //Passwortabfrage
+                        isSecret = dataSnapshot.getValue(Boolean.class);
+                       if(isSecret) {
                             final Intent intent = new Intent(JoinGame.this, PopUpEnterPassword.class);
                             intent.putExtra("gameName", gameName);
-                            //String pass = database.getReference().child("games").child(gameName).child("pass").va;
-                            //Log.d("pass", pass);
-                            //Intent mit Passwort füttern
-                            //im Intent Vergleich mit Eingabe
-                            //gleiches popup wie spielername, text von et ändern
-                            //von dort PopUpEnterName aufrufen
-                            //diese Activity beenden
-                        }
-
+                            startActivity(intent);
+                        }else{
+                           final Intent intent = new Intent(JoinGame.this, PopUpEnterName.class);
+                           intent.putExtra("gameName", gameName);
+                           startActivity(intent);
+                       }
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
                     }
                 });
-
-                //Namen abfragen
-                //Activity beenden
+                finish();
             }
         });
     }

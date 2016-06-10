@@ -74,6 +74,9 @@
         <activity android:name=".GUI.OnGamingClasses.WinScreen" />
         <activity android:name=".GUI.OnGamingClasses.LooseScreen" />
         <activity android:name=".GUI.OnGamingClasses.STUB_SCANNER" />
+        <activity android:name=".GUI.Join.PopUpEnterName"/>
+        <activity android:name=".GUI.Join.PopUpEnterPassword"/>
+        <activity android:name=".GUI.Join.WaitForServer"/>
     </application>
 
 </manifest>
