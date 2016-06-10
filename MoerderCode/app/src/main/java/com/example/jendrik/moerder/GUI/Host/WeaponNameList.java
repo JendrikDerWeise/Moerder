@@ -80,7 +80,6 @@ public class WeaponNameList extends Activity {
         Game game = new Game(gameName, pass, extras.getStringArrayList("room list"), weaponList, min, sec, playerAmount);
         intent.putExtra("GAME", game);
 
-        GameHandler.saveGame(game);
         boolean isSecret = extras.getBoolean(CreateGame.SECRET_CHECKED);
         SendToDatabase sendToDatabase = new SendToDatabase(gameName);
         sendToDatabase.createGame();
@@ -94,7 +93,12 @@ public class WeaponNameList extends Activity {
 
         sendToDatabase.sendData("roomList", extras.getStringArrayList("room list"));
         sendToDatabase.sendData("weaponlist",weaponList);
+        List<String> connectedPlayers = new ArrayList<>();
+        connectedPlayers.add("DUMMY");
+        sendToDatabase.sendData("connectedPlayers", connectedPlayers);
 
+        intent.putExtra("host", true);
+        GameHandler.saveGame(game);
         startActivity(intent);
 
     }

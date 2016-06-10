@@ -48,6 +48,7 @@ public class WaitForPlayers extends Activity {
         pNameList.add(ownName);
 
         platzhalterSpielerListeFuellen();
+
         //makeActivity();
     }
 
@@ -141,6 +142,7 @@ public class WaitForPlayers extends Activity {
 
     public void onClickStartGame(View button){
 
+        //TODO prüfen ob Spieleranzahl==Spieler in Liste
 
         //makePlayerObjects();
         final Intent intent = new Intent(this,MenueDrawer.class);

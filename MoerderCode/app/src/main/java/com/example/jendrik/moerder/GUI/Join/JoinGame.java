@@ -25,10 +25,10 @@ import java.util.List;
  * Created by bulk on 09.06.2016.
  */
 public class JoinGame extends Activity {
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    ListView lv;
-    List<String> games;
-    boolean isSecret;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private ListView lv;
+    private List<String> games;
+    private boolean isSecret;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +40,7 @@ public class JoinGame extends Activity {
         setTouchListener();
     }
 
-    public void receiveData(){
+    private void receiveData(){
         DatabaseReference myRef = database.getReference();
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -91,9 +91,11 @@ public class JoinGame extends Activity {
                        if(isSecret) {
                             final Intent intent = new Intent(JoinGame.this, PopUpEnterPassword.class);
                             intent.putExtra("gameName", gameName);
+                            intent.putExtra("host",false);
                             startActivity(intent);
                         }else{
                            final Intent intent = new Intent(JoinGame.this, PopUpEnterName.class);
+                           intent.putExtra("host",false);
                            intent.putExtra("gameName", gameName);
                            startActivity(intent);
                        }

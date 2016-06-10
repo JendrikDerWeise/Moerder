@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
  * Created by bulk on 10.06.2016.
  */
 public class PopUpEnterPassword extends Activity {
-    String typedPass;
+    private String typedPass;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +56,11 @@ public class PopUpEnterPassword extends Activity {
         database.getReference().child("games").child(gameName).child("pass").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String pass = dataSnapshot.getValue(String.class);
                 if(dataSnapshot.getValue().equals(typedPass)){
                     Intent intent = new Intent(PopUpEnterPassword.this, PopUpEnterName.class);
                     intent.putExtra("gameName", gameName);
+                    Bundle extras = getIntent().getExtras();
+                    intent.putExtras(extras);
                     startActivity(intent);
                     finish();
                 }

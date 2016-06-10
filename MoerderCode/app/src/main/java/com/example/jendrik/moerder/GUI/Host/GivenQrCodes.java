@@ -10,6 +10,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.jendrik.moerder.GUI.Join.PopUpEnterName;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Room;
 import com.example.jendrik.moerder.R;
@@ -85,7 +86,7 @@ public class GivenQrCodes extends Activity {
     }
 
     public void startWaitForPlayers(){
-        final Intent intent = new Intent(this, WaitForPlayers.class);
+        final Intent intent = new Intent(this, PopUpEnterName.class);
         intent.putExtras(extras);
         intent.putExtra("GAME", game);
         startActivity(intent);

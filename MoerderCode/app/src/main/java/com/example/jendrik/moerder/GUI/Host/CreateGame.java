@@ -17,7 +17,7 @@ import com.example.jendrik.moerder.R;
  */
 public class CreateGame extends Activity {
 
-    public static final String NAME = "game name";
+    public static final String NAME = "gameName";
     public static final String SECRET_CHECKED = "checked";
     public static final String PASS = "password";
     public static final String PLAYER_COUNT = "players";
