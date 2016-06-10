@@ -94,7 +94,7 @@ public class JoinGame extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Spielnamen speichern
                 //int lvID = v.getId();
-                String gameName = games.get(position);
+                final String gameName = games.get(position);
 
                 //Log.d("secret",database.getReference("games/"+gameName+"/isSecret").equals(true));
 
@@ -104,7 +104,10 @@ public class JoinGame extends Activity {
                         boolean isSecret = dataSnapshot.getValue(Boolean.class);
                         if(isSecret) {
                             //Passwortabfrage
-                            //final Intent intent = new Intent()
+                            final Intent intent = new Intent(JoinGame.this, PopUpEnterPassword.class);
+                            intent.putExtra("gameName", gameName);
+                            //String pass = database.getReference().child("games").child(gameName).child("pass").va;
+                            //Log.d("pass", pass);
                             //Intent mit Passwort füttern
                             //im Intent Vergleich mit Eingabe
                             //gleiches popup wie spielername, text von et ändern

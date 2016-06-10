@@ -44,7 +44,6 @@ public class Startscreen extends Activity {
 
         firebaseBindAuthStateListener();
 
-
     }
 
     @Override
