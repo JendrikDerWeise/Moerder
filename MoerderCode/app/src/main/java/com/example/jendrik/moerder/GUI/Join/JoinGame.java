@@ -25,24 +25,28 @@ import java.util.List;
  * Created by bulk on 09.06.2016.
  */
 public class JoinGame extends Activity {
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseDatabase database;
     private ListView lv;
     private List<String> games;
     private boolean isSecret;
+    private DatabaseReference myRef;
+    private ChildEventListener el;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_game);
         lv = (ListView)findViewById(R.id.JoinListView);
         games = new ArrayList();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
+        el = addEventListener();
+        myRef.addChildEventListener(el);
 
-        receiveData();
         setTouchListener();
     }
 
-    private void receiveData(){
-        DatabaseReference myRef = database.getReference();
-        myRef.addChildEventListener(new ChildEventListener() {
+    private ChildEventListener addEventListener(){
+        ChildEventListener eventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) { getUpdate(dataSnapshot); }
 
@@ -59,11 +63,12 @@ public class JoinGame extends Activity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {}
-        });
+        };
+
+        return eventListener;
     }
 
     private void  getUpdate(DataSnapshot snapshot){
-        Log.d("bla",snapshot.toString());
         games.clear();
         for (DataSnapshot ds : snapshot.getChildren()){
             String gameName = ds.getKey();
@@ -104,6 +109,7 @@ public class JoinGame extends Activity {
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
+                myRef.removeEventListener(el);
                 finish();
             }
         });

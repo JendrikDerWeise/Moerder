@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.databinding.ObservableList;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -15,8 +18,14 @@ import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.R;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import android.databinding.ObservableArrayList;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +41,12 @@ public class WaitForPlayers extends Activity {
     public static ObservableArrayList<String> pNameList = new ObservableArrayList();
     public static TableLayout table;
 
+    private ListView lv;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private ChildEventListener el;
+    private List<String> playerNames;
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,17 +54,66 @@ public class WaitForPlayers extends Activity {
 
         extras = getIntent().getExtras();
         game = (Game) extras.get("GAME");
-        TextView gameName = (TextView) findViewById(R.id.game_name);
-        gameName.setText(game.getGameName());
+        TextView tvGameName = (TextView) findViewById(R.id.game_name);
+        tvGameName.setText(game.getGameName());
 
+        //String ownName = extras.getString(PopUpEnterName.PNAME);
+        //pNameList.add(ownName);
 
-        extras = getIntent().getExtras();
-        String ownName = extras.getString(PopUpEnterName.PNAME);
-        pNameList.add(ownName);
+       // platzhalterSpielerListeFuellen();
 
-        platzhalterSpielerListeFuellen();
+        /*
+        Begin neue Version
+         */
+        final String gameName = getIntent().getExtras().getString("gameName");
+        lv = (ListView) findViewById(R.id.lv_player_wait);
+        playerNames = new ArrayList<>();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference().child("games").child(gameName).child("connectedPlayers");
+        el = addEventListener();
+        myRef.addChildEventListener(el);
+
 
         //makeActivity();
+    }
+
+    private ChildEventListener addEventListener(){
+        ChildEventListener eventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) { getUpdate(dataSnapshot); }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) { getUpdate(dataSnapshot);}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                getUpdate(dataSnapshot);
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+
+        return eventListener;
+    }
+
+    private void  getUpdate(DataSnapshot snapshot){
+        playerNames.clear();
+        for (DataSnapshot ds : snapshot.getChildren()){
+            String pName = ds.getKey();
+            Log.d("player1",pName);
+            playerNames.add(pName);
+        }
+
+        if(playerNames.size()>0){
+            ArrayAdapter adapter = new ArrayAdapter(WaitForPlayers.this,android.R.layout.simple_list_item_1,playerNames);
+            lv.setAdapter(adapter);
+        }
+        else
+            Toast.makeText(this,"Something went wrong!",Toast.LENGTH_SHORT);
     }
 
     private void platzhalterSpielerListeFuellen(){
