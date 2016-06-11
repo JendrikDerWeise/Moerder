@@ -13,10 +13,12 @@ public class RoomManager implements Serializable{
     private List<Room> roomList;
     private Room grpRoom;
 
-    public RoomManager(){
+    public RoomManager(boolean bool){
         roomList = new ArrayList<>();
         grpRoom = new Room("grp_room", 29);
     }
+
+    public RoomManager(){}
 
     public void createRoom(String name){
         int qrCode=roomList.size() + 20;

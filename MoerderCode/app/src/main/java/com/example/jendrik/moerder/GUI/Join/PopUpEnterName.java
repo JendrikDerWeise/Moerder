@@ -30,6 +30,7 @@ public class PopUpEnterName extends Activity {
     SendToDatabase sendToDatabase;
     DatabaseReference ref;
     boolean nameOK;
+    private ValueEventListener vl;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,21 +54,17 @@ public class PopUpEnterName extends Activity {
         sendToDatabase = new SendToDatabase(gameName);
 
         ref = database.getReference().child("games").child(gameName).child("connectedPlayers");
-        setListener(gameName);
+
+        vl = setListener();
+        ref.addListenerForSingleValueEvent(vl);
     }
 
 
     private void checkNameOK(){
-        for(String s : connectedPlayers) //nix zum anzeigen
-            Log.d("liste1",s + "methode");
-
-        if (connectedPlayers.contains(pName)) //funktioniert!!!
+        if (connectedPlayers.contains(pName))
             nameOK= false;
-        else {
-            //ref.removeEventListener(ve);
+        else
             nameOK =true;
-        }
-
     }
 
 
@@ -95,12 +92,13 @@ public class PopUpEnterName extends Activity {
 
             Bundle extras = getIntent().getExtras();
             intent.putExtras(extras);
+            ref.removeEventListener(vl);
             startActivity(intent);
         }
 
     }
 
-    private void setListener(String gameName){
+    private ValueEventListener setListener(){
 
         ValueEventListener ve = new ValueEventListener() {
             @Override
@@ -116,7 +114,6 @@ public class PopUpEnterName extends Activity {
 
             }
         };
-        ref.addListenerForSingleValueEvent(ve);
-
+        return ve;
     }
 }

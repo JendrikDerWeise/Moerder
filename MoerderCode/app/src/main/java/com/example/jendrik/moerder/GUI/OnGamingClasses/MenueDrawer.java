@@ -11,10 +11,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.jendrik.moerder.FCM.FCMListeners;
 import com.example.jendrik.moerder.GUI.Host.STUB_FRAG;
 import com.example.jendrik.moerder.GUI.LittleHelpers.CountDownClass;
 import com.example.jendrik.moerder.Game;
@@ -57,10 +59,23 @@ public class MenueDrawer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        extras = getIntent().getExtras();
-        game = (Game) extras.get("GAME"); //muss statisch sein, damit alle Fragments auf das selbe Objekt zugreifen können.
+       // extras = getIntent().getExtras();
+       // game = (Game) extras.get("GAME"); //muss statisch sein, damit alle Fragments auf das selbe Objekt zugreifen können.
+        FCMListeners fcmListeners=new FCMListeners(getIntent().getExtras().getString("gameName"));
+        //game = fcmListeners.getGameStat();
+
         //TODO verhindern das "Zurücktaste" von Android in die Spielerstellung zurück kehrt. Wie geht das? Ggf. finish()?
         //TODO Mitteilung "gerufen werden"
+
+        game =(Game) getIntent().getExtras().get("GAME");
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+
+
+        Log.d("testen",game.getGrpRoom().getName());
 
         if(game.getActivePlayer().isActive()){//TODO activePlayer ändern!
             setContentView(R.layout.menu_drawer);
@@ -81,6 +96,7 @@ public class MenueDrawer extends AppCompatActivity {
         //checkTurn();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerToggle.syncState();
+
     }
 
     /**
@@ -216,7 +232,7 @@ public class MenueDrawer extends AppCompatActivity {
      * Activity wird anschliessend neu gestartet.
      */
     public void endTurn(){
-        getIntent().putExtra("GAME",game);
+        //getIntent().putExtra("GAME",game);
         finish();
         startActivity(getIntent());
     }

@@ -57,6 +57,16 @@ public class SendToDatabase<T> {
         myRef.updateChildren(update);
     }
 
+    public void createList(String typOfObject, T object){
+        DatabaseReference myRef = database.getReference();
+        myRef.child("games").child(gameName).child(typOfObject).setValue(object);
+    }
+
+    public void sendGame(Game game){
+        DatabaseReference myRef = database.getReference();
+        myRef.child("games").child(gameName).setValue(game);
+    }
+
     public void createGame(){
         DatabaseReference myRef = database.getReference();
         myRef.child("games").child(gameName).push();

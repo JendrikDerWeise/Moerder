@@ -24,7 +24,6 @@ import java.util.Random;
  */
 public class Game implements Serializable {
 
-
     private Solution solution;
     private RoomManager roomManager;
     private WeaponManager weaponManager;
@@ -45,10 +44,10 @@ public class Game implements Serializable {
         this.min = min;
         this.sec = sec;
         solution = null;
-        clueList = new ArrayList<Clue>();
-        playerManager = new PlayerManager();
-        weaponManager = new WeaponManager();
-        roomManager = new RoomManager();
+        clueList = new ArrayList<>();
+        playerManager = new PlayerManager(false);
+        weaponManager = new WeaponManager(false);
+        roomManager = new RoomManager(false);
         createRooms(rooms);
         createWeapons(weapons);
         numberOfThings = rooms.size() + weapons.size();
@@ -96,7 +95,7 @@ public class Game implements Serializable {
     *Füllt ein String-Array mit den Namen aller bisher angemeldeten Spieler und setzt sie in den Gruppenraum (Startposition).
     *Zum Ende wird Spieler 0 als aktiv markiert.
      */
-    private void createPlayer(ArrayList<String> players){
+    private void createPlayer(List<String> players){
         numberOfThings += players.size();
         for(String s:players) {
             playerManager.addPlayer(s,(int) numberOfThings);
@@ -150,9 +149,6 @@ public class Game implements Serializable {
         return this.playerAmount;
     }
 
-    public boolean getGameOver(){
-        return this.gameOver;
-    }
     public List<Room> getRooms(){
         return roomManager.showMap();
     }
@@ -261,7 +257,7 @@ public class Game implements Serializable {
     *Methode stupst das Spiel los. Erst wenn alle Daten vorliegen (Spieler, Räume, Waffen) kann die Methode sinnvoll
     *verwendet werden. Die Reihenfolge muss so bestehn bleiben - glaub ich.
      */
-    public void startGame(ArrayList<String> players){
+    public void startGame(List<String> players){
         createPlayer(players);
         createClues();
         giveCluesToPlayer();

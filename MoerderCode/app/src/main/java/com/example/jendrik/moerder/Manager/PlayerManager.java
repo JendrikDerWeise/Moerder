@@ -19,9 +19,11 @@ public class PlayerManager implements Serializable {
     private List<Player> playerList;
 
 
-    public PlayerManager(){
+    public PlayerManager(boolean bool){
         playerList = new ArrayList<>();
     }
+
+    public PlayerManager(){}
 
     public void addPlayer(String name, int numberOfThings){
         int qrCode = playerList.size()+1;
@@ -64,15 +66,15 @@ public class PlayerManager implements Serializable {
         for(Player p: playerList){
             int i=0;
             for(Player x: playerList){
-                p.suspectOnList(i,'n');
+                p.suspectOnList(i,"n");
                 i++;
             }
             for(Room r : rooms){
-                p.suspectOnList(i,'n');
+                p.suspectOnList(i,"n");
                 i++;
             }
             for(Weapon w : weapons){
-                p.suspectOnList(i,'n');
+                p.suspectOnList(i,"n");
                 i++;
             }
         }

@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.databinding.ObservableList;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -14,10 +16,17 @@ import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import android.databinding.ObservableArrayList;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Klasse noch nicht fertig!
@@ -29,6 +38,13 @@ public class WaitForServer extends Activity {
     public static ObservableArrayList<String> pNameList = new ObservableArrayList();
     public static TableLayout table;
 
+    private String gameName;
+    private ListView lv;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private ValueEventListener el;
+    private List<String> playerNames;
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,61 +52,53 @@ public class WaitForServer extends Activity {
         Button startBtn = (Button) findViewById(R.id.button5);
         startBtn.setVisibility(View.INVISIBLE);
 
-        //TODO GameName empfangen/abspeichern
-        String nameOfGame = "TEST";
-        TextView gameName = (TextView) findViewById(R.id.game_name);
-        gameName.setText(nameOfGame);
+        TextView tvGameName = (TextView) findViewById(R.id.game_name);
 
-        makeActivity();
+        gameName = getIntent().getExtras().getString("gameName");
+        tvGameName.setText(gameName);
+        lv = (ListView) findViewById(R.id.lv_player_wait);
+        playerNames = new ArrayList<>();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference().child("games").child(gameName).child("connectedPlayers");
+        el = setListener();
+        myRef.addValueEventListener(el);
+
     }
 
-    private void makeActivity(){
-        listBinder();
-        makeTable();
+    private ValueEventListener setListener(){
+
+        ValueEventListener ve = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                playerNames.clear();
+                for(DataSnapshot sn:dataSnapshot.getChildren()) {
+                    String name = sn.getValue(String.class);
+                    playerNames.add(name);
+                }
+                getUpdate();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        return ve;
     }
 
-    /**
-     * Fügt dem WaitScreen einen neuen Spieler hinzu
-     * @param pName
-     */
+
+    private void  getUpdate(){
+
+        if(playerNames.size()>0){
+            ArrayAdapter adapter = new ArrayAdapter(WaitForServer.this,android.R.layout.simple_list_item_1,playerNames);
+            lv.setAdapter(adapter);
+        }
+        else
+            Toast.makeText(this,"Something went wrong!",Toast.LENGTH_SHORT);
+    }
+
     public static void addPlayer(String pName){
         pNameList.add(pName);
     }
 
-    /**
-     * erstellt eine Tabelle mit allen Spieler in der Liste
-     */
-    private void makeTable(){
-        table = (TableLayout)findViewById(R.id.player_table);
-        for(int i=0; i<pNameList.size(); i++){
-            TableRow row = new TableRow(this);
-            TextView tv = new TextView(this);
-            String txt = getResources().getString(R.string.txt_player);
-            txt =txt+ " "+(i+1) + ": " + pNameList.get(i);
-            tv.setText(txt);
-            row.addView(tv);
-            table.addView(row);
-        }
-
-    }
-
-    /**
-     * ChangeListener fuer die SpielerListe. Soll den Waitscreen refreshen und die aktuell angemeldeten Spieler anzeigen.
-     */
-    private void listBinder(){
-        onListChangedCallback = new ObservableList.OnListChangedCallback<ObservableList<String>>() {
-            @Override public void onChanged(ObservableList<String> sender) {
-                makeTable();
-            }
-
-            @Override public void onItemRangeChanged(ObservableList<String> sender, int positionStart, int itemCount) {}
-
-            @Override public void onItemRangeInserted(ObservableList<String> sender, int positionStart, int itemCount) {}
-
-            @Override public void onItemRangeMoved(ObservableList<String> sender, int fromPosition, int toPosition, int itemCount) {}
-
-            @Override public void onItemRangeRemoved(ObservableList<String> sender, int positionStart, int itemCount) {}
-        };
-        pNameList.addOnListChangedCallback(onListChangedCallback);
-    }
 }

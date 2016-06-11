@@ -15,7 +15,7 @@ public class Player implements Serializable{
     private Weapon actualWeapon;
     private Room actualRoom;
     private List<Clue> givenClues;
-    private char[] suspectList;
+    private List<String> suspectList;
     private double pNumber;
 
     public Player(String name, int qrCode, int numberOfThings, int pNumber){
@@ -23,9 +23,12 @@ public class Player implements Serializable{
         this.qrCode=qrCode;
         this.name=name;
         this.pNumber = pNumber;
-        suspectList = new char[numberOfThings];
+        suspectList = new ArrayList<>();
         givenClues = new ArrayList<>();
         dead = false;
+
+        for(int i=0; i<numberOfThings;i++)
+            suspectList.add(i,"n");
     }
 
     public Player(){}
@@ -84,19 +87,20 @@ public class Player implements Serializable{
 
     public double getpNumber(){ return pNumber; }
 
-    public void suspectOnList(int position, char character){ // zu deutsch verdaechtigen auf der Liste
+    public void suspectOnList(int position, String string){ // zu deutsch verdaechtigen auf der Liste
         //different to suspect, as this is only the internal list for that human
-        if(position < suspectList.length && (character == 'n' || character == 'y' || character == 'm')) {
+        if(position < suspectList.size() && (string == "n" || string == "y" || string == "m")) {
             //n = no, y = yes, m = maybe
-            suspectList[position] = character;
+            suspectList.remove(position);
+            suspectList.add(position,string);
         }
     }
 
-    public char getSuspectOnList(int position){
-        return suspectList[position];
+    public String getSuspectOnList(int position){
+        return suspectList.get(position);
     }
 
-    public char[] getSuspectList() { return suspectList; }
+    public List<String> getSuspectList() { return suspectList; }
 
 
 }
