@@ -183,6 +183,7 @@ public class WaitForPlayers extends Activity {
         final Intent intent = new Intent(this,MenueDrawer.class);
         intent.putExtra("gameName", gameName);
         intent.putExtra("GAME",game);
+        intent.putExtra("whoAmI", 0);
 
         startActivity(intent);
     }

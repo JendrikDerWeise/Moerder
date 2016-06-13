@@ -49,6 +49,7 @@ public class MenueDrawer extends AppCompatActivity {
     private static FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private CountDownClass timer;
+    private int whoAmI;
 
 
     /**
@@ -61,26 +62,28 @@ public class MenueDrawer extends AppCompatActivity {
 
        // extras = getIntent().getExtras();
        // game = (Game) extras.get("GAME"); //muss statisch sein, damit alle Fragments auf das selbe Objekt zugreifen können.
-        FCMListeners fcmListeners=new FCMListeners(getIntent().getExtras().getString("gameName"));
+
         //game = fcmListeners.getGameStat();
 
         //TODO verhindern das "Zurücktaste" von Android in die Spielerstellung zurück kehrt. Wie geht das? Ggf. finish()?
         //TODO Mitteilung "gerufen werden"
 
-        game =(Game) getIntent().getExtras().get("GAME");
+
     }
 
     @Override
     protected void onStart(){
         super.onStart();
+        whoAmI = getIntent().getExtras().getInt("whoAmI");
+        game =(Game) getIntent().getExtras().get("GAME");
 
+        FCMListeners fcmListeners=new FCMListeners(game.getGameName(),game);
 
-        Log.d("testen",game.getGrpRoom().getName());
-
-        if(game.getActivePlayer().isActive()){//TODO activePlayer ändern!
+        if(game.getActivePlayer().getpNumber() == whoAmI){//TODO activePlayer ändern!
             setContentView(R.layout.menu_drawer);
         }else{
             //setContentView(R.layout.menu_drawer_not_active);
+            setContentView(R.layout.menu_drawer);
             notActive();
         }
         setLayout();
@@ -232,7 +235,8 @@ public class MenueDrawer extends AppCompatActivity {
      * Activity wird anschliessend neu gestartet.
      */
     public void endTurn(){
-        //getIntent().putExtra("GAME",game);
+        game.setNextActivePlayer();
+        getIntent().putExtra("GAME",game);
         finish();
         startActivity(getIntent());
     }

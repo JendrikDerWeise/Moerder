@@ -240,17 +240,21 @@ public class Game implements Serializable {
         justScannedQR = qrnr;
     }
 
-    public void setActivePlayer(){
-        List<Player> list = playerManager.getPlayerList();
-        for(int i = 0; i < list.size(); i++){
-            if(list.get(i).isActive()){
-                if(i + 1 < list.size()){
-                    playerManager.setActive(list.get(i+1).getName());
+    public void setNextActivePlayer(){
+        for(Player p : playerManager.getPlayerList()){
+            if(p.isActive())
+                playerManager.setActive(p);
+        }
+/*
+        for(int i = 0; i < playerManager.getPlayerList().size(); i++){
+            if(playerManager.getPlayerList().get(i).isActive()){
+                if(i + 1 < playerManager.getPlayerList().size()){
+                    playerManager.setActive(playerManager.getPlayerList().get(i+1).getName());
                 }else{
-                    playerManager.setActive(list.get(0).getName());
+                    playerManager.setActive(playerManager.getPlayerList().get(0).getName());
                 }
             }
-        }
+        }*/
     }
 
     /**

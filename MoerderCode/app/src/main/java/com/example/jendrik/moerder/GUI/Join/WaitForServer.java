@@ -34,10 +34,6 @@ import java.util.List;
  */
 public class WaitForServer extends Activity {
 
-    private ObservableList.OnListChangedCallback<ObservableList<String>> onListChangedCallback;
-    public static ObservableArrayList<String> pNameList = new ObservableArrayList();
-    public static TableLayout table;
-
     private String gameName;
     private ListView lv;
     private FirebaseDatabase database;
@@ -87,7 +83,7 @@ public class WaitForServer extends Activity {
     }
 
 
-    private void  getUpdate(){
+    private void getUpdate(){
 
         if(playerNames.size()>0){
             ArrayAdapter adapter = new ArrayAdapter(WaitForServer.this,android.R.layout.simple_list_item_1,playerNames);
@@ -97,8 +93,17 @@ public class WaitForServer extends Activity {
             Toast.makeText(this,"Something went wrong!",Toast.LENGTH_SHORT);
     }
 
-    public static void addPlayer(String pName){
-        pNameList.add(pName);
+    private void gameStarted(){
+
+        Intent intent = new Intent(this,MenueDrawer.class);
+        intent.putExtra("gameName", gameName);
+        intent.putExtra("whoAmI", checkForPlayerNumber());
     }
 
+    private int checkForPlayerNumber() {
+        String pName = getIntent().getExtras().getString("pName");
+        int pNumber = playerNames.indexOf(pName);
+
+        return pNumber;
+    }
 }

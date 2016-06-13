@@ -73,7 +73,7 @@ public class ChangeWeapon extends Fragment {
                                 room.removeWeapon(w);
                             }
                         }
-
+                        game.setNextActivePlayer();
                         endTurn();
 
                     }else{
@@ -96,6 +96,7 @@ public class ChangeWeapon extends Fragment {
     }
 
     private void endTurn(){
+
         getActivity().getIntent().putExtra("GAME",game);
         getActivity().finish();
         startActivity(getActivity().getIntent());

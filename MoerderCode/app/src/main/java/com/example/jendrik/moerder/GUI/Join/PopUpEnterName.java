@@ -92,6 +92,7 @@ public class PopUpEnterName extends Activity {
 
             Bundle extras = getIntent().getExtras();
             intent.putExtras(extras);
+            intent.putExtra("pName",pName);
             ref.removeEventListener(vl);
             startActivity(intent);
         }

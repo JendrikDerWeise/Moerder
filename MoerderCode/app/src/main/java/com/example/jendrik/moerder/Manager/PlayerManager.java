@@ -1,5 +1,7 @@
 package com.example.jendrik.moerder.Manager;
 
+import android.util.Log;
+
 import com.example.jendrik.moerder.GameObjekts.Clue;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.GameObjekts.Room;
@@ -13,8 +15,6 @@ import java.util.List;
  * Created by Jendrik on 21.02.2016.
  */
 public class PlayerManager implements Serializable {
-
-
 
     private List<Player> playerList;
 
@@ -33,14 +33,22 @@ public class PlayerManager implements Serializable {
     /*
     Methode legt fest, welcher Spieler an der Reihe ist. Dazu muss der Name des aktiven Spielers übergeben werden.
      */
-    public void setActive(String name) {
+    public void setActive(Player player) {
+        int index = playerList.indexOf(player);
+        int newIndex = 0;
+        if(index+1 != playerList.size())
+            newIndex = index+1;
+
         for (Player p : playerList) {
-            if (p.getName().equals(name))
+            if (p.getName().equals(playerList.get(newIndex)))
                 p.setActive(true);
             else
                 p.setActive(false);
         }
+
+        Log.d("hallo", playerList.get(newIndex).getName());
     }
+
 
     public void giveClue(Clue clue, int playerNo){
         playerList.get(playerNo).setGivenClues(clue);

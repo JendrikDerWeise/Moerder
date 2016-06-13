@@ -17,17 +17,19 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class FCMListeners {
     private String gameName;
+    private Game game;
 
     private DatabaseReference database;
 
-    public FCMListeners(String gameName){
+    public FCMListeners(String gameName, Game game){
 
         this.gameName=gameName;
         database = FirebaseDatabase.getInstance().getReference();
-        Log.e("testen",database.child("games").child(gameName).getKey());
+       // Log.e("testen",database.child("games").child(gameName).getKey());
 
+        this.game=game;
         database.child("games").addChildEventListener(bindListener());
-        database.child("games").child(gameName).keepSynced(true);
+       // database.child("games").child(gameName).keepSynced(true);
 
     }
 
@@ -40,15 +42,19 @@ public class FCMListeners {
       //  return game;
 //    }
 
-    private ChildEventListener bindListener(){
+    public ChildEventListener bindListener(){
+
         ChildEventListener ce = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Log.e("hurra","listener!");
                 updateGame(dataSnapshot);
+
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Log.e("hurra","listener!");
                 updateGame(dataSnapshot);
             }
 
@@ -97,15 +103,15 @@ public class FCMListeners {
     }
 
     private void updateGame(DataSnapshot snapshot){
-        Log.e("hurra",snapshot.getKey());
+        Log.e("hurra","updateGame");
        // for(DataSnapshot ds : snapshot.getChildren()){
          //   if(ds.getKey() == gameName){
-                Game game=snapshot.getValue(Game.class);
+                Game game1=snapshot.child(gameName).getValue(Game.class);
                // Log.e("hurra",game.getGameName());
                 if(game==null)
                     Log.e("testen", "game is null");
                 else
-                    MenueDrawer.game=game;
+                    game=game1;
            // }
         //}
 
