@@ -240,7 +240,7 @@ public class MenueDrawer extends AppCompatActivity {
     /**
      * onClickEvents innerhalb von Fragments funktionieren nicht. Daher wird bei jedem Klick auf einem
      * Button innerhalb der Fragments diese Methode aufgerufen und leitet den Klick an die entsprechende
-     * onClick innerhalb des zugehoerigenFragments weiter.
+     * onClick innerhalb des zugehoerigen Fragments weiter.
      * @param v
      */
     public void onClickInDrawer(View v){

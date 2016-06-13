@@ -27,6 +27,7 @@ public class FCMListeners {
         Log.e("testen",database.child("games").child(gameName).getKey());
 
         database.child("games").addChildEventListener(bindListener());
+        database.child("games").child(gameName).keepSynced(true);
 
     }
 
@@ -92,21 +93,21 @@ public class FCMListeners {
                     }
                 };
 */
-        Log.d("testen",database.child("games").child(gameName).getKey()+" listener");
         return ce;
     }
 
     private void updateGame(DataSnapshot snapshot){
-        for(DataSnapshot ds : snapshot.getChildren()){
-            if(ds.getKey() == gameName){
-                Game game=ds.getValue(Game.class);
-                Log.e("hurra",game.getGameName());
+        Log.e("hurra",snapshot.getKey());
+       // for(DataSnapshot ds : snapshot.getChildren()){
+         //   if(ds.getKey() == gameName){
+                Game game=snapshot.getValue(Game.class);
+               // Log.e("hurra",game.getGameName());
                 if(game==null)
                     Log.e("testen", "game is null");
                 else
                     MenueDrawer.game=game;
-            }
-        }
+           // }
+        //}
 
     }
 
