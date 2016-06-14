@@ -89,10 +89,9 @@ public class FCMListeners {
 
 
     private List<String> getStringLists(String list){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("games").child(gameName).child(list);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         final List<String> readyList = new ArrayList<>();
-        ref.addListenerForSingleValueEvent(
+        database.getReference().child("games").child(gameName).child(list).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -111,9 +110,8 @@ public class FCMListeners {
     }
 
     private double getDoublesFromDB(String value){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("games").child(gameName).child(value);
-        ref.addListenerForSingleValueEvent(
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database.getReference().child("games").child(gameName).child(value).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -130,9 +128,8 @@ public class FCMListeners {
     }
 
     public Solution getSolutionFromDB(){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("games").child(gameName).child("solution");
-        ref.addListenerForSingleValueEvent(
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database.getReference().child("games").child(gameName).child("solution").addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -150,7 +147,7 @@ public class FCMListeners {
 
     public Game makeGameObjectForClient(){
         ArrayList<String> rooms = (ArrayList)getStringLists("roomList");
-        ArrayList<String>  weapons = (ArrayList)getStringLists("weaponList");
+        ArrayList<String> weapons = (ArrayList)getStringLists("weaponlist");
         ArrayList<String> players = (ArrayList)getStringLists("connectedPlayers");
         Solution solution = getSolutionFromDB();
         double min = getDoublesFromDB("min");
