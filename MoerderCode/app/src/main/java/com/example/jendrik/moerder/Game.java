@@ -242,19 +242,11 @@ public class Game implements Serializable {
 
     public void setNextActivePlayer(){
         for(Player p : playerManager.getPlayerList()){
-            if(p.isActive())
+            if(p.isActive()) {
                 playerManager.setActive(p);
-        }
-/*
-        for(int i = 0; i < playerManager.getPlayerList().size(); i++){
-            if(playerManager.getPlayerList().get(i).isActive()){
-                if(i + 1 < playerManager.getPlayerList().size()){
-                    playerManager.setActive(playerManager.getPlayerList().get(i+1).getName());
-                }else{
-                    playerManager.setActive(playerManager.getPlayerList().get(0).getName());
-                }
+                break;
             }
-        }*/
+        }
     }
 
     /**

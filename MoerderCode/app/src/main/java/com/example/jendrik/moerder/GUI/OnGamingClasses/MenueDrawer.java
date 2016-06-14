@@ -50,6 +50,7 @@ public class MenueDrawer extends AppCompatActivity {
     private FragmentTransaction fragmentTransaction;
     private CountDownClass timer;
     private int whoAmI;
+    private FCMListeners fcmListeners;
 
 
     /**
@@ -67,31 +68,15 @@ public class MenueDrawer extends AppCompatActivity {
 
         //TODO verhindern das "Zurücktaste" von Android in die Spielerstellung zurück kehrt. Wie geht das? Ggf. finish()?
         //TODO Mitteilung "gerufen werden"
-
-
-    }
-
-    @Override
-    protected void onStart(){
-        super.onStart();
         whoAmI = getIntent().getExtras().getInt("whoAmI");
         game =(Game) getIntent().getExtras().get("GAME");
+        setContentView(R.layout.menu_drawer);
 
-        FCMListeners fcmListeners=new FCMListeners(game.getGameName(),game);
+        fcmListeners=new FCMListeners(game.getGameName(),game);
 
-        if(game.getActivePlayer().getpNumber() == whoAmI){//TODO activePlayer ändern!
-            setContentView(R.layout.menu_drawer);
-        }else{
-            //setContentView(R.layout.menu_drawer_not_active);
-            setContentView(R.layout.menu_drawer);
-            notActive();
-        }
         setLayout();
         instantiateFragments();
         initFragManager();
-
-        timer = new CountDownClass(this, (int)game.getMin(),(int)game.getSec());
-        timer.getTimer().start();
 
         initNaviListener();
 
@@ -99,6 +84,20 @@ public class MenueDrawer extends AppCompatActivity {
         //checkTurn();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerToggle.syncState();
+
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+
+        if(game.getActivePlayer().getpNumber() != whoAmI){//TODO activePlayer ändern!{
+            //setContentView(R.layout.menu_drawer_not_active);
+            notActive();
+        }else {
+            timer = new CountDownClass(this, (int) game.getMin(), (int) game.getSec());
+            timer.getTimer().start();
+        }
 
     }
 
@@ -177,7 +176,7 @@ public class MenueDrawer extends AppCompatActivity {
                         break;
                     }
 
-                    case R.id.suspect: {
+                    case R.id.drawer_suspect: {
                         if(game.getActivePlayer().getActualWeapon()==null || game.getActivePlayer().getActualRoom().getName().equals(game.getGrpRoom().getName())){
                             menueSetter(suspectError);
                             break;
@@ -187,20 +186,20 @@ public class MenueDrawer extends AppCompatActivity {
                         }
                     }
 
-                    case R.id.weapon_change: {
-                        if(game.getActivePlayer().getActualRoom().getWeaponList().isEmpty())
+                    case R.id.drawer_weapon_change: {
+                        if(game.getActivePlayer().getActualRoom().getWeaponList().size() == 0)//TODO wirft NullPointerException, wenn keine Waffe im Raum und trotzdem "Waffe wechseln" geklickt
                             menueSetter(changeWeaponError);
                         else
                             menueSetter(changeWeapon);
                         break;
                     }
 
-                    case R.id.room_change: {
+                    case R.id.drawer_room_change: {
                         menueSetter(changeRoom);
                         break;
                     }
 
-                    case R.id.indict: {
+                    case R.id.drawer_indict: {
                         if(game.getActivePlayer().getActualRoom().getName().equals(game.getGrpRoom().getName()))
                             menueSetter(indict);
                         else
@@ -273,14 +272,14 @@ public class MenueDrawer extends AppCompatActivity {
     }
 
     private void notActive(){
-        setInvisible(R.id.suspect);
-        setInvisible(R.id.indict);
-        setInvisible(R.id.room_change);
-        setInvisible(R.id.weapon_change);
+        setInvisible(R.id.drawer_suspect);
+        setInvisible(R.id.drawer_indict);
+        setInvisible(R.id.drawer_weapon_change);
+        setInvisible(R.id.drawer_room_change);
     }
 
     private void setInvisible(int id){
-        navigationView.getMenu().getItem(id).setVisible(false);
+        navigationView.getMenu().findItem(id).setVisible(false);
     }
 /*
         Auto-generated methods
@@ -323,6 +322,14 @@ public class MenueDrawer extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         drawerToggle.onConfigurationChanged(new Configuration());
         super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+
+        timer.getTimer().cancel();
+        fcmListeners.unbindListeners();
     }
 
 

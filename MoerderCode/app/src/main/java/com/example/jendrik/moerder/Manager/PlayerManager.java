@@ -30,23 +30,25 @@ public class PlayerManager implements Serializable {
         playerList.add(new Player(name,qrCode, numberOfThings, playerList.size()));
     }
 
-    /*
-    Methode legt fest, welcher Spieler an der Reihe ist. Dazu muss der Name des aktiven Spielers übergeben werden.
+    /**
+     * Methode legt fest, welcher Spieler an der Reihe ist. Dazu muss der Name des aktiven Spielers übergeben werden.
      */
     public void setActive(Player player) {
-        int index = playerList.indexOf(player);
+        //playerList.get((int)player.getpNumber()).setActive(false);
+
+
+
+        int index = (int)player.getpNumber();
         int newIndex = 0;
         if(index+1 != playerList.size())
             newIndex = index+1;
 
         for (Player p : playerList) {
-            if (p.getName().equals(playerList.get(newIndex)))
+            if (p.getName().equals(playerList.get(newIndex).getName()))
                 p.setActive(true);
             else
                 p.setActive(false);
         }
-
-        Log.d("hallo", playerList.get(newIndex).getName());
     }
 
 

@@ -20,6 +20,7 @@ public class FCMListeners {
     private Game game;
 
     private DatabaseReference database;
+    private ChildEventListener ce;
 
     public FCMListeners(String gameName, Game game){
 
@@ -28,19 +29,12 @@ public class FCMListeners {
        // Log.e("testen",database.child("games").child(gameName).getKey());
 
         this.game=game;
-        database.child("games").addChildEventListener(bindListener());
+        ce = bindListener();
+        database.child("games").addChildEventListener(ce);
        // database.child("games").child(gameName).keepSynced(true);
 
     }
 
-    //public Game getGameStat(){
-
-        //database.getDatabase().getReferenceFromUrl()
-       // SendToDatabase sendToDatabase = new SendToDatabase("dummy");
-       // sendToDatabase.createGame();
-
-      //  return game;
-//    }
 
     public ChildEventListener bindListener(){
 
@@ -115,6 +109,10 @@ public class FCMListeners {
            // }
         //}
 
+    }
+
+    public void unbindListeners(){
+        database.removeEventListener(ce);
     }
 
 

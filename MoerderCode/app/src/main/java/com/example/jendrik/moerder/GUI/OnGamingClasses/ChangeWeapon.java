@@ -57,23 +57,22 @@ public class ChangeWeapon extends Fragment {
                 if (resultCode == Activity.RESULT_OK) { //wenn Activity korrekt zuende geführt wurde
                     int qrCode = data.getIntExtra(STUB_SCANNER.RESULT, 0); //Übergabe des Intents (data), dort ist unter dem String RESULT der INT gespeichert... klingt unsinnig, läuft aber so. Die 0 ist Unsinn
                     if(qrCode>9 && qrCode<20){
-                        for(Room r : game.getRooms()){
-                            if(r.getName().equals(game.getActivePlayer().getActualRoom().getName())) {
-                                if(game.getActivePlayer().getActualWeapon()!= null)
-                                    r.addWeapon(game.getActivePlayer().getActualWeapon());
+                        for(Room r : MenueDrawer.game.getRooms()){
+                            if(r.getName().equals(MenueDrawer.game.getActivePlayer().getActualRoom().getName())) {
+                                if(MenueDrawer.game.getActivePlayer().getActualWeapon()!= null)
+                                    r.addWeapon(MenueDrawer.game.getActivePlayer().getActualWeapon());
                                 room = r;
                             }
                         }
 
                         String weapon;
-                        weapon = game.getNameByNumber(qrCode);
-                        for (Weapon w : game.getWeapons()){
+                        weapon = MenueDrawer.game.getNameByNumber(qrCode);
+                        for (Weapon w : MenueDrawer.game.getWeapons()){
                             if(w.getName().equals(weapon)) {
-                                game.getActivePlayer().setActualWeapon(w);
+                                MenueDrawer.game.getActivePlayer().setActualWeapon(w);
                                 room.removeWeapon(w);
                             }
                         }
-                        game.setNextActivePlayer();
                         endTurn();
 
                     }else{
@@ -97,7 +96,8 @@ public class ChangeWeapon extends Fragment {
 
     private void endTurn(){
 
-        getActivity().getIntent().putExtra("GAME",game);
+        MenueDrawer.game.setNextActivePlayer();
+        getActivity().getIntent().putExtra("GAME",MenueDrawer.game);
         getActivity().finish();
         startActivity(getActivity().getIntent());
     }
