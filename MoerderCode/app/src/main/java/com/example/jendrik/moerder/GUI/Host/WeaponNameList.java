@@ -96,6 +96,7 @@ public class WeaponNameList extends Activity {
         List<String> connectedPlayers = new ArrayList<>();
         connectedPlayers.add("DUMMY");
         sendToDatabase.sendData("connectedPlayers", connectedPlayers);
+        sendToDatabase.sendData("isRunning", false);
 
         intent.putExtra("host", true);
         GameHandler.saveGame(game);

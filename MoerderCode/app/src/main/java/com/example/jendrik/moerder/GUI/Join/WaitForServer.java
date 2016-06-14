@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.databinding.ObservableList;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.jendrik.moerder.FCM.FCMListeners;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
@@ -38,7 +40,9 @@ public class WaitForServer extends Activity {
     private ListView lv;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+    private DatabaseReference gamestarter;
     private ValueEventListener el;
+    private ValueEventListener elGame;
     private List<String> playerNames;
 
 
@@ -58,6 +62,10 @@ public class WaitForServer extends Activity {
         myRef = database.getReference().child("games").child(gameName).child("connectedPlayers");
         el = setListener();
         myRef.addValueEventListener(el);
+
+        gamestarter = FirebaseDatabase.getInstance().getReference().child("games").child(gameName).child("isRunning");
+        elGame = setGameStartedListener();
+        gamestarter.addValueEventListener(elGame);
 
     }
 
@@ -82,6 +90,25 @@ public class WaitForServer extends Activity {
         return ve;
     }
 
+    private ValueEventListener setGameStartedListener(){
+
+        ValueEventListener ve = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                playerNames.clear();
+                boolean isRunning = dataSnapshot.getValue(Boolean.class);
+                if(isRunning)
+                startGame();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        return ve;
+    }
+
 
     private void getUpdate(){
 
@@ -93,11 +120,20 @@ public class WaitForServer extends Activity {
             Toast.makeText(this,"Something went wrong!",Toast.LENGTH_SHORT);
     }
 
-    private void gameStarted(){
-
+    private void startGame(){
+        myRef.removeEventListener(el);
+        gamestarter.removeEventListener(elGame);
         Intent intent = new Intent(this,MenueDrawer.class);
         intent.putExtra("gameName", gameName);
         intent.putExtra("whoAmI", checkForPlayerNumber());
+
+        FCMListeners fcmListeners = new FCMListeners();
+        Game game = fcmListeners.makeGameObjectForClient();
+        intent.putExtra("GAME", game);
+        Log.d("start","spiel wird gestartet");
+
+        startActivity(intent);
+
     }
 
     private int checkForPlayerNumber() {

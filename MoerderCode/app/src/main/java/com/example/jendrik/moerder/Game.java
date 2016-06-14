@@ -305,4 +305,8 @@ public class Game implements Serializable {
     public double getJustScannedQR() {
         return justScannedQR;
     }
+
+    public void setSolution(Solution solution){this.solution = solution;}
+
+    public void setClueList(List clues){clueList = clues;}
 }

@@ -29,6 +29,7 @@ public class JoinGame extends Activity {
     private ListView lv;
     private List<String> games;
     private boolean isSecret;
+    private boolean isRunning;
     private DatabaseReference myRef;
     private ChildEventListener el;
 
@@ -72,7 +73,8 @@ public class JoinGame extends Activity {
         games.clear();
         for (DataSnapshot ds : snapshot.getChildren()){
             String gameName = ds.getKey();
-            games.add(gameName);
+            if(!checkRunning(gameName))
+                games.add(gameName);
         }
 
         if(games.size()>0){
@@ -82,6 +84,7 @@ public class JoinGame extends Activity {
         else
             Toast.makeText(this,"There are no games on the list!",Toast.LENGTH_SHORT);
     }
+
 
     private void setTouchListener(){
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -93,17 +96,7 @@ public class JoinGame extends Activity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         isSecret = dataSnapshot.getValue(Boolean.class);
-                       if(isSecret) {
-                            final Intent intent = new Intent(JoinGame.this, PopUpEnterPassword.class);
-                            intent.putExtra("gameName", gameName);
-                            intent.putExtra("host",false);
-                            startActivity(intent);
-                        }else{
-                           final Intent intent = new Intent(JoinGame.this, PopUpEnterName.class);
-                           intent.putExtra("host",false);
-                           intent.putExtra("gameName", gameName);
-                           startActivity(intent);
-                       }
+                        startNextActivity(gameName);
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -113,6 +106,34 @@ public class JoinGame extends Activity {
                 finish();
             }
         });
+    }
+
+    private void startNextActivity(String gameName){
+        final Intent intent;
+        if(isSecret) {
+            intent = new Intent(JoinGame.this, PopUpEnterPassword.class);
+        }else{
+            intent = new Intent(JoinGame.this, PopUpEnterName.class);
+        }
+        intent.putExtra("host",false);
+        intent.putExtra("gameName", gameName);
+        startActivity(intent);
+    }
+
+    private boolean checkRunning(String gameName) {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.child("games").child(gameName).child("isRunning").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                isRunning = dataSnapshot.getValue(Boolean.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+        return isRunning;
     }
 }
 
