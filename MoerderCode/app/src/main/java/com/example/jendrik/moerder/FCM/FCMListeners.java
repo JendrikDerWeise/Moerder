@@ -42,7 +42,7 @@ public class FCMListeners {
 
     }
 
-    public FCMListeners(){}
+    public FCMListeners(String gameName){this.gameName=gameName;}
 
     public DatabaseReference getDatabaseWithSingleEventListener(){
         database = FirebaseDatabase.getInstance().getReference();

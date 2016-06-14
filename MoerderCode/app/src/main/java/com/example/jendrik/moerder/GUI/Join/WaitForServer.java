@@ -127,7 +127,7 @@ public class WaitForServer extends Activity {
         intent.putExtra("gameName", gameName);
         intent.putExtra("whoAmI", checkForPlayerNumber());
 
-        FCMListeners fcmListeners = new FCMListeners();
+        FCMListeners fcmListeners = new FCMListeners(gameName);
         Game game = fcmListeners.makeGameObjectForClient();
         intent.putExtra("GAME", game);
         Log.d("start","spiel wird gestartet");
