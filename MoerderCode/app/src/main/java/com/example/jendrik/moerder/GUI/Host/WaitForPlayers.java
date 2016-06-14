@@ -17,6 +17,7 @@ import com.example.jendrik.moerder.GUI.Join.PopUpEnterName;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
+import com.example.jendrik.moerder.GameObjekts.Solution;
 import com.example.jendrik.moerder.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -165,7 +166,7 @@ public class WaitForPlayers extends Activity {
         sendToDatabase.createList("rooms",game.getRooms());
         sendToDatabase.createList("weapons",game.getWeapons());
         sendToDatabase.createList("players",game.getPlayers());
-        sendToDatabase.createList("solution",game.getSolution());
+        sendToDatabase.createList("solution",(List<Solution>)game.getSolution());
         sendToDatabase.createList("clues",game.getClueList());
         sendToDatabase.sendData("isRunning",true);
     }

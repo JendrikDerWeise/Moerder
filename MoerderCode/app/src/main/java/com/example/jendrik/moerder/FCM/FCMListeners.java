@@ -3,6 +3,7 @@ package com.example.jendrik.moerder.FCM;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 
+import com.example.jendrik.moerder.GUI.MyApplication;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Clue;
@@ -20,36 +21,51 @@ import java.util.List;
 /**
  * Created by Jendrik on 11.06.2016.
  */
-public class FCMListeners {
+public class FCMListeners extends MyApplication{
     private String gameName;
     private Game game;
 
-    private DatabaseReference database;
+    private FirebaseDatabase database;
     private ChildEventListener ce;
     private double number;
     private Solution solution;
+    private ArrayList<String> rooms;
+    private ArrayList<String> weapons;
+    private ArrayList<String> players;
+    private double min;
+    private double sec;
+
+    private DatabaseReference listReference;
+    private ValueEventListener veList;
 
     public FCMListeners(String gameName, Game game){
 
         this.gameName=gameName;
-        database = FirebaseDatabase.getInstance().getReference();
+        database = FirebaseDatabase.getInstance();
        // Log.e("testen",database.child("games").child(gameName).getKey());
 
         this.game=game;
         ce = bindListener();
-        database.child("games").addChildEventListener(ce);
+        database.getReference().child("games").addChildEventListener(ce);
        // database.child("games").child(gameName).keepSynced(true);
 
     }
 
-    public FCMListeners(String gameName){this.gameName=gameName;}
+    public FCMListeners(String gameName){
+        this.gameName=gameName;
+        database = FirebaseDatabase.getInstance();
+        /*stringListListener("roomList");
+        stringListListener("weaponlist");
+        stringListListener("connectedPlayers");
+        solutionListener();
+        doubleListener("min");
+        doubleListener("sec");*/
 
-    public DatabaseReference getDatabaseWithSingleEventListener(){
-        database = FirebaseDatabase.getInstance().getReference();
-
-
-        return database;
+        listReference = FirebaseDatabase.getInstance().getReference().child("games").child(gameName).child("roomList");
+        veList = stringListListener("roomList");
+        listReference.addListenerForSingleValueEvent(veList);
     }
+
 
     public ChildEventListener bindListener(){
 
@@ -88,17 +104,33 @@ public class FCMListeners {
     }
 
 
-    private List<String> getStringLists(String list){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final List<String> readyList = new ArrayList<>();
-        database.getReference().child("games").child(gameName).child(list).addListenerForSingleValueEvent(
+    private ValueEventListener stringListListener(String list){
+        final String listName=list;
+        ValueEventListener ve =
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            final String name = ds.getKey();
-                            readyList.add(name);
-                        }
+                        Log.d("fuellen","listen listener"+dataSnapshot.getKey());
+                        fillList(listName,dataSnapshot);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                };
+        return ve;
+    }
+
+    private void doubleListener(final String doubleName){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database.getReference().child("games").child(gameName).child(doubleName).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d("fuellen","double listener"+dataSnapshot.getKey());
+                        fillDouble(doubleName, dataSnapshot);
+
                     }
 
                     @Override
@@ -106,35 +138,26 @@ public class FCMListeners {
 
                     }
                 });
-        return readyList;
     }
 
-    private double getDoublesFromDB(String value){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        database.getReference().child("games").child(gameName).child(value).addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        number = dataSnapshot.getValue(Double.class);
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-        return number;
+    private void fillDouble(String doubleName, DataSnapshot dataSnapshot){
+        switch (doubleName){
+            case "min":
+                min = dataSnapshot.getValue(Double.class);
+                break;
+            case "sec":
+                sec = dataSnapshot.getValue(Double.class);
+                break;
+        }
     }
 
-    public Solution getSolutionFromDB(){
+    public void  solutionListener(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         database.getReference().child("games").child(gameName).child("solution").addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        solution = dataSnapshot.getValue(Solution.class);
-
+                        fillSolution(dataSnapshot);
                     }
 
                     @Override
@@ -142,17 +165,37 @@ public class FCMListeners {
 
                     }
                 });
-        return solution;
+    }
+
+    private void fillList(String listName, DataSnapshot dataSnapshot){
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+            final String name = ds.getKey();
+            Log.d("fuellen","fill list: " + listName + " "+name);
+            switch (listName) {
+                case "roomList":
+                    rooms.add(name);
+                    break;
+                case "weaponlist":
+                    weapons.add(name);
+                    break;
+                case "connectedPlayers":
+                    players.add(name);
+                    break;
+            }
+        }
+    }
+
+    private void fillSolution(DataSnapshot dataSnapshot){
+        solution = dataSnapshot.getValue(Solution.class);
     }
 
     public Game makeGameObjectForClient(){
-        ArrayList<String> rooms = (ArrayList)getStringLists("roomList");
-        ArrayList<String> weapons = (ArrayList)getStringLists("weaponlist");
-        ArrayList<String> players = (ArrayList)getStringLists("connectedPlayers");
-        Solution solution = getSolutionFromDB();
-        double min = getDoublesFromDB("min");
-        double sec = getDoublesFromDB("sec");
 
+
+
+        String str = ""+min;
+
+        Log.d("solution",rooms.get(1));
 
         Game game = new Game(gameName, "",rooms,weapons,(int)min,(int)sec,players.size()+1);
         game.setSolution(solution);
@@ -177,7 +220,7 @@ public class FCMListeners {
     }
 
     public void unbindListeners(){
-        database.removeEventListener(ce);
+        database.getReference().removeEventListener(ce);
     }
 
 

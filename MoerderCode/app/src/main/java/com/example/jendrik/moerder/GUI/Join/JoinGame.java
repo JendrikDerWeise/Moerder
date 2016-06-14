@@ -32,6 +32,8 @@ public class JoinGame extends Activity {
     private boolean isRunning;
     private DatabaseReference myRef;
     private ChildEventListener el;
+    private DatabaseReference runningChecker;
+    private ValueEventListener ve;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,7 @@ public class JoinGame extends Activity {
         myRef = database.getReference();
         el = addEventListener();
         myRef.addChildEventListener(el);
+        runningChecker = FirebaseDatabase.getInstance().getReference();
 
         setTouchListener();
     }
@@ -73,7 +76,8 @@ public class JoinGame extends Activity {
         games.clear();
         for (DataSnapshot ds : snapshot.getChildren()){
             String gameName = ds.getKey();
-            if(!checkRunning(gameName))
+            checkRunning(gameName);
+            if(!isRunning)
                 games.add(gameName);
         }
 
@@ -120,10 +124,9 @@ public class JoinGame extends Activity {
         startActivity(intent);
     }
 
-    private boolean checkRunning(String gameName) {
+    private void checkRunning(String gameName) {
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("games").child(gameName).child("isRunning").addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("games").child(gameName).child("isRunning").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 isRunning = dataSnapshot.getValue(Boolean.class);
@@ -133,7 +136,6 @@ public class JoinGame extends Activity {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
-        return isRunning;
     }
 }
 

@@ -11,10 +11,10 @@ public class Solution implements Serializable {
 
     public Solution(){}
 
-    public Solution(String m, String r, String w){
-        murderer=m;
-        weapon=w;
-        room=r;
+    public Solution(String murderer , String room, String weapon){
+        this.murderer=murderer;
+        this.weapon=weapon;
+        this.room=room;
     }
 
     public String getMurderer() {
