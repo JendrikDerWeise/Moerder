@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.jendrik.moerder.FCM.FCMListeners;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
 import com.example.jendrik.moerder.Game;
+import com.example.jendrik.moerder.GameHandler;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.R;
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +35,7 @@ import java.util.List;
  * Klasse noch nicht fertig!
  * Es muss noch das Game-Objekt empfangen und MenueDrawer aufgerufen werden
  */
-public class WaitForServer extends Activity {
+public class WaitForServer extends Activity implements GameStartedCallback{
 
     private String gameName;
     private ListView lv;
@@ -63,7 +64,7 @@ public class WaitForServer extends Activity {
         el = setListener();
         myRef.addValueEventListener(el);
 
-        gamestarter = FirebaseDatabase.getInstance().getReference().child("games").child(gameName).child("isRunning");
+        gamestarter = FirebaseDatabase.getInstance().getReference().child("games").child(gameName).child("running");
         elGame = setGameStartedListener();
         gamestarter.addValueEventListener(elGame);
 
@@ -120,20 +121,25 @@ public class WaitForServer extends Activity {
             Toast.makeText(this,"Something went wrong!",Toast.LENGTH_SHORT);
     }
 
+    private FCMListeners fcmListeners;
+
     private void startGame(){
         myRef.removeEventListener(el);
         gamestarter.removeEventListener(elGame);
+
+        fcmListeners = new FCMListeners(gameName, this);
+    }
+
+    public void startGameAfterReceivingInformation(){
         Intent intent = new Intent(this,MenueDrawer.class);
         intent.putExtra("gameName", gameName);
         intent.putExtra("whoAmI", checkForPlayerNumber());
 
-        FCMListeners fcmListeners = new FCMListeners(gameName);
-        Game game = fcmListeners.makeGameObjectForClient();
+        Game game = fcmListeners.getGame();
         intent.putExtra("GAME", game);
-        Log.d("start","spiel wird gestartet");
+        Log.d("start",game.getGameName());
 
         startActivity(intent);
-
     }
 
     private int checkForPlayerNumber() {

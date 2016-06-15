@@ -1,4 +1,7 @@
 package com.example.jendrik.moerder.GameObjekts;
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +10,7 @@ import java.util.List;
 /**
  * Created by Jendrik on 21.02.2016.
  */
+@IgnoreExtraProperties
 public class Player implements Serializable{
     private String name;
     private boolean active;
@@ -87,6 +91,7 @@ public class Player implements Serializable{
 
     public double getpNumber(){ return pNumber; }
 
+    @Exclude
     public void suspectOnList(int position, String string){ // zu deutsch verdaechtigen auf der Liste
         //different to suspect, as this is only the internal list for that human
         if(position < suspectList.size() && (string == "n" || string == "y" || string == "m")) {

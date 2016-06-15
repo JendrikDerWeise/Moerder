@@ -72,7 +72,7 @@ public class MenueDrawer extends AppCompatActivity {
         game =(Game) getIntent().getExtras().get("GAME");
         setContentView(R.layout.menu_drawer);
 
-        fcmListeners=new FCMListeners(game.getGameName(),game);
+       // fcmListeners=new FCMListeners(game.getGameName(),game);
 
         setLayout();
         instantiateFragments();
@@ -329,7 +329,7 @@ public class MenueDrawer extends AppCompatActivity {
         super.onDestroy();
 
         timer.getTimer().cancel();
-        fcmListeners.unbindListeners();
+       // fcmListeners.unbindListeners();
     }
 
 

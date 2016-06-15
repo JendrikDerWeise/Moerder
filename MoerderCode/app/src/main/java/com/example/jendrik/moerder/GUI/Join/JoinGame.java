@@ -76,7 +76,7 @@ public class JoinGame extends Activity {
         games.clear();
         for (DataSnapshot ds : snapshot.getChildren()){
             String gameName = ds.getKey();
-            checkRunning(gameName);
+            //checkRunning(gameName);
             if(!isRunning)
                 games.add(gameName);
         }
@@ -126,7 +126,7 @@ public class JoinGame extends Activity {
 
     private void checkRunning(String gameName) {
 
-        database.getReference().child("games").child(gameName).child("isRunning").addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("games").child(gameName).child("running").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 isRunning = dataSnapshot.getValue(Boolean.class);

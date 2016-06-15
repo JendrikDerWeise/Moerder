@@ -2,11 +2,14 @@ package com.example.jendrik.moerder.GameObjekts;
 
 import android.media.Image;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.io.Serializable;
 
 /**
  * Created by Jendrik on 21.02.2016.
  */
+@IgnoreExtraProperties
 public class Clue implements Serializable {
 
     private String name;

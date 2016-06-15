@@ -162,13 +162,13 @@ public class WaitForPlayers extends Activity {
 
         SendToDatabase sendToDatabase = new SendToDatabase(gameName);
 
-        //sendToDatabase.sendGame(game);
-        sendToDatabase.createList("rooms",game.getRooms());
+        sendToDatabase.sendGame(game);
+        /*sendToDatabase.createList("rooms",game.getRooms());
         sendToDatabase.createList("weapons",game.getWeapons());
         sendToDatabase.createList("players",game.getPlayers());
-        sendToDatabase.createList("solution",(List<Solution>)game.getSolution());
+        sendToDatabase.createList("solution",game.getSolution());
         sendToDatabase.createList("clues",game.getClueList());
-        sendToDatabase.sendData("isRunning",true);
+        sendToDatabase.sendData("isRunning",true);*/
     }
 
 
@@ -178,6 +178,7 @@ public class WaitForPlayers extends Activity {
         //TODO prüfen ob Spieleranzahl==Spieler in Liste
 
         makePlayerObjects();
+        game.setGameIsRunning(true);
         sendGameStuffToDB();
         myRef.removeEventListener(el);
 

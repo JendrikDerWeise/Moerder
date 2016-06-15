@@ -6,6 +6,8 @@ import com.example.jendrik.moerder.GameObjekts.Clue;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.GameObjekts.Room;
 import com.example.jendrik.moerder.GameObjekts.Weapon;
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,10 +16,10 @@ import java.util.List;
 /**
  * Created by Jendrik on 21.02.2016.
  */
+@IgnoreExtraProperties
 public class PlayerManager implements Serializable {
 
     private List<Player> playerList;
-
 
     public PlayerManager(boolean bool){
         playerList = new ArrayList<>();
@@ -25,6 +27,7 @@ public class PlayerManager implements Serializable {
 
     public PlayerManager(){}
 
+    @Exclude
     public void addPlayer(String name, int numberOfThings){
         int qrCode = playerList.size()+1;
         playerList.add(new Player(name,qrCode, numberOfThings, playerList.size()));
@@ -33,10 +36,9 @@ public class PlayerManager implements Serializable {
     /**
      * Methode legt fest, welcher Spieler an der Reihe ist. Dazu muss der Name des aktiven Spielers übergeben werden.
      */
+    @Exclude
     public void setActive(Player player) {
         //playerList.get((int)player.getpNumber()).setActive(false);
-
-
 
         int index = (int)player.getpNumber();
         int newIndex = 0;
@@ -60,6 +62,7 @@ public class PlayerManager implements Serializable {
         return playerList;
     }
 
+    @Exclude
     public String getNameByNumber(int qrnr){
         for(Player p:playerList){
             if(p.getQrCode() == qrnr){ return p.getName();}
@@ -71,6 +74,7 @@ public class PlayerManager implements Serializable {
     Methode füllt die Notizen des Spielers mit den passenden Namen der Spieler, Waffen und Räume. Diese werden alle mit 'n' markiert.
     Der Spieler sieht dann ein rotes Viereck neben dem Namen in der Activity.
      */
+    @Exclude
     public void setSuspectList(List<Room> rooms, List<Weapon> weapons){
 
         for(Player p: playerList){
@@ -93,6 +97,7 @@ public class PlayerManager implements Serializable {
     /*
     Ich habe keinen blassen Schimmer mehr, welchen Zweck diese Methode hat.
      */
+    @Exclude
     public void updatePlayer(Player player){
         for(int i = 0; i  < playerList.size(); i++){
             if(playerList.get(i).getQrCode() == player.getQrCode()){

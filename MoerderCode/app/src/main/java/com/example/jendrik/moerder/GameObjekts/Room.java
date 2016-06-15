@@ -1,5 +1,8 @@
 package com.example.jendrik.moerder.GameObjekts;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +10,7 @@ import java.util.List;
 /**
  * Created by Jendrik on 21.02.2016.
  */
+@IgnoreExtraProperties
 public class Room implements Serializable {
     private String name;
     private double qrCode;
@@ -42,6 +46,7 @@ public class Room implements Serializable {
         weaponList.add(weapon);
     }
 
+    @Exclude
     public void removeWeapon(Weapon weapon){
         for(int i = 0; i<weaponList.size();i++){
             if(weaponList.get(i).getName().equals(weapon.getName()))
