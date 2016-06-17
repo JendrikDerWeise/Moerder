@@ -4,6 +4,12 @@
     <style name="AppTheme.PopUpTheme">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="drawerArrowStyle">@style/drawerarrow</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorBackground">@color/colorOtherTurn</item>
+        <item name="android:textColorPrimary">@color/colorFont</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
     </style>
 
     <style name="ThemeWithDrawer" parent="Theme.AppCompat.Light.NoActionBar">

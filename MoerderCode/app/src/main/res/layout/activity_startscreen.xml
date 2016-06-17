@@ -65,8 +65,7 @@
                 android:layout_gravity="center_horizontal"
                 android:onClick="onClickCreateGame"
                 android:textColor="#FFFFFF"
-                android:padding="10dp"
-                android:textStyle="bold" />
+                android:padding="10dp" />
 
             <Button
                 android:layout_width="200dp"
@@ -78,7 +77,6 @@
                 android:padding="10dp"
                 android:textColor="#FFFFFF"
                 android:layout_margin="20dp"
-                android:textStyle="bold"
                 android:onClick="onClickJoin" />
 
             <Button
@@ -89,8 +87,7 @@
                 android:textSize="20dp"
                 android:layout_gravity="center_horizontal"
                 android:padding="10dp"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold" />
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
     </LinearLayout>

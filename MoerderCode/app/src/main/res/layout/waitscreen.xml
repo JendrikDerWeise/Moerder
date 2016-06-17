@@ -20,7 +20,8 @@
         android:text="@string/btn_start_game"
         android:id="@+id/button5"
         android:layout_gravity="center_horizontal"
-        android:onClick="onClickStartGame" />
+        android:onClick="onClickStartGame"
+        android:textSize="20sp"/>
 
 
 </LinearLayout>
