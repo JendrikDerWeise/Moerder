@@ -10,16 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.jendrik.moerder.GUI.LittleHelpers.MapAdapterClass;
+import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.GameObjekts.Room;
 import com.example.jendrik.moerder.GameObjekts.Weapon;
 import com.example.jendrik.moerder.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jendrik on 20.03.2016.
  */
-public class MapOverview extends Fragment {
+public class MapOverview extends Fragment{
     private View fragLayoutV;
 
     private RecyclerView recyclerView;
@@ -48,6 +50,11 @@ public class MapOverview extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         fragLayoutV = inflater.inflate(R.layout.fragment_map, container, false);
+        update();
+        return fragLayoutV;
+    }
+
+    public void update(){
 
         roomNames = new ArrayList<>();
         weaponNames = new ArrayList<>();
@@ -62,8 +69,10 @@ public class MapOverview extends Fragment {
         for(Room r: MenueDrawer.game.getRooms()) {
             roomNames.add(r.getName());
             String str_weaponNames="";
-            for(Weapon w: r.getWeaponList())
-                str_weaponNames += w.getName()+"\n";
+            if(r.getWeaponList() != null) {
+                for (Weapon w : r.getWeaponList())
+                    str_weaponNames += w.getName() + "\n";
+            }
             weaponNames.add(str_weaponNames);
         }
 
@@ -75,8 +84,6 @@ public class MapOverview extends Fragment {
 
         rvadapter = new MapAdapterClass();
         recyclerView.setAdapter(rvadapter);
-
-        return fragLayoutV;
     }
 
 
@@ -84,5 +91,4 @@ public class MapOverview extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
-
 }

@@ -7,9 +7,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 /**
  * Created by Jendrik on 21.02.2016.
  */
+@Getter
+@Setter
+@NoArgsConstructor
 @IgnoreExtraProperties
 public class Room implements Serializable {
     private String name;
@@ -17,7 +24,6 @@ public class Room implements Serializable {
     private List<Player> playerList;
     private List<Weapon> weaponList;
 
-    public Room(){}
 
     public Room(String name, int qrCode) {
         this.name = name;
@@ -26,22 +32,8 @@ public class Room implements Serializable {
         playerList = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public double getQrCode() {
-        return qrCode;
-    }
-
-    public List<Player> getPlayerList() {
-        return playerList;
-    }
-
-    public List<Weapon> getWeaponList() {
-        return weaponList;
-    }
-
+    @Exclude
     public void addWeapon(Weapon weapon) {
         weaponList.add(weapon);
     }

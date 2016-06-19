@@ -8,9 +8,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 /**
  * Created by Jendrik on 21.02.2016.
  */
+@Getter
+@Setter
+@NoArgsConstructor
 @IgnoreExtraProperties
 public class WeaponManager implements Serializable {
 
@@ -20,16 +27,10 @@ public class WeaponManager implements Serializable {
         weaponList = new ArrayList<>();
     }
 
-    public WeaponManager(){}
-
     @Exclude
     public void createWeapon(String name){
         int qrCode = weaponList.size() + 10;
         weaponList.add(new Weapon(name,qrCode));
-    }
-
-    public List<Weapon> getWeaponList() {
-        return weaponList;
     }
 
     @Exclude

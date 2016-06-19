@@ -19,15 +19,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import lombok.Setter;
+
 /**
  * Created by Jendrik on 06.06.2016.
  */
+@Setter
 public class SendToDatabase<T> {
 
     private static final String TAG = "NewPostActivity";
     private static final String REQUIRED = "Required";
     private String gameName;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private String actualRoom;
 
     public SendToDatabase(String gameName) {
         this.gameName = gameName;
@@ -36,19 +40,6 @@ public class SendToDatabase<T> {
 
 
     public void sendData(String typOfObject, T object) {
-        /*DatabaseReference myRef = database.getReference(typOfObject);
-
-        myRef.setValue(object, new Firebase.CompletionListener(){
-            @Override
-            public void onComplete(FirebaseError firebaseError, Firebase firebase) {
-                if (firebaseError != null) {
-                    Log.d("FBfehler","Data could not be saved. " + firebaseError.getMessage());
-                } else {
-                    Log.d("FBfehler","Data saved successfully.");
-                }
-            }
-        });*/
-
         DatabaseReference myRef = database.getReference();
         myRef.child("games").child(gameName).child(typOfObject).push();
 
@@ -57,9 +48,27 @@ public class SendToDatabase<T> {
         myRef.updateChildren(update);
     }
 
-    public void createList(String typOfObject, T object){
+    public void updateData(String typOfObject, T object){
         DatabaseReference myRef = database.getReference();
-        myRef.child("games").child(gameName).child(typOfObject).setValue(object);
+       // Map<String, Object>update = new HashMap<>();
+
+        switch (typOfObject){
+            case "roomList":
+                myRef.child("games").child(gameName).child("roomManager").child(typOfObject).setValue(object);
+               // update.put("games/"+gameName+"/roomManager/"+typOfObject, object);
+                break;
+            case "playerList":
+                //update.put("games/"+gameName+"/playerManager/"+typOfObject, object);
+                break;
+            case "paused":
+                //update.put("games/"+gameName+"/"+typOfObject, object);
+                break;
+            case "aktivePlayer":
+                //update.put("games/"+gameName+"/playerManager/"+typOfObject, object);
+                break;
+        }
+
+        //myRef.updateChildren(update);
     }
 
     public void sendGame(Game game){

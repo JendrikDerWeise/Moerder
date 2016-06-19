@@ -8,9 +8,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 /**
  * Created by Jendrik on 21.02.2016.
  */
+@Getter
+@Setter
+@NoArgsConstructor
 @IgnoreExtraProperties
 public class RoomManager implements Serializable{
     private List<Room> roomList;
@@ -21,20 +28,11 @@ public class RoomManager implements Serializable{
         grpRoom = new Room("grp_room", 29);
     }
 
-    public RoomManager(){}
-
     @Exclude
     public void createRoom(String name){
         int qrCode=roomList.size() + 20;
         roomList.add(new Room(name,qrCode));
     }
-
-    @Exclude
-    public List<Room> showMap(){
-        return roomList;
-    }
-
-    public List<Room> getRoomList() {return roomList; }
 
     @Exclude
     public String getNameByNumber(int qrnr){
@@ -43,9 +41,4 @@ public class RoomManager implements Serializable{
         }
         return "error";
     }
-
-    public Room getGrpRoom(){
-        return grpRoom;
-    }
-
 }

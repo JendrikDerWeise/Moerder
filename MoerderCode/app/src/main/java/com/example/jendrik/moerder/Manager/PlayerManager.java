@@ -13,19 +13,26 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 /**
  * Created by Jendrik on 21.02.2016.
  */
+@Getter
+@Setter
+@NoArgsConstructor
 @IgnoreExtraProperties
 public class PlayerManager implements Serializable {
 
     private List<Player> playerList;
+    private double aktivePlayer;
 
     public PlayerManager(boolean bool){
         playerList = new ArrayList<>();
     }
 
-    public PlayerManager(){}
 
     @Exclude
     public void addPlayer(String name, int numberOfThings){
@@ -40,26 +47,24 @@ public class PlayerManager implements Serializable {
     public void setActive(Player player) {
         //playerList.get((int)player.getpNumber()).setActive(false);
 
-        int index = (int)player.getpNumber();
+        int index = (int)player.getPNumber();
         int newIndex = 0;
         if(index+1 != playerList.size())
             newIndex = index+1;
 
         for (Player p : playerList) {
-            if (p.getName().equals(playerList.get(newIndex).getName()))
+            if (p.getName().equals(playerList.get(newIndex).getName())) {
                 p.setActive(true);
-            else
+                aktivePlayer = p.getPNumber();
+            }else
                 p.setActive(false);
         }
     }
 
 
+    @Exclude
     public void giveClue(Clue clue, int playerNo){
-        playerList.get(playerNo).setGivenClues(clue);
-    }
-
-    public List<Player> getPlayerList() {
-        return playerList;
+        playerList.get(playerNo).giveGivenClues(clue);
     }
 
     @Exclude

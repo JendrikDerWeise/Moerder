@@ -170,7 +170,6 @@ public class FCMListeners {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        fillSolution(dataSnapshot);
                     }
 
                     @Override
@@ -197,32 +196,4 @@ public class FCMListeners {
             }
         }
     }
-
-    private void fillSolution(DataSnapshot dataSnapshot){
-        solution = dataSnapshot.getValue(Solution.class);
-    }
-
-    public Game makeGameObjectForClient(){
-
-        String str = ""+min;
-
-        Log.d("solution",solution.getMurderer());
-        Log.d("solution",str);
-        Log.d("solution",rooms.get(1));
-        Log.d("solution",weapons.get(1));
-        Log.d("solution",players.get(1));
-
-        Game game = new Game(gameName, "",rooms,weapons,(int)min,(int)sec,players.size()+1);
-        game.setSolution(solution);
-        game.startGame(players);
-        return game;
-    }
-
-
-
-   /* public void unbindListeners(){
-        database.getReference().removeEventListener(ce);
-    }*/
-
-
 }

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Random;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -28,6 +29,7 @@ import lombok.Setter;
  *
  */
 @Getter @Setter
+@NoArgsConstructor
 @IgnoreExtraProperties
 public class Game implements Serializable {
 
@@ -45,6 +47,7 @@ public class Game implements Serializable {
     private double playerAmount;
     private boolean gameOver;
     private boolean isRunning;
+    private boolean paused;
 
     public Game(String gameName, String pwd, ArrayList<String> rooms, ArrayList<String> weapons, int min, int sec, int playerAmount){
         this.gameName = gameName;
@@ -62,9 +65,8 @@ public class Game implements Serializable {
         justScannedQR = 0;
         this.playerAmount = playerAmount;
         gameOver = false;
+        this.paused = false;
     }
-
-    public Game(){} //nur für das Laden verwendet
 
     /**
     *Methode soll prüfen ob die Anklage des Spielers korrekt ist.
@@ -93,7 +95,7 @@ public class Game implements Serializable {
         for (Player p:playerManager.getPlayerList())
             clueList.add(new Clue(p.getName(), 0));
 
-        for (Room r:roomManager.showMap())
+        for (Room r:roomManager.getRoomList())
             clueList.add(new Clue(r.getName(),1));
 
         for (Weapon w:weaponManager.getWeaponList())
@@ -122,11 +124,11 @@ public class Game implements Serializable {
     @Exclude
     private void createSolution(){
         int playerCount = playerManager.getPlayerList().size();
-        int roomCount = roomManager.showMap().size();
+        int roomCount = roomManager.getRoomList().size();
         int weaponCount = weaponManager.getWeaponList().size();
         Random random = new Random();
         String pName = playerManager.getPlayerList().get(random.nextInt(playerCount)).getName();
-        String rName = roomManager.showMap().get(random.nextInt(roomCount)).getName();
+        String rName = roomManager.getRoomList().get(random.nextInt(roomCount)).getName();
         String wName = weaponManager.getWeaponList().get(random.nextInt(weaponCount)).getName();
         solution = new Solution(pName, rName,wName);
         Log.e("SOLUTION", solution.getMurderer() + solution.getRoom() + solution.getWeapon());
@@ -144,7 +146,7 @@ public class Game implements Serializable {
             weaponManager.createWeapon(s);
 
         for (int i = 0; i < weaponManager.getWeaponList().size();i++){ //Zuteilung der Waffen auf die Räume. Vorraussetzung:  Anzahl Waffen <=> Anzahl Räume
-            roomManager.showMap().get(i).addWeapon(weaponManager.getWeaponList().get(i));
+            roomManager.getRoomList().get(i).addWeapon(weaponManager.getWeaponList().get(i));
         }
     }
 
@@ -159,7 +161,7 @@ public class Game implements Serializable {
 
     @Exclude
     public List<Room> getRooms(){
-        return roomManager.showMap();
+        return roomManager.getRoomList();
     }
 
     @Exclude
@@ -293,8 +295,5 @@ public class Game implements Serializable {
     /**
      * Viele Getter fuer Firebase-Gedoens
      */
-
-
-
 
 }

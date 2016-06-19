@@ -205,7 +205,7 @@ public class Indict extends Fragment {
             startActivity(intent);
             getActivity().finish();
         }else{
-            game.killPlayer((int)game.getActivePlayer().getpNumber());
+            game.killPlayer((int)game.getActivePlayer().getPNumber());
             Intent intent = new Intent(getActivity(), LooseScreen.class);
             startActivity(intent);
             getActivity().finish();

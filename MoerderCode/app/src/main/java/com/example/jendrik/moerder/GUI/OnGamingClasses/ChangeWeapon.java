@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Room;
 import com.example.jendrik.moerder.GameObjekts.Weapon;
@@ -22,6 +23,7 @@ public class ChangeWeapon extends Fragment {
     public static String SCAN_WEAPON = "weapon";
     private static final int VALUE = 503;
     private Game game;
+    private String actualRoom;
 
 
     @Override
@@ -44,6 +46,7 @@ public class ChangeWeapon extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         game = MenueDrawer.game;
+        actualRoom = MenueDrawer.game.getActivePlayer().getActualRoom().getName();
         startWeaponScan();
 
     }
@@ -58,7 +61,7 @@ public class ChangeWeapon extends Fragment {
                     int qrCode = data.getIntExtra(STUB_SCANNER.RESULT, 0); //Übergabe des Intents (data), dort ist unter dem String RESULT der INT gespeichert... klingt unsinnig, läuft aber so. Die 0 ist Unsinn
                     if(qrCode>9 && qrCode<20){
                         for(Room r : MenueDrawer.game.getRooms()){
-                            if(r.getName().equals(MenueDrawer.game.getActivePlayer().getActualRoom().getName())) {
+                            if(r.getName().equals(actualRoom)) {
                                 if(MenueDrawer.game.getActivePlayer().getActualWeapon()!= null)
                                     r.addWeapon(MenueDrawer.game.getActivePlayer().getActualWeapon());
                                 room = r;
@@ -96,6 +99,9 @@ public class ChangeWeapon extends Fragment {
 
     private void endTurn(){
 
+        SendToDatabase stb = new SendToDatabase(game.getGameName());
+        stb.setActualRoom(actualRoom);
+        stb.updateData("roomList", game.getRoomManager().getRoomList());
         MenueDrawer.game.setNextActivePlayer();
         getActivity().getIntent().putExtra("GAME",MenueDrawer.game);
         getActivity().finish();

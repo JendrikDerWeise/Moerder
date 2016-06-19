@@ -6,10 +6,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 
 /**
  * Created by Jendrik on 21.02.2016.
  */
+@Getter
+@Setter
+@NoArgsConstructor
 @IgnoreExtraProperties
 public class Player implements Serializable{
     private String name;
@@ -35,61 +42,15 @@ public class Player implements Serializable{
             suspectList.add(i,"n");
     }
 
-    public Player(){}
-
-    public String getName(){
-        return name;
-    }
-
     private void clear(){ //oder doch public? wer fuehrt das spaeter aus?
         actualRoom = null;
         actualWeapon = null;
     }
 
-    public double getQrCode() {
-        return qrCode;
-    }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public Weapon getActualWeapon() {
-        return actualWeapon;
-    }
-
-    public void setActualWeapon(Weapon actualWeapon) {
-        this.actualWeapon=actualWeapon;
-    }
     //TODO ggf removeWeapon() einbauen weapon = null
 
-    public Room getActualRoom() {
-        return actualRoom;
-    }
-
-    public void setActualRoom(Room room){
-        this.actualRoom = room;
-    }
-
-    public List<Clue> getGivenClues() {
-        return givenClues;
-    }
-
-    public void setGivenClues(Clue clue){ givenClues.add(clue); }
-
-    public boolean isDead() {
-        return dead;
-    }
-
-    public void setDead(boolean dead) {
-        this.dead = dead;
-    }
-
-    public double getpNumber(){ return pNumber; }
+    public void giveGivenClues(Clue clue){ givenClues.add(clue); }
 
     @Exclude
     public void suspectOnList(int position, String string){ // zu deutsch verdaechtigen auf der Liste
@@ -104,8 +65,6 @@ public class Player implements Serializable{
     public String getSuspectOnList(int position){
         return suspectList.get(position);
     }
-
-    public List<String> getSuspectList() { return suspectList; }
 
 
 }

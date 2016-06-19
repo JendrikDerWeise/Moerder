@@ -17,13 +17,18 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.jendrik.moerder.FCM.FCMListeners;
+import com.example.jendrik.moerder.FCM.FCMRunningGameListener;
 import com.example.jendrik.moerder.GUI.Host.STUB_FRAG;
 import com.example.jendrik.moerder.GUI.LittleHelpers.CountDownClass;
 import com.example.jendrik.moerder.Game;
+import com.example.jendrik.moerder.GameObjekts.Player;
+import com.example.jendrik.moerder.GameObjekts.Room;
 import com.example.jendrik.moerder.R;
 
+import java.util.List;
 
-public class MenueDrawer extends AppCompatActivity {
+
+public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallback {
     public static Game game;
     private Bundle extras;
 
@@ -51,6 +56,7 @@ public class MenueDrawer extends AppCompatActivity {
     private CountDownClass timer;
     private int whoAmI;
     private FCMListeners fcmListeners;
+    private boolean myTurn;
 
 
     /**
@@ -72,8 +78,6 @@ public class MenueDrawer extends AppCompatActivity {
         game =(Game) getIntent().getExtras().get("GAME");
         setContentView(R.layout.menu_drawer);
 
-       // fcmListeners=new FCMListeners(game.getGameName(),game);
-
         setLayout();
         instantiateFragments();
         initFragManager();
@@ -85,18 +89,22 @@ public class MenueDrawer extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerToggle.syncState();
 
+        FCMRunningGameListener fcm = new FCMRunningGameListener(game.getGameName(), this);
+        fcm.roomListListener();
     }
 
     @Override
     protected void onStart(){
         super.onStart();
 
-        if(game.getActivePlayer().getpNumber() != whoAmI){//TODO activePlayer ändern!{
+        if(game.getActivePlayer().getPNumber() != whoAmI){//TODO activePlayer ändern!{
             //setContentView(R.layout.menu_drawer_not_active);
+            myTurn = false;
             notActive();
         }else {
             timer = new CountDownClass(this, (int) game.getMin(), (int) game.getSec());
             timer.getTimer().start();
+            myTurn = true;
         }
 
     }
@@ -209,7 +217,8 @@ public class MenueDrawer extends AppCompatActivity {
 
                     case R.id.pause: {
                         //TODO Pause Broadcast
-                        timer.pause();
+                        if(myTurn)
+                            timer.pause();
                         menueSetter(pause);
                         drawerToggle.setDrawerIndicatorEnabled(false);
                         break;
@@ -281,7 +290,42 @@ public class MenueDrawer extends AppCompatActivity {
     private void setInvisible(int id){
         navigationView.getMenu().findItem(id).setVisible(false);
     }
-/*
+
+
+    /**
+     * Callback Funktion für FCM Listener
+     * Wird ausgelöst, wenn Spielerliste geändert wird.
+     * @param playerList
+     */
+    public void playerListChanged(List<Player> playerList){
+        game.getPlayerManager().setPlayerList(playerList);
+    }
+
+    public void roomListChanged(List<Room> roomList){
+        MenueDrawer.game.getRoomManager().setRoomList(roomList);
+       // getFragmentManager().beginTransaction().remove(map).commit();
+        map.update();
+    }
+
+    public void pauseIsPressed(boolean paused){
+        if(paused && !myTurn){
+            menueSetter(pause);
+            drawerToggle.setDrawerIndicatorEnabled(false);
+            //TODO Name von pause-drücker in PauseActivity einfügen
+        }else if (!paused &&!myTurn){
+            menueSetter(map);
+        }
+    }
+
+    public void aktivePlayerChanged(double aktivePlayer){
+        if(aktivePlayer == whoAmI)
+            endTurn();
+
+        //TODO AktivePlayer Name in Leiste anzeigen und hier ändern
+    }
+
+
+    /*
         Auto-generated methods
  */
 
