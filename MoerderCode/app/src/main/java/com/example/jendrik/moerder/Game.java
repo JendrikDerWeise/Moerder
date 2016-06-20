@@ -93,13 +93,13 @@ public class Game implements Serializable {
     @Exclude
     private void createClues(){
         for (Player p:playerManager.getPlayerList())
-            clueList.add(new Clue(p.getName(), 0));
+            clueList.add(new Clue(p.getName(), 0.0));
 
         for (Room r:roomManager.getRoomList())
-            clueList.add(new Clue(r.getName(),1));
+            clueList.add(new Clue(r.getName(),1.0));
 
         for (Weapon w:weaponManager.getWeaponList())
-            clueList.add(new Clue(w.getName(), 2));
+            clueList.add(new Clue(w.getName(), 2.0));
 
         createSolution();
     }

@@ -24,6 +24,7 @@ public class ChangeWeapon extends Fragment {
     private static final int VALUE = 503;
     private Game game;
     private String actualRoom;
+    private Object object=new Object();
 
 
     @Override
@@ -61,7 +62,7 @@ public class ChangeWeapon extends Fragment {
                     int qrCode = data.getIntExtra(STUB_SCANNER.RESULT, 0); //Übergabe des Intents (data), dort ist unter dem String RESULT der INT gespeichert... klingt unsinnig, läuft aber so. Die 0 ist Unsinn
                     if(qrCode>9 && qrCode<20){
                         for(Room r : MenueDrawer.game.getRooms()){
-                            if(r.getName().equals(actualRoom)) {
+                            if(r.getName().equals(actualRoom)) { //hier böse
                                 if(MenueDrawer.game.getActivePlayer().getActualWeapon()!= null)
                                     r.addWeapon(MenueDrawer.game.getActivePlayer().getActualWeapon());
                                 room = r;
@@ -98,10 +99,11 @@ public class ChangeWeapon extends Fragment {
     }
 
     private void endTurn(){
-
-        SendToDatabase stb = new SendToDatabase(game.getGameName());
-        stb.setActualRoom(actualRoom);
+        String pNumberString = "" + MenueDrawer.whoAmI;
+        SendToDatabase stb = new SendToDatabase(game.getGameName(),pNumberString);
         stb.updateData("roomList", game.getRoomManager().getRoomList());
+        stb.updateData("playerList", game.getPlayerManager().getPlayerList().get(MenueDrawer.whoAmI));
+
         MenueDrawer.game.setNextActivePlayer();
         getActivity().getIntent().putExtra("GAME",MenueDrawer.game);
         getActivity().finish();

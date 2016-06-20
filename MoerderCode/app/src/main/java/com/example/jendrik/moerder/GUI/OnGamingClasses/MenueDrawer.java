@@ -18,6 +18,7 @@ import android.view.View;
 
 import com.example.jendrik.moerder.FCM.FCMListeners;
 import com.example.jendrik.moerder.FCM.FCMRunningGameListener;
+import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.GUI.Host.STUB_FRAG;
 import com.example.jendrik.moerder.GUI.LittleHelpers.CountDownClass;
 import com.example.jendrik.moerder.Game;
@@ -54,9 +55,10 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     private static FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private CountDownClass timer;
-    private int whoAmI;
+    public static int whoAmI;
     private FCMListeners fcmListeners;
     private boolean myTurn;
+    private FCMRunningGameListener fcm;
 
 
     /**
@@ -67,10 +69,6 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-       // extras = getIntent().getExtras();
-       // game = (Game) extras.get("GAME"); //muss statisch sein, damit alle Fragments auf das selbe Objekt zugreifen können.
-
-        //game = fcmListeners.getGameStat();
 
         //TODO verhindern das "Zurücktaste" von Android in die Spielerstellung zurück kehrt. Wie geht das? Ggf. finish()?
         //TODO Mitteilung "gerufen werden"
@@ -81,7 +79,6 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         setLayout();
         instantiateFragments();
         initFragManager();
-
         initNaviListener();
 
         //TODO checkTurn Methode um Titelleiste und Menü anzupassen wenn Spieler dran/nicht dran ist
@@ -89,8 +86,10 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerToggle.syncState();
 
-        FCMRunningGameListener fcm = new FCMRunningGameListener(game.getGameName(), this);
+        fcm = new FCMRunningGameListener(game.getGameName(), this);
         fcm.roomListListener();
+        fcm.playerListListener();
+        fcm.activePlayerListener();
     }
 
     @Override
@@ -244,6 +243,8 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
      */
     public void endTurn(){
         game.setNextActivePlayer();
+        SendToDatabase stb = new SendToDatabase(game.getGameName());
+        stb.updateData("aktivePlayer", game.getPlayerManager().getAktivePlayer());
         getIntent().putExtra("GAME",game);
         finish();
         startActivity(getIntent());
@@ -303,7 +304,6 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
 
     public void roomListChanged(List<Room> roomList){
         MenueDrawer.game.getRoomManager().setRoomList(roomList);
-       // getFragmentManager().beginTransaction().remove(map).commit();
         map.update();
     }
 
@@ -373,7 +373,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         super.onDestroy();
 
         timer.getTimer().cancel();
-       // fcmListeners.unbindListeners();
+        fcm.unbindListeners();
     }
 
 

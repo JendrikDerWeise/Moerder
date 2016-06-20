@@ -31,11 +31,15 @@ public class SendToDatabase<T> {
     private static final String REQUIRED = "Required";
     private String gameName;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private String actualRoom;
+    private String pNumber;
 
     public SendToDatabase(String gameName) {
         this.gameName = gameName;
+    }
 
+    public SendToDatabase(String gameName, String pNumber) {
+        this.gameName = gameName;
+        this.pNumber = pNumber;
     }
 
 
@@ -50,29 +54,26 @@ public class SendToDatabase<T> {
 
     public void updateData(String typOfObject, T object){
         DatabaseReference myRef = database.getReference();
-       // Map<String, Object>update = new HashMap<>();
+        myRef.child("games").child(gameName);
 
         switch (typOfObject){
             case "roomList":
-                myRef.child("games").child(gameName).child("roomManager").child(typOfObject).setValue(object);
-               // update.put("games/"+gameName+"/roomManager/"+typOfObject, object);
+                myRef.child("roomManager").child(typOfObject).setValue(object);
                 break;
             case "playerList":
-                //update.put("games/"+gameName+"/playerManager/"+typOfObject, object);
+                myRef.child("playerManager").child(pNumber).child(typOfObject).setValue(object);
                 break;
             case "paused":
-                //update.put("games/"+gameName+"/"+typOfObject, object);
+                myRef.child(typOfObject).setValue(object);
                 break;
             case "aktivePlayer":
-                //update.put("games/"+gameName+"/playerManager/"+typOfObject, object);
+                myRef.child("playerManager").child(typOfObject).setValue(object);
                 break;
         }
-
-        //myRef.updateChildren(update);
     }
 
     public void sendGame(Game game){
-        DatabaseReference myRef = database.getReference();
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
         myRef.child("games").child(gameName).setValue(game);
     }
 

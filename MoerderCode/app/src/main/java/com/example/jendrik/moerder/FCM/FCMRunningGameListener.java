@@ -1,6 +1,7 @@
 package com.example.jendrik.moerder.FCM;
 
 import com.example.jendrik.moerder.GUI.OnGamingClasses.GameIsRunningCallback;
+import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.GameObjekts.Room;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,18 +19,22 @@ public class FCMRunningGameListener {
 
     private String gameName;
     private GameIsRunningCallback callback;
-    private DatabaseReference gameReference;
+    private DatabaseReference roomReference;
+    private DatabaseReference playerReference;
     private ValueEventListener roomListener;
+    private ValueEventListener playerListener;
+    private DatabaseReference activePlayerReference;
+    private ValueEventListener activePlayerListener;
 
     public FCMRunningGameListener(String gameName, GameIsRunningCallback callback){
         this.gameName = gameName;
         this.callback = callback;
-        this.gameReference = FirebaseDatabase.getInstance().getReference().child("games").child(gameName);
     }
 
     public void roomListListener(){
         roomListener = makeRoomListener();
-        gameReference.child("roomManager").child("roomList").addValueEventListener(roomListener);
+        roomReference = FirebaseDatabase.getInstance().getReference().child("games").child(gameName);
+        roomReference.child("roomManager").child("roomList").addValueEventListener(roomListener);
     }
 
     private ValueEventListener makeRoomListener(){
@@ -47,5 +52,56 @@ public class FCMRunningGameListener {
             }
         };
         return ve;
+    }
+
+    public void playerListListener(){
+        playerListener = makePlayerListener();
+        playerReference = FirebaseDatabase.getInstance().getReference().child("games").child(gameName);
+        playerReference.child("playerManager").child("playerList").addValueEventListener(playerListener);
+    }
+
+    private ValueEventListener makePlayerListener(){
+        ValueEventListener ve = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<List<Player>> t = new GenericTypeIndicator<List<Player>>() {};
+                List<Player> playerList = dataSnapshot.getValue(t);
+                callback.playerListChanged(playerList);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        return ve;
+    }
+
+    public void activePlayerListener(){
+        activePlayerListener = makeAktivePlayerListener();
+        activePlayerReference = FirebaseDatabase.getInstance().getReference().child("games").child(gameName);
+        activePlayerReference.child("playerManager").child("aktivePlayer").addValueEventListener(activePlayerListener);
+    }
+
+    private ValueEventListener makeAktivePlayerListener(){
+        ValueEventListener ve = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Double aktivePlayer = dataSnapshot.getValue(Double.class);
+                callback.aktivePlayerChanged(aktivePlayer);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        return ve;
+    }
+
+    public void unbindListeners(){
+        roomReference.removeEventListener(roomListener);
+        playerReference.removeEventListener(playerListener);
+        activePlayerReference.removeEventListener(activePlayerListener);
     }
 }

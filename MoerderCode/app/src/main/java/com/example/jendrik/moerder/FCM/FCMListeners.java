@@ -56,14 +56,34 @@ public class FCMListeners {
 
 
 
-    public Game getGame(){
-        return game;
+    public ValueEventListener makeGameListener(){
+
+        ValueEventListener ve =
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        updateGame(dataSnapshot);
+                        callback.startGameAfterReceivingInformation();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                };
+
+        return ve;
     }
 
     private void updateGame(DataSnapshot snapshot){
-        game=snapshot.getValue(Game.class);
+        Log.d("tollewurst",snapshot.getKey());
+        Game game=snapshot.getValue(Game.class);
+        this.game=game;
     }
 
+    public Game getGame(){
+        return game;
+    }
 
 
     /*public FCMListeners(String gameName, GameStartedCallback callback){
@@ -96,24 +116,7 @@ public class FCMListeners {
     }*/
 
 
-    public ValueEventListener makeGameListener(){
 
-        ValueEventListener ve =
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        updateGame(dataSnapshot);
-                        callback.startGameAfterReceivingInformation();
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                };
-
-        return ve;
-    }
 
 
     private ValueEventListener stringListListener(String list){
