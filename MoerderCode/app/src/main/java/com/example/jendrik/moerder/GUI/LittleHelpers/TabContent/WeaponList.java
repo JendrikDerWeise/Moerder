@@ -37,7 +37,6 @@ public class WeaponList extends Fragment {
         rvadapter = new SuspectListAdapterClassWeapon();
         recyclerView.setAdapter(rvadapter);
 
-
         tv = (TextView) fA.findViewById(R.id.textViewTab);
 
         return contentView;

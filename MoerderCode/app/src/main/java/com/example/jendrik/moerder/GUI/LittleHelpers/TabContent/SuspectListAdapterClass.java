@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
 import com.example.jendrik.moerder.R;
 
@@ -64,6 +66,9 @@ public class SuspectListAdapterClass extends RecyclerView.Adapter<SuspectListAda
                         setSuspectColor(MenueDrawer.game.getActivePlayer().getSuspectOnList(position), (TextView) v.findViewById(R.id.txt_color_field));
                         break;
                 }
+                String pNumberString = "" + MenueDrawer.whoAmI;
+                SendToDatabase stb = new SendToDatabase(MenueDrawer.game.getGameName(),pNumberString);
+                stb.updateData("playerList", MenueDrawer.game.getPlayerManager().getPlayerList().get(MenueDrawer.whoAmI));
             }
         });
 

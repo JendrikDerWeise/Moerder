@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Room;
 import com.example.jendrik.moerder.R;
@@ -50,19 +51,19 @@ public class ChangeRoom extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode) {  //Switch case ist vermutlich unnötig
             case (VALUE) : {
-                Room room = new Room("",88);
                 if (resultCode == Activity.RESULT_OK) { //wenn Activity korrekt zuende geführt wurde
                     int qrCode = data.getIntExtra(STUB_SCANNER.RESULT, 0); //Übergabe des Intents (data), dort ist unter dem String RESULT der INT gespeichert... klingt unsinnig, läuft aber so. Die 0 ist Unsinn
                     if(qrCode>19 && qrCode<29){
                         for(Room r : game.getRooms()){
                             if(r.getName().equals(game.getNameByNumber(qrCode))) {
                                 game.getActivePlayer().setActualRoom(r);
+                                String pNumberString = "" + MenueDrawer.whoAmI;
+                                SendToDatabase stb = new SendToDatabase(game.getGameName(),pNumberString);
+                                stb.updateData("playerList", game.getPlayerManager().getPlayerList().get(MenueDrawer.whoAmI));
                                 TextView textView = (TextView)getActivity().findViewById(R.id.change_room_name);
                                 textView.setText(r.getName());
                             }
                         }
-                        //endTurn();
-
                     }
                     else if(qrCode==29){
                         game.getActivePlayer().setActualRoom(game.getGrpRoom());

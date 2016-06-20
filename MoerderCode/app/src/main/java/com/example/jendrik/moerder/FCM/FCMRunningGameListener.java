@@ -25,6 +25,8 @@ public class FCMRunningGameListener {
     private ValueEventListener playerListener;
     private DatabaseReference activePlayerReference;
     private ValueEventListener activePlayerListener;
+    private DatabaseReference pauseReference;
+    private ValueEventListener pauseListener;
 
     public FCMRunningGameListener(String gameName, GameIsRunningCallback callback){
         this.gameName = gameName;
@@ -77,6 +79,28 @@ public class FCMRunningGameListener {
         return ve;
     }
 
+    public void pauseListener(){
+        pauseListener = makePauseListener();
+        pauseReference = FirebaseDatabase.getInstance().getReference().child("games").child(gameName);
+        pauseReference.child("paused").addValueEventListener(pauseListener);
+    }
+
+    private ValueEventListener makePauseListener(){
+        ValueEventListener ve = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean pause = dataSnapshot.getValue(Boolean.class);
+                callback.pauseIsPressed(pause);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        return ve;
+    }
+
     public void activePlayerListener(){
         activePlayerListener = makeAktivePlayerListener();
         activePlayerReference = FirebaseDatabase.getInstance().getReference().child("games").child(gameName);
@@ -102,6 +126,7 @@ public class FCMRunningGameListener {
     public void unbindListeners(){
         roomReference.removeEventListener(roomListener);
         playerReference.removeEventListener(playerListener);
+        pauseReference.removeEventListener(pauseListener);
         activePlayerReference.removeEventListener(activePlayerListener);
     }
 }

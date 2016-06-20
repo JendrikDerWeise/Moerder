@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.GUI.LittleHelpers.TabContent.ViewPagerAdapter;
 import com.example.jendrik.moerder.R;
 
@@ -84,10 +85,11 @@ public class NoticeList extends Fragment {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+    }
 
-
-
-
+    @Override
+    public void onPause(){
+        super.onPause();
     }
 
 

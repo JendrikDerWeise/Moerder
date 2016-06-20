@@ -187,6 +187,7 @@ public class WaitForPlayers extends Activity {
         intent.putExtra("gameName", gameName);
         intent.putExtra("GAME",game);
         intent.putExtra("whoAmI", 0);
+        intent.putExtra("myTurn", true);
 
         startActivity(intent);
     }

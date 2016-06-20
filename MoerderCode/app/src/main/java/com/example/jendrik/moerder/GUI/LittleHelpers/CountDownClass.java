@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.CountDownTimer;
 import android.widget.TextView;
 
+import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
 import com.example.jendrik.moerder.R;
 
@@ -58,7 +59,13 @@ public class CountDownClass{
         @Override
         public void onFinish() {
             MenueDrawer.game.setNextActivePlayer();
+
+            SendToDatabase stb = new SendToDatabase(MenueDrawer.game.getGameName());
+            stb.updateData("completePlayerList", MenueDrawer.game.getPlayerManager().getPlayerList());
+            stb.updateData("aktivePlayer", MenueDrawer.game.getPlayerManager().getAktivePlayer());
+
             activity.getIntent().putExtra("GAME", MenueDrawer.game);
+            activity.getIntent().putExtra("myTurn", false);
             activity.finish();
             activity.startActivity(activity.getIntent());
         }

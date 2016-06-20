@@ -99,7 +99,7 @@ public class WaitForServer extends Activity implements GameStartedCallback{
                 playerNames.clear();
                 boolean isRunning = dataSnapshot.getValue(Boolean.class);
                 if(isRunning)
-                startGame();
+                    startGame();
             }
 
             @Override
@@ -133,19 +133,25 @@ public class WaitForServer extends Activity implements GameStartedCallback{
     public void startGameAfterReceivingInformation(){
         Intent intent = new Intent(this,MenueDrawer.class);
         intent.putExtra("gameName", gameName);
-        intent.putExtra("whoAmI", checkForPlayerNumber());
+        intent.putExtra("myTurn", false);
 
         Game game = fcmListeners.getGame();
+        intent.putExtra("whoAmI", checkForPlayerNumber(game));
         intent.putExtra("GAME", game);
-        Log.d("start",game.getGameName());
 
         startActivity(intent);
     }
 
-    private int checkForPlayerNumber() {
+    private int checkForPlayerNumber(Game game) {
         String pName = getIntent().getExtras().getString("pName");
-        int pNumber = playerNames.indexOf(pName);
+        int whoAmI=0;
+        for(Player p : game.getPlayerManager().getPlayerList()){
+            if(p.getName().equals(pName))
+                whoAmI = (int)p.getPNumber();
+        }
 
-        return pNumber;
+        Log.d("aktivePlayerChanged", "WaitForServer pNumber: "+whoAmI);
+
+        return whoAmI;
     }
 }

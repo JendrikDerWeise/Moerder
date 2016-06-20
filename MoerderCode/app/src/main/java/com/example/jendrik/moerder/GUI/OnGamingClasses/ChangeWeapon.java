@@ -19,12 +19,11 @@ import com.example.jendrik.moerder.R;
  * Created by Jendrik on 21.03.2016.
  */
 public class ChangeWeapon extends Fragment {
-    private View fragLayoutV;
     public static String SCAN_WEAPON = "weapon";
     private static final int VALUE = 503;
     private Game game;
     private String actualRoom;
-    private Object object=new Object();
+    private SendToDatabase stb;
 
 
     @Override
@@ -35,8 +34,12 @@ public class ChangeWeapon extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        fragLayoutV = inflater.inflate(R.layout.stub_activity, null);
+        View fragLayoutV = inflater.inflate(R.layout.stub_activity, null);
+        game = MenueDrawer.game;
+        actualRoom = MenueDrawer.game.getActivePlayer().getActualRoom().getName();
 
+        String pNumberString = "" + MenueDrawer.whoAmI;
+        stb = new SendToDatabase(game.getGameName(),pNumberString);
 
         return fragLayoutV;
     }
@@ -46,8 +49,7 @@ public class ChangeWeapon extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        game = MenueDrawer.game;
-        actualRoom = MenueDrawer.game.getActivePlayer().getActualRoom().getName();
+
         startWeaponScan();
 
     }
@@ -68,12 +70,14 @@ public class ChangeWeapon extends Fragment {
                                 room = r;
                             }
                         }
+                        //MenueDrawer.game.getActivePlayer().getActualRoom().addWeapon(MenueDrawer.game.getActivePlayer().getActualWeapon());
 
                         String weapon;
                         weapon = MenueDrawer.game.getNameByNumber(qrCode);
                         for (Weapon w : MenueDrawer.game.getWeapons()){
                             if(w.getName().equals(weapon)) {
                                 MenueDrawer.game.getActivePlayer().setActualWeapon(w);
+                                stb.updateData("playerList", game.getPlayerManager().getPlayerList().get(MenueDrawer.whoAmI));
                                 room.removeWeapon(w);
                             }
                         }
@@ -99,14 +103,15 @@ public class ChangeWeapon extends Fragment {
     }
 
     private void endTurn(){
-        String pNumberString = "" + MenueDrawer.whoAmI;
-        SendToDatabase stb = new SendToDatabase(game.getGameName(),pNumberString);
-        stb.updateData("roomList", game.getRoomManager().getRoomList());
-        stb.updateData("playerList", game.getPlayerManager().getPlayerList().get(MenueDrawer.whoAmI));
 
         MenueDrawer.game.setNextActivePlayer();
+        stb.updateData("completePlayerList", game.getPlayerManager().getPlayerList());
+        stb.updateData("aktivePlayer", game.getPlayerManager().getAktivePlayer());
+        stb.updateData("roomList", game.getRoomManager().getRoomList());
+        getActivity().getIntent().putExtra("myTurn", false);
         getActivity().getIntent().putExtra("GAME",MenueDrawer.game);
         getActivity().finish();
         startActivity(getActivity().getIntent());
+
     }
 }

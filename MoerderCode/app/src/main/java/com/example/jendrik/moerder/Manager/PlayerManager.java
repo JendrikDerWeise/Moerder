@@ -2,6 +2,8 @@ package com.example.jendrik.moerder.Manager;
 
 import android.util.Log;
 
+import com.example.jendrik.moerder.FCM.SendToDatabase;
+import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
 import com.example.jendrik.moerder.GameObjekts.Clue;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.GameObjekts.Room;
@@ -28,9 +30,11 @@ public class PlayerManager implements Serializable {
 
     private List<Player> playerList;
     private double aktivePlayer;
+    private SendToDatabase stb;
 
     public PlayerManager(boolean bool){
         playerList = new ArrayList<>();
+
     }
 
 

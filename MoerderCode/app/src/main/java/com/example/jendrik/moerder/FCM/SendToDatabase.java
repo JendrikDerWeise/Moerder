@@ -54,20 +54,22 @@ public class SendToDatabase<T> {
 
     public void updateData(String typOfObject, T object){
         DatabaseReference myRef = database.getReference();
-        myRef.child("games").child(gameName);
+        //myRef.child("games").child(gameName);
 
         switch (typOfObject){
             case "roomList":
-                myRef.child("roomManager").child(typOfObject).setValue(object);
+                myRef.child("games").child(gameName).child("roomManager").child(typOfObject).setValue(object);
                 break;
             case "playerList":
-                myRef.child("playerManager").child(pNumber).child(typOfObject).setValue(object);
+                myRef.child("games").child(gameName).child("playerManager").child("playerList").child(pNumber).setValue(object);
                 break;
+            case "completePlayerList":
+                myRef.child("games").child(gameName).child("playerManager").child("playerList").setValue(object);
             case "paused":
-                myRef.child(typOfObject).setValue(object);
+                myRef.child("games").child(gameName).child(typOfObject).setValue(object);
                 break;
             case "aktivePlayer":
-                myRef.child("playerManager").child(typOfObject).setValue(object);
+                myRef.child("games").child(gameName).child("playerManager").child(typOfObject).setValue(object);
                 break;
         }
     }

@@ -5,7 +5,9 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -31,9 +33,6 @@ import java.util.List;
 
 public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallback {
     public static Game game;
-    private Bundle extras;
-
-    private Toolbar toolbar;
 
     private DrawerLayout drawerLayoutgesamt;
     private ActionBarDrawerToggle drawerToggle;
@@ -52,13 +51,12 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     private IndictError indictError;
     private Pause pause;
     public static Context cont;
-    private static FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
     private CountDownClass timer;
     public static int whoAmI;
-    private FCMListeners fcmListeners;
-    private boolean myTurn;
+    public static boolean myTurn;
     private FCMRunningGameListener fcm;
+    private String pNumber;
+    private SendToDatabase stb;
 
 
     /**
@@ -74,6 +72,8 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         //TODO Mitteilung "gerufen werden"
         whoAmI = getIntent().getExtras().getInt("whoAmI");
         game =(Game) getIntent().getExtras().get("GAME");
+        myTurn = getIntent().getBooleanExtra("myTurn", false);
+        this.setTheme(R.style.mordThemeNotTurnWithDrawer);
         setContentView(R.layout.menu_drawer);
 
         setLayout();
@@ -86,9 +86,12 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerToggle.syncState();
 
+        pNumber = "" + whoAmI;
+        stb = new SendToDatabase(game.getGameName(),pNumber);
         fcm = new FCMRunningGameListener(game.getGameName(), this);
         fcm.roomListListener();
         fcm.playerListListener();
+        fcm.pauseListener();
         fcm.activePlayerListener();
     }
 
@@ -96,14 +99,14 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     protected void onStart(){
         super.onStart();
 
-        if(game.getActivePlayer().getPNumber() != whoAmI){//TODO activePlayer ändern!{
+        if(!myTurn){//TODO activePlayer ändern!{
             //setContentView(R.layout.menu_drawer_not_active);
-            myTurn = false;
+            //myTurn = false;
             notActive();
         }else {
             timer = new CountDownClass(this, (int) game.getMin(), (int) game.getSec());
             timer.getTimer().start();
-            myTurn = true;
+            //myTurn = true;
         }
 
     }
@@ -113,7 +116,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
      * Menu(Drawer) wird zugewiesen
      */
     private void setLayout(){
-        toolbar = (Toolbar) findViewById(R.id.toolbar1);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
 
         drawerLayoutgesamt = (DrawerLayout) findViewById(R.id.drawerlayoutgesamt);
@@ -156,8 +159,8 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
      * @param frag erwartet ein entsprechendes Fragment, also die jeweilige Klasse die angezeigt werden soll (siehe instantiateFragments)
      */
     private void menueSetter(Fragment frag){
-        fragmentManager = getFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frag_area, frag);
         fragmentTransaction.commit();
     }
@@ -194,7 +197,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
                     }
 
                     case R.id.drawer_weapon_change: {
-                        if(game.getActivePlayer().getActualRoom().getWeaponList().size() == 0)//TODO wirft NullPointerException, wenn keine Waffe im Raum und trotzdem "Waffe wechseln" geklickt
+                        if(game.getActivePlayer().getActualRoom().getWeaponList() == null)
                             menueSetter(changeWeaponError);
                         else
                             menueSetter(changeWeapon);
@@ -219,6 +222,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
                         if(myTurn)
                             timer.pause();
                         menueSetter(pause);
+                        stb.updateData("paused", true);
                         drawerToggle.setDrawerIndicatorEnabled(false);
                         break;
                     }
@@ -243,7 +247,8 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
      */
     public void endTurn(){
         game.setNextActivePlayer();
-        SendToDatabase stb = new SendToDatabase(game.getGameName());
+        stb.updateData("completePlayerList", game.getPlayerManager().getPlayerList());
+        myTurn = false;
         stb.updateData("aktivePlayer", game.getPlayerManager().getAktivePlayer());
         getIntent().putExtra("GAME",game);
         finish();
@@ -276,7 +281,9 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
             case R.id.btn_resume:
                 drawerToggle.setDrawerIndicatorEnabled(true);
                 menueSetter(map);
-                timer.resume();
+                stb.updateData("paused", false);
+                if(myTurn)
+                    timer.resume();
                 break;
         }
     }
@@ -318,11 +325,24 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     }
 
     public void aktivePlayerChanged(double aktivePlayer){
-        if(aktivePlayer == whoAmI)
-            endTurn();
+        int aktivePlayerInt = (int)aktivePlayer;
+        String str = "aktivePlayerInt: " + aktivePlayerInt + " whoAmI: " + whoAmI + " myTurn: " + myTurn;
+        Log.d("aktivePlayerChanged",str);
+        if(aktivePlayerInt == whoAmI && !myTurn) {
+            myTurn = true;
+            getIntent().putExtra("myTurn", myTurn);
+            getIntent().putExtra("GAME", game);
+            finish();
+            startActivity(getIntent());
+        }
 
         //TODO AktivePlayer Name in Leiste anzeigen und hier ändern
     }
+
+
+
+
+
 
 
     /*
@@ -372,7 +392,8 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     public void onDestroy(){
         super.onDestroy();
 
-        timer.getTimer().cancel();
+        if(timer != null)
+            timer.getTimer().cancel();
         fcm.unbindListeners();
     }
 
