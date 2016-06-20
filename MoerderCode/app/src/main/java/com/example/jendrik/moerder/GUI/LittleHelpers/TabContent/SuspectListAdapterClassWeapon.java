@@ -19,8 +19,6 @@ public class SuspectListAdapterClassWeapon extends RecyclerView.Adapter<SuspectL
 
         private TextView colorField;
         private TextView nameOfThing;
-        private TextView nameOfRoom;
-        private TextView nameOfWeapon;
 
         public ViewHolderClass(View itemView) {
             super(itemView);
@@ -53,16 +51,16 @@ public class SuspectListAdapterClassWeapon extends RecyclerView.Adapter<SuspectL
             public void onClick(View v) {
 
                 switch (MenueDrawer.game.getActivePlayer().getSuspectOnList(i)) {
-                    case 'y':
-                        MenueDrawer.game.getActivePlayer().suspectOnList(i, 'n');
+                    case "y":
+                        MenueDrawer.game.getActivePlayer().suspectOnList(i, "n");
                         setSuspectColor(MenueDrawer.game.getActivePlayer().getSuspectOnList(i), (TextView) v.findViewById(R.id.txt_color_field));
                         break;
-                    case 'n':
-                        MenueDrawer.game.getActivePlayer().suspectOnList(i, 'm');
+                    case "n":
+                        MenueDrawer.game.getActivePlayer().suspectOnList(i, "m");
                         setSuspectColor(MenueDrawer.game.getActivePlayer().getSuspectOnList(i), (TextView) v.findViewById(R.id.txt_color_field));
                         break;
-                    case 'm':
-                        MenueDrawer.game.getActivePlayer().suspectOnList(i, 'y');
+                    case "m":
+                        MenueDrawer.game.getActivePlayer().suspectOnList(i, "y");
                         setSuspectColor(MenueDrawer.game.getActivePlayer().getSuspectOnList(i), (TextView) v.findViewById(R.id.txt_color_field));
                         break;
                 }
@@ -75,15 +73,15 @@ public class SuspectListAdapterClassWeapon extends RecyclerView.Adapter<SuspectL
         return MenueDrawer.game.getWeapons().size();
     }
 
-    private void setSuspectColor(char c, TextView tv){
-        switch (c){
-            case 'y':
+    private void setSuspectColor(String s, TextView tv){
+        switch (s){
+            case "y":
                 tv.setBackgroundColor(ContextCompat.getColor(MenueDrawer.cont, R.color.suspect_yes));
                 break;
-            case 'n':
+            case "n":
                 tv.setBackgroundColor(ContextCompat.getColor(MenueDrawer.cont, R.color.suspect_no));
                 break;
-            case 'm':
+            case "m":
                 tv.setBackgroundColor(ContextCompat.getColor(MenueDrawer.cont, R.color.suspect_maybe));
                 break;
         }

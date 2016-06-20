@@ -291,7 +291,7 @@ public class MyFcmListenerService extends FirebaseMessagingService {
     public static void sendGame(){
         Game game = GameHandler.loadGame();
 
-        if(game.getGameOver()){
+        if(game.isGameOver()){
             //sendString("end");
         }else{
             /**Bundle data = new Bundle();

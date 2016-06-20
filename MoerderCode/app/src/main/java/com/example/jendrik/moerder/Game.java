@@ -10,11 +10,17 @@ import com.example.jendrik.moerder.GameObjekts.Weapon;
 import com.example.jendrik.moerder.Manager.PlayerManager;
 import com.example.jendrik.moerder.Manager.RoomManager;
 import com.example.jendrik.moerder.Manager.WeaponManager;
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Created by Jendrik on 22.02.2016.
@@ -22,8 +28,10 @@ import java.util.Random;
  * Hier landet die Spielmechanik. Klassen für hosten und suchen kommen extra
  *
  */
+@Getter @Setter
+@NoArgsConstructor
+@IgnoreExtraProperties
 public class Game implements Serializable {
-
 
     private Solution solution;
     private RoomManager roomManager;
@@ -38,8 +46,8 @@ public class Game implements Serializable {
     private double justScannedQR;
     private double playerAmount;
     private boolean gameOver;
-
-
+    private boolean isRunning;
+    private boolean paused;
 
     public Game(String gameName, String pwd, ArrayList<String> rooms, ArrayList<String> weapons, int min, int sec, int playerAmount){
         this.gameName = gameName;
@@ -47,28 +55,29 @@ public class Game implements Serializable {
         this.min = min;
         this.sec = sec;
         solution = null;
-        clueList = new ArrayList<Clue>();
-        playerManager = new PlayerManager();
-        weaponManager = new WeaponManager();
-        roomManager = new RoomManager();
+        clueList = new ArrayList<>();
+        playerManager = new PlayerManager(false);
+        weaponManager = new WeaponManager(false);
+        roomManager = new RoomManager(false);
         createRooms(rooms);
         createWeapons(weapons);
         numberOfThings = rooms.size() + weapons.size();
         justScannedQR = 0;
         this.playerAmount = playerAmount;
         gameOver = false;
+        this.paused = false;
     }
-
-    public Game(){} //nur für das Laden verwendet
 
     /**
     *Methode soll prüfen ob die Anklage des Spielers korrekt ist.
     *Gibt true zurück, wenn dies der Fall ist.
      */
+    @Exclude
     public boolean compareSolution(String murderer, String room, String weapon){
         return solution != null && solution.getMurderer().equals(murderer) && solution.getRoom().equals(room) && solution.getWeapon().equals(weapon);
     }
 
+    @Exclude
     public Player getActivePlayer(){
         Player player = new Player();
         for(Player p : playerManager.getPlayerList()){
@@ -81,11 +90,12 @@ public class Game implements Serializable {
     /**
     *Setzt eine Liste aus Clue-Objekten zusammen.
      */
+    @Exclude
     private void createClues(){
         for (Player p:playerManager.getPlayerList())
             clueList.add(new Clue(p.getName(), 0));
 
-        for (Room r:roomManager.showMap())
+        for (Room r:roomManager.getRoomList())
             clueList.add(new Clue(r.getName(),1));
 
         for (Weapon w:weaponManager.getWeaponList())
@@ -98,7 +108,8 @@ public class Game implements Serializable {
     *Füllt ein String-Array mit den Namen aller bisher angemeldeten Spieler und setzt sie in den Gruppenraum (Startposition).
     *Zum Ende wird Spieler 0 als aktiv markiert.
      */
-    private void createPlayer(ArrayList<String> players){
+    @Exclude
+    private void createPlayer(List<String> players){
         numberOfThings += players.size();
         for(String s:players) {
             playerManager.addPlayer(s,(int) numberOfThings);
@@ -110,67 +121,65 @@ public class Game implements Serializable {
     /**
     *Hat Sophia geschrieben
      */
+    @Exclude
     private void createSolution(){
         int playerCount = playerManager.getPlayerList().size();
-        int roomCount = roomManager.showMap().size();
+        int roomCount = roomManager.getRoomList().size();
         int weaponCount = weaponManager.getWeaponList().size();
         Random random = new Random();
         String pName = playerManager.getPlayerList().get(random.nextInt(playerCount)).getName();
-        String rName = roomManager.showMap().get(random.nextInt(roomCount)).getName();
+        String rName = roomManager.getRoomList().get(random.nextInt(roomCount)).getName();
         String wName = weaponManager.getWeaponList().get(random.nextInt(weaponCount)).getName();
         solution = new Solution(pName, rName,wName);
         Log.e("SOLUTION", solution.getMurderer() + solution.getRoom() + solution.getWeapon());
     }
 
+    @Exclude
     private void createRooms(ArrayList<String> rooms){
         for (String s:rooms)
             roomManager.createRoom(s);
     }
 
+    @Exclude
     private void createWeapons(ArrayList<String> weapons){
         for (String s:weapons)
             weaponManager.createWeapon(s);
 
         for (int i = 0; i < weaponManager.getWeaponList().size();i++){ //Zuteilung der Waffen auf die Räume. Vorraussetzung:  Anzahl Waffen <=> Anzahl Räume
-            roomManager.showMap().get(i).addWeapon(weaponManager.getWeaponList().get(i));
+            roomManager.getRoomList().get(i).addWeapon(weaponManager.getWeaponList().get(i));
         }
     }
 
-
-    public String getGameName() {
-        return gameName;
-    }
-
-    public double getMin() { return min;}
-
-    public double getSec(){return sec;}
-
+    @Exclude
     public Room getGrpRoom(){
         return roomManager.getGrpRoom(); }
 
+    @Exclude
     public double getPlayerAmount(){
         return this.playerAmount;
     }
 
-    public boolean getGameOver(){
-        return this.gameOver;
-    }
+    @Exclude
     public List<Room> getRooms(){
-        return roomManager.showMap();
+        return roomManager.getRoomList();
     }
 
+    @Exclude
     public List<Weapon> getWeapons(){
         return weaponManager.getWeaponList();
     }
 
+    @Exclude
     public List<Player> getPlayers(){
         return playerManager.getPlayerList();
     }
 
+    @Exclude
     public boolean passwordSecured(){
         return pwd != "";
     }
 
+    @Exclude
     public boolean checkPwd(String pwd){
         return this.pwd == pwd;
     }
@@ -178,6 +187,7 @@ public class Game implements Serializable {
     /**
     *Methode gibt zu QR-Code zugehörigen Namen zurück. Kann dabei Spieler, Raum oder Waffe sein.
      */
+    @Exclude
     public String getNameByNumber(int qrnr){
         if(qrnr > 0  && qrnr < 30){
             if(qrnr < 10) {
@@ -197,6 +207,7 @@ public class Game implements Serializable {
     /**
     *Verteilung der Spielkarten (Hinweise) an die Spieler. (Sophia)
      */
+    @Exclude
     private void giveCluesToPlayer(){
         ArrayList<Clue> copyClueList = new ArrayList<Clue>();//duplicates Cardlist
         for(int i = 0; i < clueList.size(); i++){
@@ -238,23 +249,22 @@ public class Game implements Serializable {
 
     }
 
+    @Exclude
     public void killPlayer(int pNumber){
         playerManager.getPlayerList().get(pNumber).setDead(true);
     }
 
+    @Exclude
     public void setJustScannedQR(int qrnr){
         justScannedQR = qrnr;
     }
 
-    public void setActivePlayer(){
-        List<Player> list = playerManager.getPlayerList();
-        for(int i = 0; i < list.size(); i++){
-            if(list.get(i).isActive()){
-                if(i + 1 < list.size()){
-                    playerManager.setActive(list.get(i+1).getName());
-                }else{
-                    playerManager.setActive(list.get(0).getName());
-                }
+    @Exclude
+    public void setNextActivePlayer(){
+        for(Player p : playerManager.getPlayerList()){
+            if(p.isActive()) {
+                playerManager.setActive(p);
+                break;
             }
         }
     }
@@ -263,7 +273,8 @@ public class Game implements Serializable {
     *Methode stupst das Spiel los. Erst wenn alle Daten vorliegen (Spieler, Räume, Waffen) kann die Methode sinnvoll
     *verwendet werden. Die Reihenfolge muss so bestehn bleiben - glaub ich.
      */
-    public void startGame(ArrayList<String> players){
+    @Exclude
+    public void startGame(List<String> players){
         createPlayer(players);
         createClues();
         giveCluesToPlayer();
@@ -272,47 +283,17 @@ public class Game implements Serializable {
         //Auslöser zum Senden des Savegames -->gehört in ServerClass
     }
 
+    @Exclude
     public void updatePlayer(Player player){
         playerManager.updatePlayer(player);
+    }
+
+    public void setGameIsRunning(boolean gameIsRunning) {
+        this.isRunning = gameIsRunning;
     }
 
     /**
      * Viele Getter fuer Firebase-Gedoens
      */
 
-    public boolean isGameOver() {
-        return gameOver;
-    }
-
-    public Solution getSolution() {
-        return solution;
-    }
-
-    public RoomManager getRoomManager() {
-        return roomManager;
-    }
-
-    public WeaponManager getWeaponManager() {
-        return weaponManager;
-    }
-
-    public PlayerManager getPlayerManager() {
-        return playerManager;
-    }
-
-    public List<Clue> getClueList() {
-        return clueList;
-    }
-
-    public double getNumberOfThings() {
-        return numberOfThings;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public double getJustScannedQR() {
-        return justScannedQR;
-    }
 }

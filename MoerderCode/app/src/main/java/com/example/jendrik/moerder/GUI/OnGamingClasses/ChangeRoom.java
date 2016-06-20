@@ -87,9 +87,4 @@ public class ChangeRoom extends Fragment {
         startActivityForResult(intent, VALUE); //Starten der Activity. Methodenaufruf "...ForResult" impliziert, das die Activity etwas zurück liefert
     }
 
-    private void endTurn(){
-        getActivity().getIntent().putExtra("GAME",game);
-        getActivity().finish();
-        startActivity(getActivity().getIntent());
-    }
 }

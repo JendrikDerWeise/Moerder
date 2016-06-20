@@ -1,12 +1,23 @@
 package com.example.jendrik.moerder.GameObjekts;
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 /**
  * Created by Jendrik on 21.02.2016.
  */
+@Getter
+@Setter
+@NoArgsConstructor
+@IgnoreExtraProperties
 public class Player implements Serializable{
     private String name;
     private boolean active;
@@ -15,7 +26,7 @@ public class Player implements Serializable{
     private Weapon actualWeapon;
     private Room actualRoom;
     private List<Clue> givenClues;
-    private char[] suspectList;
+    private List<String> suspectList;
     private double pNumber;
 
     public Player(String name, int qrCode, int numberOfThings, int pNumber){
@@ -23,15 +34,12 @@ public class Player implements Serializable{
         this.qrCode=qrCode;
         this.name=name;
         this.pNumber = pNumber;
-        suspectList = new char[numberOfThings];
+        suspectList = new ArrayList<>();
         givenClues = new ArrayList<>();
         dead = false;
-    }
 
-    public Player(){}
-
-    public String getName(){
-        return name;
+        for(int i=0; i<numberOfThings;i++)
+            suspectList.add(i,"n");
     }
 
     private void clear(){ //oder doch public? wer fuehrt das spaeter aus?
@@ -39,64 +47,24 @@ public class Player implements Serializable{
         actualWeapon = null;
     }
 
-    public double getQrCode() {
-        return qrCode;
-    }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public Weapon getActualWeapon() {
-        return actualWeapon;
-    }
-
-    public void setActualWeapon(Weapon actualWeapon) {
-        this.actualWeapon=actualWeapon;
-    }
     //TODO ggf removeWeapon() einbauen weapon = null
 
-    public Room getActualRoom() {
-        return actualRoom;
-    }
+    public void giveGivenClues(Clue clue){ givenClues.add(clue); }
 
-    public void setActualRoom(Room room){
-        this.actualRoom = room;
-    }
-
-    public List<Clue> getGivenClues() {
-        return givenClues;
-    }
-
-    public void setGivenClues(Clue clue){ givenClues.add(clue); }
-
-    public boolean isDead() {
-        return dead;
-    }
-
-    public void setDead(boolean dead) {
-        this.dead = dead;
-    }
-
-    public double getpNumber(){ return pNumber; }
-
-    public void suspectOnList(int position, char character){ // zu deutsch verdaechtigen auf der Liste
+    @Exclude
+    public void suspectOnList(int position, String string){ // zu deutsch verdaechtigen auf der Liste
         //different to suspect, as this is only the internal list for that human
-        if(position < suspectList.length && (character == 'n' || character == 'y' || character == 'm')) {
+        if(position < suspectList.size() && (string == "n" || string == "y" || string == "m")) {
             //n = no, y = yes, m = maybe
-            suspectList[position] = character;
+            suspectList.remove(position);
+            suspectList.add(position,string);
         }
     }
 
-    public char getSuspectOnList(int position){
-        return suspectList[position];
+    public String getSuspectOnList(int position){
+        return suspectList.get(position);
     }
-
-    public char[] getSuspectList() { return suspectList; }
 
 
 }

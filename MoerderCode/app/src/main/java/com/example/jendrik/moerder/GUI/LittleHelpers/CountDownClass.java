@@ -57,6 +57,7 @@ public class CountDownClass{
 
         @Override
         public void onFinish() {
+            MenueDrawer.game.setNextActivePlayer();
             activity.getIntent().putExtra("GAME", MenueDrawer.game);
             activity.finish();
             activity.startActivity(activity.getIntent());

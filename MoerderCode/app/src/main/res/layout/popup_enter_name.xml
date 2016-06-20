@@ -15,17 +15,24 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.35" />
 
+    <TextView
+        android:layout_width="165dp"
+        android:layout_height="wrap_content"
+        android:text="@string/enter_player_name"
+        android:id="@+id/tv_pass_name"
+        android:layout_weight="0.07" />
+
     <EditText
         android:layout_width="307dp"
         android:layout_height="wrap_content"
         android:id="@+id/enterPlayerName"
-        android:text="@string/enter_player_name" />
+        android:text="" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="OK"
-        android:id="@+id/button3"
+        android:id="@+id/OKbuttonNamePass"
         android:layout_gravity="center_horizontal"
         android:onClick="onClickOK"/>
 

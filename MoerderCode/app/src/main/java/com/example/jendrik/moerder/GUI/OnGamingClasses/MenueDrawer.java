@@ -11,17 +11,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.jendrik.moerder.FCM.FCMListeners;
+import com.example.jendrik.moerder.FCM.FCMRunningGameListener;
 import com.example.jendrik.moerder.GUI.Host.STUB_FRAG;
 import com.example.jendrik.moerder.GUI.LittleHelpers.CountDownClass;
 import com.example.jendrik.moerder.Game;
+import com.example.jendrik.moerder.GameObjekts.Player;
+import com.example.jendrik.moerder.GameObjekts.Room;
 import com.example.jendrik.moerder.R;
 
+import java.util.List;
 
-public class MenueDrawer extends AppCompatActivity {
+
+public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallback {
     public static Game game;
     private Bundle extras;
 
@@ -47,6 +54,9 @@ public class MenueDrawer extends AppCompatActivity {
     private static FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private CountDownClass timer;
+    private int whoAmI;
+    private FCMListeners fcmListeners;
+    private boolean myTurn;
 
 
     /**
@@ -57,23 +67,20 @@ public class MenueDrawer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        extras = getIntent().getExtras();
-        game = (Game) extras.get("GAME"); //muss statisch sein, damit alle Fragments auf das selbe Objekt zugreifen können.
+       // extras = getIntent().getExtras();
+       // game = (Game) extras.get("GAME"); //muss statisch sein, damit alle Fragments auf das selbe Objekt zugreifen können.
+
+        //game = fcmListeners.getGameStat();
+
         //TODO verhindern das "Zurücktaste" von Android in die Spielerstellung zurück kehrt. Wie geht das? Ggf. finish()?
         //TODO Mitteilung "gerufen werden"
+        whoAmI = getIntent().getExtras().getInt("whoAmI");
+        game =(Game) getIntent().getExtras().get("GAME");
+        setContentView(R.layout.menu_drawer);
 
-        if(game.getActivePlayer().isActive()){//TODO activePlayer ändern!
-            setContentView(R.layout.menu_drawer);
-        }else{
-            //setContentView(R.layout.menu_drawer_not_active);
-            notActive();
-        }
         setLayout();
         instantiateFragments();
         initFragManager();
-
-        timer = new CountDownClass(this, (int)game.getMin(),(int)game.getSec());
-        timer.getTimer().start();
 
         initNaviListener();
 
@@ -81,6 +88,25 @@ public class MenueDrawer extends AppCompatActivity {
         //checkTurn();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerToggle.syncState();
+
+        FCMRunningGameListener fcm = new FCMRunningGameListener(game.getGameName(), this);
+        fcm.roomListListener();
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+
+        if(game.getActivePlayer().getPNumber() != whoAmI){//TODO activePlayer ändern!{
+            //setContentView(R.layout.menu_drawer_not_active);
+            myTurn = false;
+            notActive();
+        }else {
+            timer = new CountDownClass(this, (int) game.getMin(), (int) game.getSec());
+            timer.getTimer().start();
+            myTurn = true;
+        }
+
     }
 
     /**
@@ -158,7 +184,7 @@ public class MenueDrawer extends AppCompatActivity {
                         break;
                     }
 
-                    case R.id.suspect: {
+                    case R.id.drawer_suspect: {
                         if(game.getActivePlayer().getActualWeapon()==null || game.getActivePlayer().getActualRoom().getName().equals(game.getGrpRoom().getName())){
                             menueSetter(suspectError);
                             break;
@@ -168,20 +194,20 @@ public class MenueDrawer extends AppCompatActivity {
                         }
                     }
 
-                    case R.id.weapon_change: {
-                        if(game.getActivePlayer().getActualRoom().getWeaponList().isEmpty())
+                    case R.id.drawer_weapon_change: {
+                        if(game.getActivePlayer().getActualRoom().getWeaponList().size() == 0)//TODO wirft NullPointerException, wenn keine Waffe im Raum und trotzdem "Waffe wechseln" geklickt
                             menueSetter(changeWeaponError);
                         else
                             menueSetter(changeWeapon);
                         break;
                     }
 
-                    case R.id.room_change: {
+                    case R.id.drawer_room_change: {
                         menueSetter(changeRoom);
                         break;
                     }
 
-                    case R.id.indict: {
+                    case R.id.drawer_indict: {
                         if(game.getActivePlayer().getActualRoom().getName().equals(game.getGrpRoom().getName()))
                             menueSetter(indict);
                         else
@@ -191,7 +217,8 @@ public class MenueDrawer extends AppCompatActivity {
 
                     case R.id.pause: {
                         //TODO Pause Broadcast
-                        timer.pause();
+                        if(myTurn)
+                            timer.pause();
                         menueSetter(pause);
                         drawerToggle.setDrawerIndicatorEnabled(false);
                         break;
@@ -216,6 +243,7 @@ public class MenueDrawer extends AppCompatActivity {
      * Activity wird anschliessend neu gestartet.
      */
     public void endTurn(){
+        game.setNextActivePlayer();
         getIntent().putExtra("GAME",game);
         finish();
         startActivity(getIntent());
@@ -224,7 +252,7 @@ public class MenueDrawer extends AppCompatActivity {
     /**
      * onClickEvents innerhalb von Fragments funktionieren nicht. Daher wird bei jedem Klick auf einem
      * Button innerhalb der Fragments diese Methode aufgerufen und leitet den Klick an die entsprechende
-     * onClick innerhalb des zugehoerigenFragments weiter.
+     * onClick innerhalb des zugehoerigen Fragments weiter.
      * @param v
      */
     public void onClickInDrawer(View v){
@@ -253,16 +281,51 @@ public class MenueDrawer extends AppCompatActivity {
     }
 
     private void notActive(){
-        setInvisible(R.id.suspect);
-        setInvisible(R.id.indict);
-        setInvisible(R.id.room_change);
-        setInvisible(R.id.weapon_change);
+        setInvisible(R.id.drawer_suspect);
+        setInvisible(R.id.drawer_indict);
+        setInvisible(R.id.drawer_weapon_change);
+        setInvisible(R.id.drawer_room_change);
     }
 
     private void setInvisible(int id){
-        navigationView.getMenu().getItem(id).setVisible(false);
+        navigationView.getMenu().findItem(id).setVisible(false);
     }
-/*
+
+
+    /**
+     * Callback Funktion für FCM Listener
+     * Wird ausgelöst, wenn Spielerliste geändert wird.
+     * @param playerList
+     */
+    public void playerListChanged(List<Player> playerList){
+        game.getPlayerManager().setPlayerList(playerList);
+    }
+
+    public void roomListChanged(List<Room> roomList){
+        MenueDrawer.game.getRoomManager().setRoomList(roomList);
+       // getFragmentManager().beginTransaction().remove(map).commit();
+        map.update();
+    }
+
+    public void pauseIsPressed(boolean paused){
+        if(paused && !myTurn){
+            menueSetter(pause);
+            drawerToggle.setDrawerIndicatorEnabled(false);
+            //TODO Name von pause-drücker in PauseActivity einfügen
+        }else if (!paused &&!myTurn){
+            menueSetter(map);
+        }
+    }
+
+    public void aktivePlayerChanged(double aktivePlayer){
+        if(aktivePlayer == whoAmI)
+            endTurn();
+
+        //TODO AktivePlayer Name in Leiste anzeigen und hier ändern
+    }
+
+
+    /*
         Auto-generated methods
  */
 
@@ -303,6 +366,14 @@ public class MenueDrawer extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         drawerToggle.onConfigurationChanged(new Configuration());
         super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+
+        timer.getTimer().cancel();
+       // fcmListeners.unbindListeners();
     }
 
 

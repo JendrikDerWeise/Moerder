@@ -51,16 +51,16 @@ public class SuspectListAdapterClass extends RecyclerView.Adapter<SuspectListAda
                 final int position = i;
 
                 switch (MenueDrawer.game.getActivePlayer().getSuspectOnList(position)){
-                    case 'y':
-                        MenueDrawer.game.getActivePlayer().suspectOnList(position,'n');
+                    case "y":
+                        MenueDrawer.game.getActivePlayer().suspectOnList(position,"n");
                         setSuspectColor(MenueDrawer.game.getActivePlayer().getSuspectOnList(position), (TextView) v.findViewById(R.id.txt_color_field));
                         break;
-                    case 'n':
-                        MenueDrawer.game.getActivePlayer().suspectOnList(position,'m');
+                    case "n":
+                        MenueDrawer.game.getActivePlayer().suspectOnList(position,"m");
                         setSuspectColor(MenueDrawer.game.getActivePlayer().getSuspectOnList(position), (TextView) v.findViewById(R.id.txt_color_field));
                         break;
-                    case 'm':
-                        MenueDrawer.game.getActivePlayer().suspectOnList(position, 'y');
+                    case "m":
+                        MenueDrawer.game.getActivePlayer().suspectOnList(position, "y");
                         setSuspectColor(MenueDrawer.game.getActivePlayer().getSuspectOnList(position), (TextView) v.findViewById(R.id.txt_color_field));
                         break;
                 }
@@ -74,15 +74,15 @@ public class SuspectListAdapterClass extends RecyclerView.Adapter<SuspectListAda
         return MenueDrawer.game.getPlayers().size();
     }
 
-    private void setSuspectColor(char c, TextView tv){
-        switch (c){
-            case 'y':
+    private void setSuspectColor(String s, TextView tv){
+        switch (s){
+            case "y":
                 tv.setBackgroundColor(ContextCompat.getColor(MenueDrawer.cont, R.color.suspect_yes));
                 break;
-            case 'n':
+            case "n":
                 tv.setBackgroundColor(ContextCompat.getColor(MenueDrawer.cont, R.color.suspect_no));
                 break;
-            case 'm':
+            case "m":
                 tv.setBackgroundColor(ContextCompat.getColor(MenueDrawer.cont, R.color.suspect_maybe));
                 break;
         }

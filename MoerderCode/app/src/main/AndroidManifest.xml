@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.jendrik.moerder" >
+    package="com.example.jendrik.moerder">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -12,6 +12,7 @@
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.example.gcm.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".GUI.MyApplication"
@@ -19,13 +20,13 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/mordThemeNotTurn" >
-        <service android:name=".FCM.MyFirebaseInstanceIDService" >
+        android:theme="@style/mordThemeNotTurn">
+        <service android:name=".FCM.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".FCM.MyFcmListenerService" >
+        <service android:name=".FCM.MyFcmListenerService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -35,7 +36,7 @@
             android:name=".GUI.Startscreen"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/mordThemeNotTurn" >
+            android:theme="@style/mordThemeNotTurn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,7 +45,7 @@
         </activity>
         <activity
             android:name=".GUI.Join.JoinGame"
-            android:label="Search for a game..."/>
+            android:label="Search for a game..." />
         <activity
             android:name=".GUI.Host.CreateGame"
             android:label="@string/txt_create_game" />
@@ -73,6 +74,9 @@
         <activity android:name=".GUI.OnGamingClasses.WinScreen" />
         <activity android:name=".GUI.OnGamingClasses.LooseScreen" />
         <activity android:name=".GUI.OnGamingClasses.STUB_SCANNER" />
+        <activity android:name=".GUI.Join.PopUpEnterName"/>
+        <activity android:name=".GUI.Join.PopUpEnterPassword"/>
+        <activity android:name=".GUI.Join.WaitForServer"/>
     </application>
 
 </manifest>

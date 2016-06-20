@@ -61,8 +61,6 @@ public class RoomNameList extends Activity {
         final Intent intent = new Intent(this, WeaponNameList.class);
         intent.putExtras(extras);
         intent.putExtra("room list", roomList);
-        SendToDatabase sendToDatabase=new SendToDatabase(extras.get("game name").toString());
-        sendToDatabase.sendData("roomlist",roomList);
 
         startActivity(intent);
     }

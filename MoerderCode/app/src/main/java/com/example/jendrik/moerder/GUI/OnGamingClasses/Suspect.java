@@ -135,8 +135,7 @@ public class Suspect extends Fragment {
      */
     public void onClickSuspect(){
         String player= (String)spinnerPlayer.getSelectedItem();
-        Suspection sus = new Suspection(getActivity(), player, room, weapon, game, (int)game.getActivePlayer().getpNumber());
-        //TODO irgendwie ein endTurn() einbauen
+        Suspection sus = new Suspection(getActivity(), player, room, weapon, game, (int)game.getActivePlayer().getPNumber());
     }
 
 
