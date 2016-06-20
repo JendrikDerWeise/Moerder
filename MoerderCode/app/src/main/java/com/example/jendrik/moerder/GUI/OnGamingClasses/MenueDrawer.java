@@ -1,13 +1,12 @@
 package com.example.jendrik.moerder.GUI.OnGamingClasses;
 
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,11 +17,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.jendrik.moerder.FCM.FCMListeners;
 import com.example.jendrik.moerder.FCM.FCMRunningGameListener;
 import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.GUI.Host.STUB_FRAG;
 import com.example.jendrik.moerder.GUI.LittleHelpers.CountDownClass;
+import com.example.jendrik.moerder.GUI.LittleHelpers.PopUpIndict;
+import com.example.jendrik.moerder.GUI.LittleHelpers.PopUpIndictPlayerBroadcast;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.GameObjekts.Room;
@@ -93,6 +93,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         fcm.playerListListener();
         fcm.pauseListener();
         fcm.activePlayerListener();
+        fcm.prosecutionNotifyListener();
     }
 
     @Override
@@ -210,9 +211,10 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
                     }
 
                     case R.id.drawer_indict: {
-                        if(game.getActivePlayer().getActualRoom().getName().equals(game.getGrpRoom().getName()))
-                            menueSetter(indict);
-                        else
+                        if(game.getActivePlayer().getActualRoom().getName().equals(game.getGrpRoom().getName())) {
+                            DialogFragment indictWarning = new PopUpIndict();
+                            indictWarning.show(getFragmentManager(), "PopUpIndict");
+                        }else
                             menueSetter(indictError);
                         break;
                     }
@@ -339,6 +341,17 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         //TODO AktivePlayer Name in Leiste anzeigen und hier ändern
     }
 
+    public void onIndictPositive(DialogFragment dialog){
+        //Spieler rufen
+        menueSetter(indict);
+    }
+
+    public void onIndictNegative(DialogFragment dialog){    }
+
+    public void prosecutionNotify(Boolean prosecutionNotify){
+        DialogFragment prosecutionBroadcast = new PopUpIndictPlayerBroadcast();
+        prosecutionBroadcast.show(getFragmentManager(), "prosecutionBroadcast");
+    }
 
 
 

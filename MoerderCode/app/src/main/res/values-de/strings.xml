@@ -56,5 +56,11 @@
     <string name="error_popup_gamename">Spielname bereits vergeben. Bitte einen anderen wählen.</string>
     <string name="error_popup_name">Spielername bereits vergeben. Bitte einen neuen wählen.</string>
     <string name="enter_player_name">Gib bitte deinen Namen ein...</string>
+    <string name="popup_indict_message">Damit rufst du alle Spieler in den Gruppenraum. Denk lieber zwei Mal darüber nach!</string>
+    <string name="popup_indict_title">Willst du wirklich Anklage erheben?</string>
+    <string name="popup_indict_positive">Verstanden, Spieler rufen!</string>
+    <string name="popup_indict_negative_button">Nein, besser nicht!</string>
+    <string name="popup_indict_broadcast_title">Eine Anklage wird erhoben!</string>
+    <string name="popup_indict_broadcast_message">Begib dich in den Gruppenraum.</string>
 
 </resources>

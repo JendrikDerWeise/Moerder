@@ -48,24 +48,27 @@ public class Game implements Serializable {
     private boolean gameOver;
     private boolean isRunning;
     private boolean paused;
+    private boolean prosecutionNotify;
 
     public Game(String gameName, String pwd, ArrayList<String> rooms, ArrayList<String> weapons, int min, int sec, int playerAmount){
         this.gameName = gameName;
         this.pwd = pwd;
         this.min = min;
         this.sec = sec;
-        solution = null;
-        clueList = new ArrayList<>();
-        playerManager = new PlayerManager(false);
-        weaponManager = new WeaponManager(false);
-        roomManager = new RoomManager(false);
+        this.solution = null;
+        this.clueList = new ArrayList<>();
+        this.playerManager = new PlayerManager(false);
+        this.weaponManager = new WeaponManager(false);
+        this.roomManager = new RoomManager(false);
         createRooms(rooms);
         createWeapons(weapons);
-        numberOfThings = rooms.size() + weapons.size();
-        justScannedQR = 0;
+        this.numberOfThings = rooms.size() + weapons.size();
+        this.justScannedQR = 0;
         this.playerAmount = playerAmount;
-        gameOver = false;
+        this.gameOver = false;
         this.paused = false;
+        this.prosecutionNotify = false;
+
     }
 
     /**

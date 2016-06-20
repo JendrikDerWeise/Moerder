@@ -79,5 +79,11 @@
 
     <string name="action_share">Share</string>
     <string name="action_reply">Reply</string>
+    <string name="popup_indict_message">This will call all players to the room of group. You should think twice!</string>
+    <string name="popup_indict_title">Do you really want to make a prosecution?</string>
+    <string name="popup_indict_positive">Got it, call players!</string>
+    <string name="popup_indict_negative_button">No, would be better if not...</string>
+    <string name="popup_indict_broadcast_title">There is a prosecution!</string>
+    <string name="popup_indict_broadcast_message">Go to the room of the group.</string>
     <!-- Ende Drawer-Temp-Krams -->
 </resources>

@@ -1,5 +1,7 @@
 package com.example.jendrik.moerder.GUI.OnGamingClasses;
 
+import android.app.DialogFragment;
+
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.GameObjekts.Room;
 
@@ -13,4 +15,8 @@ public interface GameIsRunningCallback {
     void roomListChanged(List<Room> roomList);
     void pauseIsPressed(boolean paused);
     void aktivePlayerChanged(double aktivePlayer);
+
+    void onIndictPositive(DialogFragment dialog);
+    void onIndictNegative(DialogFragment dialog);
+    void prosecutionNotify(Boolean prosecutionNotify);
 }
