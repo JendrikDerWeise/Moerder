@@ -41,9 +41,11 @@ public class JoinGame extends Activity {
         lv = (ListView)findViewById(R.id.JoinListView);
         games = new ArrayList();
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
-        el = addEventListener();
-        myRef.addChildEventListener(el);
+        myRef = database.getReference().child("games");
+       // el = addEventListener();
+       // myRef.addChildEventListener(el);
+        ve = addVEventListener();
+        myRef.addValueEventListener(ve);
         runningChecker = FirebaseDatabase.getInstance().getReference();
 
         setTouchListener();
@@ -70,6 +72,22 @@ public class JoinGame extends Activity {
         };
 
         return eventListener;
+    }
+
+    private ValueEventListener addVEventListener(){
+        ValueEventListener ve = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                getUpdate(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+        return ve;
     }
 
     private void  getUpdate(DataSnapshot snapshot){
@@ -106,7 +124,7 @@ public class JoinGame extends Activity {
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
-                myRef.removeEventListener(el);
+                myRef.removeEventListener(ve);
                 finish();
             }
         });
@@ -126,7 +144,7 @@ public class JoinGame extends Activity {
 
     private void checkRunning(String gameName) {
 
-        database.getReference().child("games").child(gameName).child("running").addListenerForSingleValueEvent(new ValueEventListener() {
+        runningChecker.child("games").child(gameName).child("running").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 isRunning = dataSnapshot.getValue(Boolean.class);

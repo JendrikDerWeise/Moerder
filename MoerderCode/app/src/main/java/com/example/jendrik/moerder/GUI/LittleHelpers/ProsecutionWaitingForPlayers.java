@@ -43,11 +43,12 @@ public class ProsecutionWaitingForPlayers extends Activity {
     }
 
     private void checkPlayersInGrpRoom(){
-        playersInGrpRoom = 0;
-        for(Player p : MenueDrawer.game.getPlayerManager().getPlayerList()){
+        playersInGrpRoom = MenueDrawer.game.getRoomManager().getGrpRoom().getPlayerList().size()-1;
+
+       /* for(Player p : MenueDrawer.game.getPlayerManager().getPlayerList()){
             if(p.getActualRoom().getName().equals("grp_room"))
                 playersInGrpRoom ++;
-        }
+        }*/
 
         if(playersInGrpRoom == MenueDrawer.game.getPlayerManager().getPlayerList().size()) {
             playerReference.removeEventListener(playerListener);

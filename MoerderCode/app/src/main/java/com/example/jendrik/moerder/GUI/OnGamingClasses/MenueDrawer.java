@@ -345,7 +345,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     }
 
     public void onIndictPositive(DialogFragment dialog){
-        //Spieler rufen
+        game.setProsecutionNotify(true);
         final int VALUE = 23;
         final Intent intent = new Intent(this, ProsecutionWaitingForPlayers.class);
         startActivityForResult(intent,VALUE);
@@ -354,8 +354,10 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     public void onIndictNegative(DialogFragment dialog){    }
 
     public void prosecutionNotify(Boolean prosecutionNotify){
-        DialogFragment prosecutionBroadcast = new PopUpIndictPlayerBroadcast();
-        prosecutionBroadcast.show(getFragmentManager(), "prosecutionBroadcast");
+        if(!myTurn){
+            DialogFragment prosecutionBroadcast = new PopUpIndictPlayerBroadcast();
+            prosecutionBroadcast.show(getFragmentManager(), "prosecutionBroadcast");
+        }
     }
 
 
