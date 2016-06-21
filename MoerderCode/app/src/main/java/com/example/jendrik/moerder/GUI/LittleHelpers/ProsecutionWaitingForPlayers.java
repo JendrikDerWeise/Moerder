@@ -1,25 +1,17 @@
 package com.example.jendrik.moerder.GUI.LittleHelpers;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
-import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.List;
 
 /**
  * Created by Jendrik on 21.06.2016.
@@ -43,12 +35,12 @@ public class ProsecutionWaitingForPlayers extends Activity {
     }
 
     private void checkPlayersInGrpRoom(){
-        playersInGrpRoom = MenueDrawer.game.getRoomManager().getGrpRoom().getPlayerList().size()-1;
+        playersInGrpRoom = 0;
 
-       /* for(Player p : MenueDrawer.game.getPlayerManager().getPlayerList()){
+        for(Player p : MenueDrawer.game.getPlayerManager().getPlayerList()){
             if(p.getActualRoom().getName().equals("grp_room"))
                 playersInGrpRoom ++;
-        }*/
+        }
 
         if(playersInGrpRoom == MenueDrawer.game.getPlayerManager().getPlayerList().size()) {
             playerReference.removeEventListener(playerListener);

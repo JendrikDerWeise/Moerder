@@ -70,6 +70,7 @@
         <item name="android:textColorPrimary">@color/colorFont</item>
         <item name="colorButtonNormal">@color/colorOtherTurnLight</item>
         <item name="colorAccent">@color/colorOtherTurnLight</item>
+        <item name="android:colorForeground">@color/dim_foreground_material_light</item>
 
     </style>
 

@@ -20,6 +20,7 @@
         <item name="android:navigationBarColor">@color/colorOtherTurn</item>
         <item name="android:colorAccent">@color/colorOtherTurnAccent</item>
         <item name="android:buttonStyle">@style/Button</item>
+        <item name="android:colorForeground">@color/dim_foreground_material_light</item>
     </style>
 
 
