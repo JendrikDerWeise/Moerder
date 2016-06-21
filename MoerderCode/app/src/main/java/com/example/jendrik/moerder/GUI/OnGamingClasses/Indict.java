@@ -241,9 +241,11 @@ public class Indict extends Fragment {
     private void endTurn(){
         stb.sendData("playerWins", false);
         stb.updateData("prosecutionIsPlaced", true);
+        stb.updateData("prosecutionNotify", false);
         game.killPlayer(MenueDrawer.whoAmI);//TODO isDead sinnvoll implementieren
 
         Intent intent = new Intent(getActivity(), LooseScreen.class);
+        intent.putExtra("gameName", game.getGameName());
         startActivity(intent);
 
         MenueDrawer.game.setNextActivePlayer();
