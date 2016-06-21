@@ -354,10 +354,11 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
 
     public void onIndictNegative(DialogFragment dialog){    }
 
-    public void prosecutionNotify(Boolean prosecutionNotify){
+    public void prosecutionNotify(){
+
         if(!myTurn){
             DialogFragment prosecutionBroadcast = new PopUpIndictPlayerBroadcast();
-            prosecutionBroadcast.show(getFragmentManager(), "prosecutionBroadcast");
+            prosecutionBroadcast.show(getFragmentManager(), "PopUpIndictPlayerBroadcast");
         }
     }
 

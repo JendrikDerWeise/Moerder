@@ -16,6 +16,7 @@ import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.R;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
@@ -138,6 +139,21 @@ public class Suspect extends Fragment {
         Suspection sus = new Suspection(getActivity(), player, room, weapon, game, (int)game.getActivePlayer().getPNumber());
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
 

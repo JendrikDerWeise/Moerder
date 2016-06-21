@@ -137,7 +137,7 @@ public class FCMRunningGameListener {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Boolean prosecutionNotify = dataSnapshot.getValue(Boolean.class);
                 if(prosecutionNotify)
-                    callback.prosecutionNotify(prosecutionNotify);
+                    callback.prosecutionNotify();
             }
 
             @Override

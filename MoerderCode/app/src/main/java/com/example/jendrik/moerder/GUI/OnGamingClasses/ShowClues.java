@@ -13,6 +13,7 @@ import com.example.jendrik.moerder.GUI.LittleHelpers.ClueAdapterClass;
 import com.example.jendrik.moerder.GameObjekts.Clue;
 import com.example.jendrik.moerder.R;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,5 +60,21 @@ public class ShowClues extends Fragment {
         recyclerView.setAdapter(rvadapter);
 
         return fragLayoutV;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

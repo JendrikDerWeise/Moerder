@@ -18,5 +18,5 @@ public interface GameIsRunningCallback {
 
     void onIndictPositive(DialogFragment dialog);
     void onIndictNegative(DialogFragment dialog);
-    void prosecutionNotify(Boolean prosecutionNotify);
+    void prosecutionNotify();
 }
