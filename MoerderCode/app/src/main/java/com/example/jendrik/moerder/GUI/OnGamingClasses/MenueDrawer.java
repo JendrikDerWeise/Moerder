@@ -217,7 +217,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
                     }
 
                     case R.id.drawer_indict: {
-                        if(game.getActivePlayer().getActualRoom().getName().equals(game.getGrpRoom().getName())) {
+                        if(game.getPlayerManager().getPlayerList().get(whoAmI).getActualRoom().getName().equals(game.getGrpRoom().getName())) {
                             DialogFragment indictWarning = new PopUpIndict();
                             indictWarning.show(getFragmentManager(), "PopUpIndict");
                         }else

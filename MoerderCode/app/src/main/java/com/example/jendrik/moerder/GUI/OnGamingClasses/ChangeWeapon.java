@@ -98,16 +98,13 @@ public class ChangeWeapon extends Fragment {
 
     private void startWeaponScan(){
         final Intent intent = new Intent(getActivity(), STUB_SCANNER.class); //Vorbereitung der neuen Activity, STUB SCANNER ist der "QR-Code Leser"
-        //final int kindOfObject = 0;
-        //intent.putExtra(SCAN_WEAPON,kindOfObject);
         startActivityForResult(intent, VALUE); //Starten der Activity. Methodenaufruf "...ForResult" impliziert, das die Activity etwas zurück liefert
-        //TODO prüfen ob RESULT ein Weapon-Object ist, sonst neu scannen - oder was auch immer
     }
 
     private void endTurn(){
 
         MenueDrawer.game.setNextActivePlayer();
-        stb.updateData("aktivePlayer", game.getPlayerManager().getAktivePlayer());
+        stb.updateData("aktivePlayer", game.getPlayerManager().getPlayerList().get(MenueDrawer.whoAmI));
         stb.updateData("roomList", game.getRoomManager().getRoomList());
         getActivity().getIntent().putExtra("myTurn", false);
         getActivity().getIntent().putExtra("GAME",MenueDrawer.game);
