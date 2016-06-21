@@ -1,10 +1,12 @@
 package com.example.jendrik.moerder.GUI.OnGamingClasses;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -23,6 +25,7 @@ import com.example.jendrik.moerder.GUI.Host.STUB_FRAG;
 import com.example.jendrik.moerder.GUI.LittleHelpers.CountDownClass;
 import com.example.jendrik.moerder.GUI.LittleHelpers.PopUpIndict;
 import com.example.jendrik.moerder.GUI.LittleHelpers.PopUpIndictPlayerBroadcast;
+import com.example.jendrik.moerder.GUI.LittleHelpers.ProsecutionWaitingForPlayers;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.GameObjekts.Room;
@@ -343,7 +346,9 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
 
     public void onIndictPositive(DialogFragment dialog){
         //Spieler rufen
-        menueSetter(indict);
+        final int VALUE = 23;
+        final Intent intent = new Intent(this, ProsecutionWaitingForPlayers.class);
+        startActivityForResult(intent,VALUE);
     }
 
     public void onIndictNegative(DialogFragment dialog){    }
@@ -354,6 +359,21 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        boolean allPlayersAtGrpRoom = false;
+
+        switch(requestCode) {  //Switch case ist vermutlich unnötig
+            case 23:
+                if (resultCode == Activity.RESULT_OK) { //wenn Activity korrekt zuende geführt wurde
+                    allPlayersAtGrpRoom = data.getBooleanExtra(STUB_SCANNER.RESULT, false);
+                }
+
+                if (allPlayersAtGrpRoom)
+                    menueSetter(indict);
+        }
+    }
 
 
 

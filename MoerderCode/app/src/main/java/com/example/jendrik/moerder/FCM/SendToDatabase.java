@@ -65,11 +65,18 @@ public class SendToDatabase<T> {
                 break;
             case "completePlayerList":
                 myRef.child("games").child(gameName).child("playerManager").child("playerList").setValue(object);
+                break;
             case "paused":
                 myRef.child("games").child(gameName).child(typOfObject).setValue(object);
                 break;
             case "aktivePlayer":
                 myRef.child("games").child(gameName).child("playerManager").child(typOfObject).setValue(object);
+                break;
+            case "grpRoom":
+                myRef.child("games").child(gameName).child("roomManager").child("grpRoom").setValue(object);
+                break;
+            case "roomManager":
+                myRef.child("games").child(gameName).child(typOfObject).setValue(object);
                 break;
         }
     }

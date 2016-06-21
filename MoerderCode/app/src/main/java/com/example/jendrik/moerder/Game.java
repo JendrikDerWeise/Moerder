@@ -117,8 +117,10 @@ public class Game implements Serializable {
         for(String s:players) {
             playerManager.addPlayer(s,(int) numberOfThings);
             playerManager.getPlayerList().get(playerManager.getPlayerList().size()-1).setActualRoom(roomManager.getGrpRoom());
+            //roomManager.getGrpRoom().getPlayerList().add(playerManager.getPlayerList().get(playerManager.getPlayerList().size()-1));
         }
         playerManager.getPlayerList().get(0).setActive(true);  //first Player has to be active for starting the game
+
     }
 
     /**
@@ -282,6 +284,9 @@ public class Game implements Serializable {
         createClues();
         giveCluesToPlayer();
         playerManager.setSuspectList(getRooms(),getWeapons());
+
+        for(Player p : playerManager.getPlayerList())
+            roomManager.getGrpRoom().getPlayerList().add(p.getName());
         //Spiel Speichern über GUI
         //Auslöser zum Senden des Savegames -->gehört in ServerClass
     }

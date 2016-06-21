@@ -30,13 +30,13 @@ public class Player implements Serializable{
     private double pNumber;
 
     public Player(String name, int qrCode, int numberOfThings, int pNumber){
-        active=false;
+        this.active=false;
         this.qrCode=qrCode;
         this.name=name;
         this.pNumber = pNumber;
-        suspectList = new ArrayList<>();
-        givenClues = new ArrayList<>();
-        dead = false;
+        this.suspectList = new ArrayList<>();
+        this.givenClues = new ArrayList<>();
+        this.dead = false;
 
         for(int i=0; i<numberOfThings;i++)
             suspectList.add(i,"n");
@@ -50,6 +50,7 @@ public class Player implements Serializable{
 
     //TODO ggf removeWeapon() einbauen weapon = null
 
+    @Exclude
     public void giveGivenClues(Clue clue){ givenClues.add(clue); }
 
     @Exclude
@@ -62,6 +63,7 @@ public class Player implements Serializable{
         }
     }
 
+    @Exclude
     public String getSuspectOnList(int position){
         return suspectList.get(position);
     }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ public class ChangeRoom extends Fragment {
     public static String SCAN_ROOM = "room";
     private static final int VALUE = 503;
     private Game game;
-
+    private SendToDatabase stb;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,8 @@ public class ChangeRoom extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         game = MenueDrawer.game;
+        String pNumberString = "" + MenueDrawer.whoAmI;
+        stb = new SendToDatabase(game.getGameName(),pNumberString);
         startRoomScan();
 
     }
@@ -56,17 +59,16 @@ public class ChangeRoom extends Fragment {
                     if(qrCode>19 && qrCode<29){
                         for(Room r : game.getRooms()){
                             if(r.getName().equals(game.getNameByNumber(qrCode))) {
-                                game.getActivePlayer().setActualRoom(r);
-                                String pNumberString = "" + MenueDrawer.whoAmI;
-                                SendToDatabase stb = new SendToDatabase(game.getGameName(),pNumberString);
-                                stb.updateData("playerList", game.getPlayerManager().getPlayerList().get(MenueDrawer.whoAmI));
+                                removePlayerFromRoom("normalRoom");
+                                movePlayerToRoom(r);
                                 TextView textView = (TextView)getActivity().findViewById(R.id.change_room_name);
                                 textView.setText(r.getName());
                             }
                         }
                     }
                     else if(qrCode==29){
-                        game.getActivePlayer().setActualRoom(game.getGrpRoom());
+                        removePlayerFromRoom("grpRoom");
+                        movePlayerToRoom(game.getRoomManager().getGrpRoom());
                         TextView textView = (TextView)getActivity().findViewById(R.id.change_room_name);
                         textView.setText(getActivity().getResources().getText(R.string.grp_room));
 
@@ -76,6 +78,7 @@ public class ChangeRoom extends Fragment {
                     }
 
                 }
+
                 break;
             }
         }
@@ -86,6 +89,39 @@ public class ChangeRoom extends Fragment {
         //final int kindOfObject = 0;
         //intent.putExtra(SCAN_WEAPON,kindOfObject);
         startActivityForResult(intent, VALUE); //Starten der Activity. Methodenaufruf "...ForResult" impliziert, das die Activity etwas zurück liefert
+    }
+
+    private void removePlayerFromRoom(String kindOfRoom){
+        Room rOldPlayer = game.getActivePlayer().getActualRoom();
+        switch (kindOfRoom){
+            case "normalRoom":
+                for(Room r : game.getRoomManager().getRoomList()){
+                    if(r.equals(rOldPlayer))
+                        r.getPlayerList().remove(game.getActivePlayer().getName());
+                }
+                break;
+            case "grpRoom":
+                game.getGrpRoom().getPlayerList().remove(game.getActivePlayer().getName());
+                break;
+        }
+
+        //stb.updateData("grpRoom", game.getRoomManager().getGrpRoom().getPlayerList());
+        //stb.updateData("roomList", game.getRoomManager().getRoomList());
+    }
+
+    private void movePlayerToRoom(Room room){
+        game.getActivePlayer().setActualRoom(room);
+
+        if(room.getName().equals("grp_room")) {
+            game.getGrpRoom().getPlayerList().add(game.getActivePlayer().getName());
+
+        }else {
+            room.getPlayerList().add(game.getActivePlayer().getName());
+
+        }
+        stb.updateData("playerList", game.getPlayerManager().getPlayerList().get(MenueDrawer.whoAmI));
+        stb.updateData("grpRoom", game.getRoomManager().getGrpRoom());
+        stb.updateData("roomList", game.getRoomManager().getRoomList());
     }
 
 }

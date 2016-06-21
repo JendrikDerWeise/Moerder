@@ -21,7 +21,7 @@ import lombok.Setter;
 public class Room implements Serializable {
     private String name;
     private double qrCode;
-    private List<Player> playerList;
+    private List<String> playerList;
     private List<Weapon> weaponList;
 
 
@@ -30,6 +30,7 @@ public class Room implements Serializable {
         this.qrCode = qrCode;
         weaponList = new ArrayList<>();
         playerList = new ArrayList<>();
+        playerList.add(" ");
     }
 
 

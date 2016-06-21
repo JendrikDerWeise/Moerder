@@ -155,8 +155,7 @@ public class WaitForPlayers extends Activity {
      * Gibt dem Gameobject den Auftrag, die Spielerobjekte zu erstellen.
      */
     private void makePlayerObjects(){
-        game.startGame(playerNames);
-    }
+        game.startGame(playerNames); }
 
     private void sendGameStuffToDB(){
 
