@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#3e9a43"
+    android:background="@color/colorOtherTurn"
     android:alpha="20"
     android:weightSum="1"
     android:orientation="vertical">
@@ -20,7 +20,9 @@
         android:layout_height="10dp"
         android:id="@+id/player_name"
         android:layout_weight="0.10"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/colorFont"
+        android:textSize="18sp" />
 
     <TextView
         android:layout_width="179dp"
@@ -28,14 +30,19 @@
         android:text="@string/txt_shows_card"
         android:id="@+id/txt_shows_card"
         android:layout_weight="0.04"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textSize="18sp"
+        android:textColor="@color/colorFont"
+        android:textAlignment="center" />
 
     <TextView
         android:layout_width="179dp"
         android:layout_height="1dp"
         android:id="@+id/card_name"
         android:layout_weight="0.10"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/colorFont"
+        android:textSize="18sp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -43,6 +50,9 @@
         android:text="OK"
         android:id="@+id/button3"
         android:layout_gravity="center_horizontal"
-        android:onClick="onClickOK"/>
+        android:onClick="onClickOK"
+        android:textSize="18sp"
+        android:textColor="@color/colorFont"
+        android:background="@color/colorOtherTurnLight" />
 
 </LinearLayout>
