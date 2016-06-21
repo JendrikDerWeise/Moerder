@@ -17,7 +17,7 @@ import com.example.jendrik.moerder.R;
  * Created by Jendrik on 21.06.2016.
  */
 public class PopUpIndictPlayerBroadcast extends DialogFragment {
-    private static final int VALUE = 503;
+    private static final int VALUE = 23;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -44,7 +44,7 @@ public class PopUpIndictPlayerBroadcast extends DialogFragment {
         if (resultCode == Activity.RESULT_OK) {
             int qrCode = data.getIntExtra(STUB_SCANNER.RESULT, 0);
             if(qrCode==29) {
-                MenueDrawer.game.getActivePlayer().setActualRoom(MenueDrawer.game.getGrpRoom());
+                MenueDrawer.game.getPlayerManager().getPlayerList().get(MenueDrawer.whoAmI).setActualRoom(MenueDrawer.game.getGrpRoom());
                 toDatabase();
             }else
                 startRoomScan();
