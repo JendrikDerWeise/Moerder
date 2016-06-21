@@ -346,6 +346,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
 
     public void onIndictPositive(DialogFragment dialog){
         game.setProsecutionNotify(true);
+        stb.updateData("prosecutionNotify", true);
         final int VALUE = 23;
         final Intent intent = new Intent(this, ProsecutionWaitingForPlayers.class);
         startActivityForResult(intent,VALUE);
