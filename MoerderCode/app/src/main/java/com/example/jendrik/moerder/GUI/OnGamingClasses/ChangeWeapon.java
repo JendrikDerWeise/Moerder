@@ -107,7 +107,6 @@ public class ChangeWeapon extends Fragment {
     private void endTurn(){
 
         MenueDrawer.game.setNextActivePlayer();
-        stb.updateData("completePlayerList", game.getPlayerManager().getPlayerList());
         stb.updateData("aktivePlayer", game.getPlayerManager().getAktivePlayer());
         stb.updateData("roomList", game.getRoomManager().getRoomList());
         getActivity().getIntent().putExtra("myTurn", false);

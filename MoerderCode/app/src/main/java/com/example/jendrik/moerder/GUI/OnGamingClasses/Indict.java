@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 
+import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.GameObjekts.Room;
@@ -42,6 +43,7 @@ public class Indict extends Fragment {
     private LayoutInflater inflater;
     private PopupWindow popupWindow;
     private ViewGroup container;
+    private SendToDatabase stb;
 
 
     @Override
@@ -56,8 +58,8 @@ public class Indict extends Fragment {
         this.container = container;
         fragLayoutV = inflater.inflate(R.layout.indict_fragment, container, false);
 
-        extras = getActivity().getIntent().getExtras();
-        game = (Game) extras.get("GAME");
+        game = MenueDrawer.game;
+        stb = new SendToDatabase(game.getGameName());
 
         return fragLayoutV;
     }
@@ -202,14 +204,14 @@ public class Indict extends Fragment {
         if(playerWins){
             Log.d("BLA","bist bu dir wirklich sicher? ja, nein, vielleicht! jendrik ist doof. da bin ich mir sicher!");
             Log.d("BLA","das habe ich ich programmiert. jetzt ist das in der welt. und es stimmt!");
+
+            stb.sendData("playerWins", true);
+            stb.updateData("prosecutionIsPlaced", true);
             Intent intent = new Intent(getActivity(), WinScreen.class);
             startActivity(intent);
             getActivity().finish();
         }else{
-            game.killPlayer((int)game.getActivePlayer().getPNumber());
-            Intent intent = new Intent(getActivity(), LooseScreen.class);
-            startActivity(intent);
-            getActivity().finish();
+            endTurn();
         }
     }
 
@@ -234,5 +236,20 @@ public class Indict extends Fragment {
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void endTurn(){
+        stb.sendData("playerWins", false);
+        stb.updateData("prosecutionIsPlaced", true);
+        game.killPlayer(MenueDrawer.whoAmI);//TODO isDead sinnvoll implementieren
+
+        Intent intent = new Intent(getActivity(), LooseScreen.class);
+        startActivity(intent);
+
+        MenueDrawer.game.setNextActivePlayer();
+        stb.updateData("aktivePlayer", game.getPlayerManager().getAktivePlayer());
+        stb.updateData("roomList", game.getRoomManager().getRoomList());
+
+        getActivity().finish();
     }
 }

@@ -85,5 +85,7 @@
     <string name="popup_indict_negative_button">No, would be better if not...</string>
     <string name="popup_indict_broadcast_title">There is a prosecution!</string>
     <string name="popup_indict_broadcast_message">Go to the room of the group.</string>
+    <string name="tvWaitingForProsecution">Waiting for prosecution...</string>
+    <string name="prosecutionWasWrong">Prosecution was wrong. The player is out auf game!</string>
     <!-- Ende Drawer-Temp-Krams -->
 </resources>

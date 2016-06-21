@@ -62,5 +62,7 @@
     <string name="popup_indict_negative_button">Nein, besser nicht!</string>
     <string name="popup_indict_broadcast_title">Eine Anklage wird erhoben!</string>
     <string name="popup_indict_broadcast_message">Begib dich in den Gruppenraum.</string>
+    <string name="tvWaitingForProsecution">Warte auf Anklage...</string>
+    <string name="prosecutionWasWrong">Die Anklage war falsch. Der Spieler scheidet aus dem Spiel aus.</string>
 
 </resources>

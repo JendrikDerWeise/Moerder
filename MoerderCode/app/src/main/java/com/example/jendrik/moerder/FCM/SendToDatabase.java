@@ -78,6 +78,9 @@ public class SendToDatabase<T> {
             case "prosecutionNotify":
                 myRef.child("games").child(gameName).child(typOfObject).setValue(object);
                 break;
+            case "prosecutionIsPlaced":
+                myRef.child("games").child(gameName).child(typOfObject).setValue(object);
+                break;
         }
     }
 

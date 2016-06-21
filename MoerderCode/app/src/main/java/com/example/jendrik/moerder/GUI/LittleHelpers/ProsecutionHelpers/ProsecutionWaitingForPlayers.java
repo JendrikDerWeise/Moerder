@@ -1,4 +1,4 @@
-package com.example.jendrik.moerder.GUI.LittleHelpers;
+package com.example.jendrik.moerder.GUI.LittleHelpers.ProsecutionHelpers;
 
 import android.app.Activity;
 import android.content.Intent;

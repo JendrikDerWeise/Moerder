@@ -106,9 +106,6 @@ public class ChangeRoom extends Fragment {
                 game.getGrpRoom().getPlayerList().remove(game.getActivePlayer().getName());
                 break;
         }
-
-        //stb.updateData("grpRoom", game.getRoomManager().getGrpRoom().getPlayerList());
-        //stb.updateData("roomList", game.getRoomManager().getRoomList());
     }
 
     private void movePlayerToRoom(Room room){

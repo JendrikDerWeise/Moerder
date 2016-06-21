@@ -23,9 +23,10 @@ import com.example.jendrik.moerder.FCM.FCMRunningGameListener;
 import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.GUI.Host.STUB_FRAG;
 import com.example.jendrik.moerder.GUI.LittleHelpers.CountDownClass;
-import com.example.jendrik.moerder.GUI.LittleHelpers.PopUpIndict;
-import com.example.jendrik.moerder.GUI.LittleHelpers.PopUpIndictPlayerBroadcast;
-import com.example.jendrik.moerder.GUI.LittleHelpers.ProsecutionWaitingForPlayers;
+import com.example.jendrik.moerder.GUI.LittleHelpers.ProsecutionHelpers.PopUpIndict;
+import com.example.jendrik.moerder.GUI.LittleHelpers.ProsecutionHelpers.PopUpIndictPlayerBroadcast;
+import com.example.jendrik.moerder.GUI.LittleHelpers.ProsecutionHelpers.ProsecutionFromOtherPlayer;
+import com.example.jendrik.moerder.GUI.LittleHelpers.ProsecutionHelpers.ProsecutionWaitingForPlayers;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.GameObjekts.Room;
@@ -52,6 +53,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     private ChangeRoom changeRoom;
     private Indict indict;
     private IndictError indictError;
+    private ProsecutionFromOtherPlayer prosecutionFromOtherPlayer;
     private Pause pause;
     public static Context cont;
     private CountDownClass timer;
@@ -144,6 +146,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         changeRoom = (ChangeRoom) Fragment.instantiate(this,ChangeRoom.class.getName(),null);
         indict = (Indict) Fragment.instantiate(this,Indict.class.getName(),null);
         indictError = (IndictError) Fragment.instantiate(this,IndictError.class.getName(),null);
+        prosecutionFromOtherPlayer = (ProsecutionFromOtherPlayer) Fragment.instantiate(this,ProsecutionFromOtherPlayer.class.getName(),null);
         pause = (Pause) Fragment.instantiate(this,Pause.class.getName(),null);
 
         stub = (STUB_FRAG) Fragment.instantiate(this,STUB_FRAG.class.getName(), null);
@@ -252,9 +255,8 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
      */
     public void endTurn(){
         game.setNextActivePlayer();
-        stb.updateData("completePlayerList", game.getPlayerManager().getPlayerList());
         myTurn = false;
-        stb.updateData("aktivePlayer", game.getPlayerManager().getAktivePlayer());
+        stb.updateData("aktivePlayer", game.getPlayerManager().getPlayerList().get(whoAmI));
         getIntent().putExtra("GAME",game);
         finish();
         startActivity(getIntent());
@@ -347,6 +349,8 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     public void onIndictPositive(DialogFragment dialog){
         game.setProsecutionNotify(true);
         stb.updateData("prosecutionNotify", true);
+        stb.sendData("prosecutionIsPlaced", false);
+        timer.getTimer().cancel();
         final int VALUE = 23;
         final Intent intent = new Intent(this, ProsecutionWaitingForPlayers.class);
         startActivityForResult(intent,VALUE);
@@ -367,6 +371,11 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         }
     }
 
+    public void startScanForGrpRoom(DialogFragment dialog){
+        final Intent intent = new Intent(this, STUB_SCANNER.class);
+        startActivityForResult(intent, 42);
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -381,6 +390,21 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
 
                 if (allPlayersAtGrpRoom)
                     menueSetter(indict);
+                break;
+
+            case 42:
+                if (resultCode == Activity.RESULT_OK) {
+                    int qrCode = data.getIntExtra(STUB_SCANNER.RESULT, 0);
+                    if (qrCode == 29) {
+                        game.getPlayerManager().getPlayerList().get(whoAmI).setActualRoom(game.getGrpRoom());
+                        stb.updateData("playerList", MenueDrawer.game.getPlayerManager().getPlayerList().get(whoAmI));
+                        menueSetter(prosecutionFromOtherPlayer);
+                    } else
+                        prosecutionNotify();
+                } else {
+                    prosecutionNotify();
+                }
+                break;
         }
     }
 
