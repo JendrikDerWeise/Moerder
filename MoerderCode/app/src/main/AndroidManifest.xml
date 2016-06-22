@@ -70,13 +70,17 @@
             android:name=".GUI.OnGamingClasses.MenueDrawer"/>
         <activity
             android:name=".GUI.LittleHelpers.ProsecutionHelpers.ProsecutionWaitingForPlayers"/>
-        <activity android:name=".GUI.LittleHelpers.PopUpNobodyHasCards" />
-        <activity android:name=".GUI.LittleHelpers.PopUpPlayerShowsCard" />
+        <activity android:name=".GUI.LittleHelpers.PopUpNobodyHasCards"
+            android:theme="@style/AppTheme.PopUpTheme"/>
+        <activity android:name=".GUI.LittleHelpers.PopUpPlayerShowsCard"
+            android:theme="@style/AppTheme.PopUpTheme"/>
         <activity android:name=".GUI.OnGamingClasses.WinScreen" />
         <activity android:name=".GUI.OnGamingClasses.LooseScreen" />
         <activity android:name=".GUI.OnGamingClasses.STUB_SCANNER" />
-        <activity android:name=".GUI.Join.PopUpEnterName"/>
-        <activity android:name=".GUI.Join.PopUpEnterPassword"/>
+        <activity android:name=".GUI.Join.PopUpEnterName"
+            android:theme="@style/AppTheme.PopUpTheme"/>
+        <activity android:name=".GUI.Join.PopUpEnterPassword"
+            android:theme="@style/AppTheme.PopUpTheme"/>
         <activity android:name=".GUI.Join.WaitForServer"/>
     </application>
 

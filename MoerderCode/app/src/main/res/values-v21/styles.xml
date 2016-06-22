@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
     <style name="mordTheme" parent="android:Theme.Material" >
         <item name="android:colorPrimary">@color/colorPrimary</item>
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -10,6 +11,7 @@
         <item name="android:navigationBarColor">@color/colorNavi</item>
         <item name="android:colorAccent">@color/colorPrimary</item>
         <item name="android:buttonStyle">@style/Button</item>
+
     </style>
     <style name="mordThemeNotTurn" parent="android:Theme.Material" >
         <item name="android:colorPrimary">@color/colorOtherTurn</item>
