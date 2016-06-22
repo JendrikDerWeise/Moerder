@@ -67,8 +67,8 @@ public class ChangeWeapon extends Fragment {
                     if(qrCode>9 && qrCode<20){
                         for(Room r : MenueDrawer.game.getRooms()){
                             if(r.getName().equals(actualRoom)) { //hier böse
-                                if(MenueDrawer.game.getActivePlayer().getActualWeapon()!= null)
-                                    r.addWeapon(MenueDrawer.game.getActivePlayer().getActualWeapon());
+                                if(MenueDrawer.game.getPlayerManager().getPlayerList().get(MenueDrawer.whoAmI).getActualWeapon()!= null)
+                                    r.addWeapon(MenueDrawer.game.getPlayerManager().getPlayerList().get(MenueDrawer.whoAmI).getActualWeapon());
                                 room = r;
                             }
                         }
