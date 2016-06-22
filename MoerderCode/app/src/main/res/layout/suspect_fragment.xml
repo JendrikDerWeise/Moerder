@@ -3,68 +3,105 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".Suspect">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout tools:context=".RoomNameList"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/txt_suspect"
-        android:id="@+id/textView7" />
+        android:background="@color/colorBackground" >
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal">
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@android:drawable/ic_menu_compass" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/txt_suspect_room"
-            />
-    </LinearLayout>
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp" >
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal"
-        android:layout_marginTop="100dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_suspect"
+                android:id="@+id/textView7"
+                android:textColor="@color/colorFont"
+                android:layout_margin="20dp"
+                android:textSize="18sp" />
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@android:drawable/star_big_on" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                style="10dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/txt_suspect_weapon"
-            />
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="fill_horizontal"
+                    android:layout_marginTop="50dp">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/location" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="fill_horizontal"
-        android:layout_marginTop="100dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="New Text"
+                        android:id="@+id/txt_suspect_room"
+                        android:textColor="@color/colorFont"
+                        android:textSize="18sp" />
+                </LinearLayout>
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:id="@+id/imageView2"
-            android:src="@android:drawable/ic_menu_myplaces" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="fill_horizontal"
+                    android:layout_marginTop="100dp">
 
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinner_suspect_person"
-            android:layout_weight="1" />
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/pistol" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="New Text"
+                        android:id="@+id/txt_suspect_weapon"
+                        android:textSize="18sp"
+                        android:textColor="@color/colorFont" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="fill_horizontal"
+                    android:layout_marginTop="150dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/imageView2"
+                        android:src="@drawable/person" />
+
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spinner_suspect_person"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_without_inner_color"
+                        android:padding="10dp"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+            </FrameLayout>
+        </FrameLayout>
+
     </LinearLayout>
 
     <Button
@@ -72,7 +109,14 @@
         android:layout_height="wrap_content"
         android:text="@string/btn_suspect"
         android:id="@+id/btn_suspect"
-        android:onClick="onClickInDrawer" />
+        android:onClick="onClickInDrawer"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textColor="@color/colorFont"
+        android:layout_marginTop="30dp"
+
+        />
 
 
 </LinearLayout>

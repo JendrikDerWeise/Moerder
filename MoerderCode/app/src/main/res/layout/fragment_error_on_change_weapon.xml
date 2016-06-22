@@ -9,5 +9,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/error_change_eapon"
         android:id="@+id/textView17"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="30dp"
+        android:textAlignment="center" />
 </LinearLayout>

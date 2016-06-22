@@ -83,7 +83,7 @@
         <item name="android:textColorPrimary">@color/colorFont</item>
         <item name="colorButtonNormal">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorPrimary</item>
-
+        <item name="android:buttonStyle">@style/Button</item>
     </style>
 
     <style name="mordThemeNotTurnWithDrawer" parent="Theme.AppCompat.Light.NoActionBar" >
@@ -94,6 +94,7 @@
         <item name="android:textColorPrimary">@color/colorFont</item>
         <item name="colorButtonNormal">@color/colorOtherTurnLight</item>
         <item name="colorAccent">@color/colorOtherTurnLight</item>
+        <item name="android:buttonStyle">@style/Button</item>
 
     </style>
 
