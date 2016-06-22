@@ -1,5 +1,7 @@
 package com.example.jendrik.moerder.FCM;
 
+import android.util.Log;
+
 import com.example.jendrik.moerder.GUI.LittleHelpers.SuspectionHelpers.Suspection;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.GameIsRunningCallback;
 import com.example.jendrik.moerder.GameObjekts.Player;
@@ -187,6 +189,7 @@ public class FCMRunningGameListener {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Suspection suspection = dataSnapshot.getValue(Suspection.class);
+                Log.d("sus", suspection.getPlayer());
                 callback.suspectionNotify(suspection);
             }
 
