@@ -189,8 +189,9 @@ public class FCMRunningGameListener {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Suspection suspection = dataSnapshot.getValue(Suspection.class);
-                Log.d("sus", suspection.getPlayer());
-                callback.suspectionNotify(suspection);
+//                Log.d("sus", suspection.getPlayer());
+                if(suspection!=null)
+                    callback.suspectionNotify(suspection);
             }
 
             @Override

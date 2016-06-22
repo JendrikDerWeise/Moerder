@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.jendrik.moerder.GUI.OnGamingClasses.GameIsRunningCallback;
+import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.Suspect;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Clue;
@@ -72,7 +73,10 @@ public class Suspection {
         }
 
         if(existendClues.isEmpty()) {
-            suspectionNextPlayer++;
+            if(suspectionNextPlayer+1 == MenueDrawer.game.getPlayerManager().getPlayerList().size())
+                suspectionNextPlayer = 0.0;
+            else
+                suspectionNextPlayer++;
             callback.suspectionNextPlayer();
         }else
             callback.informPlayerWhoHasClue(existendClues);

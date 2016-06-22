@@ -91,10 +91,10 @@ public class SendToDatabase<T> {
                 myRef.child("games").child(gameName).child(typOfObject).setValue(object);
                 break;
             case "playerCalled":
-                myRef.child("games").child(gameName).child("suspection").child(typOfObject).setValue(object);
+                myRef.child("games").child(gameName).child("suspectionObject").child(typOfObject).setValue(object);
                 break;
             case "suspectionNextPlayer":
-                myRef.child("games").child(gameName).child("suspection").child(typOfObject).setValue(object);
+                myRef.child("games").child(gameName).child("suspectionObject").child(typOfObject).setValue(object);
                 break;
         }
     }

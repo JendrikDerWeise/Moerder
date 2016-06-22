@@ -15,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -413,8 +414,14 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         this.suspection = suspection;
         this.suspection.setCallback(this);
 
-        if(suspection.getPlayer().equals(game.getNameByNumber(whoAmI)) && !suspection.isPlayerCalled()){
-            suspectionRoom = game.getNumberByName(suspection.getRoom());
+        String ownName = game.getPlayerManager().getPlayerList().get(whoAmI).getName();
+
+        if(suspection.getPlayer().equals(ownName) && !suspection.isPlayerCalled()){
+            //suspectionRoom = game.getNumberByName(suspection.getRoom());
+            for(Room r : game.getRooms()){
+                if(r.getName().equals(suspection.getRoom()))
+                    suspectionRoom = (int)r.getQrCode();
+            }
             roomForCalling = suspection.getRoom();
             DialogFragment suspectionCallPlayer = new PupUpSuspectionCallSinglePlayer();
             try {
@@ -422,9 +429,13 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
             }catch (Exception e){
                 e.printStackTrace();
             }
+
         }else if(suspection.isPlayerCalled() && !suspection.isClueShwon()){
-            suspection.whoHasClues(game.getPlayerManager().getPlayerList().get(whoAmI));
-        }else
+            int nextPlayer = suspection.getSuspectionNextPlayer().intValue();
+            if(nextPlayer == whoAmI)
+                suspection.whoHasClues(game.getPlayerManager().getPlayerList().get(whoAmI));
+
+        }else if(suspection.isClueShwon())
             suspection.informPlayer(game.getPlayerManager().getPlayerList().get(whoAmI));
         //TODO Fall "keiner hat Clue" abfangen
     }
@@ -435,7 +446,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     }
 
     public void suspectionNextPlayer(){
-        stb.updateData("playerCalled", suspection.getSuspectionNextPlayer());
+        stb.updateData("suspectionNextPlayer", suspection.getSuspectionNextPlayer());
     }
 
     public void informPlayerWhoHasClue(ArrayList<String> existendClues){
@@ -532,9 +543,14 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
                 if (resultCode == Activity.RESULT_OK) {
                     int qrCode = data.getIntExtra(STUB_SCANNER.RESULT, 0);
                     if (qrCode == suspectionRoom) {
-                        game.getPlayerManager().getPlayerList().get(whoAmI).setActualRoom(game.getGrpRoom());
-                        stb.updateData("playerList", MenueDrawer.game.getPlayerManager().getPlayerList().get(whoAmI));
-                        stb.updateData("playerCalled", true);
+                        game.getPlayerManager().getPlayerList().get(whoAmI).setActualRoom(game.getGrpRoom());//TODO richtigen Raum setzen
+                        suspection.setPlayerCalled(true);
+                        try {
+                            stb.updateData("playerList", MenueDrawer.game.getPlayerManager().getPlayerList().get(whoAmI));
+                            stb.updateData("playerCalled", true);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                     } else
                         prosecutionNotify();
                 } else {

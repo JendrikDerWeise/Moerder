@@ -25,10 +25,11 @@ public class PopUpSuspectionInformPlayerWhoHasClue extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         existentClues = getArguments().getStringArrayList("existendClues");
 
+
         CharSequence[] cs = existentClues.toArray(new CharSequence[existentClues.size()]);
 
         builder.setMessage(R.string.popup_suspection_call_single_player_message + " " + MenueDrawer.roomForCalling)
-                .setTitle(R.string.popup_suspection_call_single_player_title)
+                .setTitle(R.string.popup_suspection_call_single_player_title + "HAHAHAHAHAHAHAHA....Ha.")
                 .setItems(cs, makeOnClickListener());
 
         return builder.create();

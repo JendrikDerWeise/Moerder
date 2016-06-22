@@ -34,7 +34,7 @@ public class CreateGame extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.creategame);
         final EditText et = (EditText) findViewById(R.id.editText);
-        et.setText("RahelsTESTSPIEL");
+        et.setText("TESTSPIEL");
     }
 
     /**
