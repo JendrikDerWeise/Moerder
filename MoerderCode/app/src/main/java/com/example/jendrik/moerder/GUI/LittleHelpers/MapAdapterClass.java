@@ -1,5 +1,6 @@
 package com.example.jendrik.moerder.GUI.LittleHelpers;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.jendrik.moerder.GUI.OnGamingClasses.MapOverview;
+import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
 import com.example.jendrik.moerder.R;
 
 /**
@@ -40,7 +42,22 @@ public class MapAdapterClass extends RecyclerView.Adapter<MapAdapterClass.ViewHo
 
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.map_row, null);
 
+        if(!MenueDrawer.myTurn){
+
+            itemView.findViewById(R.id.txt_weapons_in_room_map).setBackgroundResource(R.color.colorOtherTurnLight);
+            itemView.findViewById(R.id.txt_weapons_in_room_map2).setBackgroundResource(R.color.colorOtherTurnLight);
+
+
+
+        }else {
+
+            itemView.findViewById(R.id.txt_weapons_in_room_map).setBackgroundResource(R.color.colorPrimaryDark);
+            itemView.findViewById(R.id.txt_weapons_in_room_map2).setBackgroundResource(R.color.colorPrimaryDark);
+
+
+        }
         return new ViewHolderClass(itemView);
+
     }
 
     /**

@@ -42,7 +42,20 @@ public class NoticeList extends Fragment {
 
         fragLayoutV = inflater.inflate(R.layout.fragment_list, container, false);
         createTabs();
+        if(!MenueDrawer.myTurn){
 
+            fragLayoutV.findViewById(R.id.toolbar).setBackgroundResource(R.color.colorOtherTurnLight);
+            fragLayoutV.findViewById(R.id.tablayout).setBackgroundResource(R.color.colorOtherTurn);
+
+
+
+        }else {
+
+            fragLayoutV.findViewById(R.id.toolbar).setBackgroundResource(R.color.colorPrimary);
+            fragLayoutV.findViewById(R.id.tablayout).setBackgroundResource(R.color.colorPrimaryDark);
+
+
+        }
         return fragLayoutV;
     }
 

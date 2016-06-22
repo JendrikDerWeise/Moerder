@@ -8,6 +8,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -17,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.jendrik.moerder.FCM.FCMRunningGameListener;
 import com.example.jendrik.moerder.FCM.SendToDatabase;
@@ -83,8 +85,35 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         whoAmI = getIntent().getExtras().getInt("whoAmI");
         game =(Game) getIntent().getExtras().get("GAME");
         myTurn = getIntent().getBooleanExtra("myTurn", false);
-        this.setTheme(R.style.mordThemeNotTurnWithDrawer);
+
+        if(!myTurn){
+
+            this.setTheme(R.style.mordThemeNotTurnWithDrawer);
+
+
+        }else {
+            this.setTheme(R.style.mordThemeWithDrawer);
+
+        }
+
         setContentView(R.layout.menu_drawer);
+
+        //TextView mapRoom = (TextView) ;
+        if(!MenueDrawer.myTurn){
+
+            findViewById(R.id.toolbar1).setBackgroundResource(R.color.colorOtherTurn);
+
+
+        }else {
+
+            findViewById(R.id.toolbar1).setBackgroundResource(R.color.colorPrimary);
+
+
+        }
+
+        //if(myTurn==false){
+            //this.setTheme(R.style.mordThemeNotTurnWithDrawer);
+        //}
 
         setLayout();
         instantiateFragments();
@@ -113,6 +142,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
 
         if(!myTurn){//TODO activePlayer ändern!{
             //setContentView(R.layout.menu_drawer_not_active);
+
             //myTurn = false;
             notActive();
         }else {
