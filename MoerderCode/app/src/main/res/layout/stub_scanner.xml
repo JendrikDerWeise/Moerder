@@ -9,7 +9,10 @@
         android:layout_height="wrap_content"
         android:text="Einen Int eingeben"
         android:id="@+id/textView9"
-        android:layout_weight="0.07" />
+        android:layout_weight="0.07"
+        android:textSize="18sp"
+        android:textColor="@color/colorFont"
+        android:layout_margin="30dp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -17,7 +20,10 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/et_stub_scanner_int"
-        android:layout_weight="0.07" />
+        android:layout_weight="0.07"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp" />
 
     <Button
         android:layout_width="wrap_content"

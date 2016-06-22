@@ -11,7 +11,9 @@
         android:text=" "
         android:id="@+id/textViewTab"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:textColor="@color/colorFont" />
 
 
     <android.support.v7.widget.RecyclerView

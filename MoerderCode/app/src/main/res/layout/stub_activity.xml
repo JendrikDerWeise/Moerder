@@ -11,7 +11,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Ich bin ein lustiger Platzhalter"
         android:id="@+id/textView3"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
