@@ -96,6 +96,7 @@ public class WaitForServer extends Activity implements GameStartedCallback{
         ValueEventListener ve = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                //TODO irgendeine wait-Schleife bauen, damit es nicht zu überschneidungen kommt
                 playerNames.clear();
                 boolean isRunning = dataSnapshot.getValue(Boolean.class);
                 if(isRunning)

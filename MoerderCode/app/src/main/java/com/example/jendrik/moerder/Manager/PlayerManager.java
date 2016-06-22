@@ -34,7 +34,6 @@ public class PlayerManager implements Serializable {
 
     public PlayerManager(boolean bool){
         playerList = new ArrayList<>();
-
     }
 
 
