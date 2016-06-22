@@ -22,17 +22,14 @@ package com.example.jendrik.moerder.FCM;
 
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 
 import com.example.jendrik.moerder.GUI.Host.WaitForPlayers;
-import com.example.jendrik.moerder.GUI.Join.PopUpEnterName;
-import com.example.jendrik.moerder.GUI.LittleHelpers.Suspection;
+import com.example.jendrik.moerder.GUI.LittleHelpers.SuspectionHelpers.Suspection;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameHandler;
 import com.example.jendrik.moerder.GameObjekts.Player;
@@ -44,7 +41,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -342,8 +338,8 @@ public class MyFcmListenerService extends FirebaseMessagingService {
             json.put("suspectedPlayer", suspection.getPlayer());
             json.put("suspectedRoom", suspection.getRoom());
             json.put("suspectedWeapon", suspection.getWeapon());
-            json.put("cardOwner", suspection.getCardOwner());
-            json.put("card", suspection.getCard());
+            json.put("cardOwner", suspection.getClueOwner());
+            json.put("card", suspection.getClue());
         }catch(JSONException e){
             e.printStackTrace();
         }

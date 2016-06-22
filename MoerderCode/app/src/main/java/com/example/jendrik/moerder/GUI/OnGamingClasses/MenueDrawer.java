@@ -14,7 +14,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,15 +22,21 @@ import com.example.jendrik.moerder.FCM.FCMRunningGameListener;
 import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.GUI.Host.STUB_FRAG;
 import com.example.jendrik.moerder.GUI.LittleHelpers.CountDownClass;
+import com.example.jendrik.moerder.GUI.LittleHelpers.SuspectionHelpers.PopUpShowSuspectorTheResult;
+import com.example.jendrik.moerder.GUI.LittleHelpers.SuspectionHelpers.PopUpSuspectionInformPlayerWhoHasClue;
 import com.example.jendrik.moerder.GUI.LittleHelpers.ProsecutionHelpers.PopUpIndict;
 import com.example.jendrik.moerder.GUI.LittleHelpers.ProsecutionHelpers.PopUpIndictPlayerBroadcast;
 import com.example.jendrik.moerder.GUI.LittleHelpers.ProsecutionHelpers.ProsecutionFromOtherPlayer;
 import com.example.jendrik.moerder.GUI.LittleHelpers.ProsecutionHelpers.ProsecutionWaitingForPlayers;
+import com.example.jendrik.moerder.GUI.LittleHelpers.SuspectionHelpers.PopupSuspectionShowPlayersTheResult;
+import com.example.jendrik.moerder.GUI.LittleHelpers.SuspectionHelpers.PupUpSuspectionCallSinglePlayer;
+import com.example.jendrik.moerder.GUI.LittleHelpers.SuspectionHelpers.Suspection;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.GameObjekts.Room;
 import com.example.jendrik.moerder.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -99,6 +104,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         fcm.pauseListener();
         fcm.activePlayerListener();
         fcm.prosecutionNotifyListener();
+        fcm.suspectionNotifyListener();
     }
 
     @Override
@@ -333,8 +339,6 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
 
     public void aktivePlayerChanged(double aktivePlayer){
         int aktivePlayerInt = (int)aktivePlayer;
-        String str = "aktivePlayerInt: " + aktivePlayerInt + " whoAmI: " + whoAmI + " myTurn: " + myTurn;
-        Log.d("aktivePlayerChanged",str);
         if(aktivePlayerInt == whoAmI && !myTurn) {
             myTurn = true;
             getIntent().putExtra("myTurn", myTurn);
@@ -371,6 +375,95 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         }
     }
 
+    private int suspectionRoom;
+    public static String roomForCalling;
+    private Suspection suspection;
+
+    public void suspectionNotify(Suspection suspection){
+        this.suspection = suspection;
+        this.suspection.setCallback(this);
+
+        if(suspection.getPlayer().equals(game.getNameByNumber(whoAmI)) && !suspection.isPlayerCalled()){
+            suspectionRoom = game.getNumberByName(suspection.getRoom());
+            roomForCalling = suspection.getRoom();
+            DialogFragment suspectionCallPlayer = new PupUpSuspectionCallSinglePlayer();
+            try {
+                suspectionCallPlayer.show(this.getFragmentManager(), "PupUpSuspectionCallSinglePlayer");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }else if(suspection.isPlayerCalled() && !suspection.isClueShwon()){
+            suspection.whoHasClues(game.getPlayerManager().getPlayerList().get(whoAmI));
+        }else
+            suspection.informPlayer(game.getPlayerManager().getPlayerList().get(whoAmI));
+        //TODO Fall "keiner hat Clue" abfangen
+    }
+
+    public void callPlayer(DialogFragment dialog){
+        final Intent intent = new Intent(this, STUB_SCANNER.class);
+        startActivityForResult(intent, 4711);
+    }
+
+    public void suspectionNextPlayer(){
+        stb.updateData("playerCalled", suspection.getSuspectionNextPlayer());
+    }
+
+    public void informPlayerWhoHasClue(ArrayList<String> existendClues){
+
+        PopUpSuspectionInformPlayerWhoHasClue informPlayer = new PopUpSuspectionInformPlayerWhoHasClue();
+        Bundle args = new Bundle();
+        args.putStringArrayList("existendClues", existendClues);
+        informPlayer.setArguments(args);
+
+        try {
+            informPlayer.show(this.getFragmentManager(), "PopUpSuspectionInformPlayerWhoHasClue");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void showSuspectionResultBroadcast(){
+        fcm.unbindSuspectionListeners();
+        PopupSuspectionShowPlayersTheResult resultToPlayers = new PopupSuspectionShowPlayersTheResult();
+        Bundle args = new Bundle();
+        args.putString("suspector", suspection.getSuspector());
+        args.putString("clueOwner", suspection.getClueOwner());
+        args.putString("name", suspection.getPlayer());
+        args.putString("weapon", suspection.getWeapon());
+        args.putString("room", suspection.getRoom());
+        resultToPlayers.setArguments(args);
+
+        try {
+            resultToPlayers.show(this.getFragmentManager(), "PopUpSuspectionInformPlayerWhoHasClue");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void informSuspector(){
+        fcm.unbindSuspectionListeners();
+        PopUpShowSuspectorTheResult resultToSuspector = new PopUpShowSuspectorTheResult();
+        Bundle args = new Bundle();
+        args.putString("clueOwner", suspection.getClueOwner());
+        args.putString("shownClue", suspection.getClue());
+        resultToSuspector.setArguments(args);
+
+        try {
+            resultToSuspector.show(this.getFragmentManager(), "PopUpShowSuspectorTheResult");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        stb.updateData("suspectionNotify", false);
+        stb.sendData("suspectionObject",null);
+    }
+
+    public void shownClueToSuspectionObject(DialogFragment dialog, String clueName){
+        suspection.setClueShwon(true);
+        suspection.setClue(clueName);
+        suspection.setClueOwner(game.getPlayerManager().getPlayerList().get(whoAmI).getName());
+        stb.sendData("suspectionObject", suspection);
+    }
+
     public void startScanForGrpRoom(DialogFragment dialog){
         final Intent intent = new Intent(this, STUB_SCANNER.class);
         startActivityForResult(intent, 42);
@@ -399,6 +492,19 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
                         game.getPlayerManager().getPlayerList().get(whoAmI).setActualRoom(game.getGrpRoom());
                         stb.updateData("playerList", MenueDrawer.game.getPlayerManager().getPlayerList().get(whoAmI));
                         menueSetter(prosecutionFromOtherPlayer);
+                    } else
+                        prosecutionNotify();
+                } else {
+                    prosecutionNotify();
+                }
+                break;
+            case 4711:
+                if (resultCode == Activity.RESULT_OK) {
+                    int qrCode = data.getIntExtra(STUB_SCANNER.RESULT, 0);
+                    if (qrCode == suspectionRoom) {
+                        game.getPlayerManager().getPlayerList().get(whoAmI).setActualRoom(game.getGrpRoom());
+                        stb.updateData("playerList", MenueDrawer.game.getPlayerManager().getPlayerList().get(whoAmI));
+                        stb.updateData("playerCalled", true);
                     } else
                         prosecutionNotify();
                 } else {

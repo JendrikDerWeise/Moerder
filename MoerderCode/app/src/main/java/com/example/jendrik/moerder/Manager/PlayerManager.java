@@ -79,6 +79,14 @@ public class PlayerManager implements Serializable {
         return "error";
     }
 
+    @Exclude
+    public int getNumberByName(String name){
+        for(Player p: playerList){
+            if(p.getName() == name){ return (int)p.getQrCode(); }
+        }
+        return 666;
+    }
+
     /*
     Methode füllt die Notizen des Spielers mit den passenden Namen der Spieler, Waffen und Räume. Diese werden alle mit 'n' markiert.
     Der Spieler sieht dann ein rotes Viereck neben dem Namen in der Activity.

@@ -11,7 +11,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.jendrik.moerder.GUI.LittleHelpers.Suspection;
+import com.example.jendrik.moerder.FCM.SendToDatabase;
+import com.example.jendrik.moerder.GUI.LittleHelpers.SuspectionHelpers.Suspection;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.R;
@@ -136,7 +137,10 @@ public class Suspect extends Fragment {
      */
     public void onClickSuspect(){
         String player= (String)spinnerPlayer.getSelectedItem();
-        Suspection sus = new Suspection(getActivity(), player, room, weapon, game, (int)game.getActivePlayer().getPNumber());
+        Suspection sus = new Suspection(player, room, weapon, game.getActivePlayer().getName());
+        SendToDatabase stb = new SendToDatabase(game.getGameName());
+        stb.updateData("suspectionNotify", true);
+        stb.sendData("suspectionObject",sus);
     }
 
     @Override

@@ -49,6 +49,7 @@ public class Game implements Serializable {
     private boolean isRunning;
     private boolean paused;
     private boolean prosecutionNotify;
+    private boolean suspectionNotify;
 
     public Game(String gameName, String pwd, ArrayList<String> rooms, ArrayList<String> weapons, int min, int sec, int playerAmount){
         this.gameName = gameName;
@@ -68,6 +69,7 @@ public class Game implements Serializable {
         this.gameOver = false;
         this.paused = false;
         this.prosecutionNotify = false;
+        this.suspectionNotify = false;
 
     }
 
@@ -204,6 +206,21 @@ public class Game implements Serializable {
             }
         }else{
             return "error";
+        }
+    }
+
+    @Exclude
+    public int getNumberByName(String name){
+        int qrCode=playerManager.getNumberByName(name);
+        if(qrCode == 666){
+            qrCode = weaponManager.getNumberByName(name);
+                if(qrCode == 666){
+                    return roomManager.getNumberByName(name);
+                }else{
+                    return qrCode;
+                }
+        }else{
+            return qrCode;
         }
     }
 

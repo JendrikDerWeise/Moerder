@@ -41,4 +41,12 @@ public class RoomManager implements Serializable{
         }
         return "error";
     }
+
+    @Exclude
+    public int getNumberByName(String name){
+        for(Room r: roomList){
+            if(r.getName() == name){ return (int)r.getQrCode(); }
+        }
+        return 666;
+    }
 }

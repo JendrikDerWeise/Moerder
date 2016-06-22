@@ -249,7 +249,7 @@ public class Indict extends Fragment {
         startActivity(intent);
 
         MenueDrawer.game.setNextActivePlayer();
-        stb.updateData("aktivePlayer", game.getPlayerManager().getAktivePlayer());
+        stb.updateData("aktivePlayer", game.getPlayerManager().getAktivePlayer()); //TODO Listener wird nicht ausgelöst, Gegenspieler können nicht weiter spielen
         stb.updateData("roomList", game.getRoomManager().getRoomList());
 
         getActivity().finish();

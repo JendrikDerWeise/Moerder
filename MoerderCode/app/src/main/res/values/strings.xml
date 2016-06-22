@@ -87,5 +87,10 @@
     <string name="popup_indict_broadcast_message">Go to the room of the group.</string>
     <string name="tvWaitingForProsecution">Waiting for prosecution...</string>
     <string name="prosecutionWasWrong">Prosecution was wrong. The player is out auf game!</string>
+    <string name="popup_suspection_call_single_player_message">Go to to room</string>
+    <string name="popup_suspection_call_single_player_title">A player called you for a suspection!</string>
+    <string name="popup_suspection_result_broadcast_title">has the suspection:</string>
+    <string name="popup_suspection_result_broadcast_message">had shown one clue.</string>
+    <string name="popup_suspection_result_to_suspector_title">had shown you the clue:</string>
     <!-- Ende Drawer-Temp-Krams -->
 </resources>

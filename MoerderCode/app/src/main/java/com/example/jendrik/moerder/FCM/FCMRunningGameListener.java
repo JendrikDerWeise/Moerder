@@ -1,5 +1,6 @@
 package com.example.jendrik.moerder.FCM;
 
+import com.example.jendrik.moerder.GUI.LittleHelpers.SuspectionHelpers.Suspection;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.GameIsRunningCallback;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.GameObjekts.Room;
@@ -29,6 +30,10 @@ public class FCMRunningGameListener {
     private ValueEventListener pauseListener;
     private DatabaseReference prosecutionNotifyReference;
     private ValueEventListener prosecutionNotifyListener;
+    private DatabaseReference suspectionNotifyReference;
+    private ValueEventListener suspectionNotifyListener;
+    private DatabaseReference suspectionObjectReference;
+    private ValueEventListener suspectionObjectListener;
 
     public FCMRunningGameListener(String gameName, GameIsRunningCallback callback){
         this.gameName = gameName;
@@ -148,6 +153,50 @@ public class FCMRunningGameListener {
         return ve;
     }
 
+    public void suspectionNotifyListener(){
+        suspectionNotifyListener = makeSuspectionNotifyListener();
+        suspectionNotifyReference = FirebaseDatabase.getInstance().getReference().child("games").child(gameName);
+        suspectionNotifyReference.child("suspectionNotify").addValueEventListener(suspectionNotifyListener);
+    }
+
+    private ValueEventListener makeSuspectionNotifyListener(){
+        ValueEventListener ve = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Boolean suspectionNotify = dataSnapshot.getValue(Boolean.class);
+                if(suspectionNotify)
+                    suspectionObjectListener();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        return ve;
+    }
+
+    public void suspectionObjectListener(){
+        suspectionObjectListener = makeSuspectionObjectListener();
+        suspectionObjectReference = FirebaseDatabase.getInstance().getReference().child("games").child(gameName);
+        suspectionObjectReference.child("suspectionObject").addValueEventListener(suspectionObjectListener);
+    }
+
+    private ValueEventListener makeSuspectionObjectListener(){
+        ValueEventListener ve = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Suspection suspection = dataSnapshot.getValue(Suspection.class);
+                callback.suspectionNotify(suspection);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        return ve;
+    }
 
     public void unbindListeners(){
         roomReference.removeEventListener(roomListener);
@@ -155,5 +204,10 @@ public class FCMRunningGameListener {
         pauseReference.removeEventListener(pauseListener);
         activePlayerReference.removeEventListener(activePlayerListener);
         prosecutionNotifyReference.removeEventListener(prosecutionNotifyListener);
+        suspectionNotifyReference.removeEventListener(suspectionNotifyListener);
+    }
+
+    public void unbindSuspectionListeners(){
+        suspectionObjectReference.removeEventListener(suspectionObjectListener);
     }
 }

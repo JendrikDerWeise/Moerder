@@ -64,5 +64,10 @@
     <string name="popup_indict_broadcast_message">Begib dich in den Gruppenraum.</string>
     <string name="tvWaitingForProsecution">Warte auf Anklage...</string>
     <string name="prosecutionWasWrong">Die Anklage war falsch. Der Spieler scheidet aus dem Spiel aus.</string>
+    <string name="popup_suspection_call_single_player_message">Begib dich in den Raum</string>
+    <string name="popup_suspection_call_single_player_title">Ein Spieler hat dich für einen Verdacht gerufen!</string>
+    <string name="popup_suspection_result_broadcast_title">hat den Verdacht:</string>
+    <string name="popup_suspection_result_broadcast_message">hat einen Hinweis gezeigt.</string>
+    <string name="popup_suspection_result_to_suspector_title">hat dir den Hinweis gezeigt:</string>
 
 </resources>

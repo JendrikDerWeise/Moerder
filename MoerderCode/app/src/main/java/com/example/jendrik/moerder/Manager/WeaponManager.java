@@ -40,4 +40,12 @@ public class WeaponManager implements Serializable {
         }
         return "error";
     }
+
+    @Exclude
+    public int getNumberByName(String name){
+        for(Weapon r: weaponList){
+            if(r.getName() == name){ return (int)r.getQrCode(); }
+        }
+        return 666;
+    }
 }
