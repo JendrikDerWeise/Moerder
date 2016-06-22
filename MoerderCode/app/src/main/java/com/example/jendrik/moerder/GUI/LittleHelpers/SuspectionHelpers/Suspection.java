@@ -32,9 +32,10 @@ public class Suspection {
     private String suspector;
     private String clueOwner;
     private String clue;
-    private int suspectionNextPlayer;
+    private Double suspectionNextPlayer;
     private boolean playerCalled;
     private boolean clueShwon;
+    @Exclude
     private GameIsRunningCallback callback;
 
 
@@ -54,7 +55,7 @@ public class Suspection {
         this.suspector=suspector;
         this.playerCalled = false;
         this.clueShwon = false;
-        this.suspectionNextPlayer = 0;
+        this.suspectionNextPlayer = 0.0;
     }
 
 
