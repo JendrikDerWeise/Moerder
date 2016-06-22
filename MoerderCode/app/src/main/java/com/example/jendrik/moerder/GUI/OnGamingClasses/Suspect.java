@@ -140,7 +140,7 @@ public class Suspect extends Fragment {
         Suspection sus = new Suspection(player, room, weapon, game.getActivePlayer().getName());
         SendToDatabase stb = new SendToDatabase(game.getGameName());
         stb.updateData("suspectionNotify", true);
-        stb.sendData("suspectionObject",sus);
+        stb.updateData("suspectionObject",sus);
     }
 
     @Override

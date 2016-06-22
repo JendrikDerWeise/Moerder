@@ -87,6 +87,9 @@ public class SendToDatabase<T> {
             case "suspectionNotify":
                 myRef.child("games").child(gameName).child(typOfObject).setValue(object);
                 break;
+            case "suspectionObject":
+                myRef.child("games").child(gameName).child(typOfObject).setValue(object);
+                break;
             case "playerCalled":
                 myRef.child("games").child(gameName).child("suspection").child(typOfObject).setValue(object);
                 break;
