@@ -1,6 +1,7 @@
 package com.example.jendrik.moerder.GUI.Join;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.databinding.ObservableList;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.jendrik.moerder.FCM.FCMListeners;
+import com.example.jendrik.moerder.GUI.LittleHelpers.PopUpBack;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameHandler;
@@ -68,6 +70,13 @@ public class WaitForServer extends Activity implements GameStartedCallback{
         elGame = setGameStartedListener();
         gamestarter.addValueEventListener(elGame);
 
+    }
+
+    @Override
+    public void onBackPressed(){
+        //TODO: Laueft so nicht :(
+        DialogFragment indictWarning = new PopUpBack();
+        indictWarning.show(getFragmentManager(), "PopUpBack");
     }
 
     private ValueEventListener setListener(){

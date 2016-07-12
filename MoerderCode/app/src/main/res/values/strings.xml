@@ -92,5 +92,9 @@
     <string name="popup_suspection_result_broadcast_title">has the suspection:</string>
     <string name="popup_suspection_result_broadcast_message">had shown one clue.</string>
     <string name="popup_suspection_result_to_suspector_title">had shown you the clue:</string>
+    <string name="popup_back_message">You are ending the game that way. From that there is no coming back.</string>
+    <string name="popup_back_title">Have you thought that through?</string>
+    <string name="popup_back_positive">Yes, I am out!</string>
+    <string name="popup_back_negative_button">No, I would rather stay!</string>
     <!-- Ende Drawer-Temp-Krams -->
 </resources>

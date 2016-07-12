@@ -69,5 +69,10 @@
     <string name="popup_suspection_result_broadcast_title">hat den Verdacht:</string>
     <string name="popup_suspection_result_broadcast_message">hat einen Hinweis gezeigt.</string>
     <string name="popup_suspection_result_to_suspector_title">hat dir den Hinweis gezeigt:</string>
+    <string name="popup_back_message">So beendest du dein Spiel. Danach gibt es kein zurück.</string>
+    <string name="popup_back_title">Willst du das wirklich?</string>
+    <string name="popup_back_positive">Ja, ich hau ab!</string>
+    <string name="popup_back_negative_button">Nein, lieber nicht!</string>
+
 
 </resources>

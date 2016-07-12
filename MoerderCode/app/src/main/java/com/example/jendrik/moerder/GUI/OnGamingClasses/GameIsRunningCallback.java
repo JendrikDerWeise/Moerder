@@ -1,5 +1,6 @@
 package com.example.jendrik.moerder.GUI.OnGamingClasses;
 
+import android.app.Dialog;
 import android.app.DialogFragment;
 
 import com.example.jendrik.moerder.GUI.LittleHelpers.SuspectionHelpers.Suspection;
@@ -20,6 +21,10 @@ public interface GameIsRunningCallback {
 
     void onIndictPositive(DialogFragment dialog);
     void onIndictNegative(DialogFragment dialog);
+
+    void onBackPositive(DialogFragment dialog);
+    void onBackNegative(DialogFragment dialog);
+
     void prosecutionNotify();
     void startScanForGrpRoom(DialogFragment dialog);
 

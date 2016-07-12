@@ -25,6 +25,7 @@ import com.example.jendrik.moerder.FCM.FCMRunningGameListener;
 import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.GUI.Host.STUB_FRAG;
 import com.example.jendrik.moerder.GUI.LittleHelpers.CountDownClass;
+import com.example.jendrik.moerder.GUI.LittleHelpers.PopUpBack;
 import com.example.jendrik.moerder.GUI.LittleHelpers.SuspectionHelpers.PopUpShowSuspectorTheResult;
 import com.example.jendrik.moerder.GUI.LittleHelpers.SuspectionHelpers.PopUpSuspectionInformPlayerWhoHasClue;
 import com.example.jendrik.moerder.GUI.LittleHelpers.ProsecutionHelpers.PopUpIndict;
@@ -34,6 +35,7 @@ import com.example.jendrik.moerder.GUI.LittleHelpers.ProsecutionHelpers.Prosecut
 import com.example.jendrik.moerder.GUI.LittleHelpers.SuspectionHelpers.PopupSuspectionShowPlayersTheResult;
 import com.example.jendrik.moerder.GUI.LittleHelpers.SuspectionHelpers.PupUpSuspectionCallSinglePlayer;
 import com.example.jendrik.moerder.GUI.LittleHelpers.SuspectionHelpers.Suspection;
+import com.example.jendrik.moerder.GUI.Startscreen;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.GameObjekts.Room;
@@ -152,6 +154,12 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
             //myTurn = true;
         }
 
+    }
+
+    @Override
+    public void onBackPressed(){
+        DialogFragment backWarning = new PopUpBack();
+        backWarning.show(getFragmentManager(), "PopUpBack");
     }
 
     /**
@@ -392,6 +400,13 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     }
 
     public void onIndictNegative(DialogFragment dialog){    }
+
+    public void onBackPositive(DialogFragment dialog){
+        this.finish();
+        startActivity(new Intent(this, Startscreen.class));
+    }
+
+    public void onBackNegative(DialogFragment dialog){    }
 
     public void prosecutionNotify(){
 
