@@ -18,7 +18,7 @@ public class PopUpIndictPlayerBroadcast extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.mordTheme);
 
         builder.setMessage(R.string.popup_indict_broadcast_message)
                 .setTitle(R.string.popup_indict_broadcast_title)

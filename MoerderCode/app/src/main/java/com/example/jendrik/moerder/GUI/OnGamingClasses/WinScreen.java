@@ -1,8 +1,10 @@
 package com.example.jendrik.moerder.GUI.OnGamingClasses;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.jendrik.moerder.GUI.Startscreen;
 import com.example.jendrik.moerder.R;
 
 /**
@@ -13,5 +15,12 @@ public class WinScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player_wins);
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(this, Startscreen.class);
+        startActivity(intent);
+        this.finish();
     }
 }

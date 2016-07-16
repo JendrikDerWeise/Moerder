@@ -20,7 +20,7 @@ public class PopUpBack extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),R.style.mordTheme);
 
         builder.setMessage(R.string.popup_back_message)
                 .setTitle(R.string.popup_back_title);

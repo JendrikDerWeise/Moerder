@@ -1,9 +1,11 @@
 package com.example.jendrik.moerder.GUI.OnGamingClasses;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.jendrik.moerder.FCM.SendToDatabase;
+import com.example.jendrik.moerder.GUI.Startscreen;
 import com.example.jendrik.moerder.R;
 
 /**
@@ -18,5 +20,12 @@ public class LooseScreen extends Activity {
         SendToDatabase stb = new SendToDatabase(getIntent().getExtras().getString("gameName"));
         stb.sendData("playerWins", null);
         stb.updateData("prosecutionIsPlaced", null);*/
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(this, Startscreen.class);
+        startActivity(intent);
+        this.finish();
     }
 }
