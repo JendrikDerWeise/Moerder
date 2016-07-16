@@ -70,5 +70,9 @@ public class QRHandler extends Activity{
         }
     }
 
+    @Override
+    public void onBackPressed(){
+
+    }
 
 }

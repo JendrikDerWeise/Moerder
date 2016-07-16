@@ -31,4 +31,9 @@ public class STUB_SCANNER extends Activity {
 
         finish();//Activity beenden
     }
+
+    @Override
+    public void onBackPressed(){
+
+    }
 }
