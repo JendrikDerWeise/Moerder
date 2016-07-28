@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.Game;
@@ -53,10 +54,13 @@ public class ChangeRoom extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) { //hier kommen die Daten des Scanners an. Methode gehört zur Super-Klasse, Name somit fest vorgegeben
-        super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {  //Switch case ist vermutlich unnötig
-            case (VALUE) : {
+        //super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == VALUE){
                 if (resultCode == Activity.RESULT_OK) { //wenn Activity korrekt zuende geführt wurde
+                    //bei QR CodeScanner einkommentieren
+                    //int qrCode = Integer.parseInt(data.getStringExtra("SCAN_RESULT"));
+                    //String format = data.getStringExtra("SCAN_RESULT_FORMAT");
+                    //bei qr scanner auskommentieren
                     int qrCode = data.getIntExtra(STUB_SCANNER.RESULT, 0); //Übergabe des Intents (data), dort ist unter dem String RESULT der INT gespeichert... klingt unsinnig, läuft aber so. Die 0 ist Unsinn
                     if(qrCode>19 && qrCode<29){
                         for(Room r : game.getRooms()){
@@ -81,15 +85,17 @@ public class ChangeRoom extends Fragment {
 
                 }
 
-                break;
-            }
         }
     }
 
     private void startRoomScan(){
+        //bei QR CodeScanner auskommentieren
         final Intent intent = new Intent(getActivity(), STUB_SCANNER.class); //Vorbereitung der neuen Activity, STUB SCANNER ist der "QR-Code Leser"
         //final int kindOfObject = 0;
         //intent.putExtra(SCAN_WEAPON,kindOfObject);
+        //bei QR CodeScanner einkommentieren
+        //final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
+        //final Intent intent = new Intent(ACTION_SCAN);
         startActivityForResult(intent, VALUE); //Starten der Activity. Methodenaufruf "...ForResult" impliziert, das die Activity etwas zurück liefert
     }
 

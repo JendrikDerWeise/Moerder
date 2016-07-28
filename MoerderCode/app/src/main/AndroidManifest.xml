@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.jendrik.moerder">
+    package="com.example.jendrik.moerder" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -20,13 +20,13 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/mordThemeNotTurn">
-        <service android:name=".FCM.MyFirebaseInstanceIDService">
+        android:theme="@style/mordThemeNotTurn" >
+        <service android:name=".FCM.MyFirebaseInstanceIDService" >
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".FCM.MyFcmListenerService">
+        <service android:name=".FCM.MyFcmListenerService" >
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -36,7 +36,7 @@
             android:name=".GUI.Startscreen"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/mordThemeNotTurn">
+            android:theme="@style/mordThemeNotTurn" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -66,22 +66,24 @@
         <activity
             android:name=".GUI.Host.WaitForPlayers"
             android:label="@string/txt_wait_for_players" />
+        <activity android:name=".GUI.OnGamingClasses.MenueDrawer" />
+        <activity android:name=".GUI.LittleHelpers.ProsecutionHelpers.ProsecutionWaitingForPlayers" />
         <activity
-            android:name=".GUI.OnGamingClasses.MenueDrawer"/>
+            android:name=".GUI.LittleHelpers.PopUpNobodyHasCards"
+            android:theme="@style/AppTheme.PopUpTheme" />
         <activity
-            android:name=".GUI.LittleHelpers.ProsecutionHelpers.ProsecutionWaitingForPlayers"/>
-        <activity android:name=".GUI.LittleHelpers.PopUpNobodyHasCards"
-            android:theme="@style/AppTheme.PopUpTheme"/>
-        <activity android:name=".GUI.LittleHelpers.PopUpPlayerShowsCard"
-            android:theme="@style/AppTheme.PopUpTheme"/>
+            android:name=".GUI.LittleHelpers.PopUpPlayerShowsCard"
+            android:theme="@style/AppTheme.PopUpTheme" />
         <activity android:name=".GUI.OnGamingClasses.WinScreen" />
         <activity android:name=".GUI.OnGamingClasses.LooseScreen" />
         <activity android:name=".GUI.OnGamingClasses.STUB_SCANNER" />
-        <activity android:name=".GUI.Join.PopUpEnterName"
-            android:theme="@style/AppTheme.PopUpTheme"/>
-        <activity android:name=".GUI.Join.PopUpEnterPassword"
-            android:theme="@style/AppTheme.PopUpTheme"/>
-        <activity android:name=".GUI.Join.WaitForServer"/>
+        <activity
+            android:name=".GUI.Join.PopUpEnterName"
+            android:theme="@style/AppTheme.PopUpTheme" />
+        <activity
+            android:name=".GUI.Join.PopUpEnterPassword"
+            android:theme="@style/AppTheme.PopUpTheme" />
+        <activity android:name=".GUI.Join.WaitForServer" />
     </application>
 
 </manifest>
