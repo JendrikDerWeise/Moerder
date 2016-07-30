@@ -8,7 +8,6 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -84,47 +83,28 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
 
 
         //TODO verhindern das "Zurücktaste" von Android in die Spielerstellung zurück kehrt. Wie geht das? Ggf. finish()?
-        //TODO Mitteilung "gerufen werden"
         whoAmI = getIntent().getExtras().getInt("whoAmI");
         game =(Game) getIntent().getExtras().get("GAME");
         myTurn = getIntent().getBooleanExtra("myTurn", false);
 
-        if(!myTurn){
-
+        if(!myTurn)
             this.setTheme(R.style.mordThemeNotTurnWithDrawer);
-
-
-        }else {
+        else
             this.setTheme(R.style.mordThemeWithDrawer);
-
-        }
 
         setContentView(R.layout.menu_drawer);
 
-        //TextView mapRoom = (TextView) ;
-        if(!MenueDrawer.myTurn){
+        if(!MenueDrawer.myTurn)
 
             findViewById(R.id.toolbar1).setBackgroundResource(R.color.colorOtherTurn);
-
-
-        }else {
-
+        else
             findViewById(R.id.toolbar1).setBackgroundResource(R.color.colorPrimary);
-
-
-        }
-
-        //if(myTurn==false){
-            //this.setTheme(R.style.mordThemeNotTurnWithDrawer);
-        //}
 
         setLayout();
         instantiateFragments();
         initFragManager();
         initNaviListener();
 
-        //TODO checkTurn Methode um Titelleiste und Menü anzupassen wenn Spieler dran/nicht dran ist
-        //checkTurn();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerToggle.syncState();
 
@@ -143,17 +123,12 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     protected void onStart(){
         super.onStart();
 
-        if(!myTurn){//TODO activePlayer ändern!{
-            //setContentView(R.layout.menu_drawer_not_active);
-
-            //myTurn = false;
+        if(!myTurn){
             notActive();
         }else {
             timer = new CountDownClass(this, (int) game.getMin(), (int) game.getSec());
             timer.getTimer().start();
-            //myTurn = true;
         }
-
     }
 
     @Override
@@ -169,6 +144,11 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     private void setLayout(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
+
+        if(!myTurn) {//TODO mit Listener koppeln, damit immer aktueller Spieler angezeigt wird. So wie es jetzt ist, zeigt es vermutlich dauerhaft den nächsten Spieler an
+            TextView timerView = (TextView) findViewById(R.id.timer);
+            timerView.setText(game.getActivePlayer().getName());
+        }
 
         drawerLayoutgesamt = (DrawerLayout) findViewById(R.id.drawerlayoutgesamt);
         drawerToggle = new ActionBarDrawerToggle(MenueDrawer.this,drawerLayoutgesamt,R.string.auf, R.string.zu);
@@ -301,8 +281,12 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     public void endTurn(){
         game.setNextActivePlayer();
         myTurn = false;
-        stb.updateData("aktivePlayer", game.getPlayerManager().getPlayerList().get(whoAmI));
+
+        stb.updateData("playerManager", game.getPlayerManager());
+        stb.updateData("aktivePlayer", game.getPlayerManager().getAktivePlayer());
+        stb.updateData("roomList", game.getRoomManager().getRoomList());
         getIntent().putExtra("GAME",game);
+        getIntent().putExtra("myTurn", false);
         finish();
         startActivity(getIntent());
     }
@@ -438,19 +422,24 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
                     suspectionRoom = (int)r.getQrCode();
             }
             roomForCalling = suspection.getRoom();
+            Bundle args = new Bundle();
+            args.putString("message", getResources().getString(R.string.popup_suspection_call_single_player_message));
+            args.putString("title", getResources().getString(R.string.popup_suspection_call_single_player_title));
+
             DialogFragment suspectionCallPlayer = new PupUpSuspectionCallSinglePlayer();
+            suspectionCallPlayer.setArguments(args);
             try {
                 suspectionCallPlayer.show(this.getFragmentManager(), "PupUpSuspectionCallSinglePlayer");
             }catch (Exception e){
                 e.printStackTrace();
             }
 
-        }else if(suspection.isPlayerCalled() && !suspection.isClueShwon()){
+        }else if(suspection.isPlayerCalled() && !suspection.isClueShown()){
             int nextPlayer = suspection.getSuspectionNextPlayer().intValue();
             if(nextPlayer == whoAmI)
                 suspection.whoHasClues(game.getPlayerManager().getPlayerList().get(whoAmI));
 
-        }else if(suspection.isClueShwon())
+        }else if(suspection.isClueShown())
             suspection.informPlayer(game.getPlayerManager().getPlayerList().get(whoAmI));
         //TODO Fall "keiner hat Clue" abfangen
     }
@@ -469,6 +458,8 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         PopUpSuspectionInformPlayerWhoHasClue informPlayer = new PopUpSuspectionInformPlayerWhoHasClue();
         Bundle args = new Bundle();
         args.putStringArrayList("existendClues", existendClues);
+        args.putString("message", getResources().getString(R.string.popup_suspection_have_clue_message));
+        args.putString("title", getResources().getString(R.string.popup_suspection_have_clue_title));
         informPlayer.setArguments(args);
 
         try {
@@ -487,6 +478,8 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         args.putString("name", suspection.getPlayer());
         args.putString("weapon", suspection.getWeapon());
         args.putString("room", suspection.getRoom());
+        args.putString("title", getResources().getString(R.string.popup_suspection_result_broadcast_title));
+        args.putString("message", getResources().getString(R.string.popup_suspection_result_broadcast_message));
         resultToPlayers.setArguments(args);
 
         try {
@@ -500,8 +493,9 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         fcm.unbindSuspectionListeners();
         PopUpShowSuspectorTheResult resultToSuspector = new PopUpShowSuspectorTheResult();
         Bundle args = new Bundle();
+        args.putString("title", getResources().getString(R.string.popup_suspection_result_to_suspector_title));
         args.putString("clueOwner", suspection.getClueOwner());
-        args.putString("shownClue", suspection.getClue());
+        args.putString("clue", suspection.getClue());
         resultToSuspector.setArguments(args);
 
         try {
@@ -514,10 +508,13 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     }
 
     public void shownClueToSuspectionObject(DialogFragment dialog, String clueName){
-        suspection.setClueShwon(true);
+        suspection.setClueShown(true);
         suspection.setClue(clueName);
         suspection.setClueOwner(game.getPlayerManager().getPlayerList().get(whoAmI).getName());
-        stb.sendData("suspectionObject", suspection);
+       //stb.updateData("suspectionObject", suspection);
+        stb.sendData("suspectionObject/clue", suspection.getClue());
+        stb.sendData("suspectionObject/clueOwner", suspection.getClueOwner());
+        stb.sendData("suspectionObject/clueShown", true);
     }
 
     public void startScanForGrpRoom(DialogFragment dialog){
@@ -531,7 +528,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         super.onActivityResult(requestCode, resultCode, data);
         boolean allPlayersAtGrpRoom = false;
 
-        switch(requestCode) {  //Switch case ist vermutlich unnötig
+        switch(requestCode) {
             case 23:
                 if (resultCode == Activity.RESULT_OK) { //wenn Activity korrekt zuende geführt wurde
                     allPlayersAtGrpRoom = data.getBooleanExtra(STUB_SCANNER.RESULT, false);
@@ -575,6 +572,9 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         }
     }
 
+    public void stopTimer(){
+        timer.getTimer().cancel();
+    }
 
 
 

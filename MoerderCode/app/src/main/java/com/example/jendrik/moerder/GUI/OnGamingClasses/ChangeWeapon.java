@@ -2,12 +2,14 @@ package com.example.jendrik.moerder.GUI.OnGamingClasses;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.example.jendrik.moerder.GUI.OnGamingClasses.GameIsRunningCallback;
 
 import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.Game;
@@ -20,17 +22,26 @@ import java.lang.reflect.Field;
 /**
  * Created by Jendrik on 21.03.2016.
  */
-public class ChangeWeapon extends Fragment {
+public class ChangeWeapon extends Fragment{
     public static String SCAN_WEAPON = "weapon";
     private static final int VALUE = 503;
     private Game game;
     private String actualRoom;
     private SendToDatabase stb;
+    private GameIsRunningCallback callback;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Activity activity = getActivity();
+
+        try {
+            this.callback = (GameIsRunningCallback)activity;
+        }catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnItemSelected");
+        }
     }
 
     @Override
@@ -109,15 +120,17 @@ public class ChangeWeapon extends Fragment {
 
     private void endTurn(){
 
-        MenueDrawer.game.setNextActivePlayer();
-        stb.updateData("playerManager", MenueDrawer.game.getPlayerManager());
-        stb.updateData("aktivePlayer", game.getPlayerManager().getAktivePlayer());
-        stb.updateData("roomList", game.getRoomManager().getRoomList());
+       // MenueDrawer.game.setNextActivePlayer();
+       // stb.updateData("playerManager", MenueDrawer.game.getPlayerManager());
+       // stb.updateData("aktivePlayer", game.getPlayerManager().getAktivePlayer());
+       // stb.updateData("roomList", game.getRoomManager().getRoomList());
         getActivity().getIntent().putExtra("myTurn", false);
         getActivity().getIntent().putExtra("GAME",MenueDrawer.game);
-        getActivity().finish();
-        startActivity(getActivity().getIntent());
+       // getActivity().finish();
+       // startActivity(getActivity().getIntent());
 
+        callback.stopTimer();
+        callback.endTurn();
     }
 
     @Override
@@ -135,4 +148,5 @@ public class ChangeWeapon extends Fragment {
             throw new RuntimeException(e);
         }
     }
+
 }

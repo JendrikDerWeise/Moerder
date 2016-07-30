@@ -19,14 +19,19 @@ public class PupUpSuspectionCallSinglePlayer extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.mordTheme);
 
-        builder.setMessage(R.string.popup_suspection_call_single_player_message + " " + MenueDrawer.roomForCalling)
-                .setTitle(R.string.popup_suspection_call_single_player_title)
+        Bundle args = getArguments();
+        String message = args.getString("message");
+        String title = args.getString("title");
+
+        builder.setMessage(message + " " + MenueDrawer.roomForCalling)
+                .setTitle(title)
                 .setPositiveButton("Scan", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mListener.callPlayer(PupUpSuspectionCallSinglePlayer.this);
+                        dismiss();
                     }
                 });
 

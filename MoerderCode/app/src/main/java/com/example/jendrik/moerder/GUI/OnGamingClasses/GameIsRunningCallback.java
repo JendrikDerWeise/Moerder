@@ -35,4 +35,6 @@ public interface GameIsRunningCallback {
     void shownClueToSuspectionObject(DialogFragment dialog, String clueName);
     void showSuspectionResultBroadcast();
     void informSuspector();
+    void endTurn();
+    void stopTimer();
 }

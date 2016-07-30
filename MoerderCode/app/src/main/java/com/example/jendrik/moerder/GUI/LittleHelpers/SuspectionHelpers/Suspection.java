@@ -1,19 +1,16 @@
 package com.example.jendrik.moerder.GUI.LittleHelpers.SuspectionHelpers;
 
-import android.content.Context;
-import android.content.Intent;
+
 
 import com.example.jendrik.moerder.GUI.OnGamingClasses.GameIsRunningCallback;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
-import com.example.jendrik.moerder.GUI.OnGamingClasses.Suspect;
-import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Clue;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +23,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @IgnoreExtraProperties
-public class Suspection {
+public class Suspection implements Serializable{
     private String player;
     private String room;
     private String weapon;
@@ -35,7 +32,7 @@ public class Suspection {
     private String clue;
     private Double suspectionNextPlayer;
     private boolean playerCalled;
-    private boolean clueShwon;
+    private boolean clueShown;
     @Exclude
     private GameIsRunningCallback callback;
 
@@ -55,8 +52,10 @@ public class Suspection {
         this.weapon=weapon;
         this.suspector=suspector;
         this.playerCalled = false;
-        this.clueShwon = false;
+        this.clueShown = false;
         this.suspectionNextPlayer = 0.0;
+        this.clue = "dummy";
+        this.clueOwner = "dummy";
     }
 
 

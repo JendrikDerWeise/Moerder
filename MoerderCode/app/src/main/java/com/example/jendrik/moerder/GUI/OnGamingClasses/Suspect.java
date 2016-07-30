@@ -1,6 +1,8 @@
 package com.example.jendrik.moerder.GUI.OnGamingClasses;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,11 +33,20 @@ public class Suspect extends Fragment {
     private Game game;
     private String room;
     private String weapon;
+    private GameIsRunningCallback callback;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Activity activity = getActivity();
+
+        try {
+            this.callback = (GameIsRunningCallback)activity;
+        }catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnItemSelected");
+        }
     }
 
     @Override
@@ -68,7 +79,6 @@ public class Suspect extends Fragment {
 
         fillSpinner();
         btnControl();
-
     }
 
     /**
@@ -139,8 +149,9 @@ public class Suspect extends Fragment {
         String player= (String)spinnerPlayer.getSelectedItem();
         Suspection sus = new Suspection(player, room, weapon, game.getActivePlayer().getName());
         SendToDatabase stb = new SendToDatabase(game.getGameName());
-        stb.updateData("suspectionNotify", true);
         stb.updateData("suspectionObject",sus);
+        stb.updateData("suspectionNotify", true);
+        callback.stopTimer();
     }
 
     @Override
@@ -158,6 +169,7 @@ public class Suspect extends Fragment {
             throw new RuntimeException(e);
         }
     }
+
 
 }
 

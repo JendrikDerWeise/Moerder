@@ -2,6 +2,7 @@ package com.example.jendrik.moerder.GUI.OnGamingClasses;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,10 +28,19 @@ public class ChangeRoom extends Fragment {
     private static final int VALUE = 503;
     private Game game;
     private SendToDatabase stb;
+    private GameIsRunningCallback callback;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Activity activity = getActivity();
+
+        try {
+            this.callback = (GameIsRunningCallback)activity;
+        }catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnItemSelected");
+        }
     }
 
     @Override
@@ -69,6 +79,8 @@ public class ChangeRoom extends Fragment {
                                 movePlayerToRoom(r);
                                 TextView textView = (TextView)getActivity().findViewById(R.id.change_room_name);
                                 textView.setText(r.getName());
+                                callback.stopTimer();
+                                callback.endTurn();
                             }
                         }
                     }
@@ -77,6 +89,8 @@ public class ChangeRoom extends Fragment {
                         movePlayerToRoom(game.getRoomManager().getGrpRoom());
                         TextView textView = (TextView)getActivity().findViewById(R.id.change_room_name);
                         textView.setText(getActivity().getResources().getText(R.string.grp_room));
+                        callback.stopTimer();
+                        callback.endTurn();
 
                     }else{
                         //TODO Fehlermeldung Toast? Popup?
@@ -144,4 +158,7 @@ public class ChangeRoom extends Fragment {
             throw new RuntimeException(e);
         }
     }
+
+
+
 }
