@@ -285,11 +285,16 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         stb.updateData("playerManager", game.getPlayerManager());
         stb.updateData("aktivePlayer", game.getPlayerManager().getAktivePlayer());
         stb.updateData("roomList", game.getRoomManager().getRoomList());
+
         getIntent().putExtra("GAME",game);
         getIntent().putExtra("myTurn", false);
         finish();
-        startActivity(getIntent());
+        if(!game.getPlayerManager().getPlayerList().get(whoAmI).isDead())
+            startActivity(getIntent());
+        else
+            fcm.unbindListeners();
     }
+
 
     /**
      * onClickEvents innerhalb von Fragments funktionieren nicht. Daher wird bei jedem Klick auf einem
@@ -627,6 +632,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
 
         if(timer != null)
             timer.getTimer().cancel();
+
         fcm.unbindListeners();
     }
 

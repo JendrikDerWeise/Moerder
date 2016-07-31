@@ -34,7 +34,6 @@ public class Indict extends Fragment {
     private Spinner spinnerPlayer;
     private Spinner spinnerRoom;
     private Spinner spinnerWeapon;
-    private Bundle extras;
     private Game game;
     private boolean personChosen;
     private boolean roomChosen;
@@ -44,11 +43,20 @@ public class Indict extends Fragment {
     private PopupWindow popupWindow;
     private ViewGroup container;
     private SendToDatabase stb;
+    private GameIsRunningCallback callback;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Activity activity = getActivity();
+
+        try {
+            this.callback = (GameIsRunningCallback)activity;
+        }catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnItemSelected");
+        }
     }
 
     @Override
@@ -207,9 +215,11 @@ public class Indict extends Fragment {
 
             stb.sendData("playerWins", true);
             stb.updateData("prosecutionIsPlaced", true);
+
             Intent intent = new Intent(getActivity(), WinScreen.class);
+            intent.putExtra("gameName", game.getGameName());
             startActivity(intent);
-            getActivity().finish();
+
         }else{
             endTurn();
         }
@@ -248,10 +258,12 @@ public class Indict extends Fragment {
         intent.putExtra("gameName", game.getGameName());
         startActivity(intent);
 
-        MenueDrawer.game.setNextActivePlayer();
-        stb.updateData("aktivePlayer", game.getPlayerManager().getAktivePlayer()); //TODO Listener wird nicht ausgelöst, Gegenspieler können nicht weiter spielen
-        stb.updateData("roomList", game.getRoomManager().getRoomList());
+       // MenueDrawer.game.setNextActivePlayer();
+       // stb.updateData("aktivePlayer", game.getPlayerManager().getAktivePlayer()); //TODO Listener wird nicht ausgelöst, Gegenspieler können nicht weiter spielen
+       // stb.updateData("roomList", game.getRoomManager().getRoomList());
 
-        getActivity().finish();
+        callback.stopTimer();
+        callback.endTurn();
+       // getActivity().finish();
     }
 }

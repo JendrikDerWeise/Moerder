@@ -76,7 +76,12 @@ public class FCMRunningGameListener {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<List<Player>> t = new GenericTypeIndicator<List<Player>>() {};
-                List<Player> playerList = dataSnapshot.getValue(t);
+                List<Player> playerList = null;
+                try{
+                    playerList = dataSnapshot.getValue(t);
+                }catch (NullPointerException e){
+
+                }
                 callback.playerListChanged(playerList);
             }
 
@@ -98,7 +103,12 @@ public class FCMRunningGameListener {
         ValueEventListener ve = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean pause = dataSnapshot.getValue(Boolean.class);
+                boolean pause = false;
+                try {
+                    pause = dataSnapshot.getValue(Boolean.class);
+                }catch (NullPointerException e){
+
+                }
                 callback.pauseIsPressed(pause);
             }
 
@@ -120,7 +130,11 @@ public class FCMRunningGameListener {
         ValueEventListener ve = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Double aktivePlayer = dataSnapshot.getValue(Double.class);
+                Double aktivePlayer = 0.0;
+                try {
+                    aktivePlayer = dataSnapshot.getValue(Double.class);
+                }catch (NullPointerException e) {
+                }
                 callback.aktivePlayerChanged(aktivePlayer);
             }
 
@@ -142,7 +156,12 @@ public class FCMRunningGameListener {
         ValueEventListener ve = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Boolean prosecutionNotify = dataSnapshot.getValue(Boolean.class);
+                Boolean prosecutionNotify = false;
+                try {
+                    prosecutionNotify = dataSnapshot.getValue(Boolean.class);
+                }catch (NullPointerException e){
+
+                }
                 if(prosecutionNotify)
                     callback.prosecutionNotify();
             }
@@ -165,7 +184,12 @@ public class FCMRunningGameListener {
         ValueEventListener ve = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Boolean suspectionNotify = dataSnapshot.getValue(Boolean.class);
+                Boolean suspectionNotify = false;
+                try {
+                    suspectionNotify = dataSnapshot.getValue(Boolean.class);
+                }catch (NullPointerException e){
+
+                }
                 if(suspectionNotify)
                     suspectionObjectListener();
             }
@@ -188,8 +212,12 @@ public class FCMRunningGameListener {
         ValueEventListener ve = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Suspection suspection = dataSnapshot.getValue(Suspection.class);
-//                Log.d("sus", suspection.getPlayer());
+                Suspection suspection = null;
+                try {
+                    suspection = dataSnapshot.getValue(Suspection.class);
+                }catch (NullPointerException e){
+
+                }
                 if(suspection!=null)
                     callback.suspectionNotify(suspection);
             }

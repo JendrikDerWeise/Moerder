@@ -108,4 +108,9 @@ public class SendToDatabase<T> {
         DatabaseReference myRef = database.getReference();
         myRef.child("games").child(gameName).push();
     }
+
+    public void deleteGame(){
+        DatabaseReference myRef = database.getReference();
+        myRef.child("games").child(gameName).removeValue();
+    }
 }
