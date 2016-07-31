@@ -81,6 +81,8 @@
     <string name="popup_suspection_have_clue_title">Du musst einen Hinweis zeigen!</string>
     <string name="popup_suspection_have_clue_message">Diesen Hinweis zeigen:</string>
     <string name="popup_wrong_qrcode">"Falscher Qr Code gescannt, probier es noch ein Mal."</string>
+    <string name="your_turn_txt">"Du bist dran"</string>
+    <string name="toolbar_text">"is playing"</string>
 
 
 </resources>

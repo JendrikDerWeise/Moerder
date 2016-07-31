@@ -105,5 +105,7 @@
     <string name="popup_suspection_have_clue_title">You have to show a clue!</string>
     <string name="popup_suspection_have_clue_message">Show this clue:</string>
     <string name="popup_wrong_qrcode">"Wrong QR Code scanned, try again."</string>
+    <string name="your_turn_txt">"Your turn"</string>
+    <string name="toolbar_text">"is playing"</string>
     <!-- Ende Drawer-Temp-Krams -->
 </resources>
