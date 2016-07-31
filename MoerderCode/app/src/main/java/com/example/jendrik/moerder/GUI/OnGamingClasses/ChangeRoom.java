@@ -93,7 +93,10 @@ public class ChangeRoom extends Fragment {
                         callback.endTurn();
 
                     }else{
-                        //TODO Fehlermeldung Toast? Popup?
+                        int duration = Toast.LENGTH_SHORT;
+                        CharSequence cs = getText(R.string.popup_wrong_qrcode).toString();
+                        Toast toast = Toast.makeText(getActivity(), cs , duration);
+                        toast.show();
                         startRoomScan();
                     }
 

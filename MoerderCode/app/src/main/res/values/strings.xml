@@ -66,6 +66,7 @@
     <string name="enter_player_name">Please enter your name...</string>
     <string name="error_empty_gamename">"GameName can´t be empty!"</string>
 
+
     <string name="new_message_notification_title_template">New message: %1$s</string>
 
     <!-- TODO: remove this placeholder text -->
@@ -101,5 +102,6 @@
     <string name="popup_back_negative_button">No, I would rather stay!</string>
     <string name="popup_suspection_have_clue_title">You have to show a clue!</string>
     <string name="popup_suspection_have_clue_message">Show this clue:</string>
+    <string name="popup_wrong_qrcode">"Wrong QR Code scanned, try again."</string>
     <!-- Ende Drawer-Temp-Krams -->
 </resources>

@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import com.example.jendrik.moerder.GUI.OnGamingClasses.GameIsRunningCallback;
 
 import com.example.jendrik.moerder.FCM.SendToDatabase;
@@ -100,7 +102,10 @@ public class ChangeWeapon extends Fragment{
                         endTurn();
 
                     }else{
-                        //TODO Fehlermeldung Toast? Popup?
+                        int duration = Toast.LENGTH_SHORT;
+                        CharSequence cs = getText(R.string.popup_wrong_qrcode).toString();
+                        Toast toast = Toast.makeText(getActivity(), cs , duration);
+                        toast.show();
                         startWeaponScan();
                     }
 
