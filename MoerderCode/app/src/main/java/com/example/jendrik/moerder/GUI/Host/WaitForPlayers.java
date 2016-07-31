@@ -1,6 +1,8 @@
 package com.example.jendrik.moerder.GUI.Host;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.ObservableList;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.GUI.Join.PopUpEnterName;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.MenueDrawer;
+import com.example.jendrik.moerder.GUI.Startscreen;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.GameObjekts.Solution;
@@ -78,6 +81,31 @@ public class WaitForPlayers extends Activity {
 
 
         //makeActivity();
+    }
+
+    @Override
+    public void onBackPressed(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.mordTheme);
+        builder.setMessage(R.string.popup_back_message);
+        builder.setCancelable(true);
+
+        builder.setPositiveButton(
+                R.string.popup_back_positive,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        builder.setNegativeButton(
+                R.string.popup_back_negative_button,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        startActivity(new Intent(WaitForPlayers.this, Startscreen.class));
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private ValueEventListener setListener(){

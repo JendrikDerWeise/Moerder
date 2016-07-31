@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.example.jendrik.moerder.FCM.MyFcmListenerService;
 import com.example.jendrik.moerder.FCM.SendToDatabase;
+import com.example.jendrik.moerder.GUI.textfieldHelper;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameHandler;
 import com.example.jendrik.moerder.GameObjekts.Solution;
@@ -67,40 +68,49 @@ public class WeaponNameList extends Activity {
         String pass = extras.getString(CreateGame.PASS, "none");
         final ArrayList<String> weaponList = new ArrayList<>();
 
-        for(int i=0; i < extras.getInt(CreateGame.ROOM_COUNT); i++)
-            weaponList.add(weaponNames.get(i).getText().toString());
+        boolean noEmptyFields = true;
+        for(int i=0; i < extras.getInt(CreateGame.ROOM_COUNT); i++){
+            if(textfieldHelper.stringIsEmpty(weaponNames.get(i).getText().toString())){
+                weaponNames.get(i).setError(getText(R.string.error_empty_single_textfield));
+                noEmptyFields = false;
+            }
+        }
 
-        getIntent().putExtra(WEAPON_LIST, weaponList);
-        final Intent intent = new Intent(this, GivenQrCodes.class);
-        intent.putExtras(extras);
+        if(noEmptyFields){
+            for(int i=0; i < extras.getInt(CreateGame.ROOM_COUNT); i++)
+                weaponList.add(weaponNames.get(i).getText().toString());
+            getIntent().putExtra(WEAPON_LIST, weaponList);
+            final Intent intent = new Intent(this, GivenQrCodes.class);
+            intent.putExtras(extras);
 
-        int min = extras.getInt(CreateGame.COUNTER_MIN);
-        int sec = extras.getInt(CreateGame.COUNTER_SEC);
-        int playerAmount = extras.getInt(CreateGame.PLAYER_COUNT);
-        Game game = new Game(gameName, pass, extras.getStringArrayList("room list"), weaponList, min, sec, playerAmount);
-        intent.putExtra("GAME", game);
+            int min = extras.getInt(CreateGame.COUNTER_MIN);
+            int sec = extras.getInt(CreateGame.COUNTER_SEC);
+            int playerAmount = extras.getInt(CreateGame.PLAYER_COUNT);
+            Game game = new Game(gameName, pass, extras.getStringArrayList("room list"), weaponList, min, sec, playerAmount);
+            intent.putExtra("GAME", game);
 
-        boolean isSecret = extras.getBoolean(CreateGame.SECRET_CHECKED);
-        SendToDatabase sendToDatabase = new SendToDatabase(gameName);
-        sendToDatabase.createGame();
-        sendToDatabase.sendData("isSecret", isSecret);
-        sendToDatabase.sendData("countP",game.getPlayerAmount());
-        sendToDatabase.sendData("countR", (double)game.getRooms().size());
-        sendToDatabase.sendData("min",game.getMin());
-        sendToDatabase.sendData("sec",game.getSec());
-        if(isSecret)
-            sendToDatabase.sendData("pass", game.getPwd());
+            boolean isSecret = extras.getBoolean(CreateGame.SECRET_CHECKED);
+            SendToDatabase sendToDatabase = new SendToDatabase(gameName);
+            sendToDatabase.createGame();
+            sendToDatabase.sendData("isSecret", isSecret);
+            sendToDatabase.sendData("countP",game.getPlayerAmount());
+            sendToDatabase.sendData("countR", (double)game.getRooms().size());
+            sendToDatabase.sendData("min",game.getMin());
+            sendToDatabase.sendData("sec",game.getSec());
+            if(isSecret)
+                sendToDatabase.sendData("pass", game.getPwd());
 
-        sendToDatabase.sendData("roomList", extras.getStringArrayList("room list"));
-        sendToDatabase.sendData("weaponlist",weaponList);
-        List<String> connectedPlayers = new ArrayList<>();
-        connectedPlayers.add("DUMMY");
-        sendToDatabase.sendData("connectedPlayers", connectedPlayers);
-        sendToDatabase.sendData("running", false);
+            sendToDatabase.sendData("roomList", extras.getStringArrayList("room list"));
+            sendToDatabase.sendData("weaponlist",weaponList);
+            List<String> connectedPlayers = new ArrayList<>();
+            connectedPlayers.add("DUMMY");
+            sendToDatabase.sendData("connectedPlayers", connectedPlayers);
+            sendToDatabase.sendData("running", false);
 
-        intent.putExtra("host", true);
-        GameHandler.saveGame(game);
-        startActivity(intent);
+            intent.putExtra("host", true);
+            GameHandler.saveGame(game);
+            startActivity(intent);
 
+        }
     }
 }

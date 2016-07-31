@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.jendrik.moerder.FCM.SendToDatabase;
+import com.example.jendrik.moerder.GUI.textfieldHelper;
 import com.example.jendrik.moerder.R;
 
 /**
@@ -46,8 +47,8 @@ public class CreateGame extends Activity {
         boolean nameDone = false;
 
         final EditText et = (EditText) findViewById(R.id.editText);
-        if( et.getText().toString().length() == 0 )
-            et.setError( "GameName can´t be empty!" );
+        if( et.getText().toString().length() == 0 || textfieldHelper.stringIsEmpty(et.getText().toString()))
+            et.setError( getText(R.string.error_empty_gamename) );
         else
             nameDone = true;
 
@@ -79,17 +80,24 @@ public class CreateGame extends Activity {
         final Intent intent = new Intent(this, RoomNameList.class);
         intent.putExtra(NAME, gameName);
         intent.putExtra(SECRET_CHECKED, isSecret);
+        boolean passwordDone = true;
         if(isSecret){
             final EditText et2 = (EditText) findViewById(R.id.editText2);
-            final String passw = et2.getText().toString();
-            intent.putExtra(PASS, passw);
+            if(textfieldHelper.stringIsEmpty(et2.getText().toString())){
+                et2.setError(getText(R.string.error_empty_single_textfield));
+                passwordDone = false;
+            }else{
+                final String passw = et2.getText().toString();
+                intent.putExtra(PASS, passw);
+            }
+
         }
         intent.putExtra(PLAYER_COUNT, countP);
         intent.putExtra(ROOM_COUNT, countR);
         intent.putExtra(COUNTER_MIN, min);
         intent.putExtra(COUNTER_SEC, sec);
 
-        if(nameDone)
+        if(nameDone&& passwordDone)
             startActivity(intent);
     }
 

@@ -1,6 +1,8 @@
 package com.example.jendrik.moerder.GUI.Join;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -10,6 +12,8 @@ import android.widget.EditText;
 
 import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.GUI.Host.WaitForPlayers;
+import com.example.jendrik.moerder.GUI.Startscreen;
+import com.example.jendrik.moerder.GUI.textfieldHelper;
 import com.example.jendrik.moerder.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -59,6 +63,30 @@ public class PopUpEnterName extends Activity {
         ref.addListenerForSingleValueEvent(vl);
     }
 
+    @Override
+    public void onBackPressed(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.mordTheme);
+        builder.setMessage(R.string.popup_back_message);
+        builder.setCancelable(true);
+
+        builder.setPositiveButton(
+                R.string.popup_back_positive,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        builder.setNegativeButton(
+                R.string.popup_back_negative_button,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        startActivity(new Intent(PopUpEnterName.this, Startscreen.class));
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 
     private void checkNameOK(){
         if (connectedPlayers.contains(pName))
@@ -73,10 +101,16 @@ public class PopUpEnterName extends Activity {
         pName = et.getText().toString();
 
         checkNameOK();
-
-        if(!nameOK)
-            et.setError("Name allready in use. Try another one!");
-        else{
+        boolean allcorrect = true;
+        if(!nameOK) {
+            et.setError(getText(R.string.error_popup_name));
+            allcorrect = false;
+        }
+        if(textfieldHelper.stringIsEmpty(pName)) {
+            et.setError(getText(R.string.error_empty_single_textfield));
+            allcorrect = false;
+        }
+        if(allcorrect){
             boolean host = getIntent().getExtras().getBoolean("host");
             Intent intent;
 

@@ -61,9 +61,10 @@
     <string name="error_change_eapon">There is no weapon in this room. Look at the map to find weapons.</string>
     <string name="txt_error_on_suspect">You have to be not in the room of the group and you have to have a weapon with you!</string>
     <string name="error_popup_password">Please enter a Password!</string>
-    <string name="error_popup_gamename">Gamename allready taken. Please choose another one.</string>
-    <string name="error_popup_name">Playername allready taken. Please choose another one.</string>
+    <string name="error_popup_gamename">Gamename already taken. Please choose another one.</string>
+    <string name="error_popup_name">Playername already taken. Please choose another one.</string>
     <string name="enter_player_name">Please enter your name...</string>
+    <string name="error_empty_gamename">"GameName can´t be empty!"</string>
 
     <string name="new_message_notification_title_template">New message: %1$s</string>
 
@@ -79,6 +80,8 @@
 
     <string name="action_share">Share</string>
     <string name="action_reply">Reply</string>
+    <string name="popup_empty_textfield">All textfields must be filled out.</string>
+    <string name="error_empty_single_textfield">This field cannot be empty.</string>
     <string name="popup_indict_message">This will call all players to the room of group. You should think twice!</string>
     <string name="popup_indict_title">Do you really want to make a prosecution?</string>
     <string name="popup_indict_positive">Got it, call players!</string>
