@@ -48,8 +48,7 @@ public class ShowClues extends Fragment {
 
         fragLayoutV = inflater.inflate(R.layout.fragment_show_clues, container, false);
 
-        //TODO ActivePlayer ändern in festen Spieler, sobald möglich. Sonst werden die Hinweise der Gegener angezeigt
-        clues=MenueDrawer.game.getPlayerManager().getPlayerList().get(MenueDrawer.whoAmI).getGivenClues(); //activePlayer muss entsprechend angepasst werden
+        clues=MenueDrawer.game.getPlayerManager().getPlayerList().get(MenueDrawer.whoAmI).getGivenClues();
 
         final Activity fA = getActivity();
         recyclerView = (RecyclerView) fragLayoutV.findViewById(R.id.recyclerview);

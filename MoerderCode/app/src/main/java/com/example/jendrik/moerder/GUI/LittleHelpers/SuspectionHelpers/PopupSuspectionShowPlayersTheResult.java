@@ -15,7 +15,7 @@ public class PopupSuspectionShowPlayersTheResult extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.mordTheme);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.layout.popup_theme);
         Bundle args = getArguments();
         String suspector = args.getString("suspector");
         String clueOwner = args.getString("clueOwner");

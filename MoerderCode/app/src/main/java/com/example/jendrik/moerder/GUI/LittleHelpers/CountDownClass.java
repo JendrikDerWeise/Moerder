@@ -13,11 +13,12 @@ import java.util.concurrent.TimeUnit;
 
 public class CountDownClass{
 
-    CounterClass timer;
-    TextView textViewTime;
-    Activity activity;
-    long millisOnPause;
-    long millis;
+    private CounterClass timer;
+    private TextView textViewTime;
+    private Activity activity;
+    private long millisOnPause;
+    private long millis;
+    private String str;
 
     /**
      * Verantwortlich fuer das herunterzaehlen einer Rundendauer
@@ -27,12 +28,14 @@ public class CountDownClass{
      * @param min Anzahl Minuten
      * @param sec Anzahl Sekunden
      */
-   public CountDownClass(Activity activity, int min, int sec){
+   public CountDownClass(Activity activity, int min, int sec, String str){
 
-        this.activity = activity;
-        textViewTime = (TextView) activity.findViewById(R.id.timer);
-        int count = (min*60000) + (sec*1000);
-        timer = new CounterClass(count, 1000);
+       this.activity = activity;
+       //textViewTime = (TextView) activity.findViewById(R.id.timer);
+
+       int count = (min*60000) + (sec*1000);
+       timer = new CounterClass(count, 1000);
+       this.str = str;
     }
 
 
@@ -52,7 +55,8 @@ public class CountDownClass{
             String hms = String.format("%02d:%02d",
                     TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
                     TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
-            textViewTime.setText(hms);
+            //textViewTime.setText(hms);
+            activity.setTitle(str + "          " + hms);
             wasPaused = false;
         }
 

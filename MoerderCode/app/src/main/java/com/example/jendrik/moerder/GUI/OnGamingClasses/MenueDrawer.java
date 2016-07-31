@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -24,6 +25,7 @@ import com.example.jendrik.moerder.FCM.FCMRunningGameListener;
 import com.example.jendrik.moerder.FCM.SendToDatabase;
 import com.example.jendrik.moerder.GUI.Host.STUB_FRAG;
 import com.example.jendrik.moerder.GUI.LittleHelpers.CountDownClass;
+import com.example.jendrik.moerder.GUI.LittleHelpers.NotificationBuilder;
 import com.example.jendrik.moerder.GUI.LittleHelpers.PopUpBack;
 import com.example.jendrik.moerder.GUI.LittleHelpers.SuspectionHelpers.PopUpShowSuspectorTheResult;
 import com.example.jendrik.moerder.GUI.LittleHelpers.SuspectionHelpers.PopUpSuspectionInformPlayerWhoHasClue;
@@ -71,6 +73,8 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     private FCMRunningGameListener fcm;
     private String pNumber;
     private SendToDatabase stb;
+    private NotificationBuilder mBuilder;
+    NotificationManager mNotificationManager;
 
 
     /**
@@ -81,8 +85,6 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        //TODO verhindern das "Zurücktaste" von Android in die Spielerstellung zurück kehrt. Wie geht das? Ggf. finish()?
         whoAmI = getIntent().getExtras().getInt("whoAmI");
         game =(Game) getIntent().getExtras().get("GAME");
         myTurn = getIntent().getBooleanExtra("myTurn", false);
@@ -99,6 +101,8 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
             findViewById(R.id.toolbar1).setBackgroundResource(R.color.colorOtherTurn);
         else
             findViewById(R.id.toolbar1).setBackgroundResource(R.color.colorPrimary);
+
+
 
         setLayout();
         instantiateFragments();
@@ -117,6 +121,9 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         fcm.activePlayerListener();
         fcm.prosecutionNotifyListener();
         fcm.suspectionNotifyListener();
+
+        mBuilder = new NotificationBuilder(this);
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
     @Override
@@ -126,7 +133,8 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         if(!myTurn){
             notActive();
         }else {
-            timer = new CountDownClass(this, (int) game.getMin(), (int) game.getSec());
+            String str = getResources().getString(R.string.your_turn_txt);
+            timer = new CountDownClass(this, (int) game.getMin(), (int) game.getSec(), str);
             timer.getTimer().start();
         }
     }
@@ -145,10 +153,11 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
 
-        if(!myTurn) {//TODO mit Listener koppeln, damit immer aktueller Spieler angezeigt wird. So wie es jetzt ist, zeigt es vermutlich dauerhaft den nächsten Spieler an
+      /*  if(!myTurn) {
+            String toolbarText = " " + getResources().getString(R.string.toolbar_text);
             TextView timerView = (TextView) findViewById(R.id.timer);
-            timerView.setText(game.getActivePlayer().getName());
-        }
+            timerView.setText(game.getPlayerManager().get.getName() + toolbarText);
+        }*/
 
         drawerLayoutgesamt = (DrawerLayout) findViewById(R.id.drawerlayoutgesamt);
         drawerToggle = new ActionBarDrawerToggle(MenueDrawer.this,drawerLayoutgesamt,R.string.auf, R.string.zu);
@@ -251,7 +260,6 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
                     }
 
                     case R.id.pause: {
-                        //TODO Pause Broadcast
                         if(myTurn)
                             timer.pause();
                         menueSetter(pause);
@@ -275,7 +283,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     }
 
     /**
-     * das Spielobjekt wird in die Extras abgelegt. Hier TODO wuerde der "Send"-Befehl gut hinpassen
+     * das Spielobjekt wird in die Extras abgelegt.
      * Activity wird anschliessend neu gestartet.
      */
     public void endTurn(){
@@ -365,14 +373,22 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         }
     }
 
-    public void aktivePlayerChanged(double aktivePlayer){
-        int aktivePlayerInt = (int)aktivePlayer;
-        if(aktivePlayerInt == whoAmI && !myTurn) {
+    public void aktivePlayerChanged(double activePlayer){
+        int activePlayerInt = (int)activePlayer;
+        if(activePlayerInt == whoAmI && !myTurn) {
             myTurn = true;
             getIntent().putExtra("myTurn", myTurn);
             getIntent().putExtra("GAME", game);
             finish();
             startActivity(getIntent());
+            mBuilder.setBuilder("Your Turn!", "It´s now on you");
+            mNotificationManager.notify(23,mBuilder.getBuilder().build());
+        }else{
+            String toolbarText = " " + getResources().getString(R.string.toolbar_text);
+            //TextView timerView = (TextView) findViewById(R.id.timer);
+            //timerView.setText(game.getPlayerManager().getPlayerList().get(activePlayerInt) + toolbarText);
+
+            setTitle(game.getPlayerManager().getPlayerList().get(activePlayerInt).getName() + " " + toolbarText);
         }
 
         //TODO AktivePlayer Name in Leiste anzeigen und hier ändern
@@ -587,12 +603,12 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         Auto-generated methods
  */
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -634,6 +650,14 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
             timer.getTimer().cancel();
 
         fcm.unbindListeners();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+//        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+  //      notificationManager.cancelAll();
     }
 
 

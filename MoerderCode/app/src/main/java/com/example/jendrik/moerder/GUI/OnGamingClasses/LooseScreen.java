@@ -16,7 +16,6 @@ public class LooseScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player_looses);
-
     }
 
     @Override

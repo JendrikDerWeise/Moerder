@@ -34,10 +34,12 @@ public class JoinGame extends Activity {
     private ChildEventListener el;
     private DatabaseReference runningChecker;
     private ValueEventListener ve;
+    private ArrayAdapter adapter;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_game);
+        runningChecker = FirebaseDatabase.getInstance().getReference();
         lv = (ListView)findViewById(R.id.JoinListView);
         games = new ArrayList();
         database = FirebaseDatabase.getInstance();
@@ -46,7 +48,8 @@ public class JoinGame extends Activity {
        // myRef.addChildEventListener(el);
         ve = addVEventListener();
         myRef.addValueEventListener(ve);
-        runningChecker = FirebaseDatabase.getInstance().getReference();
+        adapter = new ArrayAdapter(JoinGame.this,android.R.layout.simple_list_item_1,games);
+        lv.setAdapter(adapter);
 
         setTouchListener();
     }
@@ -94,17 +97,20 @@ public class JoinGame extends Activity {
         games.clear();
         for (DataSnapshot ds : snapshot.getChildren()){
             String gameName = ds.getKey();
-            //checkRunning(gameName);
-            if(!isRunning)
-                games.add(gameName);
+            games.add(gameName);
         }
 
-        if(games.size()>0){
+        for(String gameName : games){
+            checkRunning(gameName);
+        }
+
+        /*if(games.size()>0){
             ArrayAdapter adapter = new ArrayAdapter(JoinGame.this,android.R.layout.simple_list_item_1,games);
+            adapter.notifyDataSetChanged();
             lv.setAdapter(adapter);
         }
         else
-            Toast.makeText(this,"There are no games on the list!",Toast.LENGTH_SHORT);
+            Toast.makeText(this,"There are no games on the list!",Toast.LENGTH_SHORT);*/
     }
 
 
@@ -143,11 +149,16 @@ public class JoinGame extends Activity {
     }
 
     private void checkRunning(String gameName) {
+        final String lGameName = gameName;
 
         runningChecker.child("games").child(gameName).child("running").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 isRunning = dataSnapshot.getValue(Boolean.class);
+                if(isRunning) {
+                    games.remove(lGameName);
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
