@@ -64,7 +64,24 @@ public class RoomNameList extends Activity {
                 noEmptyFields = false;
             }
         }
+        boolean noDoubles = true;
         if(noEmptyFields){
+            for(int i=0; i < extras.getInt(CreateGame.ROOM_COUNT); i++) {
+                roomList.add(roomNames.get(i).getText().toString());
+            }
+            for(int i=0; i < roomList.size(); i++){
+                for(int j=0; j < roomList.size(); j++){
+                    if(i != j){
+                        if(roomList.get(i).equals(roomList.get(j))&& i < j){
+                            roomNames.get(j).setError(getText(R.string.error_popup_room));
+                            noDoubles = false;
+                        }
+                    }
+                }
+            }
+        }
+
+        if(noEmptyFields&& noDoubles){
             for(int i=0; i < extras.getInt(CreateGame.ROOM_COUNT); i++) {
                 roomList.add(roomNames.get(i).getText().toString());
             }

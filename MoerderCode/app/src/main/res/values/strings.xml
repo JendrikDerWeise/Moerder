@@ -65,6 +65,8 @@
     <string name="error_popup_name">Playername already taken. Please choose another one.</string>
     <string name="enter_player_name">Please enter your name...</string>
     <string name="error_empty_gamename">"GameName can´t be empty!"</string>
+    <string name="error_popup_room">This room already exists.</string>
+    <string name="error_popup_weapon">Diesen Weapon gibt es schon.</string>
 
 
     <string name="new_message_notification_title_template">New message: %1$s</string>

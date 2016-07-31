@@ -75,11 +75,25 @@ public class WeaponNameList extends Activity {
                 noEmptyFields = false;
             }
         }
-
+        boolean noDoubles = true;
         if(noEmptyFields){
-            for(int i=0; i < extras.getInt(CreateGame.ROOM_COUNT); i++)
+            for(int i=0; i < extras.getInt(CreateGame.ROOM_COUNT); i++) {
                 weaponList.add(weaponNames.get(i).getText().toString());
-            getIntent().putExtra(WEAPON_LIST, weaponList);
+            }
+            for(int i=0; i < weaponList.size(); i++){
+                for(int j=0; j < weaponList.size(); j++){
+                    if(i != j){
+                        if(weaponList.get(i).equals(weaponList.get(j)) && i < j){
+                            weaponNames.get(j).setError(getText(R.string.error_popup_weapon));
+                            noDoubles = false;
+                        }
+                    }
+                }
+            }
+        }
+
+        if(noEmptyFields&& noDoubles){
+
             final Intent intent = new Intent(this, GivenQrCodes.class);
             intent.putExtras(extras);
 
