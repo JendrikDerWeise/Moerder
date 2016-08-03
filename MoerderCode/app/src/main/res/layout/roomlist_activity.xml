@@ -6,114 +6,143 @@
     tools:context=".RoomNameList"
     android:background="@color/colorBackground">
 
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorOtherTurn"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp">
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView" >
 
-        <FrameLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp" >
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorOtherTurn"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp" >
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_enterRoomName"
+                            android:id="@+id/textView"
+                            android:textColor="@color/colorFont"
+                            android:textSize="18sp" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/editText3"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="@color/colorFont"
+                            android:textSize="16sp"
+                            android:singleLine="true"
+                            />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/editText4"
+                            android:textColor="@color/colorFont"
+                            android:textSize="16sp"
+                            android:singleLine="true"
+                            />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/editText5"
+                            android:textColor="@color/colorFont"
+                            android:textSize="16sp"
+                            android:singleLine="true"                     />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/editText6"
+                            android:textColor="@color/colorFont"
+                            android:textSize="16sp"
+                            android:maxLines="1"
+                            />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/editText7"
+                            android:textColor="@color/colorFont"
+                            android:textSize="16sp"
+                            android:maxLines="1"
+                            />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/editText8"
+                            android:textColor="@color/colorFont"
+                            android:textSize="16sp"
+                            android:maxLines="1"
+                            />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/editText9"
+                            android:textColor="@color/colorFont"
+                            android:textSize="16sp"
+                            android:maxLines="1"
+                            />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/editText10"
+                            android:textColor="@color/colorFont"
+                            android:textSize="16sp"
+                            android:maxLines="1"
+                            />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/editText11"
+                            android:textColor="@color/colorFont"
+                            android:textSize="16sp"
+                            android:maxLines="1"
+                            />
+                    </LinearLayout>
+                </FrameLayout>
+            </FrameLayout>
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
 
-                <TextView
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/txt_enterRoomName"
-                    android:id="@+id/textView"
+                    android:text="@string/next_button"
+                    android:id="@+id/button"
+                    android:onClick="onClickNextButtonR"
                     android:textColor="@color/colorFont"
-                    android:textSize="18sp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText3"
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/colorFont"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText4"
-                    android:textColor="@color/colorFont"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText5"
-                    android:textColor="@color/colorFont"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText6"
-                    android:textColor="@color/colorFont"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText7"
-                    android:textColor="@color/colorFont"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText8"
-                    android:textColor="@color/colorFont"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText9"
-                    android:textColor="@color/colorFont"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText10"
-                    android:textColor="@color/colorFont"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText11"
-                    android:textColor="@color/colorFont"
-                    android:textSize="16sp" />
+                    android:layout_gravity="center"
+                    android:textSize="20dp" />
             </LinearLayout>
-        </FrameLayout>
-    </FrameLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/next_button"
-            android:id="@+id/button"
-            android:onClick="onClickNextButtonR"
-            android:textColor="@color/colorFont"
-            android:layout_gravity="center"
-            android:textSize="20dp" />
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
