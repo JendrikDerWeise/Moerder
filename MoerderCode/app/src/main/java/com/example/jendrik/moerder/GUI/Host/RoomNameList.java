@@ -52,6 +52,7 @@ public class RoomNameList extends Activity {
 
        for(int i=extras.getInt(CreateGame.ROOM_COUNT); i < roomNames.size(); i++){
            roomNames.get(i).setVisibility(View.INVISIBLE);
+
        }
    }
 
@@ -62,6 +63,7 @@ public class RoomNameList extends Activity {
             if(textfieldHelper.stringIsEmpty(roomNames.get(i).getText().toString())){
                 roomNames.get(i).setError( getText(R.string.error_empty_single_textfield ));
                 noEmptyFields = false;
+                break;
             }
         }
         boolean noDoubles = true;
@@ -75,6 +77,7 @@ public class RoomNameList extends Activity {
                         if(roomList.get(i).equals(roomList.get(j))&& i < j){
                             roomNames.get(j).setError(getText(R.string.error_popup_room));
                             noDoubles = false;
+                            break;
                         }
                     }
                 }
@@ -82,9 +85,9 @@ public class RoomNameList extends Activity {
         }
 
         if(noEmptyFields&& noDoubles){
-            for(int i=0; i < extras.getInt(CreateGame.ROOM_COUNT); i++) {
+            /*for(int i=0; i < extras.getInt(CreateGame.ROOM_COUNT); i++) {
                 roomList.add(roomNames.get(i).getText().toString());
-            }
+            }*/
             final Intent intent = new Intent(this, WeaponNameList.class);
             intent.putExtras(extras);
             intent.putExtra("room list", roomList);

@@ -73,6 +73,7 @@ public class WeaponNameList extends Activity {
             if(textfieldHelper.stringIsEmpty(weaponNames.get(i).getText().toString())){
                 weaponNames.get(i).setError(getText(R.string.error_empty_single_textfield));
                 noEmptyFields = false;
+                break;
             }
         }
         boolean noDoubles = true;
@@ -86,6 +87,7 @@ public class WeaponNameList extends Activity {
                         if(weaponList.get(i).equals(weaponList.get(j)) && i < j){
                             weaponNames.get(j).setError(getText(R.string.error_popup_weapon));
                             noDoubles = false;
+                            break;
                         }
                     }
                 }
@@ -100,7 +102,8 @@ public class WeaponNameList extends Activity {
             int min = extras.getInt(CreateGame.COUNTER_MIN);
             int sec = extras.getInt(CreateGame.COUNTER_SEC);
             int playerAmount = extras.getInt(CreateGame.PLAYER_COUNT);
-            Game game = new Game(gameName, pass, extras.getStringArrayList("room list"), weaponList, min, sec, playerAmount);
+            ArrayList<String> roomList = extras.getStringArrayList("room list");
+            Game game = new Game(gameName, pass, roomList, weaponList, min, sec, playerAmount);
             intent.putExtra("GAME", game);
 
             boolean isSecret = extras.getBoolean(CreateGame.SECRET_CHECKED);
@@ -122,7 +125,7 @@ public class WeaponNameList extends Activity {
             sendToDatabase.sendData("running", false);
 
             intent.putExtra("host", true);
-            GameHandler.saveGame(game);
+            //GameHandler.saveGame(game);
             startActivity(intent);
 
         }

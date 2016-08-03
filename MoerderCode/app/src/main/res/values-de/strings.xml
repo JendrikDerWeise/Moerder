@@ -5,8 +5,7 @@
     <string name="rules">Spielregeln</string>
     <string name="host">Spiel hosten</string>
     <string name="gameName">Spiel Name:</string>
-    <string name="amount">Anzahl:</string>
-    <string name="countPlayers">Spieler:</string>
+    <string name="countPlayers">Anzahl Spieler:</string>
     <string name="countRooms">Räume:</string>
     <string name="countWeapons">Waffen:</string>
     <string name="next_button">Weiter</string>
