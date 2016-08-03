@@ -69,15 +69,15 @@ public class PopUpEnterName extends Activity {
         builder.setMessage(R.string.popup_back_message);
         builder.setCancelable(true);
 
-        builder.setPositiveButton(
-                R.string.popup_back_positive,
+        builder.setNegativeButton(
+                R.string.popup_back_negative_button,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
                 });
-        builder.setNegativeButton(
-                R.string.popup_back_negative_button,
+        builder.setPositiveButton(
+                R.string.popup_back_positive,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
