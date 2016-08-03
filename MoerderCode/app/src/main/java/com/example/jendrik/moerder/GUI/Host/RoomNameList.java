@@ -85,9 +85,6 @@ public class RoomNameList extends Activity {
         }
 
         if(noEmptyFields&& noDoubles){
-            /*for(int i=0; i < extras.getInt(CreateGame.ROOM_COUNT); i++) {
-                roomList.add(roomNames.get(i).getText().toString());
-            }*/
             final Intent intent = new Intent(this, WeaponNameList.class);
             intent.putExtras(extras);
             intent.putExtra("room list", roomList);
