@@ -36,55 +36,73 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText12"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:singleLine="true"
+                    />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText13"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:singleLine="true"
+                    />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText14"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:singleLine="true"
+                    />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText15"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:singleLine="true"
+                    />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText16"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:singleLine="true"
+                    />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText17"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:singleLine="true"
+                    />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText18"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:singleLine="true"
+                    />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText19"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:singleLine="true"
+                    />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText20"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:singleLine="true"
+                    />
             </LinearLayout>
         </FrameLayout>
     </FrameLayout>

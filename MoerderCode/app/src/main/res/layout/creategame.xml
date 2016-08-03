@@ -40,7 +40,9 @@
                     android:id="@+id/editText"
                     android:textColor="@color/colorFont"
                     android:autoText="false"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:singleLine="true"
+                    />
 
                 <CheckBox
                     android:layout_marginTop="20dp"
@@ -58,14 +60,25 @@
                     android:id="@+id/editText2"
                     android:password="true"
                     android:textColor="@color/colorFont"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:singleLine="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/amount"
+                    android:id="@+id/txt_amount"
+                    android:textColor="@color/colorFont"
+                    android:textSize="18sp"
+                    android:textIsSelectable="false" />
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:layout_marginTop="18dp">
+                    android:layout_marginTop="8dp">
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -101,6 +114,24 @@
                             android:layout_weight="1"
                             android:textSize="18sp" />
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/countWeapons"
+                            android:id="@+id/txt_countWeapons"
+                            android:textColor="@color/colorFont"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            android:textIsSelectable="false" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -108,7 +139,7 @@
                     android:layout_marginLeft="3dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="45dp">
 
                     <!-- Border and Textsize -->
                     <LinearLayout
@@ -116,8 +147,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginRight="80dp"
-                        android:background="@drawable/border">
+                        android:background="@drawable/border"
+                        android:layout_marginRight="10dp">
 
 
                         <Spinner
@@ -140,8 +171,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginRight="80dp"
-                        android:background="@drawable/border">
+                        android:background="@drawable/border"
+                        android:layout_marginRight="10dp">
 
                         <Spinner
                             android:layout_width="fill_parent"
@@ -152,6 +183,27 @@
                             android:entryValues="@array/rooms"
                             android:layout_weight="1" />
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:layout_marginRight="10dp">
+
+                        <Spinner
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:id="@+id/spinner_weapon"
+                            android:drawSelectorOnTop="true"
+                            android:spinnerMode="dropdown"
+                            android:layout_weight="1"
+                            android:entries="@array/weapon_numbers"
+                            android:entryValues="@array/players"
+                            android:contextClickable="false" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -188,7 +240,9 @@
                             android:layout_gravity="center_horizontal"
                             android:text="3"
                             android:textColor="@color/colorFont"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:singleLine="true"
+                            />
                     </LinearLayout>
 
                     <LinearLayout
@@ -216,7 +270,9 @@
                             android:id="@+id/et_seconds"
                             android:text="00"
                             android:textColor="@color/colorFont"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:singleLine="true"
+                            />
                     </LinearLayout>
 
                     <LinearLayout

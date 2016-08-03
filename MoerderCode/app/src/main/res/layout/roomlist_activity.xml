@@ -39,63 +39,81 @@
                     android:id="@+id/editText3"
                     android:layout_gravity="center_horizontal"
                     android:textColor="@color/colorFont"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:singleLine="true"
+                    />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText4"
                     android:textColor="@color/colorFont"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:singleLine="true"
+                    />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText5"
                     android:textColor="@color/colorFont"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:singleLine="true"
+                    />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText6"
                     android:textColor="@color/colorFont"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:singleLine="true"
+                    />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText7"
                     android:textColor="@color/colorFont"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:singleLine="true"
+                    />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText8"
                     android:textColor="@color/colorFont"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:singleLine="true"
+                    />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText9"
                     android:textColor="@color/colorFont"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:singleLine="true"
+                    />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText10"
                     android:textColor="@color/colorFont"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:singleLine="true"
+                    />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText11"
                     android:textColor="@color/colorFont"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:singleLine="true"
+                    />
             </LinearLayout>
         </FrameLayout>
     </FrameLayout>
