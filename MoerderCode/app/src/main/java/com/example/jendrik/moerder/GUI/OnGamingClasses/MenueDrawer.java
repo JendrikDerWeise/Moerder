@@ -381,8 +381,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
             getIntent().putExtra("GAME", game);
             finish();
             startActivity(getIntent());
-            mBuilder.setBuilder("Your Turn!", "It´s now on you");
-            mNotificationManager.notify(23,mBuilder.getBuilder().build());
+
         }else{
             String toolbarText = " " + getResources().getString(R.string.toolbar_text);
             //TextView timerView = (TextView) findViewById(R.id.timer);
@@ -433,6 +432,9 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     public void suspectionNotify(Suspection suspection){
         this.suspection = suspection;
         this.suspection.setCallback(this);
+
+        mBuilder.setBuilder("Gerufen worden", "Geh in Raum "+ suspection.getRoom());
+        mNotificationManager.notify(23,mBuilder.getBuilder().build());
 
         String ownName = game.getPlayerManager().getPlayerList().get(whoAmI).getName();
 
