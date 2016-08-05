@@ -28,7 +28,7 @@
         android:onClick="onClickInDrawer"
         android:gravity="center_vertical|center_horizontal"
         android:layout_gravity="center"
-        android:background="@color/colorPrimary"
+        android:background="?android:colorPrimary"
         android:padding="10dp"
         android:textColor="@color/colorFont"
         android:textSize="30dp" />

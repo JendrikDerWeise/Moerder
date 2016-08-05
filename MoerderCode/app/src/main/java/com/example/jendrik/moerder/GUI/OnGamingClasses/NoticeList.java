@@ -42,20 +42,19 @@ public class NoticeList extends Fragment {
 
         fragLayoutV = inflater.inflate(R.layout.fragment_list, container, false);
         createTabs();
-       /* if(!MenueDrawer.myTurn){
+        if(!MenueDrawer.myTurn){
 
-            fragLayoutV.findViewById(R.id.toolbar).setBackgroundResource(R.color.colorOtherTurnLight);
             fragLayoutV.findViewById(R.id.tablayout).setBackgroundResource(R.color.colorOtherTurn);
-
+            fragLayoutV.findViewById(R.id.viewpager).setBackgroundResource(R.color.colorOtherTurnLight);
 
 
         }else {
 
-            fragLayoutV.findViewById(R.id.toolbar).setBackgroundResource(R.color.colorPrimary);
-            fragLayoutV.findViewById(R.id.tablayout).setBackgroundResource(R.color.colorPrimaryDark);
+            fragLayoutV.findViewById(R.id.tablayout).setBackgroundResource(R.color.colorPrimary);
+            fragLayoutV.findViewById(R.id.viewpager).setBackgroundResource(R.color.colorPrimaryDark);
 
 
-        }*/
+        }
         return fragLayoutV;
     }
 

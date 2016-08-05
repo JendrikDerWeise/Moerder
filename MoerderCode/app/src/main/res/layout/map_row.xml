@@ -13,7 +13,7 @@
     <TextView
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        app:layout_widthPercent="5%"
+        app:layout_widthPercent="25%"
         app:layout_heightPercent="100%"
         app:layout_marginTopPercent="5%"
         app:layout_marginLeftPercent="2%"
@@ -21,8 +21,8 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/txt_roomname_map"
-android:textSize="15dp"
-        android:background="@color/colorBackground"
+        android:textSize="15dp"
+        android:rotation="-90"
         android:textColor="#ffffff"
 
 
@@ -38,10 +38,10 @@ android:textSize="15dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/txt_weapons_in_room_map"
-        android:background="@color/colorPrimaryDark"
+        android:background="?android:colorPrimaryDark"
         android:textColor="#ffffff"
 
-    />
+        android:textSize="16sp" />
 
     <TextView
         android:layout_height="match_parent"
@@ -53,21 +53,24 @@ android:textSize="15dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/txt_weapons_in_room_map2"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="#ffffff"/>
+        android:background="?android:colorPrimaryDark"
+        android:textColor="#ffffff"
+        android:textSize="16sp" />
 
     <TextView
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        app:layout_widthPercent="5%"
+        app:layout_widthPercent="25%"
         app:layout_heightPercent="100%"
         app:layout_marginTopPercent="5%"
-        app:layout_marginLeftPercent="93%"
+        app:layout_marginLeftPercent="74%"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:textSize="15dp"
+        android:rotation="-90"
         android:id="@+id/txt_roomname_map2"
-        android:background="@color/colorBackground"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:gravity="bottom" />
 </android.support.percent.PercentRelativeLayout>
+
 </LinearLayout>
