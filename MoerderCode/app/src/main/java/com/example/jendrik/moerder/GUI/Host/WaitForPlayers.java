@@ -206,21 +206,28 @@ public class WaitForPlayers extends Activity {
 
 
     public void onClickStartGame(View button){
+        //TODO folgende Zeile auskommentieren und bool aus if abfrage loeschen oder auf false setzen
+        boolean demo = true;
+        if(playerNames.size() != game.getPlayerAmount() && !demo){
+            int duration = Toast.LENGTH_SHORT;
+            CharSequence cs = getText(R.string.popup_not_enough_players).toString();
+            Toast toast = Toast.makeText(this, cs , duration);
+            toast.show();
+        }else {
 
-        //TODO prüfen ob Spieleranzahl==Spieler in Liste
+            makePlayerObjects();
+            game.setGameIsRunning(true);
+            sendGameStuffToDB();
+            myRef.removeEventListener(el);
 
-        makePlayerObjects();
-        game.setGameIsRunning(true);
-        sendGameStuffToDB();
-        myRef.removeEventListener(el);
+            //Clients informieren, Spiel zu starten
+            final Intent intent = new Intent(this, MenueDrawer.class);
+            intent.putExtra("gameName", gameName);
+            intent.putExtra("GAME", game);
+            intent.putExtra("whoAmI", 0);
+            intent.putExtra("myTurn", true);
 
-        //Clients informieren, Spiel zu starten
-        final Intent intent = new Intent(this,MenueDrawer.class);
-        intent.putExtra("gameName", gameName);
-        intent.putExtra("GAME",game);
-        intent.putExtra("whoAmI", 0);
-        intent.putExtra("myTurn", true);
-
-        startActivity(intent);
+            startActivity(intent);
+        }
     }
 }

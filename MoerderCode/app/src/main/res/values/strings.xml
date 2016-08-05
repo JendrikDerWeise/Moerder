@@ -103,6 +103,7 @@
     <string name="popup_back_title">Have you thought that through?</string>
     <string name="popup_back_positive">Yes, I am out!</string>
     <string name="popup_back_negative_button">No, I would rather stay!</string>
+    <string name="popup_not_enough_players">You cannot start the game until all players joined.</string>
     <string name="popup_suspection_have_clue_title">You have to show a clue!</string>
     <string name="popup_suspection_have_clue_message">Show this clue:</string>
     <string name="popup_wrong_qrcode">"Wrong QR Code scanned, try again."</string>
