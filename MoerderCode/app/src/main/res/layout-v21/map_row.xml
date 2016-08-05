@@ -38,7 +38,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/txt_weapons_in_room_map"
-        android:background="@color/colorPrimaryDark"
+        android:background="?android:colorPrimaryDark"
         android:textColor="#ffffff"
 
         android:textSize="16sp" />
@@ -53,7 +53,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/txt_weapons_in_room_map2"
-        android:background="@color/colorPrimaryDark"
+        android:background="?android:colorPrimaryDark"
         android:textColor="#ffffff"
         android:textSize="16sp" />
 

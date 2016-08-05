@@ -19,9 +19,9 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:launchMode="singleTop"
         android:supportsRtl="true"
-        android:theme="@style/mordThemeNotTurn"
-        android:launchMode="singleTop">
+        android:theme="@style/mordThemeNotTurn" >
         <service android:name=".FCM.MyFirebaseInstanceIDService" >
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
