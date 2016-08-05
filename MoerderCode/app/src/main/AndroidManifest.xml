@@ -67,7 +67,8 @@
         <activity
             android:name=".GUI.Host.WaitForPlayers"
             android:label="@string/txt_wait_for_players" />
-        <activity android:name=".GUI.OnGamingClasses.MenueDrawer" />
+        <activity android:name=".GUI.OnGamingClasses.MenueDrawer"
+            />
         <activity android:name=".GUI.LittleHelpers.ProsecutionHelpers.ProsecutionWaitingForPlayers" />
         <activity
             android:name=".GUI.LittleHelpers.PopUpNobodyHasCards"

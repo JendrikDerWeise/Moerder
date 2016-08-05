@@ -97,12 +97,9 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         setContentView(R.layout.menu_drawer);
 
         if(!MenueDrawer.myTurn)
-
             findViewById(R.id.toolbar1).setBackgroundResource(R.color.colorOtherTurn);
         else
             findViewById(R.id.toolbar1).setBackgroundResource(R.color.colorPrimary);
-
-
 
         setLayout();
         instantiateFragments();
@@ -434,8 +431,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         String ownName = game.getPlayerManager().getPlayerList().get(whoAmI).getName();
 
         if(suspection.getPlayer().equals(ownName) && !suspection.isPlayerCalled()){
-            makeNotify("Du wirst gerufen!", "Begib dich in Raum", suspection.getRoom());
-            //suspectionRoom = game.getNumberByName(suspection.getRoom());
+            makeNotify("Du wirst gerufen!", "Begib dich in Raum", suspection.getRoom());//TODO String-Ressource englisch deutsch
             for(Room r : game.getRooms()){
                 if(r.getName().equals(suspection.getRoom()))
                     suspectionRoom = (int)r.getQrCode();

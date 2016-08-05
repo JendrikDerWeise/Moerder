@@ -36,8 +36,6 @@ public class PopUpSuspectionInformPlayerWhoHasClue extends DialogFragment {
                 .setTitle( title)
                 .setItems(cs, makeOnClickListener());
 
-        ViewPager viewPager = (ViewPager)getView().findViewById(R.id.pager);
-
         return builder.create();
     }
 

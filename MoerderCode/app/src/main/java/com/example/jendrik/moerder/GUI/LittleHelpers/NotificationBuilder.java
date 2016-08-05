@@ -29,11 +29,11 @@ public class NotificationBuilder {
         mBuilder.setContentText(txt);
         mBuilder.setVibrate(new long[]{500,500});
         mBuilder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
-        Intent intent = new Intent(mContext, MenueDrawer.class);
-        intent.addFlags( Intent.FLAG_FROM_BACKGROUND);
-        PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-        mBuilder.setContentIntent(pendingIntent);
+        //Intent intent = new Intent(mContext, MenueDrawer.class);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_FROM_BACKGROUND);
+        //PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0 /* Request code */, intent,
+          //      PendingIntent.FLAG_ONE_SHOT);
+        //mBuilder.setContentIntent(pendingIntent);
     }
 
     public NotificationCompat.Builder getBuilder(){
