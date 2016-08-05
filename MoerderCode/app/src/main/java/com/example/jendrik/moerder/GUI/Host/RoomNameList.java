@@ -5,10 +5,14 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.jendrik.moerder.GUI.Host.AdapterClasses.RoomAdapterClass;
+import com.example.jendrik.moerder.GUI.LittleHelpers.ClueAdapterClass;
 import com.example.jendrik.moerder.GUI.textfieldHelper;
 import com.example.jendrik.moerder.R;
 
@@ -18,8 +22,11 @@ import java.util.List;
 
 public class RoomNameList extends Activity {
   //  public static ArrayList ROOM_LIST = "room list";
-    private List<EditText> roomNames;
+    public static List<EditText> roomNames;
     private Bundle extras;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter rvadapter;
+    private RecyclerView.LayoutManager rvLayoutManager;
 
     /**
      * Die Klasse wurde erstellt, als ich die entsprechende Listenfunktion noch nicht kannte.
@@ -32,29 +39,33 @@ public class RoomNameList extends Activity {
 
        extras = getIntent().getExtras();
 
-       roomNames = new ArrayList<>();
+       makeList();
+       final Activity fA = this;
+       recyclerView = (RecyclerView) findViewById(R.id.recyclerview_rooms);
+       rvLayoutManager = new LinearLayoutManager(fA);
+       recyclerView.setLayoutManager(rvLayoutManager);
 
-       roomNames.add((EditText) findViewById(R.id.editText3));
-       roomNames.add((EditText) findViewById(R.id.editText4));
-       roomNames.add((EditText) findViewById(R.id.editText5));
-       roomNames.add((EditText) findViewById(R.id.editText6));
-       roomNames.add((EditText) findViewById(R.id.editText7));
-       roomNames.add((EditText) findViewById(R.id.editText8));
-       roomNames.add((EditText) findViewById(R.id.editText9));
-       roomNames.add((EditText) findViewById(R.id.editText10));
-       roomNames.add((EditText) findViewById(R.id.editText11));
-
-       int a=1;
-       for(EditText r:roomNames) {
-           r.setText("DUMMY ROOM " + a); //TODO löschen bei Endversion
-           a++;
-       }
-
-       for(int i=extras.getInt(CreateGame.ROOM_COUNT); i < roomNames.size(); i++){
-           roomNames.get(i).setVisibility(View.INVISIBLE);
-
-       }
+       rvadapter = new RoomAdapterClass();
+       recyclerView.setAdapter(rvadapter);
    }
+
+    private void makeList(){
+        roomNames = new ArrayList<>();
+        for(int i=0; i<extras.getInt(CreateGame.ROOM_COUNT);i++){
+            roomNames.add(new EditText(this));
+        }
+
+        int a=1;
+        for(EditText r:roomNames) {
+            r.setText("DUMMY ROOM " + a); //TODO löschen bei Endversion
+            a++;
+        }
+
+       /* for(int i=extras.getInt(CreateGame.ROOM_COUNT); i < roomNames.size(); i++){
+            roomNames.get(i).setVisibility(View.INVISIBLE);
+
+        }*/
+    }
 
     public void onClickNextButtonR(View button){
         final ArrayList<String> roomList = new ArrayList<>();
