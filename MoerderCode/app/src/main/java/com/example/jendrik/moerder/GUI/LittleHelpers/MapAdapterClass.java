@@ -2,6 +2,7 @@ package com.example.jendrik.moerder.GUI.LittleHelpers;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,9 +33,31 @@ public class MapAdapterClass extends RecyclerView.Adapter<MapAdapterClass.ViewHo
             tvWeaponName = (TextView) itemView.findViewById(R.id.txt_weapons_in_room_map);
             tvRoomName2 = (TextView) itemView.findViewById(R.id.txt_roomname_map2);
             tvWeaponName2 = (TextView) itemView.findViewById(R.id.txt_weapons_in_room_map2);
-
-
         }
+    }
+
+    int i;
+    int count;
+    int pos;
+    public void onViewAttachedToWindow(ViewHolderClass holder) {
+        super.onViewAttachedToWindow(holder);
+        if(holder instanceof ViewHolderClass && pos <= count-1){
+            holder.tvRoomName.setVisibility(View.VISIBLE);
+            holder.tvRoomName2.setVisibility(View.VISIBLE);
+            holder.tvWeaponName.setVisibility(View.VISIBLE);
+            holder.tvWeaponName2.setVisibility(View.VISIBLE);
+
+            holder.tvRoomName.setText(MapOverview.roomNames.get(pos));
+            holder.tvWeaponName.setText(MapOverview.weaponNames.get(pos));
+            if (pos < count - 1) {//rechter Raum in der Spalte
+                holder.tvRoomName2.setText(MapOverview.roomNames.get(pos + 1));
+                holder.tvWeaponName2.setText(MapOverview.weaponNames.get(pos + 1));
+            }else {//wenn ungerade Raumanzahl und i = letzter Raum in Liste
+                setInvisibleSecond(holder);
+            }
+        }
+
+        checkEmptyRooms(holder);
     }
 
     @Override
@@ -43,22 +66,15 @@ public class MapAdapterClass extends RecyclerView.Adapter<MapAdapterClass.ViewHo
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.map_row, null);
 
         if(!MenueDrawer.myTurn){
-
             itemView.findViewById(R.id.txt_weapons_in_room_map).setBackgroundResource(R.color.colorOtherTurnLight);
             itemView.findViewById(R.id.txt_weapons_in_room_map2).setBackgroundResource(R.color.colorOtherTurnLight);
-
-
-
         }else {
-
             itemView.findViewById(R.id.txt_weapons_in_room_map).setBackgroundResource(R.color.colorPrimaryDark);
             itemView.findViewById(R.id.txt_weapons_in_room_map2).setBackgroundResource(R.color.colorPrimaryDark);
-
-
         }
         return new ViewHolderClass(itemView);
-
     }
+
 
     /**
      * Um zwei Raeume in einer Row anzuzeigen, wird hier ein wenig getrickst.
@@ -69,37 +85,26 @@ public class MapAdapterClass extends RecyclerView.Adapter<MapAdapterClass.ViewHo
      */
     @Override
     public void onBindViewHolder(ViewHolderClass viewHolderClass, final int i) {
+        this.i = i;
 
-        int count = MapOverview.roomNames.size();
-        int pos = i*2;
+        this.count = MapOverview.roomNames.size();
+        this.pos = i*2;
+    }
 
-        if(pos <= count-1) {
-            //linker Raum in der Spalte
-            viewHolderClass.tvRoomName.setText(MapOverview.roomNames.get(pos));
-            viewHolderClass.tvWeaponName.setText(MapOverview.weaponNames.get(pos));
-            if (pos < count - 1) {//rechter Raum in der Spalte
-                viewHolderClass.tvRoomName2.setText(MapOverview.roomNames.get(pos + 1));
-                viewHolderClass.tvWeaponName2.setText(MapOverview.weaponNames.get(pos + 1));
-            }else {//wenn ungerade Raumanzahl und i = letzter Raum in Liste
-                setInvisibleSecond(viewHolderClass);
-            }
-        }
-
+    private void checkEmptyRooms(ViewHolderClass holder){
         //verhindert die entstehenden "leeren" Raeume die warum auch immer auftauchen...
+        //
         if(count%2==0) {
             if (i >= count / 2) {
-                setInvisibleFirst(viewHolderClass);
-                setInvisibleSecond(viewHolderClass);
+                setInvisibleFirst(holder);
+                setInvisibleSecond(holder);
             }
         }else{
             if (i >= (count / 2) + 1) {
-                setInvisibleFirst(viewHolderClass);
-                setInvisibleSecond(viewHolderClass);
+                setInvisibleFirst(holder);
+                setInvisibleSecond(holder);
             }
         }
-
-
-
     }
 
     private void setInvisibleFirst(ViewHolderClass viewHolderClass){
