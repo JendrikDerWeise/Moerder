@@ -7,8 +7,8 @@
     android:background="@color/colorBackground">
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorOtherTurn"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
@@ -41,86 +41,13 @@
                         android:textColor="@color/colorFont"
                         android:textSize="18sp" />
 
-                    <EditText
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_height="match_parent"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/editText3"
-                        android:textColor="@color/colorFont"
-                        android:textSize="16sp"
-                        android:singleLine="true"
-                        />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/editText4"
-                        android:textColor="@color/colorFont"
-                        android:textSize="16sp"
-                        android:singleLine="true"
-                        />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/editText5"
-                        android:textColor="@color/colorFont"
-                        android:textSize="16sp"
-                        android:singleLine="true"
-                        />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/editText6"
-                        android:textColor="@color/colorFont"
-                        android:textSize="16sp"
-                        android:singleLine="true"
-                        />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/editText7"
-                        android:textColor="@color/colorFont"
-                        android:textSize="16sp"
-                        android:singleLine="true"
-                        />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/editText8"
-                        android:textColor="@color/colorFont"
-                        android:textSize="16sp"
-                        android:singleLine="true"
-                        />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/editText9"
-                        android:textColor="@color/colorFont"
-                        android:textSize="16sp"
-                        android:singleLine="true"
-                        />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/editText10"
-                        android:textColor="@color/colorFont"
-                        android:textSize="16sp"
-                        android:singleLine="true"
-                        />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/editText11"
-                        android:textColor="@color/colorFont"
-                        android:textSize="16sp"
-                        android:singleLine="true"
-                        />
+                        android:id="@+id/recyclerview"
+                        android:layout_below="@+id/imageView4"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"/>
                 </LinearLayout>
             </FrameLayout>
         </ScrollView>
