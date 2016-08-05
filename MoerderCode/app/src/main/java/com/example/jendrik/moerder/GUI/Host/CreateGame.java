@@ -26,6 +26,7 @@ public class CreateGame extends Activity {
     public static final String PASS = "password";
     public static final String PLAYER_COUNT = "players";
     public static final String ROOM_COUNT = "rooms";
+    public static final String WEAPON_COUNT = "rooms";
     public static final String COUNTER_MIN = "minutes";
     public static final String COUNTER_SEC = "seconds";
     public static final String SENDTODATABASE = "sentToDatabase";

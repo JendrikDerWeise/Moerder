@@ -5,12 +5,16 @@ import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import com.example.jendrik.moerder.FCM.MyFcmListenerService;
 import com.example.jendrik.moerder.FCM.SendToDatabase;
+import com.example.jendrik.moerder.GUI.Host.AdapterClasses.RoomAdapterClass;
+import com.example.jendrik.moerder.GUI.Host.AdapterClasses.WeaponAdapterClass;
 import com.example.jendrik.moerder.GUI.textfieldHelper;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameHandler;
@@ -26,8 +30,11 @@ import java.util.List;
 public class WeaponNameList extends Activity {
 
     public static final String WEAPON_LIST = "weapon list";
-    private List<EditText> weaponNames;
+    public static List<EditText> weaponNames;
     private Bundle extras;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter rvadapter;
+    private RecyclerView.LayoutManager rvLayoutManager;
 
     /**
      * Es gilt das gleiche wie bei RoomNameList
@@ -39,27 +46,26 @@ public class WeaponNameList extends Activity {
 
         extras = getIntent().getExtras();
 
+        makeList();
+        final Activity fA = this;
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview_weapons);
+        rvLayoutManager = new LinearLayoutManager(fA);
+        recyclerView.setLayoutManager(rvLayoutManager);
+
+        rvadapter = new WeaponAdapterClass();
+        recyclerView.setAdapter(rvadapter);
+    }
+
+    private void makeList() {
         weaponNames = new ArrayList<>();
-
-        weaponNames.add((EditText) findViewById(R.id.editText12));
-        weaponNames.add((EditText) findViewById(R.id.editText13));
-        weaponNames.add((EditText) findViewById(R.id.editText14));
-        weaponNames.add((EditText) findViewById(R.id.editText15));
-        weaponNames.add((EditText) findViewById(R.id.editText16));
-        weaponNames.add((EditText) findViewById(R.id.editText17));
-        weaponNames.add((EditText) findViewById(R.id.editText18));
-        weaponNames.add((EditText) findViewById(R.id.editText19));
-        weaponNames.add((EditText) findViewById(R.id.editText20));
-
-        int a=1;
-        for(EditText r:weaponNames){
-            r.setText("DUMMY WEAPON" + " "+a); //TODO löschen bei Endversion
-            a++;
+        for (int i = 0; i < extras.getInt(CreateGame.ROOM_COUNT); i++) {
+            weaponNames.add(new EditText(this));
         }
 
-        for(int i=extras.getInt(CreateGame.ROOM_COUNT); i < weaponNames.size(); i++){
-            weaponNames.get(i).setText("DUMMY ROOM");
-            weaponNames.get(i).setVisibility(View.INVISIBLE);
+        int a = 1;
+        for (EditText r : weaponNames) {
+            r.setText("DUMMY WEAPON " + a); //TODO löschen bei Endversion
+            a++;
         }
     }
 

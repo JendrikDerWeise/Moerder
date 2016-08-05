@@ -6,54 +6,54 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.example.jendrik.moerder.GUI.Host.RoomNameList;
+import com.example.jendrik.moerder.GUI.Host.WeaponNameList;
 import com.example.jendrik.moerder.R;
 
 /**
  * Created by bulk on 05.08.2016.
  */
-public class RoomAdapterClass extends RecyclerView.Adapter<RoomAdapterClass.ViewHolderClass>{
+public class WeaponAdapterClass  extends RecyclerView.Adapter<WeaponAdapterClass.ViewHolderClass>{
     private int i;
 
     public class ViewHolderClass extends RecyclerView.ViewHolder{
 
-        public EditText roomName;
+        public EditText weaponName;
         public MyCustomEditTextListener myCustomEditTextListener;
 
         public ViewHolderClass(View itemView) {
             super(itemView);
-            roomName = (EditText) itemView.findViewById(R.id.room_name);
+            weaponName = (EditText) itemView.findViewById(R.id.weapon_name);
             myCustomEditTextListener = new MyCustomEditTextListener();
-            roomName.addTextChangedListener(myCustomEditTextListener);
+            weaponName.addTextChangedListener(myCustomEditTextListener);
         }
     }
 
     @Override
     public ViewHolderClass onCreateViewHolder(ViewGroup viewGroup, int i) {
 
-        View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.roomlist_list, null);
+        View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.weaponlist_list, null);
 
         return new ViewHolderClass(itemView);
     }
 
     public void onViewAttachedToWindow(ViewHolderClass holder) {
         super.onViewAttachedToWindow(holder);
-        holder.myCustomEditTextListener.updatePosition(i,RoomNameList.roomNames);
+        holder.myCustomEditTextListener.updatePosition(i, WeaponNameList.weaponNames);
 
-        holder.roomName.setText(RoomNameList.roomNames.get(holder.getAdapterPosition()).getText());
-        holder.roomName.setVisibility(View.VISIBLE);
+        holder.weaponName.setText(WeaponNameList.weaponNames.get(holder.getAdapterPosition()).getText());
+        holder.weaponName.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onBindViewHolder(ViewHolderClass viewHolderClass, final int i) {
 
         this.i=i;
-        viewHolderClass.roomName.setVisibility(View.VISIBLE);
+        viewHolderClass.weaponName.setVisibility(View.VISIBLE);
     }
 
     @Override
     public int getItemCount() {
-        return RoomNameList.roomNames.size();
+        return WeaponNameList.weaponNames.size();
     }
 
 
