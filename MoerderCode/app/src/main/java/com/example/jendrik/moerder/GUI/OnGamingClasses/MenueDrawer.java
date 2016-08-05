@@ -209,20 +209,16 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
                 switch (menuItem.getItemId()) {
                     case R.id.map: {
                         menueSetter(map);
-
                         break;
                     }
-
                     case R.id.list: {
                         menueSetter(noticeList);
                         break;
                     }
-
                     case R.id.clues:{
                         menueSetter(clues);
                         break;
                     }
-
                     case R.id.drawer_suspect: {
                         if(game.getActivePlayer().getActualWeapon()==null || game.getActivePlayer().getActualRoom().getName().equals(game.getGrpRoom().getName())){
                             menueSetter(suspectError);
@@ -232,7 +228,6 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
                             break;
                         }
                     }
-
                     case R.id.drawer_weapon_change: {
                         if(game.getActivePlayer().getActualRoom().getWeaponList() == null)
                             menueSetter(changeWeaponError);
@@ -240,12 +235,10 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
                             menueSetter(changeWeapon);
                         break;
                     }
-
                     case R.id.drawer_room_change: {
                         menueSetter(changeRoom);
                         break;
                     }
-
                     case R.id.drawer_indict: {
                         if(game.getPlayerManager().getPlayerList().get(whoAmI).getActualRoom().getName().equals(game.getGrpRoom().getName())) {
                             DialogFragment indictWarning = new PopUpIndict();
@@ -254,13 +247,11 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
                             menueSetter(indictError);
                         break;
                     }
-
                     case R.id.pause: {
                         if(myTurn)
                             timer.pause();
                         menueSetter(pause);
                         stb.updateData("paused", true);
-                        //drawerToggle.setDrawerIndicatorEnabled(false);
                         break;
                     }
 
@@ -325,7 +316,6 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
                 break;
             case R.id.btn_resume:
                 drawerToggle.setDrawerIndicatorEnabled(true);
-                //menueSetter(map);
                 stb.updateData("paused", false);
                 break;
         }
@@ -395,8 +385,6 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
             String toolbarText = " " + getResources().getString(R.string.toolbar_text);
             setTitle(game.getPlayerManager().getPlayerList().get(activePlayerInt).getName() + " " + toolbarText);
         }
-
-        //TODO AktivePlayer Name in Leiste anzeigen und hier ändern
     }
 
     public void onIndictPositive(DialogFragment dialog){
@@ -427,8 +415,12 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
             }catch (Exception e){
                 e.printStackTrace();
             }
-
         }
+    }
+
+    private void makeNotify(String title, String message, String message2){
+        mBuilder.setBuilder(title, message + " "+ message2);
+        mNotificationManager.notify(23,mBuilder.getBuilder().build());
     }
 
     private int suspectionRoom;
@@ -439,12 +431,10 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         this.suspection = suspection;
         this.suspection.setCallback(this);
 
-        mBuilder.setBuilder("Gerufen worden", "Geh in Raum "+ suspection.getRoom());
-        mNotificationManager.notify(23,mBuilder.getBuilder().build());
-
         String ownName = game.getPlayerManager().getPlayerList().get(whoAmI).getName();
 
         if(suspection.getPlayer().equals(ownName) && !suspection.isPlayerCalled()){
+            makeNotify("Du wirst gerufen!", "Begib dich in Raum", suspection.getRoom());
             //suspectionRoom = game.getNumberByName(suspection.getRoom());
             for(Room r : game.getRooms()){
                 if(r.getName().equals(suspection.getRoom()))
