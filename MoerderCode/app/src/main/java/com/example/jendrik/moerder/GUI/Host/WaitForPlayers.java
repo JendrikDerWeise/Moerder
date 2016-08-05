@@ -132,7 +132,12 @@ public class WaitForPlayers extends Activity {
     private void  getUpdate(){
 
         if(playerNames.size()>0){
-            ArrayAdapter adapter = new ArrayAdapter(WaitForPlayers.this,android.R.layout.simple_list_item_1,playerNames);
+            ArrayList<String> lines = new ArrayList<String>();
+            for(int i = 0; i < playerNames.size(); i++){
+                String line = "QR-Code "+ (i+1) + ": " + playerNames.get(i);
+                lines.add(i,line);
+            }
+            ArrayAdapter adapter = new ArrayAdapter(WaitForPlayers.this,android.R.layout.simple_list_item_1,lines);
             lv.setAdapter(adapter);
         }
         else
