@@ -3,10 +3,11 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.jendrik.moerder.R;
 
-public class ViewPagerAdapter extends FragmentPagerAdapter{
+public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     String[] tabtitlearray = new String[3];
 
@@ -44,5 +45,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter{
 
         return tabtitlearray[position];
     }
+
+
 } 
 

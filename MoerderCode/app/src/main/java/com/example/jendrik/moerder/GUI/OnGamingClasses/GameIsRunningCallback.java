@@ -37,4 +37,5 @@ public interface GameIsRunningCallback {
     void informSuspector();
     void endTurn();
     void stopTimer();
+    void setTimerOnPause(String status);
 }

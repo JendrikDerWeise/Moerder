@@ -37,6 +37,12 @@ public class ClueAdapterClass extends RecyclerView.Adapter<ClueAdapterClass.View
         return new ViewHolderClass(itemView);
     }
 
+    public void onViewAttachedToWindow(ViewHolderClass holder) {
+        super.onViewAttachedToWindow(holder);
+        holder.clueName.setVisibility(View.VISIBLE);
+        holder.itemImageView.setVisibility(View.VISIBLE);
+    }
+
     /**
      * Entscheidung welches Bild fuer den Clue verwendet wird.
      * 0=player, 1=room, 2=weapon
@@ -60,11 +66,14 @@ public class ClueAdapterClass extends RecyclerView.Adapter<ClueAdapterClass.View
                 viewHolderClass.itemImageView.setImageResource(R.drawable.pistol);
                 break;
         }
-
+        viewHolderClass.clueName.setVisibility(View.VISIBLE);
+        viewHolderClass.itemImageView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public int getItemCount() {
         return ShowClues.clues.size();
     }
+
+
 }

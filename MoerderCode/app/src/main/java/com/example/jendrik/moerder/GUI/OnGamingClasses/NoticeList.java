@@ -71,8 +71,8 @@ public class NoticeList extends Fragment {
      */
     private void createTabs(){
 
-        toolbar = (Toolbar) fragLayoutV.findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        //toolbar = (Toolbar) fragLayoutV.findViewById(R.id.toolbar1);
+        //((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
         viewPager = (ViewPager) fragLayoutV.findViewById(R.id.viewpager);
         Context context = getActivity().getApplicationContext();

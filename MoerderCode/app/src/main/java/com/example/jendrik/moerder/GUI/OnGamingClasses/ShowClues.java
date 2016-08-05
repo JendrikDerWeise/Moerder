@@ -1,8 +1,10 @@
 package com.example.jendrik.moerder.GUI.OnGamingClasses;
 
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -60,6 +62,7 @@ public class ShowClues extends Fragment {
 
         return fragLayoutV;
     }
+
 
     @Override
     public void onDetach() {

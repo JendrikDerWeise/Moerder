@@ -153,12 +153,6 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
 
-      /*  if(!myTurn) {
-            String toolbarText = " " + getResources().getString(R.string.toolbar_text);
-            TextView timerView = (TextView) findViewById(R.id.timer);
-            timerView.setText(game.getPlayerManager().get.getName() + toolbarText);
-        }*/
-
         drawerLayoutgesamt = (DrawerLayout) findViewById(R.id.drawerlayoutgesamt);
         drawerToggle = new ActionBarDrawerToggle(MenueDrawer.this,drawerLayoutgesamt,R.string.auf, R.string.zu);
         drawerLayoutgesamt.setDrawerListener(drawerToggle);
@@ -192,6 +186,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
      * Eigentlich ist die Methode Unsinn, aber so wird es deutlicher.
      */
     private void initFragManager(){
+        drawerToggle.setDrawerIndicatorEnabled(true);
         menueSetter(map);
     }
 
@@ -214,6 +209,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
                 switch (menuItem.getItemId()) {
                     case R.id.map: {
                         menueSetter(map);
+
                         break;
                     }
 
@@ -264,7 +260,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
                             timer.pause();
                         menueSetter(pause);
                         stb.updateData("paused", true);
-                        drawerToggle.setDrawerIndicatorEnabled(false);
+                        //drawerToggle.setDrawerIndicatorEnabled(false);
                         break;
                     }
 
@@ -329,10 +325,8 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
                 break;
             case R.id.btn_resume:
                 drawerToggle.setDrawerIndicatorEnabled(true);
-                menueSetter(map);
+                //menueSetter(map);
                 stb.updateData("paused", false);
-                if(myTurn)
-                    timer.resume();
                 break;
         }
     }
@@ -364,12 +358,27 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     }
 
     public void pauseIsPressed(boolean paused){
-        if(paused && !myTurn){
+        if(paused){
             menueSetter(pause);
             drawerToggle.setDrawerIndicatorEnabled(false);
+
             //TODO Name von pause-drücker in PauseActivity einfügen
-        }else if (!paused &&!myTurn){
+        }else if (!paused){
             menueSetter(map);
+            drawerToggle.setDrawerIndicatorEnabled(true);
+        }
+    }
+
+    public void setTimerOnPause(String status){
+        switch (status){
+            case "pause":
+                if(myTurn)
+                    timer.pause();
+                break;
+            case "resume":
+                if(myTurn)
+                    timer.resume();
+                break;
         }
     }
 
@@ -384,9 +393,6 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
 
         }else{
             String toolbarText = " " + getResources().getString(R.string.toolbar_text);
-            //TextView timerView = (TextView) findViewById(R.id.timer);
-            //timerView.setText(game.getPlayerManager().getPlayerList().get(activePlayerInt) + toolbarText);
-
             setTitle(game.getPlayerManager().getPlayerList().get(activePlayerInt).getName() + " " + toolbarText);
         }
 
