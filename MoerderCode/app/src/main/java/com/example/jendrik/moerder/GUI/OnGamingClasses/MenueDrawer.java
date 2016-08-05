@@ -119,7 +119,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         fcm.prosecutionNotifyListener();
         fcm.suspectionNotifyListener();
 
-        mBuilder = new NotificationBuilder(this);
+        mBuilder = new NotificationBuilder(this, getIntent().getExtras());
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
@@ -373,11 +373,13 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         int activePlayerInt = (int)activePlayer;
         if(activePlayerInt == whoAmI && !myTurn) {
             myTurn = true;
-            getIntent().putExtra("myTurn", myTurn);
-            getIntent().putExtra("GAME", game);
-            finish();
-            startActivity(getIntent());
+            Intent intent = getIntent();
+            intent.putExtra("myTurn", myTurn);
+            intent.putExtra("GAME", game);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
+            startActivity(intent);
+            finish();
         }else{
             String toolbarText = " " + getResources().getString(R.string.toolbar_text);
             setTitle(game.getPlayerManager().getPlayerList().get(activePlayerInt).getName() + " " + toolbarText);
@@ -406,6 +408,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     public void prosecutionNotify(){
 
         if(!myTurn){
+            makeNotify("Eine Anklage wird erhoben!", "Antippen und in den Gruppenraum gehen", "");//TODO String-Ressource englisch deutsch
             DialogFragment prosecutionBroadcast = new PopUpIndictPlayerBroadcast();
             try {
                 prosecutionBroadcast.show(this.getFragmentManager(), "PopUpIndictPlayerBroadcast");
@@ -469,7 +472,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     }
 
     public void informPlayerWhoHasClue(ArrayList<String> existendClues){
-
+        makeNotify("Ein Verdacht wurde geäußert", "Du musst einen Hinweis zeigen", "");//TODO String-Ressource englisch deutsch
         PopUpSuspectionInformPlayerWhoHasClue informPlayer = new PopUpSuspectionInformPlayerWhoHasClue();
         Bundle args = new Bundle();
         args.putStringArrayList("existendClues", existendClues);
@@ -486,6 +489,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
 
     public void showSuspectionResultBroadcast(){
         fcm.unbindSuspectionListeners();
+        makeNotify("Ein Verdacht wurde geäußert!", "Antippen um das Ergebnis zu sehen", "");//TODO String-Ressource englisch deutsch
         PopupSuspectionShowPlayersTheResult resultToPlayers = new PopupSuspectionShowPlayersTheResult();
         Bundle args = new Bundle();
         args.putString("suspector", suspection.getSuspector());
@@ -506,6 +510,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
 
     public void informSuspector(){
         fcm.unbindSuspectionListeners();
+        makeNotify("Dir wird ein Hinweis gezeigt", "Antippen um das Ergebnis zu sehen", "");//TODO String-Ressource englisch deutsch
         PopUpShowSuspectorTheResult resultToSuspector = new PopUpShowSuspectorTheResult();
         Bundle args = new Bundle();
         args.putString("title", getResources().getString(R.string.popup_suspection_result_to_suspector_title));
