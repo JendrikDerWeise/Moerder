@@ -38,16 +38,77 @@
                         android:textSize="18dp"
                         android:textColor="@color/colorFont" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:layout_height="match_parent"
+                    <EditText
                         android:layout_width="match_parent"
-                        android:id="@+id/recyclerview_weapons"
-                        android:layout_below="@+id/imageView4"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"/>
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editText12"
+                        android:textSize="16dp"
+                        android:singleLine="true"
+                        />
 
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editText13"
+                        android:textSize="16dp"
+                        android:singleLine="true"
+                        />
 
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editText14"
+                        android:textSize="16dp"
+                        android:singleLine="true"
+                        />
 
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editText15"
+                        android:textSize="16dp"
+                        android:singleLine="true"
+                        />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editText16"
+                        android:textSize="16dp"
+                        android:singleLine="true"
+                        />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editText17"
+                        android:textSize="16dp"
+                        android:singleLine="true"
+                        />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editText18"
+                        android:textSize="16dp"
+                        android:singleLine="true"
+                        />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editText19"
+                        android:textSize="16dp"
+                        android:singleLine="true"
+                        />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editText20"
+                        android:textSize="16dp"
+                        android:singleLine="true"
+                        />
                 </LinearLayout>
             </FrameLayout>
         </ScrollView>
