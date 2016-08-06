@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.example.jendrik.moerder.FCM.MyFcmListenerService;
@@ -54,6 +55,7 @@ public class WeaponNameList extends Activity {
 
         rvadapter = new WeaponAdapterClass();
         recyclerView.setAdapter(rvadapter);
+        recyclerView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
     }
 
     private void makeList() {

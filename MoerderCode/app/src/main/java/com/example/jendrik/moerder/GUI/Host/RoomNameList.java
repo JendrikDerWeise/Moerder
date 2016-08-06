@@ -1,18 +1,15 @@
 package com.example.jendrik.moerder.GUI.Host;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.example.jendrik.moerder.GUI.Host.AdapterClasses.RoomAdapterClass;
-import com.example.jendrik.moerder.GUI.LittleHelpers.ClueAdapterClass;
 import com.example.jendrik.moerder.GUI.textfieldHelper;
 import com.example.jendrik.moerder.R;
 
@@ -40,6 +37,7 @@ public class RoomNameList extends Activity {
        extras = getIntent().getExtras();
 //damit er pusht
        makeList();
+
        final Activity fA = this;
        recyclerView = (RecyclerView) findViewById(R.id.recyclerview_rooms);
        rvLayoutManager = new LinearLayoutManager(fA);
@@ -47,6 +45,7 @@ public class RoomNameList extends Activity {
 
        rvadapter = new RoomAdapterClass();
        recyclerView.setAdapter(rvadapter);
+       recyclerView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
    }
 
     private void makeList(){
