@@ -104,7 +104,7 @@ public class Suspect extends Fragment {
      */
     private void setRoom(){
         TextView tv = (TextView) fragLayoutV.findViewById(R.id.txt_suspect_room);
-        room = game.getActivePlayer().getActualRoom().getName(); //TODO ActivePlayer anpassen!
+        room = game.getActivePlayer().getActualRoom().getName();
         tv.setText(room);
     }
 

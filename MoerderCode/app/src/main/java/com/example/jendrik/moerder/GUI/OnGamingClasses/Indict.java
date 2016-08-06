@@ -201,7 +201,7 @@ public class Indict extends Fragment {
     /**
      * Diese Methode bestimmt ob ein Spieler gewinnt oder verliert.
      * Wenn seine Anklage falsch war, wird er aus dem Spiel genommen (killPlayer())
-     * Wenn es stimmt, wird das Spiel beendet TODO noch nicht implementiert!
+     * Wenn es stimmt, wird das Spiel beendet
      */
     public void onClickYes(){
         String player= (String)spinnerPlayer.getSelectedItem();
@@ -258,12 +258,7 @@ public class Indict extends Fragment {
         intent.putExtra("gameName", game.getGameName());
         startActivity(intent);
 
-       // MenueDrawer.game.setNextActivePlayer();
-       // stb.updateData("aktivePlayer", game.getPlayerManager().getAktivePlayer()); //TODO Listener wird nicht ausgelöst, Gegenspieler können nicht weiter spielen
-       // stb.updateData("roomList", game.getRoomManager().getRoomList());
-
         callback.stopTimer();
         callback.endTurn();
-       // getActivity().finish();
     }
 }

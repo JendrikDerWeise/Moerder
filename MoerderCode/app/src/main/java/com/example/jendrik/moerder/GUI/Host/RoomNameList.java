@@ -53,18 +53,8 @@ public class RoomNameList extends Activity {
         roomNames = new ArrayList<>();
         for(int i=0; i<extras.getInt(CreateGame.ROOM_COUNT);i++){
             roomNames.add(new EditText(this));
+            roomNames.get(i).setText("DUMMY ROOM " + (i+1)); //TODO löschen bei Endversion
         }
-
-        int a=1;
-        for(EditText r:roomNames) {
-            r.setText("DUMMY ROOM " + a); //TODO löschen bei Endversion
-            a++;
-        }
-
-       /* for(int i=extras.getInt(CreateGame.ROOM_COUNT); i < roomNames.size(); i++){
-            roomNames.get(i).setVisibility(View.INVISIBLE);
-
-        }*/
     }
 
     public void onClickNextButtonR(View button){

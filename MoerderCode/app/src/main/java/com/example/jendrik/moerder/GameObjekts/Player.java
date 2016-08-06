@@ -48,6 +48,7 @@ public class Player implements Serializable{
     }
 
 
+
     //TODO ggf removeWeapon() einbauen weapon = null
 
     @Exclude

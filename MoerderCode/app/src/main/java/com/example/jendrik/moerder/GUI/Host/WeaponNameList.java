@@ -57,15 +57,10 @@ public class WeaponNameList extends Activity {
     }
 
     private void makeList() {
-        weaponNames = new ArrayList<EditText>();
+        weaponNames = new ArrayList<>();
         for (int i = 0; i < extras.getInt(CreateGame.WEAPON_COUNT); i++) {
             weaponNames.add(new EditText(this));
-        }
-
-        int a = 1;
-        for (EditText r : weaponNames) {
-            r.setText("DUMMY WEAPON " + a); //TODO löschen bei Endversion
-            a++;
+            weaponNames.get(i).setText("DUMMY WEAPON " + (i+1));
         }
     }
 

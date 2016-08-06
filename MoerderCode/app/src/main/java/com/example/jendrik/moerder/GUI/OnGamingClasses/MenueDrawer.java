@@ -40,6 +40,7 @@ import com.example.jendrik.moerder.GUI.Startscreen;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Player;
 import com.example.jendrik.moerder.GameObjekts.Room;
+import com.example.jendrik.moerder.GameObjekts.Solution;
 import com.example.jendrik.moerder.R;
 
 import java.util.ArrayList;
@@ -427,17 +428,17 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     public static String roomForCalling;
     private Suspection suspection;
 
-    public void suspectionNotify(Suspection suspection){
+    public void suspectionNotify(Suspection suspection) {
         this.suspection = suspection;
         this.suspection.setCallback(this);
 
         String ownName = game.getPlayerManager().getPlayerList().get(whoAmI).getName();
 
-        if(suspection.getPlayer().equals(ownName) && !suspection.isPlayerCalled()){
+        if (suspection.getPlayer().equals(ownName) && !suspection.isPlayerCalled()) {
             makeNotify("Du wirst gerufen!", "Begib dich in Raum", suspection.getRoom());//TODO String-Ressource englisch deutsch
-            for(Room r : game.getRooms()){
-                if(r.getName().equals(suspection.getRoom()))
-                    suspectionRoom = (int)r.getQrCode();
+            for (Room r : game.getRooms()) {
+                if (r.getName().equals(suspection.getRoom()))
+                    suspectionRoom = (int) r.getQrCode();
             }
             roomForCalling = suspection.getRoom();
             Bundle args = new Bundle();
@@ -448,18 +449,34 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
             suspectionCallPlayer.setArguments(args);
             try {
                 suspectionCallPlayer.show(this.getFragmentManager(), "PupUpSuspectionCallSinglePlayer");
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
-        }else if(suspection.isPlayerCalled() && !suspection.isClueShown()){
+        } else if (suspection.isPlayerCalled() && !suspection.isClueShown()) {
             int nextPlayer = suspection.getSuspectionNextPlayer().intValue();
-            if(nextPlayer == whoAmI)
+            if (nextPlayer == whoAmI && !suspection.getSuspector().equals(ownName))
                 suspection.whoHasClues(game.getPlayerManager().getPlayerList().get(whoAmI));
 
-        }else if(suspection.isClueShown())
+        } else if (suspection.isClueShown())
             suspection.informPlayer(game.getPlayerManager().getPlayerList().get(whoAmI));
-        //TODO Fall "keiner hat Clue" abfangen
+        else if(suspectionEqualsSolution() || suspection.getSuspector().equals(ownName)){
+            fcm.unbindSuspectionListeners();
+            makeNotify("Ein Verdacht wurde geäußert!", "Niemand hat einen Hinweis gezeigt", suspection.getRoom());//TODO String-Ressource englisch deutsch
+        }
+    }
+
+    public void nobodyHadShownClue(){
+        fcm.unbindSuspectionListeners();
+        makeNotify("Ein Verdacht wurde geäußert!", "Niemand hat einen Hinweis gezeigt", suspection.getRoom());//TODO String-Ressource englisch deutsch
+    }
+
+    public boolean suspectionEqualsSolution(){
+        Solution solution = game.getSolution();
+        if(solution.getMurderer().equals(suspection.getPlayer()) && solution.getRoom().equals(suspection.getRoom()) && solution.getWeapon().equals(suspection.getWeapon()))
+            return true;
+        else
+            return false;
     }
 
     public void callPlayer(DialogFragment dialog){
@@ -502,7 +519,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
         resultToPlayers.setArguments(args);
 
         try {
-            resultToPlayers.show(this.getFragmentManager(), "PopUpSuspectionInformPlayerWhoHasClue");
+            resultToPlayers.show(this.getFragmentManager(), "PopupSuspectionShowPlayersTheResult");
         }catch (Exception e){
             e.printStackTrace();
         }

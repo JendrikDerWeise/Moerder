@@ -118,7 +118,7 @@ public class PlayerManager implements Serializable {
         for(int i = 0; i  < playerList.size(); i++){
             if(playerList.get(i).getQrCode() == player.getQrCode()){
                 playerList.remove(i);
-                playerList.set(i, player); //TODO Stimmt die reihenfolge?
+                playerList.set(i, player);
             }
         }
     }
