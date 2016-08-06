@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.databinding.ObservableList;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -85,7 +86,7 @@ public class WaitForPlayers extends Activity {
 
     @Override
     public void onBackPressed(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.mordTheme);
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.mordTheme));
         builder.setMessage(R.string.popup_back_message);
         builder.setCancelable(true);
 
