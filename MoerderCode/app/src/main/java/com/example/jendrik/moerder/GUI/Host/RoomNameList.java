@@ -45,7 +45,7 @@ public class RoomNameList extends Activity {
 
        rvadapter = new RoomAdapterClass();
        recyclerView.setAdapter(rvadapter);
-       recyclerView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+       //recyclerView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
    }
 
     private void makeList(){
