@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 
 import com.example.jendrik.moerder.GUI.OnGamingClasses.GameIsRunningCallback;
 import com.example.jendrik.moerder.R;
@@ -20,7 +21,7 @@ public class PopUpBack extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),R.style.mordTheme);
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.mordTheme));
 
         builder.setMessage(R.string.popup_back_message)
                 .setTitle(R.string.popup_back_title);

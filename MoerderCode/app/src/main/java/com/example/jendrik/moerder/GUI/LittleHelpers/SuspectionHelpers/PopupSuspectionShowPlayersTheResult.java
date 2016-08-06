@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 
 import com.example.jendrik.moerder.R;
 
@@ -15,7 +16,7 @@ public class PopupSuspectionShowPlayersTheResult extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.layout.popup_theme);
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.mordTheme));
         Bundle args = getArguments();
         String suspector = args.getString("suspector");
         String clueOwner = args.getString("clueOwner");

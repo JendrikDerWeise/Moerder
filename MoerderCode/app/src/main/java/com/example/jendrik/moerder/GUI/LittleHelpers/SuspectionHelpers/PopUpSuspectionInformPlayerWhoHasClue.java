@@ -7,6 +7,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.ContextThemeWrapper;
 
 import com.example.jendrik.moerder.GUI.LittleHelpers.TabContent.ViewPagerAdapter;
 import com.example.jendrik.moerder.GUI.OnGamingClasses.GameIsRunningCallback;
@@ -24,7 +25,7 @@ public class PopUpSuspectionInformPlayerWhoHasClue extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.layout.popup_theme);
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.mordTheme));
         existentClues = getArguments().getStringArrayList("existendClues");
 
         CharSequence[] cs = existentClues.toArray(new CharSequence[existentClues.size()]);
