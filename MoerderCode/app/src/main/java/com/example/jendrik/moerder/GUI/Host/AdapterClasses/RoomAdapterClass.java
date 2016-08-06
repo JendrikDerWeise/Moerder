@@ -14,6 +14,7 @@ import com.example.jendrik.moerder.R;
  */
 public class RoomAdapterClass extends RecyclerView.Adapter<RoomAdapterClass.ViewHolderClass>{
     private int i;
+    private int counter=0;
 
     public class ViewHolderClass extends RecyclerView.ViewHolder{
 
@@ -40,8 +41,12 @@ public class RoomAdapterClass extends RecyclerView.Adapter<RoomAdapterClass.View
         super.onViewAttachedToWindow(holder);
         holder.myCustomEditTextListener.updatePosition(i,RoomNameList.roomNames);
 
-        holder.roomName.setText(RoomNameList.roomNames.get(i).getText());//holder.getAdapterPosition()).getText());
+        if(counter != RoomNameList.roomNames.size()) {
+            holder.roomName.setText(RoomNameList.roomNames.get(holder.getAdapterPosition()).getText());
+            counter++;
+        }
         holder.roomName.setVisibility(View.VISIBLE);
+
     }
 
     @Override

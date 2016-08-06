@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.example.jendrik.moerder.GUI.Host.RoomNameList;
 import com.example.jendrik.moerder.GUI.Host.WeaponNameList;
 import com.example.jendrik.moerder.R;
 
@@ -14,6 +15,7 @@ import com.example.jendrik.moerder.R;
  */
 public class WeaponAdapterClass  extends RecyclerView.Adapter<WeaponAdapterClass.ViewHolderClass>{
     private int i;
+    private int counter = 0;
 
     public class ViewHolderClass extends RecyclerView.ViewHolder{
 
@@ -40,7 +42,10 @@ public class WeaponAdapterClass  extends RecyclerView.Adapter<WeaponAdapterClass
         super.onViewAttachedToWindow(holder);
         holder.myCustomEditTextListener.updatePosition(i, WeaponNameList.weaponNames);
 
-        holder.weaponName.setText(WeaponNameList.weaponNames.get(holder.getAdapterPosition()).getText());
+        if(counter != WeaponNameList.weaponNames.size()) {
+            holder.weaponName.setText(WeaponNameList.weaponNames.get(holder.getAdapterPosition()).getText());
+            counter++;
+        }
         holder.weaponName.setVisibility(View.VISIBLE);
     }
 
