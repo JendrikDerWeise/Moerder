@@ -2,6 +2,7 @@ package com.example.jendrik.moerder.GUI.Host;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,7 +34,7 @@ import java.util.List;
 public class GivenQrCodes extends Activity {
     private Game game;
     public static List<HashMap<String, TextView>> qrList;
-    public static List<List> listOfWeaponLists;
+    public static List<Drawable> iconList;
     private Bundle extras;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter rvadapter;
@@ -64,14 +65,17 @@ public class GivenQrCodes extends Activity {
 
     private void makeList(){
         qrList = new ArrayList<>();
-        listOfWeaponLists = new ArrayList<>();
+        iconList = new ArrayList<>();
         for(Room r : game.getRooms()){
             hashMe(r.getName(),"" + r.getQrCode());
+            iconList.add(getResources().getDrawable(R.drawable.map2));
             for(Weapon w : r.getWeaponList()){
                 hashMe(w.getName(),"" + w.getQrCode());
+                iconList.add(getResources().getDrawable(R.drawable.pistol));
             }
         }
         hashMe(""+getResources().getText(R.string.grp_room),"" + 29);
+        iconList.add(getResources().getDrawable(R.drawable.map2));
     }
 
     private void hashMe(String objectName, String qr){
