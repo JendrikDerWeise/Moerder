@@ -38,7 +38,7 @@ public class RoomNameList extends Activity {
        setContentView(R.layout.roomlist_activity);
 
        extras = getIntent().getExtras();
-
+//damit er pusht
        makeList();
        final Activity fA = this;
        recyclerView = (RecyclerView) findViewById(R.id.recyclerview_rooms);
