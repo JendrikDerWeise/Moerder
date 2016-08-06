@@ -35,7 +35,6 @@ public class RoomNameList extends Activity {
        setContentView(R.layout.roomlist_activity);
 
        extras = getIntent().getExtras();
-//damit er pusht
        makeList();
 
        final Activity fA = this;
@@ -44,8 +43,10 @@ public class RoomNameList extends Activity {
        recyclerView.setLayoutManager(rvLayoutManager);
 
        rvadapter = new RoomAdapterClass();
+       recyclerView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
+       recyclerView.setFocusable(false);
        recyclerView.setAdapter(rvadapter);
-       //recyclerView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+
    }
 
     private void makeList(){
@@ -93,4 +94,6 @@ public class RoomNameList extends Activity {
         }
 
     }
+
+
 }

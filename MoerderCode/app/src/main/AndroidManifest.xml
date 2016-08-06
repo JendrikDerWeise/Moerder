@@ -21,7 +21,8 @@
         android:label="@string/app_name"
         android:launchMode="singleTop"
         android:supportsRtl="true"
-        android:theme="@style/mordThemeNotTurn" >
+        android:theme="@style/mordThemeNotTurn"
+        >
         <service android:name=".FCM.MyFirebaseInstanceIDService" >
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -52,10 +53,12 @@
             android:label="@string/txt_create_game" />
         <activity
             android:name=".GUI.Host.RoomNameList"
-            android:label="@string/txt_create_game" />
+            android:label="@string/txt_create_game"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".GUI.Host.WeaponNameList"
-            android:label="@string/txt_create_game" />
+            android:label="@string/txt_create_game"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".GUI.Host.GivenQrCodes"
             android:label="@string/txt_attach_qrcodes" />

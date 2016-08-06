@@ -46,7 +46,7 @@ public class WeaponNameList extends Activity {
         setContentView(R.layout.weaponlist_activity);
 
         extras = getIntent().getExtras();
-//damit er pusht
+
         makeList();
         final Activity fA = this;
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview_weapons);
@@ -54,8 +54,10 @@ public class WeaponNameList extends Activity {
         recyclerView.setLayoutManager(rvLayoutManager);
 
         rvadapter = new WeaponAdapterClass();
+        recyclerView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
+        recyclerView.setFocusable(false);
         recyclerView.setAdapter(rvadapter);
-        recyclerView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+
     }
 
     private void makeList() {

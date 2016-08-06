@@ -40,7 +40,7 @@ public class RoomAdapterClass extends RecyclerView.Adapter<RoomAdapterClass.View
         super.onViewAttachedToWindow(holder);
         holder.myCustomEditTextListener.updatePosition(i,RoomNameList.roomNames);
 
-        holder.roomName.setText(RoomNameList.roomNames.get(holder.getAdapterPosition()).getText());
+        holder.roomName.setText(RoomNameList.roomNames.get(i).getText());//holder.getAdapterPosition()).getText());
         holder.roomName.setVisibility(View.VISIBLE);
     }
 
@@ -55,6 +55,7 @@ public class RoomAdapterClass extends RecyclerView.Adapter<RoomAdapterClass.View
     public int getItemCount() {
         return RoomNameList.roomNames.size();
     }
+
 
 
 }

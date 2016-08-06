@@ -48,7 +48,9 @@
                         android:id="@+id/recyclerview_rooms"
                         android:layout_below="@+id/imageView4"
                         android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"/>
+                        android:layout_alignParentStart="true"
+                        descendantFocusability="afterDescendants"
+                        android:focusable="false"/>
                 </LinearLayout>
             </FrameLayout>
         </ScrollView>
