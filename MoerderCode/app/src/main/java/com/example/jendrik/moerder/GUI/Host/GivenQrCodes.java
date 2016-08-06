@@ -13,7 +13,10 @@ import android.widget.TextView;
 import com.example.jendrik.moerder.GUI.Join.PopUpEnterName;
 import com.example.jendrik.moerder.Game;
 import com.example.jendrik.moerder.GameObjekts.Room;
+import com.example.jendrik.moerder.GameObjekts.Weapon;
 import com.example.jendrik.moerder.R;
+
+import java.util.List;
 
 /**
  * Created by bulk on 01.03.2016.
@@ -35,10 +38,10 @@ public class GivenQrCodes extends Activity {
         game = (Game) extras.get("GAME");
 
         for(Room r : game.getRooms()) { //create table for room- and weaponnames & QR-Codes
-           fillTable(r);
+           //fillTable(r);
         }
 
-        fillTable(game.getGrpRoom());
+        fillTable(game.getGrpRoom()); //TODO Gruppenraum ausbauen/wirklichen Raum als gruppenraum
 
         ll.addView(tbl); //add table to Layout
 
@@ -72,7 +75,7 @@ public class GivenQrCodes extends Activity {
         }else {
             tv_roomName.setText("Raumname: " + r.getName()); //set text of the TextViews
             tv_qrCodeR.setText("QR-Code Raum: " + r.getQrCode());
-            tv_weaponName.setText("Waffenname: " + r.getWeaponList().get(0).getName());
+            tv_weaponName.setText("Waffenname: " + r.getWeaponList().get(0).getName()); //TODO durch waffe/n in dem raum ersetzen
             tv_qrCodeW.setText("QR-Code Waffe " + r.getWeaponList().get(0).getQrCode());
         }
 

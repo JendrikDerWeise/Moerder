@@ -49,4 +49,9 @@ public class RoomManager implements Serializable{
         }
         return 666;
     }
+
+    public List<Room> getRoomList(){
+        return this.roomList;
+    }
+
 }

@@ -152,8 +152,13 @@ public class Game implements Serializable {
         for (String s:weapons)
             weaponManager.createWeapon(s);
 
+        int room = 0;
         for (int i = 0; i < weaponManager.getWeaponList().size();i++){ //Zuteilung der Waffen auf die Räume. Vorraussetzung:  Anzahl Waffen <=> Anzahl Räume
-            roomManager.getRoomList().get(i).addWeapon(weaponManager.getWeaponList().get(i));
+            if(!(room < roomManager.getRoomList().size())){
+                room = 0;
+            }
+            roomManager.getRoomList().get(room).addWeapon(weaponManager.getWeaponList().get(i));
+            room++;
         }
     }
 

@@ -26,7 +26,7 @@ public class CreateGame extends Activity {
     public static final String PASS = "password";
     public static final String PLAYER_COUNT = "players";
     public static final String ROOM_COUNT = "rooms";
-    public static final String WEAPON_COUNT = "rooms";
+    public static final String WEAPON_COUNT = "weapons";
     public static final String COUNTER_MIN = "minutes";
     public static final String COUNTER_SEC = "seconds";
     public static final String SENDTODATABASE = "sentToDatabase";
@@ -70,6 +70,11 @@ public class CreateGame extends Activity {
         final int[] cRooms = getResources().getIntArray(R.array.rooms);
         final int countR = cRooms[p];
 
+        final Spinner spinnerW=(Spinner) findViewById(R.id.spinner_weapon);
+        final int posw = spinnerW.getSelectedItemPosition();
+        final int[] cWeapon = getResources().getIntArray(R.array.weapons);
+        final int countW = cWeapon[posw];
+
         final EditText etMin = (EditText) findViewById(R.id.et_minutes); //EditText Objekte können nur Strings, daher muss ein Int geparst werden
         final String str_min = etMin.getText().toString();
         final int min = Integer.parseInt(str_min);
@@ -95,6 +100,7 @@ public class CreateGame extends Activity {
         }
         intent.putExtra(PLAYER_COUNT, countP);
         intent.putExtra(ROOM_COUNT, countR);
+        intent.putExtra(WEAPON_COUNT,countW);
         intent.putExtra(COUNTER_MIN, min);
         intent.putExtra(COUNTER_SEC, sec);
 

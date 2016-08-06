@@ -209,7 +209,7 @@
                                 android:spinnerMode="dropdown"
                                 android:layout_weight="1"
                                 android:entries="@array/weapon_numbers"
-                                android:entryValues="@array/players"
+                                android:entryValues="@array/weapons"
                                 android:contextClickable="false" />
                         </LinearLayout>
 

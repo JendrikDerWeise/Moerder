@@ -48,4 +48,8 @@ public class WeaponManager implements Serializable {
         }
         return 666;
     }
+
+    public List<Weapon> getWeaponList(){
+        return this.weaponList;
+    }
 }
