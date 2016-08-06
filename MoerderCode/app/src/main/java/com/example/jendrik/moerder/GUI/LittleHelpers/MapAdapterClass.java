@@ -39,8 +39,24 @@ public class MapAdapterClass extends RecyclerView.Adapter<MapAdapterClass.ViewHo
     int i;
     int count;
     int pos;
-    public void onViewAttachedToWindow(ViewHolderClass holder) {
-        super.onViewAttachedToWindow(holder);
+
+    @Override
+    public ViewHolderClass onCreateViewHolder(ViewGroup viewGroup, int i) {
+
+        View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.map_row, null);
+
+        if(!MenueDrawer.myTurn){
+            itemView.findViewById(R.id.txt_weapons_in_room_map).setBackgroundResource(R.color.colorOtherTurnLight);
+            itemView.findViewById(R.id.txt_weapons_in_room_map2).setBackgroundResource(R.color.colorOtherTurnLight);
+        }else {
+            itemView.findViewById(R.id.txt_weapons_in_room_map).setBackgroundResource(R.color.colorPrimaryDark);
+            itemView.findViewById(R.id.txt_weapons_in_room_map2).setBackgroundResource(R.color.colorPrimaryDark);
+        }
+
+        return new ViewHolderClass(itemView);
+    }
+
+    private void theWhatEverMethod(ViewHolderClass holder){
         if(holder instanceof ViewHolderClass && pos <= count-1){
             holder.tvRoomName.setVisibility(View.VISIBLE);
             holder.tvRoomName2.setVisibility(View.VISIBLE);
@@ -56,23 +72,7 @@ public class MapAdapterClass extends RecyclerView.Adapter<MapAdapterClass.ViewHo
                 setInvisibleSecond(holder);
             }
         }
-
         checkEmptyRooms(holder);
-    }
-
-    @Override
-    public ViewHolderClass onCreateViewHolder(ViewGroup viewGroup, int i) {
-
-        View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.map_row, null);
-
-        if(!MenueDrawer.myTurn){
-            itemView.findViewById(R.id.txt_weapons_in_room_map).setBackgroundResource(R.color.colorOtherTurnLight);
-            itemView.findViewById(R.id.txt_weapons_in_room_map2).setBackgroundResource(R.color.colorOtherTurnLight);
-        }else {
-            itemView.findViewById(R.id.txt_weapons_in_room_map).setBackgroundResource(R.color.colorPrimaryDark);
-            itemView.findViewById(R.id.txt_weapons_in_room_map2).setBackgroundResource(R.color.colorPrimaryDark);
-        }
-        return new ViewHolderClass(itemView);
     }
 
 
@@ -89,6 +89,8 @@ public class MapAdapterClass extends RecyclerView.Adapter<MapAdapterClass.ViewHo
 
         this.count = MapOverview.roomNames.size();
         this.pos = i*2;
+
+        theWhatEverMethod(viewHolderClass);
     }
 
     private void checkEmptyRooms(ViewHolderClass holder){

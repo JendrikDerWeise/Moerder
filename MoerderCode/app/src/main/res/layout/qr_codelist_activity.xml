@@ -4,7 +4,8 @@
     android:orientation="vertical" android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     tools:context=""
-    android:background="@color/colorBackground">
+    android:background="@color/colorBackground"
+    android:onClick="onClickCreateGame">
 
     <FrameLayout
         android:focusableInTouchMode="true"
@@ -66,7 +67,7 @@
             android:layout_height="wrap_content"
             android:text="@string/next_button"
             android:id="@+id/button"
-            android:onClick="onClickNextButtonR"
+            android:onClick="startWaitForPlayers"
             android:textColor="@color/colorFont"
             android:layout_gravity="center"
             android:textSize="20dp"

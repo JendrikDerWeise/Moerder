@@ -61,7 +61,8 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".GUI.Host.GivenQrCodes"
-            android:label="@string/txt_attach_qrcodes" />
+            android:label="@string/txt_attach_qrcodes"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".GUI.Host.STUB" />
         <activity
             android:name=".GUI.Host.popupGivenQrCodes"
