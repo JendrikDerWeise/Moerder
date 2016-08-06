@@ -21,6 +21,7 @@ tools:context=".WeaponNameList">
         android:id="@+id/scrollView3" >
 
         <FrameLayout
+            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp" >
