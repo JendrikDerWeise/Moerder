@@ -21,13 +21,11 @@ public class QRCodeAdapterClass extends RecyclerView.Adapter<QRCodeAdapterClass.
 
         public TextView objectName;
         public TextView qrCode;
-        public ImageView drawable;
 
         public ViewHolderClass(View itemView) {
             super(itemView);
             objectName = (TextView) itemView.findViewById(R.id.txt_qr_for);
             qrCode = (TextView) itemView.findViewById(R.id.txt_qr);
-            drawable = (ImageView) itemView.findViewById(R.id.img_kind_of_qr);
         }
     }
 
@@ -55,11 +53,9 @@ public class QRCodeAdapterClass extends RecyclerView.Adapter<QRCodeAdapterClass.
         this.i = i;
         viewHolderClass.qrCode.setText(unHashMe("qr"));
         viewHolderClass.objectName.setText(unHashMe("object"));
-        viewHolderClass.drawable.setImageDrawable(GivenQrCodes.iconList.get(i));
 
         viewHolderClass.qrCode.setVisibility(View.VISIBLE);
         viewHolderClass.objectName.setVisibility(View.VISIBLE);
-        viewHolderClass.drawable.setVisibility(View.VISIBLE);
     }
 
     @Override

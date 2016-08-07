@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.widget.AppCompatDrawableManager;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -68,14 +72,14 @@ public class GivenQrCodes extends Activity {
         iconList = new ArrayList<>();
         for(Room r : game.getRooms()){
             hashMe(r.getName(),"" + r.getQrCode());
-            iconList.add(getResources().getDrawable(R.drawable.map2));
+
             for(Weapon w : r.getWeaponList()){
                 hashMe(w.getName(),"" + w.getQrCode());
-                iconList.add(getResources().getDrawable(R.drawable.pistol));
+
             }
         }
         hashMe(""+getResources().getText(R.string.grp_room),"" + 29);
-        iconList.add(getResources().getDrawable(R.drawable.map2));
+
     }
 
     private void hashMe(String objectName, String qr){
