@@ -43,6 +43,7 @@ import com.example.jendrik.moerder.GameObjekts.Room;
 import com.example.jendrik.moerder.GameObjekts.Solution;
 import com.example.jendrik.moerder.R;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -153,7 +154,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
 
         drawerLayoutgesamt = (DrawerLayout) findViewById(R.id.drawerlayoutgesamt);
         drawerToggle = new ActionBarDrawerToggle(MenueDrawer.this,drawerLayoutgesamt,R.string.auf, R.string.zu);
-        drawerLayoutgesamt.setDrawerListener(drawerToggle);
+        drawerLayoutgesamt.addDrawerListener(drawerToggle);
     }
 
     /**
@@ -667,6 +668,7 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
 
         fcm.unbindListeners();
     }
+
 
     @Override
     protected void onResume() {

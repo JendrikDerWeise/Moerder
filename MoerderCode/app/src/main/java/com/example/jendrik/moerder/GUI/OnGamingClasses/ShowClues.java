@@ -79,4 +79,6 @@ public class ShowClues extends Fragment {
             throw new RuntimeException(e);
         }
     }
+
+
 }
