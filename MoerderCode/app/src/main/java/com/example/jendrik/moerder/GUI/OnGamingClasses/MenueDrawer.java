@@ -429,17 +429,17 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
     public static String roomForCalling;
     private Suspection suspection;
 
-    public void suspectionNotify(Suspection suspection) {
+    public void suspectionNotify(Suspection suspection){
         this.suspection = suspection;
         this.suspection.setCallback(this);
 
         String ownName = game.getPlayerManager().getPlayerList().get(whoAmI).getName();
 
-        if (suspection.getPlayer().equals(ownName) && !suspection.isPlayerCalled()) {
+        if(suspection.getPlayer().equals(ownName) && !suspection.isPlayerCalled()){
             makeNotify("Du wirst gerufen!", "Begib dich in Raum", suspection.getRoom());//TODO String-Ressource englisch deutsch
-            for (Room r : game.getRooms()) {
-                if (r.getName().equals(suspection.getRoom()))
-                    suspectionRoom = (int) r.getQrCode();
+            for(Room r : game.getRooms()){
+                if(r.getName().equals(suspection.getRoom()))
+                    suspectionRoom = (int)r.getQrCode();
             }
             roomForCalling = suspection.getRoom();
             Bundle args = new Bundle();
@@ -450,21 +450,18 @@ public class MenueDrawer extends AppCompatActivity implements GameIsRunningCallb
             suspectionCallPlayer.setArguments(args);
             try {
                 suspectionCallPlayer.show(this.getFragmentManager(), "PupUpSuspectionCallSinglePlayer");
-            } catch (Exception e) {
+            }catch (Exception e){
                 e.printStackTrace();
             }
 
-        } else if (suspection.isPlayerCalled() && !suspection.isClueShown()) {
+        }else if(suspection.isPlayerCalled() && !suspection.isClueShown()){
             int nextPlayer = suspection.getSuspectionNextPlayer().intValue();
-            if (nextPlayer == whoAmI && !suspection.getSuspector().equals(ownName))
+            if(nextPlayer == whoAmI)
                 suspection.whoHasClues(game.getPlayerManager().getPlayerList().get(whoAmI));
 
-        } else if (suspection.isClueShown())
+        }else if(suspection.isClueShown())
             suspection.informPlayer(game.getPlayerManager().getPlayerList().get(whoAmI));
-        else if(suspectionEqualsSolution() || suspection.getSuspector().equals(ownName)){
-            fcm.unbindSuspectionListeners();
-            makeNotify("Ein Verdacht wurde geäußert!", "Niemand hat einen Hinweis gezeigt", suspection.getRoom());//TODO String-Ressource englisch deutsch
-        }
+        //TODO Fall "keiner hat Clue" abfangen
     }
 
     public void nobodyHadShownClue(){

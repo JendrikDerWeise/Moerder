@@ -57,8 +57,10 @@ public class PlayerManager implements Serializable {
 
         for (Player p : playerList) {
             if (p.getName().equals(playerList.get(newIndex).getName())) {
-                p.setActive(true);
-                aktivePlayer = p.getPNumber();
+                if(!p.isDead()) {
+                    p.setActive(true);
+                    aktivePlayer = p.getPNumber();
+                }
             }else
                 p.setActive(false);
         }
