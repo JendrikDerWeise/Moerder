@@ -120,7 +120,13 @@ public class ChangeWeapon extends Fragment{
         //bei QR CodeScanner einkommentieren
         //final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
         //final Intent intent = new Intent(ACTION_SCAN);
+        //if(intent.resolveActivity(getActivity().getPackageManager()) != null){
         startActivityForResult(intent, VALUE); //Starten der Activity. Methodenaufruf "...ForResult" impliziert, das die Activity etwas zurück liefert
+        //}else{
+        //String appAddressInMarket = "play.google.com/store/apps/details?id=com.google.zxing.client.android";
+        //Intent intent_googlePlay = new Intent(Intent.ACTION_VIEW, Uri.parse(appAddressInMarket));
+        //startActivity(intent_googlePlay);
+        //}
     }
 
     private void endTurn(){
